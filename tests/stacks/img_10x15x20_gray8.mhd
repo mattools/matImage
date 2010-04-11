@@ -1,0 +1,8 @@
+ObjectType = Image
+NDims = 3
+DimSize = 15 10 20
+ElementType = MET_UCHAR
+ElementSize = 1.000000 2.000000 3.000000
+HeaderSize = 0.000000
+ElementByteOrderMSB = true
+ElementDataFile = img_10x15x20_gray8.raw

@@ -1,0 +1,7 @@
+ObjectType = Image
+NDims = 3
+DimSize = 10 15 20
+ElementType = MET_USHORT
+BinaryData = true
+ElementByteOrderMSB = false
+ElementDataFile = img_10x15x20_gray16.raw

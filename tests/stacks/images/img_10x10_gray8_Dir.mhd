@@ -1,0 +1,7 @@
+ObjectType = Image
+NDims = 2
+DimSize = 10 10
+ElementType = MET_UCHAR
+BinaryData = true
+ElementByteOrderMSB = false
+ElementDataFile = img_10x10_gray8_Dir.raw

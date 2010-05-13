@@ -1,5 +1,5 @@
 function test_suite = testClipLine(varargin)
-%TESTCLIPLINE  One-line description here, please.
+% Tests the function 'clipLine'
 %   output = testClipLine(input)
 %
 %   Example

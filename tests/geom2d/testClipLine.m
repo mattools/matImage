@@ -18,21 +18,62 @@ function test_suite = testClipLine(varargin)
 initTestSuite;
 
 function testHoriz
-% test edges totally inside window, possibly touching edges
+% test clipping of horizontal lines
 
 box = [0 100 0 100];
 
-% inside
-assertElementsAlmostEqual(clipLine([30 40 10 0], box), [0 40 100 40]);
+% inside, to the right
+line = [30 40 10 0];
+edge = [0 40 100 40];
+assertElementsAlmostEqual(edge, clipLine(line, box));
+
+% inside, to the left
+line = [30 40 -10 0];
+edge = [100 40 0 40];
+assertElementsAlmostEqual(edge, clipLine(line, box));
 
 % outside
-assertTrue(sum(isnan(clipLine([30 140 10 0], box)))==4);
+line = [30 140 10 0];
+assertTrue(sum(isnan(clipLine(line, box)))==4);
 
 function testVert
-% test edges totally inside window, possibly touching edges
+% test clipping of vertical lines
 
 box = [0 100 0 100];
-% inside
-assertElementsAlmostEqual(clipLine([30 40 0 10], box), [30 0 30 100]);
+
+% inside, upward
+line = [30 40 0 10];
+edge = [30 0 30 100];
+assertElementsAlmostEqual(edge, clipLine(line, box));
+
+% inside, downward
+line = [30 40 0 -10];
+edge = [30 100 30 0];
+assertElementsAlmostEqual(edge, clipLine(line, box));
+
 % outside
-assertTrue(sum(isnan(clipLine([140 30 0 10], box)))==4);
+line = [140 30 0 10];
+assertTrue(sum(isnan(clipLine(line, box)))==4);
+
+function testDiagUp
+% test clipping of upward diagonal lines
+
+box = [0 100 0 100];
+
+% inside, top right corner
+line = [80 30 10 10];
+edge = [50 0 100 50];
+assertElementsAlmostEqual(edge, clipLine(line, box));
+
+% inside, down right corner
+line = [20 70 10 10];
+edge = [0 50 50 100];
+assertElementsAlmostEqual(edge, clipLine(line, box));
+
+% outside
+line = [140 -30 10 10];
+assertTrue(sum(isnan(clipLine(line, box)))==4);
+
+line = [-40 130 10 10];
+assertTrue(sum(isnan(clipLine(line, box)))==4);
+

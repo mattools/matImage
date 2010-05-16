@@ -17,7 +17,7 @@ function test_suite = testClipRay(varargin)
 
 initTestSuite;
 
-function testHoriz
+function testRightSide
 % test edges totally inside window, possibly touching edges
 
 % a basic bounding box
@@ -42,8 +42,33 @@ direction   = [10 0];
 ray         = [origin direction];
 assertTrue(sum(isnan(clipRay(ray, box)))==4);
 
+function testLeftSide
+% test edges totally inside window, possibly touching edges
 
-function testVert
+% a basic bounding box
+box = [0 100 0 100];
+
+% inside
+origin      = [30 40];
+direction   = [-10 0];
+ray         = [origin direction];
+expected    = [30 40 0 40];
+assertElementsAlmostEqual(expected, clipRay(ray, box));
+
+% outside
+origin      = [30 140];
+direction   = [-10 0];
+ray         = [origin direction];
+assertTrue(sum(isnan(clipRay(ray, box)))==4);
+
+% line inside, but ray outside
+origin      = [-30 40];
+direction   = [-10 0];
+ray         = [origin direction];
+assertTrue(sum(isnan(clipRay(ray, box)))==4);
+
+
+function testUpSide
 % test edges totally inside window, possibly touching edges
 
 box = [0 100 0 100];
@@ -64,6 +89,31 @@ assertTrue(sum(isnan(clipRay(ray, box)))==4);
 % line inside, but ray outside
 origin      = [30 140];
 direction   = [0 10];
+ray         = [origin direction];
+assertTrue(sum(isnan(clipRay(ray, box)))==4);
+
+
+function testDownSide
+% test edges totally inside window, possibly touching edges
+
+box = [0 100 0 100];
+
+% inside
+origin      = [30 40];
+direction   = [0 -10];
+ray         = [origin direction];
+expected    = [30 40 30 0];
+assertElementsAlmostEqual(expected, clipRay(ray, box));
+
+% outside
+origin      = [130 40];
+direction   = [0 -10];
+ray         = [origin direction];
+assertTrue(sum(isnan(clipRay(ray, box)))==4);
+
+% line inside, but ray outside
+origin      = [30 -40];
+direction   = [0 -10];
 ray         = [origin direction];
 assertTrue(sum(isnan(clipRay(ray, box)))==4);
 

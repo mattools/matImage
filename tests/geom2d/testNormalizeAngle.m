@@ -27,29 +27,41 @@ assertAlmostEqual(theta, normalizeAngle(theta));
 theta = 3*pi/2;
 assertAlmostEqual(theta, normalizeAngle(theta));
 
+function testPiCentered
+
+theta = pi/2;
+assertAlmostEqual(theta, normalizeAngle(theta, pi));
+
+theta = pi;
+assertAlmostEqual(theta, normalizeAngle(theta, pi));
+
+theta = 3*pi/2;
+assertAlmostEqual(theta, normalizeAngle(theta, pi));
+
+
 function testVector
 
 theta = linspace(0, 2*pi-.1, 100);
 assertElementsAlmostEqual(theta, normalizeAngle(theta));
 
 
-function testPiCentered
+function testZeroCentered
 
 theta = 0;
-assertAlmostEqual(theta, normalizeAngle(theta, pi));
+assertAlmostEqual(theta, normalizeAngle(theta, 0));
 
 theta = pi/2;
-assertAlmostEqual(theta, normalizeAngle(theta, pi));
+assertAlmostEqual(theta, normalizeAngle(theta, 0));
 
 theta = -pi;
-assertAlmostEqual(theta, normalizeAngle(theta, pi));
+assertAlmostEqual(theta, normalizeAngle(theta, 0));
 
 theta = 7*pi/2;
-assertAlmostEqual(-pi/2, normalizeAngle(theta, pi));
+assertAlmostEqual(-pi/2, normalizeAngle(theta, 0));
 
-function testVectorPiCentered
+function testVectorZeroCentered
 
 theta = linspace(-pi+.1, pi-.1, 100);
-assertElementsAlmostEqual(theta, normalizeAngle(theta, pi));
+assertElementsAlmostEqual(theta, normalizeAngle(theta, 0));
 
 

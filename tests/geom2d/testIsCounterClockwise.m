@@ -45,6 +45,22 @@ assertEqual(isCounterClockwise(pd, p0, pr), -1);
 assertEqual(isCounterClockwise(pr, p0, pu), -1);
 assertEqual(isCounterClockwise(pu, p0, pl), -1);
 
+function testCcwTurnLeftArray
+% turn 90° left => return +1
+
+p0 = [2, 3]; % center point
+pu = [2, 4]; % up point
+pd = [2, 2]; % down point
+pl = [1, 3]; % left point
+pr = [3, 3]; % right point
+
+pts1 = [pl;pd;pr;pu;pl;pd;pr;pu];
+pts2 = [p0;p0;p0;p0;p0;p0;p0;p0];
+pts3 = [pu;pl;pd;pr;pd;pr;pu;pl];
+expected = [1;1;1;1;-1;-1;-1;-1];
+result = isCounterClockwise(pts1, pts2, pts3);
+assertElementsAlmostEqual(expected, result);
+
 function testCcwCol1
 % aligned with p0-p1-p2 => return +1
 

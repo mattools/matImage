@@ -16,14 +16,14 @@ function test_suite = testImMergeBands(varargin)
 
 initTestSuite;
 
-function testImage2dUint8
+function testImage2dUint8 %#ok<*DEFNU>
 
 r = zeros(10, 10, 'uint8');
 r(2:4, 4:5) = 200;
 g = zeros(10, 10, 'uint8');
-r(3:5, 3:7) = 200;
+r(3:5, 3:7) = 210;
 b = zeros(10, 10, 'uint8');
-r(6:8, 2:6) = 200;
+r(6:8, 2:6) = 220;
 rgb = imMergeBands(r, g, b);
 assertEqual([10 10 3], size(rgb));
 
@@ -38,9 +38,9 @@ function testImage3dUint8
 r = zeros(10, 10, 10, 'uint8');
 r(2:4, 4:5, 5:6) = 200;
 g = zeros(10, 10, 10, 'uint8');
-r(3:5, 3:7, 2:5) = 200;
+r(3:5, 3:7, 2:5) = 220;
 b = zeros(10, 10, 10, 'uint8');
-r(6:8, 2:6, 3:4) = 200;
+r(6:8, 2:6, 3:4) = 250;
 rgb = imMergeBands(r, g, b);
 assertEqual([10 10 3 10], size(rgb));
 

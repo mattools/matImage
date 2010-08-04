@@ -77,3 +77,50 @@ assertTrue(sum(isnan(clipLine(line, box)))==4);
 line = [-40 130 10 10];
 assertTrue(sum(isnan(clipLine(line, box)))==4);
 
+
+function testMultiLines
+
+box = [0 100 0 100];
+
+% inside, top right corner
+line = [...
+    80 30 10 10; ...
+    20 70 10 10; ...
+    140 -30 10 10; ...
+    -40 130 10 10];
+edge = [...
+    50 0 100 50; ...
+    0 50 50 100; ...
+    NaN NaN NaN NaN; ...
+    NaN NaN NaN NaN; ...
+    ];
+
+clipped = clipLine(line, box);
+assertEqual(4, size(clipped, 1));
+assertElementsAlmostEqual(edge(1:2, :), clipped(1:2, :));
+assertTrue(sum(isnan(clipped(3,:)))==4);
+assertTrue(sum(isnan(clipped(4,:)))==4);
+
+function testBigBox
+% test clipping of horizontal lines
+
+box = [-1 1 -1 1]*1e10;
+
+% inside, to the right
+line = [3 0 1 2];
+D = 1e10;
+edge = [3-D/2 -D 3+D/2 D];
+clipped = clipLine(line, box);
+assertElementsAlmostEqual(edge, clipped);
+
+function testBigLine
+% test clipping of horizontal lines
+
+box = [-1 1 -1 1]*100;
+
+% inside, to the right
+line = [3 0 1*1e10 2*1e10];
+D = 100;
+edge = [3-D/2 -D 3+D/2 D];
+clipped = clipLine(line, box);
+assertElementsAlmostEqual(edge, clipped);

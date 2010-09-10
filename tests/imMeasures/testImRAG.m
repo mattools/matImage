@@ -1,4 +1,4 @@
-function test_suite = testImRAG(varargin)
+function test_suite = testImRAG(varargin) %#ok<STOUT>
 %TESTIMRAG  One-line description here, please.
 %   output = testImRAG(input)
 %
@@ -16,7 +16,7 @@ function test_suite = testImRAG(varargin)
 
 initTestSuite;
 
-function testWithInnerRegion
+function testWithInnerRegion %#ok<*DEFNU>
 
 img = zeros(9, 9);
 img(1:6, 1:6) = 1;

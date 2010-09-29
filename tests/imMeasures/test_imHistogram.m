@@ -110,3 +110,20 @@ h2 = imHistogram(img, ~mask);
 assertEqual(256, size(h1, 1));
 assertEqual(256, size(h2, 1));
 assertEqual(numel(img), sum(h1(:))+sum(h2(:)));
+
+
+function test_brainMRI
+
+info = analyze75info('brainMRI.hdr');
+X = analyze75read(info);
+h = imHistogram(X);
+assertEqual(numel(X), sum(h(:)));
+
+function test_brainMRI_roi_bins
+
+info = analyze75info('brainMRI.hdr');
+X = analyze75read(info);
+h = imHistogram(X, X>0, 1:88);
+
+assertEqual(88, length(h));
+

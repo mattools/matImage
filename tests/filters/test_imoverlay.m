@@ -1,10 +1,10 @@
-function test_suite = test_imoverlay(varargin)
+function test_suite = test_imOverlay(varargin)
 %TEST_IMOVERLAY  One-line description here, please.
 %
-%   output = test_imoverlay(input)
+%   output = test_imOverlay(input)
 %
 %   Example
-%   test_imoverlay
+%   test_imOverlay
 %
 %   See also
 %
@@ -24,7 +24,7 @@ function test_overlayMask_gray2d %#ok<*DEFNU>
 
 img = createGrayImage2d;
 mask = createMask2d;
-res = imoverlay(img, mask);
+res = imOverlay(img, mask);
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -45,7 +45,7 @@ img = createGrayImage2d;
 mask = createMask2d;
 
 % magenta overlay
-res = imoverlay(img, mask, [1 0 1]);
+res = imOverlay(img, mask, [1 0 1]);
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -66,7 +66,7 @@ img = createGrayImage2d;
 mask = createMask2d;
 
 % magenta overlay
-res = imoverlay(img, mask, 'm');
+res = imOverlay(img, mask, 'm');
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -88,7 +88,7 @@ mask = createMask2d;
 ovr = createGrayOverlay2d;
 
 % magenta overlay
-res = imoverlay(img, mask, ovr);
+res = imOverlay(img, mask, ovr);
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -109,7 +109,7 @@ mask = createMask2d;
 ovr = createColorOverlay2d;
 
 % magenta overlay
-res = imoverlay(img, mask, ovr);
+res = imOverlay(img, mask, ovr);
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -130,7 +130,7 @@ function test_overlayMask_color2d
 
 img = createColorImage2d;
 mask = createMask2d;
-res = imoverlay(img, mask);
+res = imOverlay(img, mask);
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -155,7 +155,7 @@ img = createColorImage2d;
 mask = createMask2d;
 
 % magenta overlay
-res = imoverlay(img, mask, [1 0 1]);
+res = imOverlay(img, mask, [1 0 1]);
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -181,7 +181,7 @@ img = createColorImage2d;
 mask = createMask2d;
 
 % magenta overlay
-res = imoverlay(img, mask, 'm');
+res = imOverlay(img, mask, 'm');
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -208,7 +208,7 @@ mask = createMask2d;
 ovr = createGrayOverlay2d;
 
 % magenta overlay
-res = imoverlay(img, mask, ovr);
+res = imOverlay(img, mask, ovr);
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -234,7 +234,7 @@ mask = createMask2d;
 ovr = createColorOverlay2d;
 
 % magenta overlay
-res = imoverlay(img, mask, ovr);
+res = imOverlay(img, mask, ovr);
 
 % check size
 assertEqual([10 10 3], size(res));
@@ -260,7 +260,7 @@ function test_overlayMask_gray3d
 
 img     = createGrayImage3d;
 mask    = createMask3d;
-res     = imoverlay(img, mask);
+res     = imOverlay(img, mask);
 
 % check size
 assertEqual([10 10 3 10], size(res));
@@ -285,7 +285,7 @@ img     = createGrayImage3d;
 mask    = createMask3d;
 
 % magenta overlay
-res = imoverlay(img, mask, [1 0 1]);
+res = imOverlay(img, mask, [1 0 1]);
 
 % check size
 assertEqual([10 10 3 10], size(res));
@@ -310,7 +310,7 @@ img     = createGrayImage3d;
 mask    = createMask3d;
 
 % magenta overlay
-res = imoverlay(img, mask, 'm');
+res = imOverlay(img, mask, 'm');
 
 % check size
 assertEqual([10 10 3 10], size(res));
@@ -336,7 +336,7 @@ mask    = createMask3d;
 ovr     = createGrayOverlay3d;
 
 % magenta overlay
-res = imoverlay(img, mask, ovr);
+res = imOverlay(img, mask, ovr);
 
 % check size
 assertEqual([10 10 3 10], size(res));
@@ -361,7 +361,7 @@ mask    = createMask3d;
 ovr     = createColorOverlay3d;
 
 % magenta overlay
-res = imoverlay(img, mask, ovr);
+res = imOverlay(img, mask, ovr);
 
 % check size
 assertEqual([10 10 3 10], size(res));
@@ -386,7 +386,7 @@ function test_overlayMask_color3d
 
 img     = createColorImage3d;
 mask    = createMask3d;
-res     = imoverlay(img, mask);
+res     = imOverlay(img, mask);
 
 % check size
 assertEqual([10 10 3 10], size(res));
@@ -411,7 +411,7 @@ img     = createColorImage3d;
 mask    = createMask3d;
 
 % magenta overlay
-res = imoverlay(img, mask, [1 0 1]);
+res = imOverlay(img, mask, [1 0 1]);
 
 % check size
 assertEqual([10 10 3 10], size(res));
@@ -437,7 +437,7 @@ img     = createColorImage3d;
 mask    = createMask3d;
 
 % magenta overlay
-res = imoverlay(img, mask, 'm');
+res = imOverlay(img, mask, 'm');
 
 % check size
 assertEqual([10 10 3 10], size(res));
@@ -464,7 +464,7 @@ mask    = createMask3d;
 ovr     = createGrayOverlay3d;
 
 % magenta overlay
-res = imoverlay(img, mask, ovr);
+res = imOverlay(img, mask, ovr);
 
 % check size
 assertEqual([10 10 3 10], size(res));
@@ -491,7 +491,7 @@ mask    = createMask3d;
 ovr     = createColorOverlay3d;
 
 % magenta overlay
-res = imoverlay(img, mask, ovr);
+res = imOverlay(img, mask, ovr);
 
 % check size
 assertEqual([10 10 3 10], size(res));

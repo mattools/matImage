@@ -18,7 +18,7 @@ function test_suite = testIsParallel(varargin)
 initTestSuite;
 
 
-function testParallel
+function testParallel %#ok<*DEFNU>
 
 v1 = [1 2];
 v2 = [2 4];

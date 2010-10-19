@@ -1,0 +1,8 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+DimSize = 96 96 96
+ElementSize = 333.3 333.3 333.3
+ElementType = MET_USHORT
+ElementByteOrderMSB = True
+ElementDataFile = BRNOR39e5p1-%03d.tif 0 95 1

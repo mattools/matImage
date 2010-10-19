@@ -134,7 +134,7 @@ assertElementsAlmostEqual(imgSize, resSize);
 
 
 function testRW_Gray8_3D_Info
-% add some info to header file, and test they aree read correctly
+% add some info to header file, and test they are read correctly
 img = zeros([10, 15, 20], 'uint8');
 img(2:8, 3:8, 5:16) = 50;
 img(3:7, 4:7, 7:13) = 150;
@@ -215,3 +215,28 @@ assertElementsAlmostEqual(imgSize, resSize);
 imgType = class(img);
 resType = class(res);
 assertEqual(imgType, resType, 'error in image type I/O');
+
+
+
+function test_read_slices_list
+
+filename = 'BRNOR39e5p1List.mhd';
+info = metaImageInfo(fullfile('ratBrainMriSlices', filename));
+img = metaImageRead(info);
+
+exp = [96 96 96];
+assertEqual(exp, size(img), 'image does not have the right size');
+
+assertTrue(max(img(:))>0);
+
+
+function test_read_slices_pattern
+
+filename = 'BRNOR39e5p1Pattern.mhd';
+info = metaImageInfo(fullfile('ratBrainMriSlices', filename));
+img = metaImageRead(info);
+
+exp = [96 96 96];
+assertEqual(exp, size(img), 'image does not have the right size');
+
+assertTrue(max(img(:))>0);

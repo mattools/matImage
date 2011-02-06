@@ -1,9 +1,9 @@
-function test_suite = testImRAG(varargin) %#ok<STOUT>
-%TESTIMRAG  One-line description here, please.
-%   output = testImRAG(input)
+function test_suite = test_imRAG(varargin) %#ok<STOUT>
+%TEST_IMRAG  One-line description here, please.
+%   output = test_imRAG(input)
 %
 %   Example
-%   testImRAG
+%   test_imRAG
 %
 %   See also
 %

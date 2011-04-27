@@ -23,7 +23,7 @@ function test_sliceX_gray %#ok<*DEFNU>
 img = createTestImage;
 dim = stackSize(img);
 
-sliceYZ = stackSlice(img, 2, 5);
+sliceYZ = stackSlice(img, 1, 5);
 assertEqual([dim(3) dim(2)], size(sliceYZ));
 
 sliceYZ = stackSlice(img, 'x', 5);
@@ -35,7 +35,7 @@ function test_sliceY_gray %#ok<*DEFNU>
 img = createTestImage;
 dim = stackSize(img);
 
-sliceZX = stackSlice(img, 1, 5);
+sliceZX = stackSlice(img, 2, 5);
 assertEqual([dim(1) dim(3)], size(sliceZX));
 
 sliceZX = stackSlice(img, 'y', 5);

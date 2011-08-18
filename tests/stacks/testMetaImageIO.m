@@ -1,4 +1,4 @@
-function test_suite = testMetaImageIO(varargin)
+function test_suite = testMetaImageIO(varargin) %#ok<STOUT>
 % Test MetaImage import and export
 %   output = testMetaImageIO(input)
 %
@@ -97,7 +97,30 @@ assertEqual(length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 
-function testRW_Gray8_3D
+function testRW_Gray8_3D_initSizeFromSpacing
+
+info = metaImageInfo('img_10x15x20_gray8_Spc123.mhd');
+
+assertEqual([1 2 3], info.ElementSpacing);
+assertEqual([1 2 3], info.ElementSize);
+
+
+function testRW_Gray8_3D_initSpacingFromSize
+
+info = metaImageInfo('img_10x15x20_gray8_Siz123.mhd');
+
+assertEqual([1 2 3], info.ElementSpacing);
+assertEqual([1 2 3], info.ElementSize);
+
+function testRW_Gray8_3D_noSizeInit
+
+info = metaImageInfo('img_10x15x20_gray8_noSizeInit.mhd');
+
+assertEqual([1 1 1], info.ElementSpacing);
+assertEqual([1 1 1], info.ElementSize);
+
+
+function test_read_Gray8_3D
 
 img = zeros([10, 10, 10], 'uint8');
 img(2:8, 3:8) = 50;

@@ -1,9 +1,9 @@
-function test_suite = testMetaImageIO(varargin) %#ok<STOUT>
+function test_suite = test_metaImageIO(varargin) %#ok<STOUT>
 % Test MetaImage import and export
-%   output = testMetaImageIO(input)
+%   output = test_metaImageIO(input)
 %
 %   Example
-%   testMetaImageIO
+%   test_metaImageIO
 %
 %   See also
 %

@@ -1,9 +1,9 @@
-function test_suite = testStackRotate90(varargin) %#ok<STOUT>
-%TESTROTATESTACK90  One-line description here, please.
-%   output = testStackRotate90(input)
+function test_suite = test_stackRotate90(varargin) %#ok<STOUT>
+%TEST_STACKROTATE90  One-line description here, please.
+%   output = test_stackRotate90(input)
 %
 %   Example
-%   testStackRotate90
+%   test_stackRotate90
 %
 %   See also
 %

@@ -1,0 +1,116 @@
+function res = imGaussFilter(img, kernelSize, sigma, varargin)
+%IMGAUSSFILTER Apply gaussian filter to an image, using separability
+%
+%   IMGF = imGaussFilter(IMG, SIZE, SIGMA)
+%   IMG is the input image,
+%   SIZE is the size of the convolution kernel, either as a scalar, or as a
+%   1-by-ND row vector containging size in the X, Y, and eventually z
+%   direction.
+%   SIGMA is the width of the kernel, either as a scalar (the same sigma
+%   will be used in each direction), or as a row vector containing sigmax,
+%   sigmay, and eventually sigmaz.
+%
+%   IMGF = imGaussFilter(IMG, SIZE, SIGMA, OPTIONS)
+%   Apply the same kind of options than for imfilter.
+%
+%   The function works for 2D or 3D images, for grayscale or color images.
+%   In case of color images, the filtering is repeated for each channel of
+%   the image.
+%
+%
+%   Example
+%   img = imread('cameraman.tif');
+%   imgf = imGaussFilter(img, 11, 4);
+%   % is equivalent, but is in general faster, that:
+%   imgf2 = imfilter(img, fspecial('gaussian', 11, 4));
+%
+%   Note that there can be slight differences due to rounding effects. To
+%   minimize them, it is possible to use something like:
+%   imgf3 = uint8(imGaussFilter(single(img), 11, 4));
+%
+%   See also
+%   gaussianKernel3d, imfilter, fspecial
+%
+%   Requires
+%   imfilter in the image processing toolbox
+%
+% ------
+% Author: David Legland
+% e-mail: david.legland@grignon.inra.fr
+% Created: 2010-11-09,    using Matlab 7.9.0.529 (R2009b)
+% Copyright 2010 INRA - Cepia Software Platform.
+
+
+%% Dispatch processing in case of color images
+
+% compute image dimension
+nd = ndims(img);
+
+% case of color images
+if size(img, 3)==3 && size(img,1)~=3 && size(img, 2)~=3
+    res = img;
+    if nd==3
+        for i=1:3
+            % filter each channel of the 2D image
+            res(:,:,i) = imGaussFilter(img(:,:,i), ...
+                kernelSize, sigma, varargin{:});
+        end
+    else
+        for i=1:3
+            % filter each channel of the 3D image
+            res(:,:,i,:) = imGaussFilter(img(:,:,i,:), ...
+                kernelSize, sigma, varargin{:});
+        end
+    end
+    return;
+    
+end
+
+
+%% Process input arguments
+
+% process kernel size
+if nargin<2
+    kernelSize = 3;
+end
+if length(kernelSize)==1
+    kernelSize = repmat(kernelSize, 1, nd);
+end
+
+% process filter sigma
+if nargin<3
+    sigma = 3;
+end
+if length(sigma)==1
+    sigma = repmat(sigma, 1, nd);
+end
+
+
+%% Main processing
+
+% init result
+res = img;
+
+% process each direction
+for i=1:nd
+    % compute spatial reference
+    refSize = (kernelSize(i) - 1) / 2;
+    s0 = floor(refSize);
+    s1 = ceil(refSize);
+    lx = -s0:s1;
+    
+    % compute normalized kernel
+    sigma2 = 2*sigma(i).^2;
+    h = exp(-(lx.^2 / sigma2));
+    h = h/sum(h);
+    
+    % reshape
+    newDim = [ones(1, i-1) kernelSize(i) ones(1, nd-i)];
+    newDim = newDim([2 1 3:nd]);
+    
+    h = reshape(h, newDim);
+    
+    % apply filtering along one direction
+    res = imfilter(res, h, varargin{:});
+end
+

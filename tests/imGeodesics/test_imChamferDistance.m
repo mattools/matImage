@@ -1,10 +1,10 @@
-function test_suite = testImChamferDist(varargin)
+function test_suite = test_imChamferDistance(varargin) %#ok<STOUT>
 %TESTIMCHAMFERDIST  One-line description here, please.
 %
-%   output = testImChamferDist(input)
+%   output = test_imChamferDistance(input)
 %
 %   Example
-%   testImChamferDist
+%   test_imChamferDistance
 %
 %   See also
 %
@@ -22,7 +22,7 @@ initTestSuite;
 %% Tests for Grayscale image 2D
 
 
-function test_MarkerAtUpperLeftCorner_10x12
+function test_MarkerAtUpperLeftCorner_10x12 %#ok<*DEFNU>
 % use blank image, marker at the upper left corner.
 
 img = true(10, 12);
@@ -84,7 +84,7 @@ expDist = 29;
 assertEqual(expDist, maxDist);
 
 
-function test_FiniteDistWithMarkerOutside %#ok<*DEFNU>
+function test_FiniteDistWithMarkerOutside
 
 img = [...
     0 0 0 0 0 0 0 0 0 0; ...

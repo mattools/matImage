@@ -24,7 +24,7 @@
 %   imGeodesicDistance    - Compute geodesic distance between 2 markers
 %
 % Geodesic parameters
-%   imGeodesicLength      - Compute geodesic length of particles
+%   imGeodesicDiameter    - Compute geodesic diameter of particles
 %   imGeodesicCenter      - Compute geodesic center of a binary particle
 %   imGeodesicExtremities - Compute geodesic extremities of a binary particle
 %   imGeodesicRadius      - Compute the geodesic radius of a binary particle

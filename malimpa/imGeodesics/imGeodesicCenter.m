@@ -18,7 +18,7 @@ function center = imGeodesicCenter(img, varargin)
 %
 %   See also
 %   imGeodesics, imChamferDistance, imGeodesicRadius, imGeodesicPropagation
-%   imGeodesicLength, imGeodesicExtremities
+%   imGeodesicDiameter, imGeodesicExtremities
 %
 %
 % ------
@@ -30,4 +30,4 @@ function center = imGeodesicCenter(img, varargin)
 
 propag = imGeodesicPropagation(img, varargin{:});
 minVal = min(propag(img));
-center = propag==minVal;
+center = propag == minVal;

@@ -1,6 +1,8 @@
 function gl = geodesicLength(img, varargin)
 %GEODESICLENGTH Compute geodesic length of particles
 %
+%   Deprecated: replaced by imGeodesicDiameter
+%
 %   GL = geodesicLength(IMG)
 %   where IMG is a labeled image, returns the geodesic length of each
 %   particle.
@@ -27,6 +29,10 @@ function gl = geodesicLength(img, varargin)
 %   HISTORY 
 %   10/08/2006: add support for 3D images
 %   19/04/2007: update doc, allocate memory for result
+
+warning('malimpa:deprecated', ...
+    'function "geodesicLength" has been replaced by "imGeodesicDiameter"');
+
 
 % default structuring element
 if ndims(img)==2

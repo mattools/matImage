@@ -20,15 +20,14 @@ function center = imGeodesicExtremities(img, varargin)
 %   pixel, the computation time may be expensive.
 %
 %   See also
-%   imGeodesics, imChamferDistance, imGeodesicLength, imGeodesicPropagation
-%   imGeodesicRadius, imGeodesicCenter
+%   imGeodesics, imChamferDistance, imGeodesicPropagation
+%   imGeodesicRadius, imGeodesicCenter, imGeodesicDiameter
 %
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2009-05-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 propag = imGeodesicPropagation(img, varargin{:});
 maxVal = max(propag(img));

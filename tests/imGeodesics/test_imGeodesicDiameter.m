@@ -1,10 +1,10 @@
-function test_suite = testImGeodesicLength(varargin)
-%testImGeodesicLength  One-line description here, please.
+function test_suite = test_imGeodesicDiameter(varargin)
+%TEST_IMGEODESICDIAMETER  One-line description here, please.
 %
-%   output = testImGeodesicLength(input)
+%   output = test_imGeodesicDiameter(input)
 %
 %   Example
-%   testImGeodesicLength
+%   test_imGeodesicDiameter
 %
 %   See also
 %
@@ -24,10 +24,10 @@ function test_Square5x5 %#ok<*DEFNU>
 img = zeros(8, 8);
 img(2:6, 3:7) = 1;
 
-assertAlmostEqual(4*sqrt(2), imGeodesicLength(img));
-assertAlmostEqual(4, imGeodesicLength(img, [1 1]));
-assertAlmostEqual(8, imGeodesicLength(img, [1 2]));
-assertAlmostEqual(16/3, imGeodesicLength(img, [3 4]));
+assertAlmostEqual(4*sqrt(2), imGeodesicDiameter(img));
+assertAlmostEqual(4, imGeodesicDiameter(img, [1 1]));
+assertAlmostEqual(8, imGeodesicDiameter(img, [1 2]));
+assertAlmostEqual(16/3, imGeodesicDiameter(img, [3 4]));
 
 
 function test_SmallSpiral
@@ -49,14 +49,14 @@ no = 5 + 1 + 3 + 2;
 nd = 2 + 2 + 3 + 1;
 
 exp1s2 = no + nd*sqrt(2);
-assertAlmostEqual(exp1s2, imGeodesicLength(img));
+assertAlmostEqual(exp1s2, imGeodesicDiameter(img));
 exp11 = no + nd;
-assertAlmostEqual(exp11, imGeodesicLength(img, [1 1]));
+assertAlmostEqual(exp11, imGeodesicDiameter(img, [1 1]));
 exp12 = no + nd*2;
-assertAlmostEqual(exp12, imGeodesicLength(img, [1 2]));
+assertAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
 exp34 = (no*3 + nd*4)/3;
-assertAlmostEqual(exp34, imGeodesicLength(img, [3 4]));
-assertAlmostEqual(exp34, imGeodesicLength(img, uint16([3 4])));
+assertAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
+assertAlmostEqual(exp34, imGeodesicDiameter(img, uint16([3 4])));
 
 function test_VerticalLozenge
 % vertical lozenge that does not pass test with first version of algo
@@ -75,11 +75,11 @@ img = [...
 
 exp = 6;
 
-assertAlmostEqual(exp, imGeodesicLength(img));
-assertAlmostEqual(exp, imGeodesicLength(img, [1 1]));
-assertAlmostEqual(exp, imGeodesicLength(img, [1 2]));
-assertAlmostEqual(exp, imGeodesicLength(img, [3 4]));
-assertAlmostEqual(exp, imGeodesicLength(img, uint16([3 4])));
+assertAlmostEqual(exp, imGeodesicDiameter(img));
+assertAlmostEqual(exp, imGeodesicDiameter(img, [1 1]));
+assertAlmostEqual(exp, imGeodesicDiameter(img, [1 2]));
+assertAlmostEqual(exp, imGeodesicDiameter(img, [3 4]));
+assertAlmostEqual(exp, imGeodesicDiameter(img, uint16([3 4])));
 
 function test_SeveralParticles
 
@@ -94,16 +94,16 @@ exp12 = [4 5 5 6]';
 exp34 = [8/3 11/3 11/3 12/3]';
 
 % test on label image
-assertAlmostEqual(exp11, imGeodesicLength(img, [1 1]));
-assertAlmostEqual(exp12, imGeodesicLength(img, [1 2]));
-assertAlmostEqual(exp34, imGeodesicLength(img, [3 4]));
-assertAlmostEqual(exp34, imGeodesicLength(img, uint16([3 4])));
+assertAlmostEqual(exp11, imGeodesicDiameter(img, [1 1]));
+assertAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
+assertAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
+assertAlmostEqual(exp34, imGeodesicDiameter(img, uint16([3 4])));
 
 % test on binary image that will be labeled
-assertAlmostEqual(exp11, imGeodesicLength(img>0, [1 1]));
-assertAlmostEqual(exp12, imGeodesicLength(img>0, [1 2]));
-assertAlmostEqual(exp34, imGeodesicLength(img>0, [3 4]));
-assertAlmostEqual(exp34, imGeodesicLength(img>0, uint16([3 4])));
+assertAlmostEqual(exp11, imGeodesicDiameter(img>0, [1 1]));
+assertAlmostEqual(exp12, imGeodesicDiameter(img>0, [1 2]));
+assertAlmostEqual(exp34, imGeodesicDiameter(img>0, [3 4]));
+assertAlmostEqual(exp34, imGeodesicDiameter(img>0, uint16([3 4])));
 
 
 
@@ -127,15 +127,15 @@ no = 5 + 1 + 3 + 2;
 nd = 2 + 2 + 3 + 1;
 
 exp1s2 = no + nd*sqrt(2);
-assertAlmostEqual(exp1s2, imGeodesicLength(img, 'verbose', true));
+assertAlmostEqual(exp1s2, imGeodesicDiameter(img, 'verbose', true));
 exp11 = no + nd;
-assertAlmostEqual(exp11, imGeodesicLength(img, [1 1], 'verbose', true));
+assertAlmostEqual(exp11, imGeodesicDiameter(img, [1 1], 'verbose', true));
 exp12 = no + nd*2;
-assertAlmostEqual(exp12, imGeodesicLength(img, [1 2], 'verbose', true));
+assertAlmostEqual(exp12, imGeodesicDiameter(img, [1 2], 'verbose', true));
 exp34 = (no*3 + nd*4)/3;
-assertAlmostEqual(exp34, imGeodesicLength(img, [3 4], 'verbose', true));
-assertAlmostEqual(exp34, imGeodesicLength(img, uint16([3 4]), 'verbose', true));
+assertAlmostEqual(exp34, imGeodesicDiameter(img, [3 4], 'verbose', true));
+assertAlmostEqual(exp34, imGeodesicDiameter(img, uint16([3 4]), 'verbose', true));
 
 
 % and a small test to check verbosity when labelling
-assertAlmostEqual(exp34, imGeodesicLength(img>0, [3 4], 'verbose', true));
+assertAlmostEqual(exp34, imGeodesicDiameter(img>0, [3 4], 'verbose', true));

@@ -1,32 +1,32 @@
-function gl = imGeodesicLength(img, varargin)
-%IMGEODESICLENGTH Compute geodesic length of particles
+function gl = imGeodesicDiameter(img, varargin)
+%IMGEODESICDIAMETER Compute geodesic diameter of particles
 %
-%   GL = imGeodesicLength(IMG)
-%   where IMG is a labeled image, returns the geodesic length of each
+%   GL = imGeodesicDiameter(IMG)
+%   where IMG is a labeled image, returns the geodesic diameter of each
 %   particle.
 %   If IMG is a binary image, a labelling is performed first.
-%   GL is a column vector containing the geodesic length of each particle.
+%   GL is a column vector containing the geodesic diameter of each particle.
 %
 %   A definition for the geodesic length can be found in the book from
 %   Coster & Chermant: "Precis d'analyse d'images", Ed. CNRS 1989.
 %
 %   
-%   GL = imGeodesicLength(IMG, WS)
+%   GL = imGeodesicDiameter(IMG, WS)
 %   Specifies the weights associated to neighbor pixels. WS(1) is the
 %   distance to orthogonal pixels, and WS(2) is the distance to diagonal
 %   pixels. Default is [3 4], recommended by Borgefors. The final length is
 %   normalized by weight for orthogonal pixels.
 %   
-%   GL = imGeodesicLength(..., 'verbose', true);
+%   GL = imGeodesicDiameter(..., 'verbose', true);
 %   Display some informations about the computation procedure, that may
 %   take some time for large and/or complicated images.
 %
 %   These algorithm uses 3 steps:
-%   - first propagate distance from particles boundary to find a pixel
+%   * first propagate distance from particles boundary to find a pixel
 %       approximately in the center of the particle(s)
-%   - propagate distances from the center, and keep the furthest pixel,
+%   * propagate distances from the center, and keep the furthest pixel,
 %       which is assumed to be a geodesic extremity
-%   - propagate distances from the geodesic extremity, and keep the maximal
+%   * propagate distances from the geodesic extremity, and keep the maximal
 %       distance.
 %   This algorithm is less time-consuming than the direct approach that
 %   consists in computing geodesic propagation and keeping the max value.
@@ -45,7 +45,7 @@ function gl = imGeodesicLength(img, varargin)
 %     img2 = img - imopen(img, ones(30, 30));
 %     bin = imopen(img2 > 50, ones(3, 3));
 %     lbl = bwlabel(bin);
-%     lg = imGeodesicLength(lbl);
+%     lg = imGeodesicDiameter(lbl);
 %     plot(lg, '+');
 %
 %
@@ -93,7 +93,7 @@ while ~isempty(varargin)
     if strcmpi(paramName, 'verbose')
         verbose = varargin{2};
     else
-        error(['Unkown option in imGeodesicLength: ' paramName]);
+        error(['Unkown option in imGeodesicDiameter: ' paramName]);
     end
     varargin(1:2) = [];
 end

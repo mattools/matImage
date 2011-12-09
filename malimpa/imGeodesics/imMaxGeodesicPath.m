@@ -28,7 +28,7 @@ function path = imMaxGeodesicPath(img, varargin)
 %     end
 %
 %   See also
-%   imGeodesics, imGeodesicPath, imChamferDistance, imGeodesicLength
+%   imGeodesics, imGeodesicPath, imChamferDistance, imGeodesicDiameter
 %
 % ------
 % Author: David Legland

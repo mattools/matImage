@@ -130,7 +130,7 @@ if length(varargin) > 1
     
     % open file and read data
     f = fopen(fname, 'r');
-    img(:) = fread(f, dim(1)*dim(2)*dim(3), ['*' type]);
+    img(:) = fread(f, prod(dim), ['*' type]);
     fclose(f);
     
     return;

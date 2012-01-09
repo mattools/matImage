@@ -8,11 +8,23 @@ function extent = stackExtent(img, varargin)
 %   BOX = stackExtent(IMG, SPACING)
 %   Computes the extent by taking into account the resolution of the image.
 %
+%   BOX = stackExtent(IMG, SPACING, ORIGIN)
+%   Also takes into account the stack origin, i.e. the coordinates of the
+%   first voxel expressed in user coordinates.
+%
+%   BOX = stackExtent(IMG, 'spacing', SPACING, 'origin', ORIGIN)
+%   Uses a syntax based on parameter name-value pairs.
+%
 %   Example
-%   stackExtent
+%   % Compute physical extent of MRI Human head
+%     metadata = analyze75info('brainMRI.hdr');
+%     I = analyze75read(metadata);
+%     box = stackExtent(I, [1 1 2.5])
+%     box =
+%         0.5000  128.5000    0.5000  128.5000    -0.2500   67.2500
 %
 %   See also
-%
+%     stackSize
 %
 % ------
 % Author: David Legland
@@ -36,7 +48,7 @@ if ~isempty(varargin)
         % extract voxel spacing
         sp = var;
         
-        if length(varargin)>1
+        if length(varargin) > 1
             % also extract voxel origin
             or = varargin{2};
         end

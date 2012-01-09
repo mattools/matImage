@@ -1,8 +1,10 @@
-% STACKS Manipulation and display of 3D images
+% IMSTACKS Manipulation and display of 3D images
 % Version 1.1 01-Jul-2011 .
 %
-% Visualisation
+% GUI
 %   slicer         - Interactive visualization of 3D images
+%
+% Visualisation
 %   orthoSlices    - Display three orthogonal slices in the same figure
 %   orthoSlices3d  - Show three orthogonal slices of a 3D image
 %   slice3d        - Show a moving 3D slice of an image

@@ -1,16 +1,16 @@
-function installImael(varargin)
-%INSTALLIMAEL  Add the paths required for using IMAEL library
+function installMalimpa(varargin)
+%INSTALLMALIMPA Add the paths required for using MALIMPA library
 %
 %   usage: 
-%       installImael;
+%       installMalimpa;
 %   All the required directories are successively added, in appropriate
 %   order to comply with dependencies.
 %
 %   Example
-%   installImael
+%   installMalimpa
 %
 %   See also
-%   imael
+%   malimpa
 %
 %
 % ------
@@ -18,7 +18,7 @@ function installImael(varargin)
 % e-mail: david.legland@nantes.inra.fr
 % Created: 2008-01-17,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2008 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
+% Licensed under the terms of the modified BSD licence
 
 % base directory of the library
 p = pwd;
@@ -38,5 +38,5 @@ addpath(fullfile(p, 'imGeodesics'));
 addpath(fullfile(p, 'imShapes'));
 
 % management of 3D images
-addpath(fullfile(p, 'stacks'));
+addpath(fullfile(p, 'imStacks'));
 

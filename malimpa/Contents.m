@@ -7,10 +7,10 @@
 %   The library is organised into several modules:
 %   imFilters       - Image filters
 %   imMeasures      - Measurement of various parameters in digital images
-%   imGeodesics     - Propagation of geodesic distances in images
 %   imMinkowski     - Geometric measures (Surface, Perimeter...) in 2D or 3D
+%   imGeodesics     - Propagation of geodesic distances in images
 %   imShapes        - Generation of images representing geometric shapes
-%   stacks          - Functions for manipulation and display of 3D images
+%   imStacks        - Functions for manipulation and display of 3D images
 %   util            - General purpose functions
 %
 %

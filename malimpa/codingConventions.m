@@ -34,7 +34,7 @@
 %   followed by a short description. Name and function may be separated by
 %   colon. Name must be capitalized, without punctuation before
 %   description (to remain valid with matlab documenbtation tools). 
-%   Ex:   'SLICER interactive visualization of 3D images'
+%   Ex:   'SLICER Interactive visualization of 3D images'
 %
 %   - Main part of header describes usage of function/script with various
 %   parameters. Function name should be the real name. Variables names

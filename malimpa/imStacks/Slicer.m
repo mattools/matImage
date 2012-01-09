@@ -1,13 +1,60 @@
 classdef Slicer < handle
 %SLICER GUI for exploration of 3D images, using Object Oriented Programming
 %
-%   output = Slicer(input)
+%   SLICER is an graphical interface to explore slices of a 3D image.
+%   Index of the current slice is given under the slider, mouse position as
+%   well as cursor value are indicated when mouse is moved over image, and
+%   scrollbars allow to navigate within image.
+%   
+%   SLICER should work with any kind of 3D images: binary, gray scale
+%   (integer or floating-point) or color RGB.
+%
+%   slicer(IMG)
+%   where IMG is a preloaded M*N*P matrix, opens the slicer GUI,
+%   initialized with image IMG.
+%   User can change current slice with the slider to the left, X and Y
+%   position with the two corresponding sliders, and change the zoom in the
+%   View menu.
+%
+%   Slicer(IMGNAME, ...)
+%   Load the stack specified by IMGNAME. It can be either a tif bundle, the
+%   first file of a series, or a 3D image stored in one of the medical
+%   image format:
+%   * DICOM (*.dcm) 
+%   * Analyze (*.hdr) 
+%   * MetaImage (*.mhd, *.mha) 
+%   It is also possible to import a raw data file, from the File->Import
+%   menu.
+%
+%   slicer
+%   without argument opens a dialog to read a file (either a set of slices
+%   or a bundle-stack).
+%
+%   slicer(..., PARAM, VALUE)
+%   Specifies one or more display options as name-value parameter pairs.
+%   Available parameter names are:
+%   * 'slice'       the display uses slice given by VALUE as current slice
+%   * 'name'        gives a name to the image (for display in title bar)
+%   * 'spacing'     specifies the size of voxel elements. VALUE is a 1-by-3
+%         row vector containing spacing in x, y and z direction.
+%   * 'origin'      specifies coordinate of first voxel in user space
+%   * 'displayRange' the values of min and max gray values to display. The
+%         default behaviour is to use [0 255] for uint8 images, or to
+%         compute bounds such as 95% of the voxels are converted to visible
+%         gray levels for other image types.
+%
 %
 %   Example
-%   Slicer
+%   % Explore human brain MRI
+%     metadata = analyze75info('brainMRI.hdr');
+%     I = analyze75read(metadata);
+%     Slicer(I);
+%
+%   % show the 10-th slice, and add some setup
+%     Slicer(I, 'slice', 10, 'spacing', [1 1 2.5], 'name', 'Brain', 'displayRange', [0 90]);
 %
 %   See also
-%   Slicer, imscrollpanel
+%     imStacks, imscrollpanel
 %
 %   Requires
 %       GUILayout-v1p9
@@ -16,6 +63,7 @@ classdef Slicer < handle
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2011-04-12,    using Matlab 7.9.0.529 (R2009b)
+% http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2011 INRA - Cepia Software Platform.
 
 %% Properties
@@ -85,14 +133,19 @@ methods
             else
                 setupImageData(this, var, inputname(1));
             end
+            varargin(1) = [];
+            
         else
-            %error('Please specify at least one argument');
             this.imageData = [];
+            this.imageType = 'none';
             
         end
         
         % initialize to gray-scale LUT
         this.lut = repmat((0:255)', 1, 3) / 255;
+        
+        % parses input arguments
+        parsesInputArguments();
         
         updateCalibrationFlag(this);
 
@@ -117,7 +170,50 @@ methods
         set(fig, 'WindowScrollWheelFcn', @this.mouseWheelScrolled);
         set(fig, 'NextPlot', 'new');
 
+        function parsesInputArguments()
+            % iterate over couples of input arguments to setup display
+            while length(varargin) > 1
+                param = varargin{1};
+                switch lower(param)
+                    case 'slice'
+                        % setup initial slice
+                        pos = varargin{2};
+                        this.sliceIndex = pos(1);
+                        
+                    case 'spacing'
+                        this.voxelSize = varargin{2};
+                    case 'origin'
+                        this.voxelOrigin = varargin{2};
+                    case 'name'
+                        this.imageName = varargin{2};
+                    case 'displayrange'
+                        this.displayRange = varargin{2};
+                    otherwise
+                        error(['Unknown parameter name: ' param]);
+                end
+                varargin(1:2) = [];
+            end
+
+        end
+        
         function setupMenuBar(hf)
+            
+            % setup some flags that will able/disable some menu items
+            if ~isempty(this.imageData)
+                imageFlag = 'on';
+            else
+                imageFlag = 'off';
+            end                
+            if strcmp(this.imageType, 'color')
+                colorFlag = 'on';
+            else
+                colorFlag = 'off';
+            end
+            if strcmp(this.imageType, 'grayscale')
+                grayscaleFlag = 'on';
+            else
+                grayscaleFlag = 'off';
+            end
             
             % files
             menuFiles = uimenu(hf, 'Label', '&Files');
@@ -132,6 +228,7 @@ methods
             uimenu(menuFiles, ...
                 'Label', '&Save Image...', ...
                 'Separator', 'On', ...
+                'Enable', imageFlag, ...
                 'Accelerator', 'S', ...
                 'Callback', @this.onSaveImage);
             uimenu(menuFiles, ...
@@ -141,20 +238,26 @@ methods
                 'Callback', @this.close);
             
             % Image
-            menuImage = uimenu(hf, 'Label', '&Image');
+            menuImage = uimenu(hf, 'Label', '&Image', ...
+                'Enable', imageFlag);
+            
             uimenu(menuImage, ...
                 'Label', 'Image &Info...', ...
+                'Enable', imageFlag, ...
                 'Accelerator', 'I', ...
                 'Callback', @this.onDisplayImageInfo);
             uimenu(menuImage, ...
                 'Label', 'Spatial &Resolution...', ...
+                'Enable', imageFlag, ...
                 'Callback', @this.onChangeResolution);
             uimenu(menuImage, ...
                 'Label', 'Image &Origin...', ...
+                'Enable', imageFlag, ...
                 'Callback', @this.onChangeImageOrigin);
             
             menuChangeGrayLevels = uimenu(menuImage, ...
                 'Label', 'Change Gray levels', ...
+                'Enable', grayscaleFlag, ...
                 'Separator', 'On');
             uimenu(menuChangeGrayLevels, ...
                 'Label', '2 levels (Binary)', ...
@@ -173,8 +276,14 @@ methods
                 'UserData', 'double', ...
                 'Callback', @this.onChangeDataType);
             
+            uimenu(menuImage, ...
+                'Label', 'Split RGB', ...
+                'Enable', colorFlag, ...
+                'Callback', @this.onSplitRGB);
+                
             menuTransform = uimenu(menuImage, ...
                 'Label', '&Transform', ...
+                'Enable', imageFlag, ...
                 'Enable', 'On');
             uimenu(menuTransform, ...
                 'Label', '&Horizontal Flip', ...
@@ -223,11 +332,13 @@ methods
                 'Callback', @this.onDisplayHistogram);
             
             % View
-            menuView = uimenu(hf, 'Label', '&View');
+            menuView = uimenu(hf, 'Label', '&View', ...
+                'Enable', imageFlag);
 
             % Display range menu
             displayRangeMenu = uimenu(menuView, ...
-                'Label', '&Display Range');
+                'Label', '&Display Range', ...
+                'Enable', grayscaleFlag);
             uimenu(displayRangeMenu, ...
                 'Label', '&Image', ...
                 'Callback', @this.onSetImageDisplayExtent);
@@ -240,7 +351,8 @@ methods
 
             % LUTs menu
             menuLut = uimenu(menuView, ...
-                'Label', '&Look-Up Table');
+                'Label', '&Look-Up Table', ...
+                'Enable', grayscaleFlag);
             uimenu(menuLut, ...
                 'Label', 'Gray', ...
                 'UserData', 'gray', ...
@@ -406,7 +518,7 @@ methods
                 % edition of slice number
                 this.handles.zEdit = uicontrol('Style', 'edit', ...
                     'Parent', leftPanel, ...
-                    'String', '101', ...
+                    'String', num2str(this.sliceIndex), ...
                     'Callback', @this.onSliceEditTextChanged, ...
                     'BackgroundColor', [1 1 1]);
                 
@@ -1096,6 +1208,31 @@ methods
         updateSlice(this);
         displayNewImage(this);
         updateTitle(this);
+    end
+    
+    function onSplitRGB(this, hObject, eventdata) 
+        
+        if isempty(this.imageData)
+            return;
+        end
+        
+        % check that imaeg is grayscale
+        if ~strcmp(this.imageType, 'color')
+            return;
+        end
+        
+        options = {...
+            'spacing', this.voxelSize, ...
+            'origin', this.voxelOrigin, ...
+            'slice', this.sliceIndex};
+        
+        Slicer(squeeze(this.imageData(:,:,1,:)), options{:}, ...
+            'name', [this.imageName '-red']);
+        Slicer(squeeze(this.imageData(:,:,2,:)), options{:}, ...
+            'name', [this.imageName '-green']);
+        Slicer(squeeze(this.imageData(:,:,3,:)), options{:}, ...
+            'name', [this.imageName '-blue']);
+        
     end
     
     

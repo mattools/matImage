@@ -54,11 +54,20 @@ img = permute(img, [2 1 3:ndims(img)]);
 % extract image dimension
 dims = size(img);
 
+% check if image is color
+isColor = false;
+if length(dims) > 2 && dims(3) == 3
+    isColor = true;
+    dims = dims([1 2 4:end]);
+end
+    
+nd = length(dims);
+
 
 %% Process file names
 
 % ensure the filename has no '.mhd' extension
-if length(fileName)>4
+if length(fileName) > 4
     if strcmp(fileName(end-3:end), '.mhd')
         fileName(end-3:end) = [];
     end
@@ -79,7 +88,7 @@ if ~isfield(info, 'ObjectType')
     info.ObjectType = 'Image';
 end
 if ~isfield(info, 'NDims')
-    info.NDims = ndims(img);
+    info.NDims = nd;
 end
 if ~isfield(info, 'DimSize')
     info.DimSize = dims;
@@ -89,6 +98,10 @@ if ~isfield(info, 'ElementType')
 end
 if ~isfield(info, 'ElementDataFile')
     info.ElementDataFile = binaryFileName;
+end
+
+if isColor
+    info.ElementNumberOfChannels = 3;
 end
 
 % add additional varargins
@@ -122,7 +135,7 @@ f = fopen(fullfile(path, headerFileName), 'wt');
 
 fprintf(f, '%s = %s\n', 'ObjectType', 'Image');
 fprintf(f, '%s = %d\n', 'NDims', info.NDims);
-fprintf(f, '%s =%s\n',  'DimSize', ...
+fprintf(f, '%s =%s\n', 'DimSize', ...
     sprintf(repmat(' %d', 1, info.NDims), info.DimSize));
 fprintf(f, '%s = %s\n', 'ElementType', info.ElementType);
 
@@ -130,7 +143,7 @@ fprintf(f, '%s = %s\n', 'ElementType', info.ElementType);
 %% write each additional tag
 
 names = fieldnames(info);
-for i=1:length(names)
+for i = 1:length(names)
     name = names{i};
     
     % some tags are either in the very beginning or at the end, so they are
@@ -163,7 +176,14 @@ precision = parseMetaType(info.ElementType);
 f = fopen(fullfile(path, binaryFileName), 'wb');
 
 % write image data in correct order
-fwrite(f, img(:), precision, 0, byteOrder);
+if ~isColor
+    % write grayscale data
+    fwrite(f, img(:), precision, 0, byteOrder);
+else
+    % first permute data to write RGB of each element, then w, y, and z
+    data = permute(img, [3 1 2 4:ndims(img)]);
+    fwrite(f, data(:), precision, 0, byteOrder);
+end
 
 % close binary file
 fclose(f);

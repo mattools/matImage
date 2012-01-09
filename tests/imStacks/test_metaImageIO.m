@@ -96,6 +96,21 @@ resSize = size(res);
 assertEqual(length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
+function testRW_RGB8_2D_peppers
+
+img = imread('peppers.png');
+imgSize = size(img);
+
+fileName = 'img_rgb8_peppers.mhd';
+metaImageWrite(img, fileName);
+
+info = metaImageInfo(fileName);
+res = metaImageRead(info);
+resSize = size(res);
+
+assertEqual(length(imgSize), length(resSize));
+assertElementsAlmostEqual(imgSize, resSize);
+
 
 function testRW_Gray8_3D_initSizeFromSpacing
 
@@ -218,7 +233,7 @@ resType = class(res);
 assertEqual(imgType, resType, 'error in image type I/O');
 
 
-function testRW_In16_3D_Rect
+function testRW_Int16_3D_Rect
 
 img = zeros([15, 10, 20], 'int16');
 img(2:8, 3:8, 5:16) = 50;
@@ -239,6 +254,24 @@ imgType = class(img);
 resType = class(res);
 assertEqual(imgType, resType, 'error in image type I/O');
 
+
+function testRW_RGB8_3D_headOvr
+
+metadata = analyze75info('brainMRI.hdr');
+I = analyze75read(metadata);
+
+I2 = imOverlay(I, I>60, 'r', I==0, 'b');
+imgSize = size(I2);
+
+fileName = 'img_rgb8_headOvr.mhd';
+metaImageWrite(I2, fileName);
+
+info = metaImageInfo(fileName);
+res = metaImageRead(info);
+resSize = size(res);
+
+assertEqual(length(imgSize), length(resSize));
+assertElementsAlmostEqual(imgSize, resSize);
 
 
 function test_read_slices_list

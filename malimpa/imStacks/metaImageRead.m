@@ -70,11 +70,20 @@ end
 % determines pixel type
 [pixelType isArrayType] = parseMetaType(info.ElementType);
 
-% in the case of array type, need number of channels
+% determines number of channels
 nChannels = 1;
-if isArrayType
+if isfield(info, 'ElementNumberOfChannels');
     nChannels = info.ElementNumberOfChannels;
 end
+if nChannels > 1
+    isArrayType = true;
+end
+
+% % in the case of array type, need number of channels
+% nChannels = 1;
+% if isArrayType
+%     nChannels = info.ElementNumberOfChannels;
+% end
 
 % compute size of resulting array
 % (in the case of multi-channel image, use dim=3 for channel dimension).
@@ -100,7 +109,7 @@ if ischar(info.ElementDataFile)
     end
 
     % skip header
-    fread(f, info.HeaderSize*nChannels, ['*' pixelType]);
+    fread(f, info.HeaderSize, ['*' pixelType]);
 
     % read data
     img(:) = fread(f, prod(dims), ['*' pixelType], byteOrder);
@@ -125,8 +134,8 @@ elseif iscell(info.ElementDataFile)
         error('Number of files does not match image third dimension');
     end
     
-    % iterate over the elements in ElementDataFile, extract filename, erad
-    % image and add corresponding data to the img array.    
+    % iterate over the elements in ElementDataFile, extract filename,
+    % read image and add corresponding data to the img array.    
     for i = 1:length(info.ElementDataFile)
         filename = info.ElementDataFile{i};
         data = imread(filename);
@@ -145,13 +154,14 @@ end
 
 function [type isArray] = parseMetaType(string)
 
-% determines if the data type is an array or a scalar
+% % determines if the data type is an array or a scalar
+% isArray = false;
+% ind = findstr(string, '_ARRAY');
+% if ~isempty(ind)
+%     isArray = true;
+%     string = string(1:ind-1);
+% end
 isArray = false;
-ind = findstr(string, '_ARRAY');
-if ~isempty(ind)
-    isArray = true;
-    string = string(1:ind-1);
-end
 
 % determines the base data type
 switch string

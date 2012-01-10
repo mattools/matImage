@@ -105,7 +105,7 @@ if isColor
 end
 
 % add additional varargins
-while length(varargin)>1
+while length(varargin) > 1
     key = varargin{1};
     if ~ischar(key)
         error('following parameter must be a string: %s', key);
@@ -180,7 +180,7 @@ if ~isColor
     % write grayscale data
     fwrite(f, img(:), precision, 0, byteOrder);
 else
-    % first permute data to write RGB of each element, then w, y, and z
+    % first permute data to write RGB of each element, then x, y, and z
     data = permute(img, [3 1 2 4:ndims(img)]);
     fwrite(f, data(:), precision, 0, byteOrder);
 end

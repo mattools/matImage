@@ -111,8 +111,12 @@ if ischar(info.ElementDataFile)
     % skip header
     fread(f, info.HeaderSize, ['*' pixelType]);
 
-    % read data
+    % read binary data
     img(:) = fread(f, prod(dims), ['*' pixelType], byteOrder);
+
+    % close file
+    fclose(f);
+
 
     % convert order of elements
     if isArrayType
@@ -122,9 +126,6 @@ if ischar(info.ElementDataFile)
         % permute dims 1 and 2
         img = permute(img, [2 1 3:length(dims)]);
     end
-
-    % close file
-    fclose(f);
 
 elseif iscell(info.ElementDataFile)
     % filename is given as a cell array containing name of each file

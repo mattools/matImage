@@ -24,11 +24,11 @@ function img = readstack(fname, varargin)
 %   FNAME: base filename of images, without end number (string)
 %   INDICES: indices of images to put for result. Ex:  [0:39]
 %
-%   IMG = readstack(FNAME, TYPE, DIM)
-%   forces the type and number of dimensions of resulting array.
+%   IMG = readstack(FNAME, DIM, TYPE)
+%   forces the size and datatype of resulting array.
 %   FNAME: name of the single stack file
-%   TYPE:  matlab type of data ('uint8', 'double'...)
 %   DIM:   size of final stack. Ex : [256 256 50].
+%   TYPE:  matlab type of data ('uint8', 'int16', 'double'...)
 %   There is no support for binary raw stacks.
 %
 %   IMG = readstack(..., 'verbose')
@@ -111,8 +111,8 @@ end
 
 %% Read data in a raw file
 
-% First argument is type of image ('uint8' usually), 
-% and second argument contains size of image to load.
+% First argument is image size (Nx-by-Ny-by-Nz-by-Nc), 
+% and second argument is image type (usually 'uint8')
 if length(varargin) > 1
     % get image size and type
     dim = varargin{1};
@@ -125,13 +125,27 @@ if length(varargin) > 1
         dim = tmp;
     end
     
+    % auto-detect color image, and permute dimensions if necessary
+    colorImage = false;
+    if length(dim) > 2 && dim(3) == 3
+        colorImage = true;
+        dim = dim([3 1 2 4:length(dim)]);
+    end
+    
     % allocate memory
     img = zeros(dim, type);
     
-    % open file and read data
+    % open file and read data, in order C, X, Y and Z
     f = fopen(fname, 'r');
     img(:) = fread(f, prod(dim), ['*' type]);
     fclose(f);
+    
+    % permute dimension to comply with matlab convention
+    if colorImage 
+        img = permute(img, [3 2 1 4:length(dim)]);
+    else
+        img = permute(img, [2 1 3:length(dim)]);
+    end
     
     return;
 end

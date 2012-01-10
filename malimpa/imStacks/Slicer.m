@@ -775,16 +775,17 @@ methods
         
         % dialog to choose image dimensions
         answers = inputdlg(...
-            {'X Size (columns):', 'Y Size (rows):', 'Z Size (slices):'}, ...
+            {'X Size (columns):', 'Y Size (rows):', 'Z Size (slices):', ...
+            'Channel number:'}, ...
             'Input Image Dimensions',...
-            1, {'10', '10', '10'});
+            1, {'10', '10', '10', '1'});
         if isempty(answers)
             return;
         end
         
         % parse dimensions
-        dims = [0 0 0];
-        for i = 1:3
+        dims = [0 0 0 0];
+        for i = 1:4
             num = str2num(answers{i}); %#ok<ST2NM>
             if isempty(num)
                 errordlg(sprintf('Could not parse input number %d', i), ...
@@ -805,16 +806,20 @@ methods
             return;
         end
         
+        % if number of channels is specified, use it as third dimension
+        if dims(4) > 1
+            dims = dims([1 2 4 3]);
+        end
+        
         % read raw stack (use correction of some bugs in 'readstack' function)
         dataType = types{selection};
-        img = readstack(fileName, dataType, dims([2 1 3]));
-        img = permute(img, [2 1 3]);
-        
+        img = readstack(fileName, dataType, dims);
+                
         % determine image name
         [pathName baseName ext] = fileparts(fileName);
         imgName = [baseName ext];
         
-        setupImageData(this, img, imgName);
+        Slicer(img, 'name', imgName);
         
         % setup file infos
         this.lastPath = pathName;

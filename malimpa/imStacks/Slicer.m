@@ -226,15 +226,22 @@ methods
                 'Label', 'Import &Raw Data...', ...
                 'Callback', @this.onImportRawData);
             uimenu(menuFiles, ...
+                'Label', '&Import From Workspace...', ...
+                'Callback', @this.onImportFromWorkspace);
+            uimenu(menuFiles, ...
                 'Label', '&Save Image...', ...
                 'Separator', 'On', ...
                 'Enable', imageFlag, ...
                 'Accelerator', 'S', ...
                 'Callback', @this.onSaveImage);
             uimenu(menuFiles, ...
-                'Label', '&Quit', ...
+                'Label', '&Export To Workspace...', ...
+                'Enable', imageFlag, ...
+                'Callback', @this.onExportToWorkspace);
+            uimenu(menuFiles, ...
+                'Label', '&Close', ...
                 'Separator', 'On', ...
-                'Accelerator', 'Q', ...
+                'Accelerator', 'W', ...
                 'Callback', @this.close);
             
             % Image
@@ -824,9 +831,10 @@ methods
         % setup file infos
         this.lastPath = pathName;
     end
+    
 end
 
-
+%% Some methods for image manipulation
 methods
     function [mini maxi] = computeGrayScaleExtent(this)
         % compute grayscale extent of this inner image
@@ -1034,6 +1042,32 @@ methods
         
     end
     
+    function onImportFromWorkspace(this, hObject, eventdata) %#ok<MANU>
+        % Import an image from a variable in current workspace
+
+        % open dialog to input image name
+        prompt = {'Enter Variable Name:'};
+        title = 'Import From Workspace';
+        lines = 1;
+        def = {'ans'};
+        answer = inputdlg(prompt, title, lines, def);
+        
+        % if user cancels, answer is empty
+        if isempty(answer)
+            return;
+        end
+        
+        data = evalin('base', answer{1});
+        
+        if ndims(data) < 3
+            errordlg('Input Image must have at least 3 dimensions');
+            return;
+        end
+        
+        Slicer(data, 'name', answer{1});
+    end
+    
+    
     function onSaveImage(this, hObject, eventdata)
         % Display the dialog, determines image type, and save image 
         % accordingly
@@ -1085,6 +1119,24 @@ methods
         end
     end
 
+    function onExportToWorkspace(this, hObject, eventdata)
+        % Export current image data to workspace
+        
+        % open dialog to input image name
+        prompt = {'Enter image name:'};
+        title = 'Export Image Data';
+        lines = 1;
+        def = {'img'};
+        answer = inputdlg(prompt, title, lines, def);
+        
+        % if user cancels, answer is empty
+        if isempty(answer)
+            return;
+        end
+        
+        assignin('base', answer{1}, this.imageData);
+    end
+ 
 end
 
 

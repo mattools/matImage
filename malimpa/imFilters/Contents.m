@@ -13,7 +13,6 @@
 %   imGradient          - Compute gradient magnitude in a grayscale image
 %   imMorphoGradient    - Morphological gradient of an image
 %   imMorphoLaplacian   - Morphological laplacian of an image
-%   imImposedWatershed  - Compute watershed after imposition of extended minima
 %   imrecerode          - Perform a morphological reconstruction by erosion
 %   imHConcave          - H-concave transformation of an image
 %   imHConvex           - H-convex transformation of an image
@@ -21,6 +20,10 @@
 %   imMeanFilter        - Compute mean value in the neighboorhood of each pixel
 %   imMedianFilter      - Compute median value in the neighboorhood of each pixel
 %   imNeighborhood      - Return the neighborhood of a given pixel
+%
+%   Segmentation filters:
+%   imOtsuThreshold     - Threshold an image using Otsu method
+%   imImposedWatershed  - Compute watershed after imposition of extended minima
 %
 %   Color and gray-scale conversions
 %   imOverlay           - Add colored markers to an image (2D or 3D, grayscale or color)

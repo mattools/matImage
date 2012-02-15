@@ -141,8 +141,8 @@ methods
             
         end
         
-        % initialize to gray-scale LUT
-        this.lut = repmat((0:255)', 1, 3) / 255;
+        % initialize to empty LUT
+        this.lut = [];
         
         % parses input arguments
         parsesInputArguments();
@@ -985,7 +985,9 @@ methods
         % for grayscale and vector images, adjust displayrange and LUT
         if ~strcmp(this.imageType, 'color')
             set(this.handles.imageAxis, 'CLim', this.displayRange);
-            colormap(this.handles.imageAxis, this.lut);
+            if  ~isempty(this.lut)
+                colormap(this.handles.imageAxis, this.lut);
+            end
         end
         
         % adjust zoom to view the full image
@@ -1534,7 +1536,11 @@ methods
         disp(['Change LUT to: ' lutName]);
         
         nGrays = 256;
-        if strmatch(lutName, 'inverted')
+        if strmatch(lutName, 'gray')
+            % for gray-scale, use an empty LUT
+            this.lut = [];
+            
+        elseif strmatch(lutName, 'inverted')
             this.lut = repmat((255:-1:0)', 1, 3) / 255;
             
         elseif strmatch(lutName, 'blue-gray-red')
@@ -1590,10 +1596,16 @@ methods
         pos = ceil(this.imageSize / 2);
         spacing = this.voxelSize;
         
+        % determine the LUT to use (default is empty)
+        ortholut = [];
+        if ~isColorStack(this.imageData) && ~isempty(this.lut)
+            ortholut = this.lut;
+        end
+        
         % create figure with 3 orthogonal slices
         figure();
         orthoSlices(this.imageData, pos, spacing, ...
-            'displayRange', this.displayRange, 'LUT', this.lut);
+            'displayRange', this.displayRange, 'LUT', ortholut);
     end
     
     function onShowOrthoSlices3d(this, varargin)
@@ -1606,10 +1618,16 @@ methods
         pos = ceil(this.imageSize / 2);
         spacing = this.voxelSize;
         
+        % determine the LUT to use (default is empty)
+        ortholut = [];
+        if ~isColorStack(this.imageData) && ~isempty(this.lut)
+            ortholut = this.lut;
+        end
+        
         % create figure with 3 orthogonal slices in 3D
         figure();
         orthoSlices3d(this.imageData, pos, spacing, ...
-            'displayRange', this.displayRange, 'LUT', this.lut);
+            'displayRange', this.displayRange, 'LUT', ortholut);
         
         % add few settings
         axis equal;
@@ -1653,8 +1671,8 @@ methods
             % compute each channel
             for c = 1 : size(this.lut, 2)
                 res = zeros(size(data));
-                for i = 0:size(this.lut)-1
-                    res(data==i) = this.lut(i+1, c);
+                for i = 0:size(this.lut, 1)-1
+                    res(data == i) = this.lut(i+1, c);
                 end
                 rgb(:,:,c,:) = uint8(res * 255 / lutMax);
             end

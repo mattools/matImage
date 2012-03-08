@@ -1,6 +1,22 @@
 % IMFILTERS Generic filters for image processing
 % Version 1.1 01-Jul-2011 .
 %
+%   Generic filters:
+%   imAdjustDynamic     - Rescale gray levels of image to get better dynamic
+%   imGradient          - Compute gradient magnitude in a grayscale image
+%   imMorphoGradient    - Morphological gradient of an image
+%   imMorphoLaplacian   - Morphological laplacian of an image
+%   imrecerode          - Perform a morphological reconstruction by erosion
+%   imHConcave          - H-concave transformation of an image
+%   imHConvex           - H-convex transformation of an image
+%   imNeighborhood      - Return the neighborhood of a given pixel
+%
+%   Noise filtering:
+%   imGaussFilter       - Apply gaussian filter to an image, using separability
+%   imDirectionalFilter - Apply and combine several directional filters
+%   imMeanFilter        - Compute mean value in the neighboorhood of each pixel
+%   imMedianFilter      - Compute median value in the neighboorhood of each pixel
+%
 %   Geometric filters:
 %   imAddBorder         - Add a border around a 2D or 3D image
 %   imTranspose         - Transpose an image (grayscale or RGB)
@@ -8,26 +24,12 @@
 %   subsamplergb        - Return a sub-sampled version of an rgb image.
 %   imCheckerBoard      - Create a checkerboard image from 2 images
 %
-%   Generic filters:
-%   imGaussFilter       - Apply gaussian filter to an image, using separability
-%   imGradient          - Compute gradient magnitude in a grayscale image
-%   imMorphoGradient    - Morphological gradient of an image
-%   imMorphoLaplacian   - Morphological laplacian of an image
-%   imrecerode          - Perform a morphological reconstruction by erosion
-%   imHConcave          - H-concave transformation of an image
-%   imHConvex           - H-convex transformation of an image
-%   imDirectionalFilter - Apply and combine several directional filters
-%   imMeanFilter        - Compute mean value in the neighboorhood of each pixel
-%   imMedianFilter      - Compute median value in the neighboorhood of each pixel
-%   imNeighborhood      - Return the neighborhood of a given pixel
-%
 %   Segmentation filters:
 %   imOtsuThreshold     - Threshold an image using Otsu method
 %   imImposedWatershed  - Compute watershed after imposition of extended minima
 %
 %   Color and gray-scale conversions
 %   imOverlay           - Add colored markers to an image (2D or 3D, grayscale or color)
-%   imAdjustDynamic     - Rescale gray levels of image to get better dynamic
 %   imMergeBands        - Merge 3 bands to create a 2D or 3D color image
 %   imSplitBands        - Split the 3 bands of a 2D or 3D image
 %   double2rgb          - Create a RGB image from double values

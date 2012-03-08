@@ -84,7 +84,9 @@ end
 %% Compute grayscale adjustment
 
 % compute slope of linear transformation
-a = double((outMax - outMin) / (maxi - mini));
+maxi = double(maxi);
+mini = double(mini);
+a = double((outMax - outMin) / (double(maxi) - mini));
 
 % compute result image
 res = (img - mini) * a + outMin;

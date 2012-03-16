@@ -13,15 +13,15 @@ function varargout = orthoSlices(img, varargin)
 %   orthoSlices(IMG, POS, SPACING)
 %   Also specify the spacing between voxels, in [SP_X SP_Y SP_Z] order.
 %
-%   orthoSlices(..., 'displayRange', RANGE)
+%   orthoSlices(..., 'DisplayRange', RANGE)
 %   Specifies the grayscale range of the data. RANGE should be a 1-by-2 row
 %   vector containing min and max values to display. Display will be
 %   adjusted such that min value correspond to black (value 0), and max
 %   value correspond to white (value 255).
 %
-%   orthoSlices(..., 'lut', LUT)
-%   Specifies the lut to display the data with. LUT should be a 255-by-3
-%   array.
+%   orthoSlices(..., 'ColorMap', MAP)
+%   Specifies the Colormap to display the data with. MAP should be a
+%   255-by-3 array.
 %
 %   Examples
 %   % Display MRI head using three orthogonal planar slices
@@ -35,7 +35,7 @@ function varargout = orthoSlices(img, varargin)
 %     orthoSlices(img, [60 80 13], [1 1 2.5], 'displayRange', [0 90], 'lut', 'jet');
 %
 %   See also
-%   orthoSlices3d
+%   orthoSlices3d, colormap
 %
 %
 % ------
@@ -88,7 +88,7 @@ while length(varargin) > 1
             origin = varargin{2};
         case 'displayrange'
             displayRange = varargin{2};
-        case 'lut'
+        case {'lut', 'colormap'}
             lut = varargin{2};
         otherwise
             error(['Unknown parameter: ' param]);

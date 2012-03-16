@@ -65,6 +65,6 @@ hs = surface(xy_x, xy_y, xy_z, slice, params{:});
 
 %% process output arguments
 
-if nargout>0
-    varargout{1} = hs;
+if nargout > 0
+    varargout = {hs};
 end

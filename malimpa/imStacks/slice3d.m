@@ -15,18 +15,18 @@ function hs = slice3d(img, dim, index, varargin)
 %   slice3d(IMG, DIR, INDEX, SCALE)
 %   give the voxel resolution for each one of the x,y,z directions.
 %
-%   slice3d(..., 'displayRange', RANGE)
+%   slice3d(..., 'DisplayRange', RANGE)
 %   Specifies the grayscale range of the data. RANGE should be a 1-by-2 row
 %   vector containing min and max values to display. Display will be
 %   adjusted such that min value correspond to black (value 0), and max
 %   value correspond to white (value 255).
 %
-%   slice3d(..., 'lut', LUT)
-%   Specifies the lut to display the data with. LUT should be a 255-by-3
-%   array.
+%   slice3d(..., 'ColorMap', MAP)
+%   Specifies the color map to display the data with. MAP should be a
+%   255-by-3 array, see the colromap function for examples.
 %
 %   See also
-%   orthoSlices, orthoSlices3d
+%   orthoSlices, orthoSlices3d, colormap
 %
 %   References
 %   Largely inspired by file 'slice3i' from Anders Brun, see FEx:
@@ -84,7 +84,7 @@ while length(varargin) > 1
     switch lower(param)
         case 'displayrange'
             displayRange = varargin{2};
-        case 'lut'
+        case {'lut', 'colormap'}
             lut = varargin{2};
         otherwise
             error(['Unknown parameter: ' param]);

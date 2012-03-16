@@ -40,7 +40,7 @@ function varargout = orthoSlices3d(img, varargin)
 %
 %
 %   See also
-%   stackSlice, orthoSlices, showXSlice, showYSlice, showZSlice
+%   stackSlice, orthoSlices, showXSlice, showYSlice, showZSlice, slice3d
 %
 % ------
 % Author: David Legland
@@ -87,7 +87,7 @@ while length(varargin) > 1
             origin = varargin{2};
         case 'displayrange'
             options = [options {'DisplayRange', varargin{2}}]; %#ok<AGROW>
-        case 'lut'
+        case {'colormap', 'lut'}
             options = [options {'LUT', varargin{2}}]; %#ok<AGROW>
         otherwise
             error(['Unknown parameter: ' param]);

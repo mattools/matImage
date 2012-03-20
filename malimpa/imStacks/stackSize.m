@@ -34,7 +34,7 @@ function dim = stackSize(img, varargin)
 %         50
 %
 %   See also
-%   size, ndims
+%   stackExtent, size, ndims
 %
 %
 % ------
@@ -60,7 +60,7 @@ if ~isempty(varargin)
         % in case a single direction is asked, select it
         dim = dim(varargin{1});
         
-    elseif length(var)==3
+    elseif length(var) == 3
         % if resolution is specified, compute size in physical units
         dim = dim .* var;
     end

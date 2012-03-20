@@ -15,6 +15,12 @@ function extent = stackExtent(img, varargin)
 %   BOX = stackExtent(IMG, 'spacing', SPACING, 'origin', ORIGIN)
 %   Uses a syntax based on parameter name-value pairs.
 %
+%   BOX = stackExtent(DIM, SPACING, ORIGIN)
+%   Computes the physical extent based on the size of the stack. This
+%   syntax can be used to avoid passing ana rray as parameter. DIM is given
+%   in X-Y-Z order.
+%
+%
 %   Example
 %   % Compute physical extent of MRI Human head
 %     metadata = analyze75info('brainMRI.hdr');
@@ -34,7 +40,14 @@ function extent = stackExtent(img, varargin)
 
 
 % size of image in each physical direction
-sz = stackSize(img);
+dim = size(img);
+if length(dim) > 2
+    % compute size of the stack
+    sz = stackSize(img);
+else
+    % the size of the stack is given as input
+    sz = img;
+end
 
 % default spacing and origin (matlab display convention)
 sp = [1 1 1];
@@ -70,7 +83,7 @@ if ~isempty(varargin)
 end
 
 % put extent in array
-extent = (([zeros(3, 1) sz']-.5).* [sp' sp'] + [or' or'])';
+extent = (([zeros(3, 1) sz'] - .5).* [sp' sp'] + [or' or'])';
 
 % change array shape to get a single row
 extent = extent(:)';

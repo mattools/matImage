@@ -1631,10 +1631,7 @@ methods
             'displayRange', this.displayRange, 'ColorMap', ortholut);
         
         % compute display extent (add a 0.5 limit around each voxel)
-        corner000 = (zeros(1, 3) + .5) .* spacing + origin;
-        corner111 = (siz + .5) .* spacing + origin;
-        extent = [corner000 ; corner111];
-        extent = extent(:)';
+        extent = stackExtent(this.imageSize, spacing, origin);
         
         % setup display
         axis equal;
@@ -1662,7 +1659,7 @@ methods
         elseif strcmp(this.imageType, 'vector')
             data = zeros(this.imageSize);
             for i = 1:size(this.imageData, 3)
-                data = data + squeeze(this.imageData(:,:,i,:)).^2;
+                data = data + squeeze(this.imageData(:,:,i,:)) .^ 2;
             end
             data = sqrt(data);
         end

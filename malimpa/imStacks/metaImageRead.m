@@ -108,8 +108,8 @@ if ischar(info.ElementDataFile)
         error(['Unable to open data file: ' info.ElementDataFile]);
     end
 
-    % skip header
-    fread(f, info.HeaderSize, ['*' pixelType]);
+    % skip header (defined as number of bytes)
+    fread(f, info.HeaderSize, 'uint8');
 
     % read binary data
     img(:) = fread(f, prod(dims), ['*' pixelType], byteOrder);

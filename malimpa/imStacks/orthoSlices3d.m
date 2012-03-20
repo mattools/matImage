@@ -20,9 +20,9 @@ function varargout = orthoSlices3d(img, varargin)
 %   adjusted such that min value correspond to black (value 0), and max
 %   value correspond to white (value 255).
 %
-%   orthoSlices3d(..., 'lut', LUT)
-%   Specifies the lut to display the data with. LUT should be a 255-by-3
-%   array.
+%   orthoSlices3d(..., 'ColorMap', MAP)
+%   Specifies the colormap to display the data with. MAP should be a
+%   255-by-3 array.
 %
 %   Examples
 %   % Display MRI head using three 3D orthogonal slices
@@ -88,7 +88,7 @@ while length(varargin) > 1
         case 'displayrange'
             options = [options {'DisplayRange', varargin{2}}]; %#ok<AGROW>
         case {'colormap', 'lut'}
-            options = [options {'LUT', varargin{2}}]; %#ok<AGROW>
+            options = [options {'ColorMap', varargin{2}}]; %#ok<AGROW>
         otherwise
             error(['Unknown parameter: ' param]);
     end

@@ -1617,6 +1617,7 @@ methods
         % compute display settings
         pos = ceil(this.imageSize / 2);
         spacing = this.voxelSize;
+        origin  = this.voxelOrigin;
         
         % determine the LUT to use (default is empty)
         ortholut = [];
@@ -1627,11 +1628,19 @@ methods
         % create figure with 3 orthogonal slices in 3D
         figure();
         orthoSlices3d(this.imageData, pos, spacing, ...
-            'displayRange', this.displayRange, 'LUT', ortholut);
+            'displayRange', this.displayRange, 'ColorMap', ortholut);
         
-        % add few settings
+        % compute display extent (add a 0.5 limit around each voxel)
+        corner000 = (zeros(1, 3) + .5) .* spacing + origin;
+        corner111 = (siz + .5) .* spacing + origin;
+        extent = [corner000 ; corner111];
+        extent = extent(:)';
+        
+        % setup display
         axis equal;
+        axis(extent);
         view(3);
+
         axis(stackExtent(this.imageData));
     end
 

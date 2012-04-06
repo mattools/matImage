@@ -357,22 +357,14 @@ methods
         dcm = diag([this.voxelSize 1]);
         dcm(1:3, 4) = this.voxelOrigin;
         
-
-        s = dcm(1:3, dim);
+        sliceNormal = dcm(1:3, [4 dim])';
 
         % Project start ray on slice-axis
-        a = this.startRay(1, :)';
-        b = this.startRay(2, :)';
-
-        alphabeta = computeAlphaBeta(this, a, b, s);
-        alphastart = alphabeta(1);
+        alphastart = posProjRayOnRay(this, this.startRay, sliceNormal);
 
         % Project current ray on slice-axis
         currentRay = get(gca, 'CurrentPoint');
-        a = currentRay(1, :)';
-        b = currentRay(2, :)';
-        alphabeta = computeAlphaBeta(this, a, b, s);
-        alphanow = alphabeta(1);
+        alphanow = posProjRayOnRay(this, currentRay, sliceNormal);
 
         % compute difference in positions
         slicediff = alphanow - alphastart;
@@ -431,8 +423,22 @@ methods
         alphabeta = pinv([s'*s -s'*dab ; dab'*s -dab'*dab]) * [s'*a dab'*a]';
     end
 
+    function pos = posProjRayOnRay(this, ray1, ray2) %#ok<MANU>
+        % ray1 and ray2 given as 2-by-3 arrays
+        
+        u = ray1(2,:) - ray1(1,:);
+        v = ray2(2,:) - ray2(1,:);
+        w = ray1(1,:) - ray2(1,:);
+        
+        a = dot(u, u, 2);
+        b = dot(u, v, 2);
+        c = dot(v, v, 2);
+        d = dot(u, w, 2);
+        e = dot(v, w, 2);
+        
+        pos = (a*e - b*d) / (a*c - b^2);
+    end
 end
-
 
 methods
     %% Some methods for image manipulation (should be factorized)

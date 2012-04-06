@@ -274,24 +274,18 @@ end
 % dimension in xyz
 dim = data.dim;
 
-s = data.dcm(1:3, dim);
+% get the ray used for computing slice position
+sliceNormal = data.dcm(1:3, [4 dim])';
 
-% Project start ray on slice-axis
-a = data.startRay(1, :)';
-b = data.startRay(2, :)';
+% position of initial ray
+pos0 = posProjRayOnRay(data.startRay, sliceNormal);
 
-alphabeta = computeAlphaBeta(a, b, s);
-alphastart = alphabeta(1);
-
-% Project current ray on slice-axis
+% position of current ray
 currentRay = get(gca, 'CurrentPoint');
-a = currentRay(1, :)';
-b = currentRay(2, :)';
-alphabeta = computeAlphaBeta(a, b, s);
-alphanow = alphabeta(1);
+pos = posProjRayOnRay(currentRay, sliceNormal);
 
 % compute difference in positions
-slicediff = alphanow - alphastart;
+slicediff = pos - pos0;
 
 index = data.startIndex + round(slicediff);
 index = min(max(1, index), stackSize(data.img, data.dim));
@@ -364,7 +358,7 @@ else
             [zdata xdata] = meshgrid(vz, vx);
 
             ly = 1:imgSize(1);
-            ydata = ones(meshSize)*ly(index);
+            ydata = ones(meshSize) * ly(index);
 
         case 3
             % compute coords of u and v
@@ -373,7 +367,7 @@ else
             [xdata ydata] = meshgrid(vx, vy);
 
             lz = 1:imgSize(3);
-            zdata = ones(meshSize)*lz(index);
+            zdata = ones(meshSize) * lz(index);
 
         otherwise
             error('Unknown stack direction');
@@ -392,7 +386,17 @@ end
 drawnow;
 
 
-function alphabeta = computeAlphaBeta(a, b, s)
-dab = b - a;
-alphabeta = pinv([s'*s -s'*dab ; dab'*s -dab'*dab]) * [s'*a dab'*a]';
+function pos = posProjRayOnRay(ray1, ray2)
+% ray1 and ray2 given as 2-by-3 arrays
 
+u = ray1(2,:) - ray1(1,:);
+v = ray2(2,:) - ray2(1,:);
+w = ray1(1,:) - ray2(1,:);
+
+a = dot(u, u, 2);
+b = dot(u, v, 2);
+c = dot(v, v, 2);
+d = dot(u, w, 2);
+e = dot(v, w, 2);
+
+pos = (a*e - b*d) / (a*c - b^2);

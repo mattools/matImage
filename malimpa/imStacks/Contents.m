@@ -1,8 +1,9 @@
 % IMSTACKS Manipulation and display of 3D images
 % Version 1.1 01-Jul-2011 .
 %
-% GUI
-%   slicer         - Interactive visualization of 3D images
+% Interactive Display
+%   Slicer         - GUI for exploration of 3D images
+%   OrthoSlicer3d  - Display 3D interactive orthoslicer
 %
 % Visualisation
 %   orthoSlices    - Display three orthogonal slices in the same figure
@@ -41,3 +42,4 @@
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 
 %
+

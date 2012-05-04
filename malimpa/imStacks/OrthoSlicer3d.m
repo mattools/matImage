@@ -1,13 +1,37 @@
 classdef OrthoSlicer3d < handle
 %ORTHOSLICER3D Display 3D interactive orthoslicer
 %
-%   output = OrthoSlicer3d(input)
+%   OrthoSlicer3d(IMG)
+%   Displays an interactive 3D orthoslicer of a 3D image. 
+%
+%   OrthoSlicer3d(..., NAME, VALUE)
+%   Specifies one or more display options as name-value parameter pairs.
+%   Available parameter names are:
+%   'position'      the position of the slices intersection point, given in
+%           pixels as a 1-by-3 row vector.
+%   'spacing'       specifies the size of voxel elements. VALUE is a 1-by-3
+%           row vector containing spacing in x, y and z direction.
+%   'origin'        specifies coordinate of first voxel in user space
+%   'displayRange'  the values of min and max gray values to display. The
+%           default behaviour is to use [0 255] for uint8 images, or to
+%           compute bounds such as 95% of the voxels are converted to visible
+%           gray levels for other image types.
+%   'colormap'      the name of the colormap used for displaying grayscale
+%           values. Available values are 'jet', 'hsv', 'gray'...
 %
 %   Example
-%   OrthoSlicer3d
+%   % Explore human brain MRI
+%     metadata = analyze75info('brainMRI.hdr');
+%     I = analyze75read(metadata);
+%     OrthoSlicer3d(I);
+%  
+%   % add some setup
+%     figure;
+%     OrthoSlicer3d(I, 'Position', [60 40 5], 'spacing', [1 1 2.5], ...
+%           'displayRange', [0 90]);
 %
 %   See also
-%
+%   Slicer
 %
 % ------
 % Author: David Legland
@@ -28,7 +52,7 @@ properties
     % extra info for image, such as the result of imfinfo
     imageInfo;
 
-    % the position of the interesction point of the three slices
+    % the position of the intersection point of the three slices
     position;
     
     % extra info for image, such as the result of imfinfo
@@ -115,7 +139,6 @@ methods
         
         parsesInputArguments();
         
-        
 
         % handle to current figure;
         hFig = gcf();
@@ -125,7 +148,7 @@ methods
         hold on;
 
         % display three orthogonal slices
-        
+        pos = this.position;
         this.handles.sliceYZ = createSlice3d(this, 1, pos(1));
         this.handles.sliceXZ = createSlice3d(this, 2, pos(2));
         this.handles.sliceXY = createSlice3d(this, 3, pos(3));
@@ -134,7 +157,6 @@ methods
         set(this.handles.sliceYZ, 'ButtonDownFcn', @this.startDragging);
         set(this.handles.sliceXZ, 'ButtonDownFcn', @this.startDragging);
         set(this.handles.sliceXY, 'ButtonDownFcn', @this.startDragging);
-        
         
         
         % extract spatial calibration
@@ -172,14 +194,22 @@ methods
                         pos = varargin{2};
                         this.sliceIndex = pos(1);
                         
+                    case 'position'
+                        % setup position of the intersection point (pixels)
+                        this.position = varargin{2};
+                        
+                    % setup of image calibration    
                     case 'spacing'
                         this.voxelSize = varargin{2};
                     case 'origin'
                         this.voxelOrigin = varargin{2};
+                        
+                    % setup display calibration
                     case 'displayrange'
                         this.displayRange = varargin{2};
                     case {'colormap', 'lut'}
                         this.lut = varargin{2};
+                        
                     otherwise
                         error(['Unknown parameter name: ' param]);
                 end
@@ -280,9 +310,9 @@ methods
         spacing = this.voxelSize;
         origin = this.voxelOrigin;
         
-        xdata = 0:dim(1) * spacing(1) + origin(1);
-        ydata = 0:dim(2) * spacing(2) + origin(2);
-        zdata = 0:dim(3) * spacing(3) + origin(3);
+        xdata = (0:dim(1)) * spacing(1) + origin(1);
+        ydata = (0:dim(2)) * spacing(2) + origin(2);
+        zdata = (0:dim(3)) * spacing(3) + origin(3);
         
         pos = this.position;
         xPos = xdata(pos(1));

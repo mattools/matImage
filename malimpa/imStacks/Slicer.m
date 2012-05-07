@@ -9,14 +9,14 @@ classdef Slicer < handle
 %   SLICER should work with any kind of 3D images: binary, gray scale
 %   (integer or floating-point) or color RGB.
 %
-%   slicer(IMG)
+%   slicer(IMG);
 %   where IMG is a preloaded M*N*P matrix, opens the slicer GUI,
 %   initialized with image IMG.
 %   User can change current slice with the slider to the left, X and Y
 %   position with the two corresponding sliders, and change the zoom in the
 %   View menu.
 %
-%   Slicer(IMGNAME, ...)
+%   Slicer(IMGNAME, ...);
 %   Load the stack specified by IMGNAME. It can be either a tif bundle, the
 %   first file of a series, or a 3D image stored in one of the medical
 %   image format:
@@ -26,22 +26,33 @@ classdef Slicer < handle
 %   It is also possible to import a raw data file, from the File->Import
 %   menu.
 %
-%   slicer
-%   without argument opens a dialog to read a file (either a set of slices
-%   or a bundle-stack).
+%   Slicer
+%   without argument opens with an empty interface, and allows to open an
+%   image through the menu.
 %
-%   slicer(..., PARAM, VALUE)
+%   Slicer(..., PARAM, VALUE);
 %   Specifies one or more display options as name-value parameter pairs.
 %   Available parameter names are:
+%
 %   * 'slice'       the display uses slice given by VALUE as current slice
+%
 %   * 'name'        gives a name to the image (for display in title bar)
+%
 %   * 'spacing'     specifies the size of voxel elements. VALUE is a 1-by-3
 %         row vector containing spacing in x, y and z direction.
+%
 %   * 'origin'      specifies coordinate of first voxel in user space
+%
+%   * 'unitName'    the name of the unit used for spatial calibration (can
+%         be any string, default is empty).
+%
 %   * 'displayRange' the values of min and max gray values to display. The
 %         default behaviour is to use [0 255] for uint8 images, or to
 %         compute bounds such as 95% of the voxels are converted to visible
 %         gray levels for other image types.
+%
+%   * 'colorMap'    The colormap used for displaying grayscale images
+%         (default is gray).
 %
 %
 %   Example
@@ -93,7 +104,7 @@ properties
     displayRange;
     
     % Look-up table for display of uint8 images
-    lut;
+    colorMap;
     
     % calibraton information for image
     voxelOrigin;
@@ -142,7 +153,7 @@ methods
         end
         
         % initialize to empty LUT
-        this.lut = [];
+        this.colorMap = [];
         
         % parses input arguments
         parsesInputArguments();
@@ -181,14 +192,23 @@ methods
                         pos = varargin{2};
                         this.sliceIndex = pos(1);
                         
+                    % Setup spatial calibration
                     case 'spacing'
                         this.voxelSize = varargin{2};
                     case 'origin'
                         this.voxelOrigin = varargin{2};
+                    case 'unitname'
+                        this.voxelSizeUnit = varargin{2};
+                        
                     case 'name'
                         this.imageName = varargin{2};
+                        
+                    % Setup image display
                     case 'displayrange'
                         this.displayRange = varargin{2};
+                    case 'colormap'
+                        this.colorMap = varargin{2};
+                        
                     otherwise
                         error(['Unknown parameter name: ' param]);
                 end
@@ -335,8 +355,8 @@ methods
             this.displayRange  = [mini maxi];
         end
         
-        % empty lut by default
-        this.lut = [];
+        % empty colorMap by default
+        this.colorMap = [];
         
         % default slice index is in the middle of the stack
         this.sliceIndex = ceil(dim(3) / 2);
@@ -700,8 +720,8 @@ methods
         % for grayscale and vector images, adjust displayrange and LUT
         if ~strcmp(this.imageType, 'color')
             set(this.handles.imageAxis, 'CLim', this.displayRange);
-            if  ~isempty(this.lut)
-                colormap(this.handles.imageAxis, this.lut);
+            if  ~isempty(this.colorMap)
+                colormap(this.handles.imageAxis, this.colorMap);
             end
         end
         
@@ -987,7 +1007,7 @@ methods
         
         % convert inner image data
         newData = uint8(double2rgb(this.imageData, ...
-            this.lut, this.displayRange) * 255);
+            this.colorMap, this.displayRange) * 255);
         createNewSlicer(this, newData, this.imageName);
     end
     
@@ -1276,64 +1296,64 @@ methods
     
     function onSelectLUT(this, hObject, eventdata)
         % Change the LUT of the grayscale image, and refresh the display
-        % lut name is specified by 'UserData' field of hObject
+        % colorMap name is specified by 'UserData' field of hObject
         
         if isempty(this.imageData)
             return;
         end
         
-        lutName = get(hObject, 'UserData');
-        disp(['Change LUT to: ' lutName]);
+        cmapName = get(hObject, 'UserData');
+        disp(['Change LUT to: ' cmapName]);
         
         nGrays = 256;
-        if strmatch(lutName, 'gray')
+        if strmatch(cmapName, 'gray')
             % for gray-scale, use an empty LUT
-            this.lut = [];
+            this.colorMap = [];
             
-        elseif strmatch(lutName, 'inverted')
-            this.lut = repmat((255:-1:0)', 1, 3) / 255;
+        elseif strmatch(cmapName, 'inverted')
+            this.colorMap = repmat((255:-1:0)', 1, 3) / 255;
             
-        elseif strmatch(lutName, 'blue-gray-red')
-            this.lut = gray(nGrays);
-            this.lut(1,:) = [0 0 1];
-            this.lut(end,:) = [1 0 0];
+        elseif strmatch(cmapName, 'blue-gray-red')
+            this.colorMap = gray(nGrays);
+            this.colorMap(1,:) = [0 0 1];
+            this.colorMap(end,:) = [1 0 0];
             
-        elseif strmatch(lutName, 'colorcube')
+        elseif strmatch(cmapName, 'colorcube')
             nLabels = round(max(this.imageData(:)));
             map = colorcube(double(nLabels)+2);
             % remove black and white colors
             isValidColor = sum(map==0, 2) ~= 3 & sum(map==1, 2) ~= 3;
-            this.lut = [0 0 0; map(isValidColor, :)];
+            this.colorMap = [0 0 0; map(isValidColor, :)];
             
-        elseif strmatch(lutName, 'redLUT')
-            this.lut = gray(nGrays);
-            this.lut(:, 2:3) = 0;
+        elseif strmatch(cmapName, 'redLUT')
+            this.colorMap = gray(nGrays);
+            this.colorMap(:, 2:3) = 0;
             
-        elseif strmatch(lutName, 'greenLUT')
-            this.lut = gray(nGrays);
-            this.lut(:, [1 3]) = 0;
+        elseif strmatch(cmapName, 'greenLUT')
+            this.colorMap = gray(nGrays);
+            this.colorMap(:, [1 3]) = 0;
             
-        elseif strmatch(lutName, 'blueLUT')
-            this.lut = gray(nGrays);
-            this.lut(:, 1:2) = 0;
+        elseif strmatch(cmapName, 'blueLUT')
+            this.colorMap = gray(nGrays);
+            this.colorMap(:, 1:2) = 0;
             
-        elseif strmatch(lutName, 'yellowLUT')
-            this.lut = gray(nGrays);
-            this.lut(:, 3) = 0;
+        elseif strmatch(cmapName, 'yellowLUT')
+            this.colorMap = gray(nGrays);
+            this.colorMap(:, 3) = 0;
             
-        elseif strmatch(lutName, 'cyanLUT')
-            this.lut = gray(nGrays);
-            this.lut(:, 1) = 0;
+        elseif strmatch(cmapName, 'cyanLUT')
+            this.colorMap = gray(nGrays);
+            this.colorMap(:, 1) = 0;
             
-        elseif strmatch(lutName, 'magentaLUT')
-            this.lut = gray(nGrays);
-            this.lut(:, 2) = 0;
+        elseif strmatch(cmapName, 'magentaLUT')
+            this.colorMap = gray(nGrays);
+            this.colorMap(:, 2) = 0;
             
         else
-            this.lut = feval(lutName, nGrays);
+            this.colorMap = feval(cmapName, nGrays);
         end
         
-        colormap(this.handles.imageAxis, this.lut);
+        colormap(this.handles.imageAxis, this.colorMap);
     end
     
     function onShowOrthoPlanes(this, varargin)
@@ -1348,8 +1368,8 @@ methods
         
         % determine the LUT to use (default is empty)
         ortholut = [];
-        if ~isColorStack(this.imageData) && ~isempty(this.lut)
-            ortholut = this.lut;
+        if ~isColorStack(this.imageData) && ~isempty(this.colorMap)
+            ortholut = this.colorMap;
         end
         
         % create figure with 3 orthogonal slices
@@ -1371,8 +1391,8 @@ methods
         
         % determine the LUT to use (default is empty)
         ortholut = [];
-        if ~isColorStack(this.imageData) && ~isempty(this.lut)
-            ortholut = this.lut;
+        if ~isColorStack(this.imageData) && ~isempty(this.colorMap)
+            ortholut = this.colorMap;
         end
         
         % create figure with 3 orthogonal slices in 3D
@@ -1419,16 +1439,16 @@ methods
         data = uint8(255 * (data - range(1)) / (range(2) - range(1)));
         
         % eventually apply a LUT
-        if ~isempty(this.lut)
-            lutMax = max(this.lut(:));
+        if ~isempty(this.colorMap)
+            lutMax = max(this.colorMap(:));
             dim = this.imageSize;
             rgb = zeros([dim(2) dim(1) 3 dim(3)], 'uint8');
             
             % compute each channel
-            for c = 1 : size(this.lut, 2)
+            for c = 1 : size(this.colorMap, 2)
                 res = zeros(size(data));
-                for i = 0:size(this.lut, 1)-1
-                    res(data == i) = this.lut(i+1, c);
+                for i = 0:size(this.colorMap, 1)-1
+                    res(data == i) = this.colorMap(i+1, c);
                 end
                 rgb(:,:,c,:) = uint8(res * 255 / lutMax);
             end

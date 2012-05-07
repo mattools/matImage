@@ -1007,7 +1007,7 @@ methods
         
         % convert inner image data
         newData = uint8(double2rgb(this.imageData, ...
-            this.colorMap, this.displayRange) * 255);
+            this.colorMap, this.displayRange, [1 1 1]) * 255);
         createNewSlicer(this, newData, this.imageName);
     end
     
@@ -1389,16 +1389,17 @@ methods
         spacing = this.voxelSize;
         origin  = this.voxelOrigin;
         
-        % determine the LUT to use (default is empty)
-        ortholut = [];
+        % determine the color map to use (default is empty)
+        cmap = [];
         if ~isColorStack(this.imageData) && ~isempty(this.colorMap)
-            ortholut = this.colorMap;
+            cmap = this.colorMap;
         end
         
         % create figure with 3 orthogonal slices in 3D
         figure();
-        orthoSlices3d(this.imageData, pos, spacing, ...
-            'displayRange', this.displayRange, 'ColorMap', ortholut);
+        OrthoSlicer3d(this.imageData, 'Position', pos, ...
+            'Origin', origin, 'Spacing', spacing, ...
+            'DisplayRange', this.displayRange, 'ColorMap', cmap);
         
         % compute display extent (add a 0.5 limit around each voxel)
         extent = stackExtent(this.imageSize, spacing, origin);
@@ -1407,8 +1408,6 @@ methods
         axis equal;
         axis(extent);
         view(3);
-
-        axis(stackExtent(this.imageData));
     end
 
     function rgb = createRGBImage(this)

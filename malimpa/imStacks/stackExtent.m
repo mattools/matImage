@@ -7,17 +7,20 @@ function extent = stackExtent(img, varargin)
 %
 %   BOX = stackExtent(IMG, SPACING)
 %   Computes the extent by taking into account the resolution of the image.
+%   The resolution is given in X-Y-Z order (ie., SPACING(1) corresponds to
+%   the resolution of the second dimension of IMG).
 %
 %   BOX = stackExtent(IMG, SPACING, ORIGIN)
 %   Also takes into account the stack origin, i.e. the coordinates of the
 %   first voxel expressed in user coordinates.
+%   The origin is given in X-Y-Z order.
 %
 %   BOX = stackExtent(IMG, 'spacing', SPACING, 'origin', ORIGIN)
 %   Uses a syntax based on parameter name-value pairs.
 %
 %   BOX = stackExtent(DIM, SPACING, ORIGIN)
 %   Computes the physical extent based on the size of the stack. This
-%   syntax can be used to avoid passing ana rray as parameter. DIM is given
+%   syntax can be used to avoid passing an array as parameter. DIM is given
 %   in X-Y-Z order.
 %
 %

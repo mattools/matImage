@@ -46,13 +46,14 @@ properties
     % type of image. Can be one of {'grayscale', 'color', 'vector'}
     imageType;
     
-    % physical size of the reference image (1-by-3 row vector)
+    % physical size of the reference image (1-by-3 row vector, in xyz order) 
     imageSize;
     
     % extra info for image, such as the result of imfinfo
     imageInfo;
 
-    % the position of the intersection point of the three slices
+    % the position of the intersection point of the three slices, as index
+    % in xyz ordering
     position;
     
     % extra info for image, such as the result of imfinfo
@@ -180,8 +181,31 @@ methods
             [xPos xPos], [yPos yPos], box(5:6), ...
             'color', 'r');
 
+        % show frames around each slice
+        xmin = box(1);
+        xmax = box(2);
+        ymin = box(3);
+        ymax = box(4);
+        zmin = box(5);
+        zmax = box(6);
+        this.handles.frameXY = line(...
+            [xmin xmin xmax xmax xmin], ...
+            [ymin ymax ymax ymin ymin], ...
+            [zPos zPos zPos zPos zPos], ...
+            'color', 'k');
+        this.handles.frameXZ = line(...
+            [xmin xmin xmax xmax xmin], ...
+            [yPos yPos yPos yPos yPos], ...
+            [zmin zmax zmax zmin zmin], ...
+            'color', 'k');
+        this.handles.frameYZ = line(...
+            [xPos xPos xPos xPos xPos], ...
+            [ymin ymin ymax ymax ymin], ...
+            [zmin zmax zmax zmin zmin], ...
+            'color', 'k');
+        
+        % setup display
         view([-20 30]);
-
         axis equal;
  
         function parsesInputArguments()
@@ -281,14 +305,14 @@ methods
         
         % initialize transform matrix from index coords to physical coords
         dcm = diag([this.voxelSize 1]);
-        dcm(1:3, 4) = this.voxelOrigin;
+        %dcm(4, 1:3) = this.voxelOrigin;
         
         % transform coordinates from image reference to spatial reference
         hdata = ones(1, numel(xdata));
         trans = dcm(1:3, :) * [xdata(:)'; ydata(:)'; zdata(:)'; hdata];
-        xdata(:) = trans(1,:);
-        ydata(:) = trans(2,:);
-        zdata(:) = trans(3,:);
+        xdata(:) = trans(1,:) + this.voxelOrigin(1);
+        ydata(:) = trans(2,:) + this.voxelOrigin(2);
+        zdata(:) = trans(3,:) + this.voxelOrigin(3);
 
 
         % global parameters for surface display
@@ -320,14 +344,34 @@ methods
         zPos = zdata(pos(3));
         
         % show orthogonal lines
-        set(this.handles.lineX, 'ydata', [yPos yPos])
+        set(this.handles.lineX, 'ydata', [yPos yPos]);
         set(this.handles.lineX, 'zdata', [zPos zPos]);
-        set(this.handles.lineY, 'xdata', [xPos xPos])
+        set(this.handles.lineY, 'xdata', [xPos xPos]);
         set(this.handles.lineY, 'zdata', [zPos zPos]);
-        set(this.handles.lineZ, 'xdata', [xPos xPos])
-        set(this.handles.lineZ, 'ydata', [yPos yPos])
+        set(this.handles.lineZ, 'xdata', [xPos xPos]);
+        set(this.handles.lineZ, 'ydata', [yPos yPos]);
     end
 
+    function updateFramesPosition(this)
+        dim = this.imageSize;
+        spacing = this.voxelSize;
+        origin = this.voxelOrigin;
+        
+        xdata = (0:dim(1)) * spacing(1) + origin(1);
+        ydata = (0:dim(2)) * spacing(2) + origin(2);
+        zdata = (0:dim(3)) * spacing(3) + origin(3);
+        
+        pos = this.position;
+        xPos = xdata(pos(1));
+        yPos = ydata(pos(2));
+        zPos = zdata(pos(3));
+
+        set(this.handles.frameXY, 'zdata', repmat(zPos, 1, 5));
+        set(this.handles.frameXZ, 'ydata', repmat(yPos, 1, 5));
+        set(this.handles.frameYZ, 'xdata', repmat(xPos, 1, 5));
+
+    end
+    
     function startDragging(this, src, event) %#ok<INUSD>
         %STARTDRAGGING  One-line description here, please.
         %
@@ -383,11 +427,13 @@ methods
         % dimension in xyz
         dim = data.dim;
 
+        
         % initialize transform matrix from index coords to physical coords
         dcm = diag([this.voxelSize 1]);
-        dcm(1:3, 4) = this.voxelOrigin;
         
-        sliceNormal = dcm(1:3, [4 dim])';
+        % compute the ray corresponding to current slice normal
+        center = (this.position .* this.voxelSize) + this.voxelOrigin;
+        sliceNormal = [center; center+dcm(1:3, dim)'];
 
         % Project start ray on slice-axis
         alphastart = posProjRayOnRay(this, this.startRay, sliceNormal);
@@ -444,6 +490,7 @@ methods
 
         % update display
         updateLinesPosition(this);
+        updateFramesPosition(this);
         drawnow;
     end
 

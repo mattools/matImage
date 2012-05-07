@@ -12,8 +12,9 @@ function res = imGeodesicPropagation(img, varargin)
 %   imChamferDistance for further details.
 %
 %   Note:
-%   As the algorithm propagates geodesic distances from each foreground
-%   pixel, the computation time may be expensive.
+%   * As the algorithm propagates geodesic distances from each foreground
+%       pixel, the computation time may be expensive.
+%   * the function is defined for both 2D and 3D images
 %
 %
 %   Example 
@@ -28,7 +29,7 @@ function res = imGeodesicPropagation(img, varargin)
 %     % Compute geodesic propagation in a set of particles
 %     prop = zeros(size(img));
 %     lbl = bwlabel(img);
-%     for i=1:max(lbl(:))
+%     for i = 1:max(lbl(:))
 %         prop = max(prop, imGeodesicPropagation(lbl==i));
 %     end
 %     imagesc(prop);
@@ -44,20 +45,42 @@ function res = imGeodesicPropagation(img, varargin)
 % Copyright 2009 INRA - Cepia Software Platform.
 % Licensed under the terms of the LGPL, see the file "license.txt"
 
-img = img>0;
+img = img > 0;
 res = zeros(size(img));
 
 dim = size(img);
-for i=1:dim(1)
-    for j=1:dim(2)
-        if ~img(i,j)
-            continue;
+if length(dim) == 2
+    for i = 1:dim(1)
+        for j = 1:dim(2)
+            if ~img(i,j)
+                continue;
+            end
+            
+            marker = false(size(img));
+            marker(i, j) = true;
+            
+            dist = imChamferDistance(img, marker, varargin{:});
+            res(i, j) = max(dist(img));
         end
-        
-        marker = false(size(img));
-        marker(i,j) = true;
-        
-        dist = imChamferDistance(img, marker, varargin{:});
-        res(i,j) = max(dist(img));
     end
+    
+elseif length(dim) == 3
+    for k = 1:dim(3)
+        for j = 1:dim(2)
+            for i = 1:dim(1)
+                if ~img(i,j,k)
+                    continue;
+                end
+                
+                marker = false(size(img));
+                marker(i, j, k) = true;
+                
+                dist = imChamferDistance3d(img, marker, varargin{:});
+                res(i, j, k) = max(dist(img));
+            end
+        end
+    end
+
+else
+    error('Requires a 2D or a 3D image');
 end

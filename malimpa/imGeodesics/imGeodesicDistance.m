@@ -2,6 +2,10 @@ function [res labels1 labels2] = imGeodesicDistance(mask, marker1, marker2, vara
 %IMGEODESICDISTANCE Compute geodesic distance between 2 markers
 %
 %   RES = imGeodesicDistance(MASK, MARKER1, MARKER2);
+%   Computes the geodesic distance between 2 markers with respect to the
+%   given mask.
+%   The function is defined for both 2D and 3D images
+%
 %
 %   Example
 %   mask = [...
@@ -24,7 +28,7 @@ function [res labels1 labels2] = imGeodesicDistance(mask, marker1, marker2, vara
 %       10
 %
 %   See also
-%   imGeodesics, imChamferDistance
+%   imGeodesics, imChamferDistance, imChamferDistance3d
 %
 % ------
 % Author: David Legland
@@ -50,11 +54,20 @@ N2 = length(labels2);
 res = zeros(N1, N2);
 
 % iterate on labels of first marker image
-for i=1:N1
-    dist = imChamferDistance(mask, marker1==labels1(i), varargin{:});
-    
-    for j=1:N2
-        res(i, j) = min(dist(marker2==labels2(j)));
+if ndims(mask) == 2
+    for i = 1:N1
+        dist = imChamferDistance(mask, marker1==labels1(i), varargin{:});
+
+        for j = 1:N2
+            res(i, j) = min(dist(marker2 == labels2(j)));
+        end
+    end
+else
+    for i = 1:N1
+        dist = imChamferDistance3d(mask, marker1==labels1(i), varargin{:});
+
+        for j = 1:N2
+            res(i, j) = min(dist(marker2 == labels2(j)));
+        end
     end
 end
-

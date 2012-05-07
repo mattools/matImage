@@ -8,6 +8,11 @@ function [bin value] = imOtsuThreshold(img, varargin)
 %   [BIN VALUE] = imOtsuThreshold(IMG)
 %   Also returns the threshold value.
 %
+%   ... = imOtsuThreshold(IMG, ROI)
+%   Computes Otsu threshold using pixels in the given Region of interest.
+%   ROI is a binary image the same size as the input image.
+%   
+%
 %   Example
 %   % Compute 
 %     img = imread('coins.png');
@@ -15,8 +20,12 @@ function [bin value] = imOtsuThreshold(img, varargin)
 %     bin = imOtsuThreshold(img);
 %     figure; imshow(bin);
 %
-%   See also
+%   Note
+%   Only implemented for grayscale image coded on uint8.
 %
+%
+%   See also
+%   imHistogram
 %
 % ------
 % Author: David Legland

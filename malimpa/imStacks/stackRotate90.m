@@ -29,7 +29,7 @@ function [img permInds flipInds] = stackRotate90(img, axis, varargin)
 %     title('slice of rotated image');
 %
 %   See also
-%   stacks, rotateStack90
+%   imStacks, rotateStack90
 %
 % ------
 % Author: David Legland

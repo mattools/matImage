@@ -2,11 +2,11 @@
 % Version 1.1 01-Jul-2011 .
 %
 % Interactive Display
-%   Slicer         - GUI for exploration of 3D images
+%   Slicer         - GUI for exploration of 3D images, using Object Oriented Programming
 %   OrthoSlicer3d  - Display 3D interactive orthoslicer
-%
-% Visualisation
 %   orthoSlices    - Display three orthogonal slices in the same figure
+%
+% Visualisation routines
 %   orthoSlices3d  - Show three orthogonal slices of a 3D image
 %   slice3d        - Show a moving 3D slice of an image
 %   showXSlice     - Show YZ slice of a 3D image
@@ -31,8 +31,9 @@
 % Manipulation of 3D images
 %   createRGBStack - Concatenate 2 or 3 grayscale stacks to form a color stack
 %   stackSlice     - Extract a planar slice from a 3D image
-%   rotateStack90  - Rotate a 3D image by 90 degrees around one image axis
 %   stackRotate90  - Rotate a 3D image by 90 degrees around one image axis
+%   rotateStack90  - Rotate a 3D image by 90 degrees around one image axis
+%   flipStack      - Flip a 3D image along specified X, Y, or Z dimension
 %
 % -----
 % Author: David Legland

@@ -43,7 +43,6 @@ function res = imGeodesicPropagation(img, varargin)
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2009-05-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 img = img > 0;
 res = zeros(size(img));

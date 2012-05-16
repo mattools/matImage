@@ -89,7 +89,6 @@ function dist = imChamferDistance(img, varargin)
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2009-05-19,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 %   HISTORY
 %   2010.08.25 fix memory allocation for large images, add vebosity option

@@ -26,7 +26,6 @@ function center = imGeodesicCenter(img, varargin)
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2009-05-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 propag = imGeodesicPropagation(img, varargin{:});
 minVal = min(propag(img));

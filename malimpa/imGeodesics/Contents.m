@@ -47,7 +47,6 @@
 % created:  2011-04-01.
 % Copyright INRA - Cepia Software Platform.
 % http://www.pfl-cepia.inra.fr/index.php?page=imGeodesics
-% Licensed under the terms of the BSD License, see the file license.txt
 
 % deprecated
 %   geodesicLength        - Compute geodesic length of particles

@@ -35,7 +35,6 @@ function [res labels1 labels2] = imGeodesicDistance(mask, marker1, marker2, vara
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2009-12-07,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 % ensure mask is binary
 mask = mask > 0;

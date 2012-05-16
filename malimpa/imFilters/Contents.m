@@ -37,14 +37,14 @@
 %   imGetHue            - Extract hue of a color image, using rgb2hsv.
 %   imGray12ToGray8     - Convert a 12 bits gray scale image to 8 bits gray scale
 %
-%   Indexed images:
-%   imLUT               - Apply a look-up table (LUT) to a gray-scale image.
-%   grayFilter          - Compute configuration map of a binary image
-%   grayHist            - Compute frequencies of configurations in binary images
-%   createTile          - Create a binary tile (2x2) from its index
-%   tileIndex           - Return the index of a 2x2 binary tile
-%   createTile3d        - Create a 3D binary tile (2x2x2) from its index
-%   tileIndex3d         - Return the index of a 2x2x2 binary tile
+%   Filters for binary images:
+%   imBoundary          - Compute the boundary image of a binary image
+%   imFillHoles         - Fill holes in a binary image
+%   imSkeleton          - Homothopic skeleton of a binary image 
+%   imChainPixels       - Chain neighbor pixels in an image to form a contour
+%   imConvexImage       - Compute smallest convex image containing the original pixels
+%   imDistance          - Create distance image from a set of points
+%   imDistance3d        - Create distance image from a set of 3D points
 %
 %   Filters for label images:
 %   label2rgb3d         - Convert a 3D label image to a 3D RGB image
@@ -54,12 +54,14 @@
 %   imLabelEdges        - Label edges between adjacent regions of labeled image.
 %   removeBorderRegions - Remove regions on the border of an image
 %
-%   Generate images from binary:
-%   imDistance          - Create distance image from a set of points
-%   imDistance3d        - Create distance image from a set of 3D points
-%   imConvexImage       - Compute smallest convex image containing the original pixels
-%   imBoundary          - Compute the boundary image of a binary image
-%   findContour         - Chain neigbor pixels to form a contour
+%   Indexed images:
+%   imLUT               - Apply a look-up table (LUT) to a gray-scale image.
+%   grayFilter          - Compute configuration map of a binary image
+%   grayHist            - Compute frequencies of configurations in binary images
+%   createTile          - Create a binary tile (2x2) from its index
+%   tileIndex           - Return the index of a 2x2 binary tile
+%   createTile3d        - Create a 3D binary tile (2x2x2) from its index
+%   tileIndex3d         - Return the index of a 2x2x2 binary tile
 %
 %   Structuring elements:
 %   ball                - Generate a ball in a matrix in 2 or 3 dimensions
@@ -88,6 +90,9 @@ help Contents
 %   immean              - Compute mean value in the neighboorhood of each pixel
 %   immedian            - Compute median value in the neighboorhood of each pixel
 %   imRescale           - Rescale gray levels of image to get better dynamic
+%   findContour         - Chain neigbor pixels to form a contour
 
 %   Not supported functions
 %   imMergeCells        - merge labeled cell of an image
+
+%   Other functions

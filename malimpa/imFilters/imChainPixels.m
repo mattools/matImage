@@ -1,38 +1,43 @@
-function varargout = findContour(img, varargin)
-%FINDCONTOUR Chain neigbor pixels to form a contour
+function varargout = imChainPixels(img, varargin)
+%IMCHAINPIXELS Chain neighbor pixels in an image to form a contour
 %
-%   Deprecated: replaced by function 'imChainPixels'
-%
-%   usage:
-%   POINTS = findContour(IMG), or 
-%   [PX, PY] = findContour(IMG)
+%   POINTS = imChainPixels(IMG)
+%   [PX, PY] = imChainPixels(IMG)
 %   returns a list of points, chaining points visible in the image.
 %   IMG shoud be a binary image, containing a single 8-connected loop.
 %
+%   Example
+%     img = imread('circles.png');
+%     img = imFillHoles(img);
+%     bnd = imSkeleton(imBoundary(img));
+%     figure; subplot(1, 3, 1); imshow(img);
+%     subplot(1, 3, 2); imshow(imOverlay(img, bnd));
+%     pts = imChainPixels(bnd);
+%     subplot(1, 3, 3); imshow(img); hold on; 
+%     drawPolygon(pts, 'g', 'linewidth', 2);
+%
 %   See Also
-%   bwboundaries
+%     imFillHoles, imSkeleton, bwboundaries
 %
 %   -----
-%
 %   author: David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 01/11/2003.
 %
 
 %   HISTORY
-%   06/04/2004 add to graph lib, correct x-y ordering, and add doc.
+%   2004-04-06 add to graph lib, correct x-y ordering, and add doc.
+%   2012-05-16 rename from findContour to imChainPixels
 
-warning('malimpa:deprecated', ...
-    '"findContour" is deprecated, use "imChainPixels" instead');
 
 % set to logical
-img = img~=0;
+img = img ~= 0;
 
 % find points in the image
 [pty, ptx] = find(img);
 
 
-% Initialize iteration : first set the initial point
+% Initialize iteration: first set the initial point
 points = zeros(length(ptx), 2);
 x0 = ptx(1);
 y0 = pty(1);

@@ -1,32 +1,7 @@
 function res = imGaussFilter(img, kernelSize, sigma, varargin)
 %IMGAUSSFILTER Apply gaussian filter to an image, using separability
 %
-%   IMGF = imGaussFilter(IMG, SIZE, SIGMA)
-%   IMG is the input image,
-%   SIZE is the size of the convolution kernel, either as a scalar, or as a
-%   1-by-ND row vector containging size in the X, Y, and eventually z
-%   direction.
-%   SIGMA is the width of the kernel, either as a scalar (the same sigma
-%   will be used in each direction), or as a row vector containing sigmax,
-%   sigmay, and eventually sigmaz.
-%
-%   IMGF = imGaussFilter(IMG, SIZE, SIGMA, OPTIONS)
-%   Apply the same kind of options than for imfilter.
-%
-%   The function works for 2D or 3D images, for grayscale or color images.
-%   In case of color images, the filtering is repeated for each channel of
-%   the image.
-%
-%
-%   Example
-%   img = imread('cameraman.tif');
-%   imgf = imGaussFilter(img, 11, 4);
-%   % is equivalent, but is in general faster, that:
-%   imgf2 = imfilter(img, fspecial('gaussian', 11, 4));
-%
-%   Note that there can be slight differences due to rounding effects. To
-%   minimize them, it is possible to use something like:
-%   imgf3 = uint8(imGaussFilter(single(img), 11, 4));
+%   Deprecated. Use imGaussianFilter instead.
 %
 %   See also
 %   gaussianKernel3d, imfilter, fspecial
@@ -40,6 +15,8 @@ function res = imGaussFilter(img, kernelSize, sigma, varargin)
 % Created: 2010-11-09,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
+warning('malimpa:deprecated', ...
+    'imGaussFilter is deprecated, use imGaussianFitler instead');
 
 %% Dispatch processing in case of color images
 

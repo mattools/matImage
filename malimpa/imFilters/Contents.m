@@ -12,12 +12,14 @@
 %   imNeighborhood      - Return the neighborhood of a given pixel
 %
 %   Noise filtering:
-%   imGaussFilter       - Apply gaussian filter to an image, using separability
-%   imDirectionalFilter - Apply and combine several directional filters
 %   imMeanFilter        - Compute mean value in the neighboorhood of each pixel
 %   imMedianFilter      - Compute median value in the neighboorhood of each pixel
+%   imGaussianFilter    - Apply gaussian filter to an image, using separability
+%   imDirectionalFilter - Apply and combine several directional filters
 %
 %   Geometric filters:
+%   imFlip              - Flip an image along one of its dimensions
+%   imRotate90          - Rotate a 3D image by 90 degrees around one image axis
 %   imAddBorder         - Add a border around a 2D or 3D image
 %   imTranspose         - Transpose an image (grayscale or RGB)
 %   subsample           - Subsample an array by applying operation on blocs
@@ -91,6 +93,7 @@ help Contents
 %   immedian            - Compute median value in the neighboorhood of each pixel
 %   imRescale           - Rescale gray levels of image to get better dynamic
 %   findContour         - Chain neigbor pixels to form a contour
+%   imGaussFilter       - Apply gaussian filter to an image, using separability
 
 %   Not supported functions
 %   imMergeCells        - merge labeled cell of an image

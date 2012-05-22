@@ -7,8 +7,12 @@
 %   Some geometrical measures are provided as well, for description of
 %   particles in binary or in label images.
 %
-% Histogram, entropy, mutual information
+% Image investigation
 %   imHistogram                - Histogram of 2D/3D grayscale or color images
+%   imLineProfile              - Evaluate image value along a line segment
+%   imEvaluate                 - Evaluate image value at given position(s)
+%
+% Entropy and mutual information
 %   imJointHistogram           - Compute joint histogram of two images
 %   imEntropy                  - Compute entropy of an image
 %   imJointEntropy             - Joint entropy between two images
@@ -55,7 +59,6 @@
 %
 % Other
 %   imRAG                      - Region adjacency graph of a labeled image
-%   findContour                - return chain of points making a contour
 %
 %
 % -----

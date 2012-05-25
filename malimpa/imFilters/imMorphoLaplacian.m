@@ -17,7 +17,7 @@ function res = imMorphoLaplacian(img, se)
 %   imshow(grad, []);
 %
 %   See also
-%   imdilate, imerode, imsubtract, rangefilt
+%   imdilate, imerode, imsubtract, rangefilt, imLaplacian
 %   imMorphoGradient
 %
 % ------

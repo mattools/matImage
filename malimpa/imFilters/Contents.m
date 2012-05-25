@@ -4,6 +4,7 @@
 %   Generic filters:
 %   imAdjustDynamic     - Rescale gray levels of image to get better dynamic
 %   imGradient          - Compute gradient magnitude in a grayscale image
+%   imLaplacian         - Discrete Laplacian of an image
 %   imMorphoGradient    - Morphological gradient of an image
 %   imMorphoLaplacian   - Morphological laplacian of an image
 %   imrecerode          - Perform a morphological reconstruction by erosion
@@ -24,7 +25,6 @@
 %   imTranspose         - Transpose an image (grayscale or RGB)
 %   subsample           - Subsample an array by applying operation on blocs
 %   subsamplergb        - Return a sub-sampled version of an rgb image.
-%   imCheckerBoard      - Create a checkerboard image from 2 images
 %
 %   Segmentation filters:
 %   imOtsuThreshold     - Threshold an image using Otsu method
@@ -74,6 +74,7 @@
 %
 %   Utilities
 %   createImage         - Create a new image with given size and type
+%   imCheckerBoard      - Create a checkerboard image from 2 images
 %   imDrawLine          - Draw a line between two points in the image
 %
 % -----

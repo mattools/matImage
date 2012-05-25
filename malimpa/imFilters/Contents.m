@@ -48,13 +48,13 @@
 %   imDistance          - Create distance image from a set of points
 %   imDistance3d        - Create distance image from a set of 3D points
 %
-%   Filters for label images:
+%   Filters for binary/label images:
 %   label2rgb3d         - Convert a 3D label image to a 3D RGB image
+%   imKillBorders       - Remove regions on the border of an image
 %   imMergeLabels       - Merge regions in a labeled image
 %   mergeRegions        - Merge regions of labeled image, using inclusion criteria
 %   imBoundaryIndices   - Find indices of boundary between 2 cells
 %   imLabelEdges        - Label edges between adjacent regions of labeled image.
-%   removeBorderRegions - Remove regions on the border of an image
 %
 %   Indexed images:
 %   imLUT               - Apply a look-up table (LUT) to a gray-scale image.
@@ -94,6 +94,7 @@ help Contents
 %   imRescale           - Rescale gray levels of image to get better dynamic
 %   findContour         - Chain neigbor pixels to form a contour
 %   imGaussFilter       - Apply gaussian filter to an image, using separability
+%   removeBorderRegions - Remove regions on the border of an image
 
 %   Not supported functions
 %   imMergeCells        - merge labeled cell of an image

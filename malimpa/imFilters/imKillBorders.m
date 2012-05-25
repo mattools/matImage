@@ -1,7 +1,7 @@
-function lbl = removeBorderRegions(lbl, varargin)
-%REMOVEBORDERREGIONS Remove regions on the border of an image
+function lbl = imKillBorders(lbl, varargin)
+%IMKILLBORDERS Remove regions on the border of an image
 %
-%   LBL2 = removeBorderRegions(LBL);
+%   LBL2 = imKillBorders(LBL);
 %   LBL is a labeled image, or a binary image. Image can be 2D or 3D.
 %   In the case of binary image, the image is labeled using 4-adjacency for
 %   2D images, or 6-adjacency for 3D images.
@@ -9,7 +9,7 @@ function lbl = removeBorderRegions(lbl, varargin)
 %   remaining regions are re-labeled. Result has the same class than the
 %   original image.
 %
-%   LBL2 = removeBorderRegions(LBL, BORDERS);
+%   LBL2 = imKillBorders(LBL, BORDERS);
 %   Specifies which borders need to be removed. BORDERS is a cell array of
 %   strings, with each string corresponding to a border:
 %   'left':     all pixels with x=1
@@ -21,12 +21,18 @@ function lbl = removeBorderRegions(lbl, varargin)
 %   'front':    all pixels with z=1
 %   'back':     all pixels with z=last
 %
-%   LBL2 = removeBorderRegions(LBL, BORDERS, RELABEL);
+%   LBL2 = imKillBorders(LBL, BORDERS, RELABEL);
 %   where RELABEL is a logical, specifies wheter remaining regions should
 %   be relabeled or not (default is TRUE).
 %
+%   Example
+%     img = imread('rice.png');
+%     bin = imOtsuThreshold(imtophat(img, ones(30, 30)));
+%     bin2 = imKillBorders(bin);
+%     imshow(bin2);
+% 
 %   See also:
-%   bwmorph
+%   bwmorph, imreconstruct
 %
 %   ---------
 %   author : David Legland 
@@ -35,12 +41,13 @@ function lbl = removeBorderRegions(lbl, varargin)
 %
 
 % HISTORY :
-%   19/07/2007: add possibility to specify borders
-%   07/08/2007: relabeling is now optional
-%   01/02/2008: return binImg image if input is binImg
+%   19/07/2007 add possibility to specify borders
+%   07/08/2007 relabeling is now optional
+%   01/02/2008 return binImg image if input is binImg
+%   25/05/2011 rename from removeBorderRegions to imKillBorders, cleanup
 
-warning('malimpa:deprecated', ...
-    'function "removeBorderRegion" has been replaced by "imKillBorders"');
+
+%% Process inputs
 
 % default values
 binImg  = false;
@@ -50,9 +57,9 @@ relabel = true;
 if islogical(lbl)
     binImg = true;
     relabel = false;
-    if ndims(lbl)==2
+    if ndims(lbl) == 2
         lbl = bwlabel(lbl, 4);
-    elseif ndims(lbl)==3
+    elseif ndims(lbl) == 3
         lbl = bwlabeln(lbl, 6);
     end
 end
@@ -64,6 +71,9 @@ if ~isempty(varargin)
         varargin(end) = [];
     end
 end
+
+
+%% Build binary mask
 
 % find borders to remove
 borders = {'top', 'bottom', 'left', 'right'};
@@ -77,64 +87,70 @@ end
 
 % create mask for borders
 mask = false(size(lbl));
-if ndims(lbl)==2
-    for i=1:length(borders)
-        border = borders{i};
-        if strcmp(border, 'left')
-            mask(:,1) = true;
-        elseif strcmp(border, 'right')
-            mask(:,end) = true;
-        elseif strcmp(border, 'top')
-            mask(1,:) = true;
-        elseif strcmp(border, 'bottom')
-            mask(end,:) = true;
+if ndims(lbl) == 2
+    for i = 1:length(borders)
+        switch lower(borders{i})
+            case 'left'
+                mask(:,1) = true;
+            case 'right'
+                mask(:,end) = true;
+            case 'top'
+                mask(1,:) = true;
+            case 'bottom'
+                mask(end,:) = true;
         end
     end
 else
-    for i=1:length(borders)
-        border = borders{i};
-        if strcmp(border, 'left')
-            mask(:,1,:) = true;
-        elseif strcmp(border, 'right')
-            mask(:,end,:) = true;
-        elseif strcmp(border, 'top')
-            mask(1,:,:) = true;
-        elseif strcmp(border, 'bottom')
-            mask(end,:,:) = true;
-        elseif strcmp(border, 'front')
-            mask(:,:,1) = true;
-        elseif strcmp(border, 'back')
-            mask(:,:,end) = true;
+    for i = 1:length(borders)
+        switch lower(borders{i})
+            case 'left'
+                mask(:,1,:) = true;
+            case 'right'
+                mask(:,end,:) = true;
+            case 'top'
+                mask(1,:,:) = true;
+            case 'bottom'
+                mask(end,:,:) = true;
+            case 'front'
+                mask(:,:,1) = true;
+            case 'back'
+                mask(:,:,end) = true;
         end
     end
 end
+
+
+%% Main processing
 
 % find labels of regions touching borders
 lbl2 = unique(lbl(mask));
 
 % remove label '0', which corresponds to background
-if lbl2(1)==0 
+if lbl2(1) == 0 
     lbl2 = lbl2(2:length(lbl2));
 end
 
 % set labels of border regions to 0
 indices = ismember(lbl, lbl2);
-lbl(indices)=0;
+lbl(indices) = 0;
+
+
+%% Optional relabeling
 
 % Eventually relabel remaining regions by shifting labels
 if relabel && ~isempty(lbl2)
     % For remaining regions, shift the labels
-    for i=1:length(lbl2)-1
-        indices = lbl>lbl2(i) & lbl<=lbl2(i+1);
+    for i = 1:length(lbl2)-1
+        indices = lbl > lbl2(i) & lbl <= lbl2(i+1);
         lbl(indices) = imsubtract(lbl(indices), i);
     end
 
     % Shift labels for regions whose index is greater than last index of LBL2.
-    indices = lbl>lbl2(length(lbl2));
+    indices = lbl > lbl2(length(lbl2));
     lbl(indices) = imsubtract(lbl(indices), length(lbl2));
 end
 
 % convert to binImg image if needed
 if binImg
-    lbl = lbl>0;
+    lbl = lbl > 0;
 end

@@ -42,9 +42,9 @@ function dist = imDistance3d(varargin)
 %   29/05/2009 add possibility to specify grid with meshgrid-like syntax
 
 
-%% extract input arguments
-% ---------------------------------------------
+%% Process input arguments
 
+% default values
 dim = [100 100 100];    % size of image
 points = [];            % points array
 N = 20;                 % default number of germs
@@ -56,9 +56,10 @@ if isempty(varargin)
     lx = 1:100;
     ly = 1:100;
     lz = 1:100;
+    
 else
     var = varargin{1};
-    if size(var, 1)>2 && size(var, 2)>2
+    if size(var, 1) > 2 && size(var, 2) > 2
         % case of a 2x3 matrix with starting position, increment, end
         % position for each coordinate
         lx = var(1,1):var(1,2):var(1,3);
@@ -66,21 +67,23 @@ else
         lz = var(3,1):var(3,2):var(3,3);
         varargin(1) = [];
         
-    elseif size(var, 1)==1 && size(var, 2)==3
+    elseif size(var, 1) == 1 && size(var, 2) == 3
         % first argument contains maximal position for each coordinate
-        lx = 1:var(1);
-        ly = 1:var(2);
+        lx = 1:var(2);
+        ly = 1:var(1);
         lz = 1:var(3);
         varargin(1) = [];
-    elseif length(varargin)>2
+        
+    elseif length(varargin) > 2
         % first and second arguments contain vector for each coordinate
         % respectively
         lx = varargin{1};
         ly = varargin{2};
         lz = varargin{3};
         varargin(1:3) = [];
+        
     else
-        error('wrong arguments in imDistance');
+        error('wrong input arguments in imDistance');
     end
 end
 
@@ -105,17 +108,16 @@ end
 
 
 
-%% initialisations
-% ---------------------------------------------
+%% Initialisations
 
 % create array of points, if does not exist
 if isempty(points)
     % generation of germs array
     points = zeros(N, 3);
-    for i=1:N
-        points(i,1) = rand*lx(end) + lx(1);
-        points(i,2) = rand*ly(end) + ly(1);
-        points(i,3) = rand*lz(end) + lz(1);
+    for i = 1:N
+        points(i,1) = rand * (lx(end) - lx(1)) + lx(1);
+        points(i,2) = rand * (ly(end) - ly(1)) + ly(1);
+        points(i,3) = rand * (lz(end) - lz(1)) + lz(1);
     end                        
 end
 
@@ -123,19 +125,19 @@ end
 if strcmp(edgecond, 'periodic')
     N = size(points, 1);
     points = repmat(points, [9 1]);
-    for i=[1 2 3]
+    for i = [1 2 3]
         points((i-1)*N+1:i*N, 1) = points((i-1)*N+1:i*N, 1) - dim(1);
     end
 
-    for i=[7 8 9]
+    for i = [7 8 9]
         points((i-1)*N+1:i*N, 1) = points((i-1)*N+1:i*N, 1) + dim(1);
     end
 
-    for i=[1 4 7]
+    for i = [1 4 7]
         points((i-1)*N+1:i*N, 2) = points((i-1)*N+1:i*N, 2) - dim(2);
     end
 
-    for i=[3 6 9]
+    for i = [3 6 9]
         points((i-1)*N+1:i*N, 2) = points((i-1)*N+1:i*N, 2) + dim(2);
     end    
 end
@@ -143,14 +145,7 @@ end
 N = size(points, 1);
 
 
-%% Main algorithm
-% ---------------------------------------------
-% - first create distance function: each pixel get the distance to the
-%   closest point
-% - then perform watershed  
-
-
-% generation of distance function
+%% Generation of distance function
 
 % size in each direction
 Nx = length(lx);
@@ -158,16 +153,18 @@ Ny = length(ly);
 Nz = length(lz);
 
 % fill with default high value
-dist = Nx*Ny*Nz*ones([Ny Nx Nz]);
+dist = Nx * Ny * Nz * ones([Ny Nx Nz]);
 
 % update with distance to closest point
-for p=1:N
+for p = 1:N
     dx = repmat(reshape(lx-points(p, 1), [1 Nx 1]), [Ny 1 Nz]);  
     dy = repmat(reshape(ly-points(p, 2), [Ny 1 1]), [1 Nx Nz]);  
     dz = repmat(reshape(lz-points(p, 3), [1 1 Nz]), [Ny Nx 1]);
     dist = min(dist, hypot(dx, hypot(dy, dz)));
 end
 
+
+%% Optional processing for borders
 
 % distance from borders of image
 if strcmp(edgecond, 'remove')

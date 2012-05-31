@@ -20,19 +20,19 @@ initTestSuite;
 function test_Simple %#ok<*DEFNU>
 % Test with image dimension and points coords
 dim = [10 15];
-img = imDistance([10 15], [2 3;5 8;3 6]);
-assertEqual(dim([2 1]), size(img));
+img = imDistance(dim, [2 3;5 8;3 6]);
+assertEqual(dim, size(img));
 
 function test_PeriodicEdge
 % Test with image dimension and points coords
 dim = [10 15];
-img = imDistance([10 15], [2 3;5 8;3 6], 'periodic');
-assertEqual(dim([2 1]), size(img));
+img = imDistance(dim, [2 3;5 8;3 6], 'periodic');
+assertEqual(dim, size(img));
 
 
 function test_removeEdge
 % Test with image dimension and points coords
 dim = [100 100];
 img = imDistance(dim, [10 10;10 90;90 10;90 90;50 50], 'remove');
-assertEqual(dim([2 1]), size(img));
+assertEqual(dim, size(img));
 

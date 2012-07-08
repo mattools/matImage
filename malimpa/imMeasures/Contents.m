@@ -21,9 +21,11 @@
 % Particle analysis
 %   imCentroid                 - Centroid of regions in a label image
 %   imBoundingBox              - Bounding box of a binary or label image
-%   imOrientedBox              - Minimum-area oriented bounding box of particles in image
 %   imInertiaEllipse           - Inertia ellipse of a binary or label image
 %   imInertiaEllipsoid         - Inertia ellipsoid of a 3D binary image
+%   imInscribedCircle          - Maximal circle inscribed in a particle
+%   imEnclosingCircle          - Minimal enclosing circle of a particle
+%   imOrientedBox              - Minimum-area oriented bounding box of particles in image
 %   imFeretDiameter            - Feret diameter of a particle(s) for a given direction(s)
 %   imMaxFeretDiameter         - Maximum Feret diameter of a binary or label image
 %   imConvexity                - Convexity of particles in label image

@@ -59,7 +59,7 @@ nLabels = length(labels);
 % allocate memory for result
 rect = zeros(nLabels, 5);
 
-for i=1:nLabels
+for i = 1:nLabels
     % extract points of the current particle
     [y x] = find(img==labels(i));
     

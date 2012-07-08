@@ -48,7 +48,7 @@ nLabels = length(labels);
 % allocate memory for result
 ellipse = zeros(nLabels, 5);
 
-for i=1:nLabels
+for i = 1:nLabels
     % extract points of the current particle
     [y x] = find(img==labels(i));
     
@@ -78,7 +78,7 @@ for i=1:nLabels
     
     % compute ellipse angle and convert into degrees
     theta = atan2(2 * Ixy, Ixx - Iyy) / 2;
-    theta = rad2deg(theta);
+    theta = theta * 180 / pi;
     
     % create the resulting inertia ellipse
     ellipse(i,:) = [xc yc ra rb theta];

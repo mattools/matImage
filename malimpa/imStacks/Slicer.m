@@ -106,7 +106,7 @@ properties
     % Look-up table for display of uint8 images
     colorMap;
     
-    % calibraton information for image
+    % calibration information for image
     voxelOrigin;
     voxelSize;
     voxelSizeUnit;
@@ -195,11 +195,19 @@ methods
                     % Setup spatial calibration
                     case 'spacing'
                         this.voxelSize = varargin{2};
+                        if ~this.calibrated
+                            this.voxelOrigin = [0 0 0];
+                        end
+                        this.calibrated = true;
+                        
                     case 'origin'
                         this.voxelOrigin = varargin{2};
+                        this.calibrated = true;
+                        
                     case 'unitname'
                         this.voxelSizeUnit = varargin{2};
-                        
+                        this.calibrated = true;
+                       
                     case 'name'
                         this.imageName = varargin{2};
                         
@@ -2070,8 +2078,46 @@ methods
     
 end
 
-%% Methods fr text display
+%% Methods for text display
 methods
+    function display(this)
+        % display a resume of the slicer structure
+       
+        % determines whether empty lines should be printed or not
+        if strcmp(get(0, 'FormatSpacing'), 'loose')
+            emptyLine = '\n';
+        else
+            emptyLine = '';
+        end
+        
+        % eventually add space
+        fprintf(emptyLine);
+        
+        % get name to display
+        objectname = inputname(1);
+        if isempty(objectname)
+            objectname = 'ans';
+        end
+        
+        % display object name
+        fprintf('%s = \n', objectname);
+        
+        fprintf(emptyLine);
+        
+        fprintf('Slicer object, containing a %d x %d x %d %s image.\n', ...
+            this.imageSize, this.imageType);
+        
+        % calibration information for image
+        if this.calibrated
+            fprintf('  Voxel spacing = [ %g %g %g ] %s\n', ...
+                this.voxelSize, this.voxelSizeUnit');
+            fprintf('  Image origin  = [ %g %g %g ] %s\n', ...
+                this.voxelOrigin, this.voxelSizeUnit');
+        end
+
+        fprintf(emptyLine);
+        
+    end
 end
 
 end

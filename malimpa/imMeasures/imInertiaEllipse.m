@@ -1,4 +1,4 @@
-function [ellipse labels] = imInertiaEllipse(img)
+function [ellipse labels] = imInertiaEllipse(img, varargin)
 %IMINERTIAELLIPSE Inertia ellipse of a binary or label image
 %
 %   ELLI = imInertiaEllipse(IMG)
@@ -14,6 +14,16 @@ function [ellipse labels] = imInertiaEllipse(img)
 %   The same result could be obtained with the regionprops function. The
 %   advantage of using imInertiaEllipse is that equivalent ellipses can be
 %   obtained in one call. Orientation of both functions are not consistent.
+%
+%   ELLI = imInertiaEllipse(IMG, SPACING);
+%   ELLI = imInertiaEllipse(IMG, SPACING, ORIGIN);
+%   Specifies the spatial calibration of image. Both SPACING and ORIGIN are
+%   1-by-2 row vectors. SPACING = [SX SY] contains the size of a pixel.
+%   ORIGIN = [OX OY] contains the center position of the top-left pixel of
+%   image. 
+%   If no calibration is specified, spacing = [1 1] and origin = [1 1] are
+%   used. If only the sapcing is specified, the origin is set to [0 0].
+%
 %
 %   Example
 %   % Draw a commplex particle together with its equivalent ellipse
@@ -39,6 +49,29 @@ function [ellipse labels] = imInertiaEllipse(img)
 % Created: 2011-03-30,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
+%% extract spatial calibration
+
+% default values
+spacing = [1 1];
+origin  = [1 1];
+calib   = false;
+
+% extract spacing
+if ~isempty(varargin)
+    spacing = varargin{1};
+    varargin(1) = [];
+    calib = true;
+    origin = [0 0];
+end
+
+% extract origin
+if ~isempty(varargin)
+    origin = varargin{1};
+end
+
+
+%% Initialisations
+
 % extract the set of labels, and remove label for background
 labels = unique(img(:));
 labels(labels==0) = [];
@@ -48,9 +81,18 @@ nLabels = length(labels);
 % allocate memory for result
 ellipse = zeros(nLabels, 5);
 
+
+%% Extract ellipse corresponding to each label
+
 for i = 1:nLabels
     % extract points of the current particle
     [y x] = find(img==labels(i));
+    
+    % transform to physical space if needed
+    if calib
+        x = (x-1) * spacing(1) + origin(1);
+        y = (y-1) * spacing(2) + origin(2);
+    end
     
     % compute convex hull centroid, that corresponds to approximate
     % location of rectangle center
@@ -67,8 +109,8 @@ for i = 1:nLabels
     % compute inertia parameters. 1/12 is the contribution of a single
     % pixel, then for regions with only one pixel the resulting ellipse has
     % positive radii.
-    Ixx = sum(x.^2) / n + 1/12;
-    Iyy = sum(y.^2) / n + 1/12;
+    Ixx = sum(x.^2) / n + spacing(1)^2/12;
+    Iyy = sum(y.^2) / n + spacing(2)^2/12;
     Ixy = sum(x.*y) / n;
     
     % compute ellipse semi-axis lengths

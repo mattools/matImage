@@ -1,9 +1,19 @@
-function [circle labels] = imEnclosingCircle(img)
+function [circle labels] = imEnclosingCircle(img, varargin)
 %IMENCLOSINGCIRCLE Minimal enclosing circle of a particle
 %
 %   CIRC = imEnclosingCircle(IMG)
 %   Computes the minimal enclosing circle around a binary particle, or
 %   around each labeled particle in the input image.
+%
+%
+%   CIRC = imEnclosingCircle(IMG, SPACING);
+%   CIRC = imEnclosingCircle(IMG, SPACING, ORIGIN);
+%   Specifies the spatial calibration of image. Both SPACING and ORIGIN are
+%   1-by-2 row vectors. SPACING = [SX SY] contains the size of a pixel.
+%   ORIGIN = [OX OY] contains the center position of the top-left pixel of
+%   image. 
+%   If no calibration is specified, spacing = [1 1] and origin = [1 1] are
+%   used. If only the sapcing is specified, the origin is set to [0 0].
 %
 %
 %   Example
@@ -30,6 +40,29 @@ function [circle labels] = imEnclosingCircle(img)
 % Created: 2012-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
+%% extract spatial calibration
+
+% default values
+spacing = [1 1];
+origin  = [1 1];
+calib   = false;
+
+% extract spacing
+if ~isempty(varargin)
+    spacing = varargin{1};
+    varargin(1) = [];
+    calib = true;
+    origin = [0 0];
+end
+
+% extract origin
+if ~isempty(varargin)
+    origin = varargin{1};
+end
+
+
+%% Initialisations
+
 % extract the set of labels, and remove label for background
 labels = unique(img(:));
 labels(labels==0) = [];
@@ -39,10 +72,19 @@ nLabels = length(labels);
 % allocate memory for result
 circle = zeros(nLabels, 3);
 
+
+%% Iterate over labels
+
 for i = 1:nLabels
     % extract points of the current particle
     [y x] = find(img==labels(i));
 
+    % transform to physical space if needed
+    if calib
+        x = (x-1) * spacing(1) + origin(1);
+        y = (y-1) * spacing(2) + origin(2);
+    end
+    
     % works on convex hull (faster), or on original points if the hull
     % could not be computed
     try 

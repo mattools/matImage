@@ -14,27 +14,32 @@ function [fd labels] = imFeretDiameter(img, varargin)
 %   FD = imFeretDiameter(IMG);
 %   Uses a default set of directions for computing Feret diameter.
 %
+%   FD = imFeretDiameter(..., SPACING);
+%   Specifies the spatial calibration of image. SPACING = [SX SY] is a
+%   1-by-2 row vector that contains the size of a pixel. 
+%   Default spacing value is [1 1].
+%
 %   [FD LABELS] = imFeretDiameter(...);
 %   Also returns the set of labels that were considered for measure.
 %
 %   The maximum Feret diameter can be obtained using a max() function. 
 %
 %   Example:
-%   % compute Feret diameter for a discrete square
-%   img = zeros(100, 100, 'uint8');
-%   img(21:80, 21:80) = 1;
-%   theta = linspace(0, 180, 201);
-%   fd = imFeretDiameter(img, theta);
-%   figure(1); clf; set(gca, 'fontsize', 14);
-%   plot(theta, fd); xlim([0 180]);
-%   xlabel('Angle (in degrees)');
-%   ylabel('Diameter (in pixels)');
-%   title('Feret diameter of discrete square');
+%     % compute Feret diameter for a discrete square
+%     img = zeros(100, 100, 'uint8');
+%     img(21:80, 21:80) = 1;
+%     theta = linspace(0, 180, 201);
+%     fd = imFeretDiameter(img, theta);
+%     figure(1); clf; set(gca, 'fontsize', 14);
+%     plot(theta, fd); xlim([0 180]);
+%     xlabel('Angle (in degrees)');
+%     ylabel('Diameter (in pixels)');
+%     title('Feret diameter of discrete square');
 %
 %   % max Feret diameter:
-%   diam = max(fd, [], 2)
-%   ans =
-%       84.4386
+%     diam = max(fd, [], 2)
+%     ans =
+%        84.4386
 %
 %   See also 
 %   imOrientedBox
@@ -48,13 +53,54 @@ function [fd labels] = imFeretDiameter(img, varargin)
 %   HISTORY
 %   2011-02-06 update doc, use convex hull, use degrees instead of radians
 
-% extract orientations
-if isempty(varargin)
-    theta = linspace(0, 180, 32+1);
-    theta = theta(1:end-1);
-else 
-    theta = varargin{1};
+%% Extract number of orientations
+
+theta = 180;
+if ~isempty(varargin)
+    var1 = varargin{1};
+    if isscalar(var1)
+        % Number of directions given as scalar
+        theta = var1;
+        varargin(1) = [];
+        
+    elseif ndims(var1) == 2 && sum(size(var1) ~= [1 2]) ~= 0
+        % direction set given as vector
+        theta = var1;
+        varargin(1) = [];
+    end
 end
+
+
+%% Extract spatial calibration
+
+% default values
+spacing = [1 1];
+origin  = [1 1];
+calib   = false;
+
+% extract spacing
+if ~isempty(varargin)
+    spacing = varargin{1};
+    varargin(1) = [];
+    calib = true;
+    origin = [0 0];
+end
+
+% extract origin
+if ~isempty(varargin)
+    origin = varargin{1};
+end
+
+
+%% Initialisations
+
+% if theta is scalar, create an array of directions (in degrees)
+if isscalar(theta)
+    theta = linspace(0, 180, theta+1);
+    theta = theta(1:end-1);
+end
+nTheta = length(theta);
+
 
 % number of particles
 labels = unique(img(:));
@@ -62,13 +108,19 @@ labels(labels==0) = [];
 nLabels = length(labels);
 
 % allocate memory for result
-fd = zeros(nLabels, numel(theta));
+fd = zeros(nLabels, nTheta);
 
 for i = 1:nLabels
     % extract pixel centroids
     [y x] = find(img==labels(i));
     if isempty(x)
         continue;
+    end
+    
+    % transform to physical space if needed
+    if calib
+        x = (x-1) * spacing(1) + origin(1);
+        y = (y-1) * spacing(2) + origin(2);
     end
     
     % keep only points of the convex hull
@@ -86,7 +138,7 @@ for i = 1:nLabels
     y = y - mean(y);
     
     % iterate over orientations
-    for t = 1:numel(theta)
+    for t = 1:nTheta
         % convert angle to radians, and change sign (to make transformed
         % points aligned along x-axis)
         theta2 = -theta(t) * pi / 180;
@@ -99,7 +151,8 @@ for i = 1:nLabels
         xmax    = max(x2);
         
         % store result (add 1 pixel to consider pixel width)
-        fd(i, t) = xmax - xmin + 1;
+        dl = spacing(1) * abs(cos(theta2)) + spacing(2) * abs(sin(theta2));
+        fd(i, t) = xmax - xmin + dl;
     end
 end
 

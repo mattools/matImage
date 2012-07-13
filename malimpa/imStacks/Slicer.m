@@ -2069,4 +2069,9 @@ methods
     end
     
 end
+
+%% Methods fr text display
+methods
+end
+
 end

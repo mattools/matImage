@@ -77,6 +77,7 @@ origin = [0 0 0];
 % (set to false for the moment, requires further debugging)
 display3d = false;
 
+% default settings for color rendering
 displayRange = [0 255];
 lut = '';
 
@@ -84,6 +85,8 @@ lut = '';
 while length(varargin) > 1
     param = varargin{1};
     switch lower(param)
+        case 'spacing'
+            spacing = varargin{2};
         case 'origin'
             origin = varargin{2};
         case 'displayrange'
@@ -144,7 +147,7 @@ axes('parent', hf, 'units', 'normalized', 'visible', 'off', ...
 hSliceXY = imshow(sliceXY, 'xdata', xdata, 'ydata', ydata);
 
 hLineXYx = line([xdata(1) xdata(end)], [yPos yPos], 'color', 'r');
-hLineXYy = line([xPos xPos], [ydata(1) ydata(end)], 'color', 'r');
+hLineXYy = line([xPos xPos], [ydata(1) ydata(end)], 'color', 'g');
 
 % set up slice data
 data.handle = hSliceXY;
@@ -168,8 +171,8 @@ axes('parent', hf, 'units', 'normalized', 'visible', 'off', ...
     'position', [width1 height2 width2 height1]);
 hSliceZY = imshow(sliceZY, 'xdata', zdata, 'ydata', ydata);
 
-hLineZYz = line([zdata(1) zdata(end)], [yPos yPos], 'color', 'r');
-hLineZYy = line([zPos zPos], [ydata(1) ydata(end)], 'color', 'r');
+hLineZYz = line([zdata(1) zdata(end)], [yPos yPos], 'color', 'b');
+hLineZYy = line([zPos zPos], [ydata(1) ydata(end)], 'color', 'g');
 
 % set up slice data
 data.handle = hSliceZY;
@@ -194,7 +197,7 @@ axes('parent', hf, 'units', 'normalized', 'visible', 'off', ...
 hSliceXZ = imshow(sliceXZ, 'xdata', xdata, 'ydata', zdata);
 
 hLineXZx = line([xdata(1) xdata(end)], [zPos zPos], 'color', 'r');
-hLineXZz = line([xPos xPos], [zdata(1) zdata(end)], 'color', 'r');
+hLineXZz = line([xPos xPos], [zdata(1) zdata(end)], 'color', 'b');
 
 % set up slice data
 data.handle = hSliceXZ;

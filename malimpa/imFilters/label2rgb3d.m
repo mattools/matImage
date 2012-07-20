@@ -25,33 +25,34 @@ function rgb = label2rgb3d(img, varargin)
 %   working...
 %   21/12/2005 add possibility tu specify colormap 
 
-%   note (20/04/2004) : could use ind2rgb, but maybe output need to be
+%   note (20/04/2004): could use ind2rgb, but maybe output need to be
 %   converted, and need to check if faster or not.
 
 N = double(max(img(:)));
 
-% create map
-map = colorcube(N+1);
+% create map (colorcube, with white background)
+map = colorcube(N + 1);
 if ~isempty(varargin)
     var = varargin{1};
-    if size(var, 1)>=N && size(var, 2)==3
+    if size(var, 1) >= N && size(var, 2) == 3
         map = var;
     end
 end
 
-% extract each channel
-r = uint8(zeros(size(img)));
-g = uint8(zeros(size(img)));
-b = uint8(zeros(size(img)));
+bgColor = [1 1 1];
 
-for label=1:N
+% create each channel
+dim = [size(img, 1) size(img, 2) 1 size(img, 3)]; 
+r = ones(dim, 'uint8') * 255 * bgColor(1);
+g = ones(dim, 'uint8') * 255 * bgColor(2);
+b = ones(dim, 'uint8') * 255 * bgColor(3);
+
+for label = 1:N
     ind = find(img==label);
     r(ind) = 255*map(label, 1);
     g(ind) = 255*map(label, 2);
     b(ind) = 255*map(label, 3);
 end
-
+ 
 % build the result 3D color image
-rgb(1:size(img, 1), 1:size(img, 2), 1, 1:size(img, 3)) = r;
-rgb(1:size(img, 1), 1:size(img, 2), 2, 1:size(img, 3)) = g;
-rgb(1:size(img, 1), 1:size(img, 2), 3, 1:size(img, 3)) = b;
+rgb = cat(3, r, g, b);

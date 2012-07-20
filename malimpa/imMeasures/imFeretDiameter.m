@@ -53,6 +53,7 @@ function [fd labels] = imFeretDiameter(img, varargin)
 %   HISTORY
 %   2011-02-06 update doc, use convex hull, use degrees instead of radians
 
+
 %% Extract number of orientations
 
 theta = 180;
@@ -94,13 +95,7 @@ end
 
 %% Initialisations
 
-% if theta is scalar, create an array of directions (in degrees)
-if isscalar(theta)
-    theta = linspace(0, 180, theta+1);
-    theta = theta(1:end-1);
-end
 nTheta = length(theta);
-
 
 % number of particles
 labels = unique(img(:));

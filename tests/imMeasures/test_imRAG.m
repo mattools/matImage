@@ -16,6 +16,20 @@ function test_suite = test_imRAG(varargin) %#ok<STOUT>
 
 initTestSuite;
 
+function testBasic
+
+img = [...
+    1 1 1 0 2 2 ; ...
+    1 1 1 0 2 2 ; ...
+    0 0 0 0 2 2 ; ...
+    3 3 0 0 0 0 ; ...
+    3 3 0 4 4 4 ; ...
+    3 3 0 4 4 4 ];
+exp = [1 2;1 3;2 4;3 4];
+rag = imRAG(img);
+assertEqual(exp, rag);
+
+
 function testWithInnerRegion %#ok<*DEFNU>
 
 img = zeros(9, 9);
@@ -52,12 +66,12 @@ function testThreeD
 img = zeros(9,9,9);
 l1 = 1:4; l2 = 6:9;
 img(l1, l1, l1) = 1;
-img(l1, l1, l2) = 2;
-img(l1, l2, l1) = 3;
-img(l1, l2, l2) = 4;
-img(l2, l1, l1) = 5;
-img(l2, l1, l2) = 6;
-img(l2, l2, l1) = 7;
+img(l1, l2, l1) = 2;
+img(l2, l1, l1) = 3;
+img(l2, l2, l1) = 4;
+img(l1, l1, l2) = 5;
+img(l1, l2, l2) = 6;
+img(l2, l1, l2) = 7;
 img(l2, l2, l2) = 8;
 
 rag = imRAG(img);
@@ -65,7 +79,7 @@ assertEqual(12, size(rag, 1));
 
 function testCentroids
 
-img = zeros(5, 6, 'uint8');
+img = zeros(5, 6);
 img(1:2, 1:2) = 1;
 img(1:3, 4:6) = 2;
 img(4, 1:2) = 3;
@@ -100,3 +114,27 @@ img(l2, l2, l2) = 8;
 assertEqual(12, size(e, 1));
 
 assertElementsAlmostEqual([2.5 2.5 2.5], n(1,:));
+
+function testNoGap
+
+img = [...
+    1 1 1 2 2 ; ...
+    1 1 1 2 2 ; ...
+    3 3 0 2 2 ; ...
+    3 3 4 4 4 ; ...
+    3 3 4 4 4 ];
+exp = [1 2;1 3;2 4;3 4];
+rag = imRAG(img, 0);
+assertEqual(exp, rag);
+
+function testNoGap3d
+
+img = cat(3, ...
+    [1 1 2 2; 1 1 2 2; 3 3 4 4; 3 3 4 4],  ...
+    [1 1 2 2; 1 1 2 2; 3 3 4 4; 3 3 4 4],  ...
+    [5 5 6 6; 5 5 6 6; 7 7 8 8; 7 7 8 8],  ...
+    [5 5 6 6; 5 5 6 6; 7 7 8 8; 7 7 8 8]);
+exp = [1 2;1 3;1 5;2 4;2 6;3 4;3 7;4 8;5 6;5 7;6 8;7 8];
+rag = imRAG(img, 0);
+assertEqual(exp, rag);
+

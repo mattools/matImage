@@ -29,25 +29,36 @@ function varargout = imRAG(img, varargin)
 %     % read and display an image with several objects
 %     img = imread('coins.png');
 %     figure(1); clf;
-%     imshow(img); hold on;
-% 
+%     imshow(img); hold on; 
 %     % compute the Skeleton by influence zones using watershed
 %     bin = imfill(img>100, 'holes');
 %     dist = bwdist(bin);
 %     wat = watershed(dist, 4);
-%
 %     % compute overlay image for display
 %     tmp = uint8(double(img).*(wat>0));
 %     ovr = uint8(cat(3, max(img, uint8(255*(wat==0))), tmp, tmp));
 %     imshow(ovr);
-%
 %     % show the resulting graph
 %     [n e] = imRAG(wat);
-%     for i=1:size(e, 1)
+%     for i = 1:size(e, 1)
 %         plot(n(e(i,:), 1), n(e(i,:), 2), 'linewidth', 4, 'color', 'g');
 %     end
 %     plot(n(:,1), n(:,2), 'bo', 'markerfacecolor', 'b');
-%   
+%
+%
+%   % Create a basic 3D image with labels, and compute RAG
+%     germs = [50 50 50;...
+%         20 20 20;80 20 20;20 80 20;80 80 20; ...
+%         20 20 80;80 20 80;20 80 80;80 80 80];
+%     img = zeros([100 100 100]);
+%     for i = 1:size(germs, 1)
+%         img(germs(i,1), germs(i,2), germs(i,3)) = 1;
+%     end
+%     wat = watershed(bwdist(img), 6);
+%     [n e] = imRAG(wat);
+%     figure; drawGraph(n, e);
+%     view(3);
+%
 %
 % ------
 % Author: David Legland
@@ -60,14 +71,9 @@ function varargout = imRAG(img, varargin)
 %   2007-10-17 add example
 %   2010-03-08 replace calls to regionprops by local centroid computation
 %   2010-07-29 update doc
+%   2012-07-20 remove the use of "diff", using less memory
 
 %% Initialisations
-
-% convert to double, to avoid repetitive type cast
-img = double(img);
-
-% get greatest region label
-N = max(img(:));
 
 % size of image
 dim = size(img);
@@ -78,108 +84,153 @@ nd = length(dim);
 % initialize array
 edges = [];
 
-
-%% Main processing
-
-if nd==2
-	% compute matrix of absolute differences in the first direction
-	diff1 = abs(diff(img, 1, 1));
-	
-	% find non zero values (region changes)
-	[i1 i2] = find(diff1);
-	
-	% delete values close to border
-	i2 = i2(i1<dim(1)-1);
-	i1 = i1(i1<dim(1)-1);
-	
-	% get values of consecutive changes
-	val1 = diff1(sub2ind(size(diff1), i1, i2));
-	val2 = diff1(sub2ind(size(diff1), i1+1, i2));
-	
-	% find changes separated with 2 pixels
-	ind = find(val2 & val1~=val2);
-	edges = unique([val1(ind) val2(ind)], 'rows');	
-	
-    
-	% compute matrix of absolute differences in the second direction
-	diff2 = abs(diff(img, 1, 2));
-	
-	% find non zero values (region changes)
-	[i1 i2] = find(diff2);
-	
-	% delete values close to border
-	i1 = i1(i2<dim(2)-1);
-	i2 = i2(i2<dim(2)-1);
-	
-	% get values of consecutive changes
-	val1 = diff2(sub2ind(size(diff2), i1, i2));
-	val2 = diff2(sub2ind(size(diff2), i1, i2+1));
-	
-	% find changes separated with 2 pixels
-	ind = find(val2 & val1~=val2);
-	edges = [edges ; unique([val1(ind) val2(ind)], 'rows')];
-	
-elseif nd==3
-    
-     % compute matrix of absolute differences in the first direction
-	diff1 = abs(diff(img, 1, 1));
-	
-	% find non zero values (region changes)
-	[i1 i2 i3] = ind2sub(size(diff1), find(diff1));
-	
-	% delete values close to border
-	i2 = i2(i1<dim(1)-1);
-	i3 = i3(i1<dim(1)-1);
-	i1 = i1(i1<dim(1)-1);
-	
-	% get values of consecutive changes
-	val1 = diff1(sub2ind(size(diff1), i1, i2, i3));
-	val2 = diff1(sub2ind(size(diff1), i1+1, i2, i3));
-	
-	% find changes separated with 2 pixels
-	ind = find(val2 & val1~=val2);
-	edges = unique([val1(ind) val2(ind)], 'rows');	
-	
-	
-	% compute matrix of absolute differences in the second direction
-	diff2 = abs(diff(img, 1, 2));
-	
-	% find non zero values (region changes)
-	[i1 i2 i3] = ind2sub(size(diff2), find(diff2));
-	
-	% delete values close to border
-	i1 = i1(i2<dim(2)-1);
-	i3 = i3(i2<dim(2)-1);
-	i2 = i2(i2<dim(2)-1);
-	
-	% get values of consecutive changes
-	val1 = diff2(sub2ind(size(diff2), i1, i2, i3));
-	val2 = diff2(sub2ind(size(diff2), i1, i2+1, i3));
-	
-	% find changes separated with 2 pixels
-	ind = find(val2 & val1~=val2);
-	edges = [edges ; unique([val1(ind) val2(ind)], 'rows')];	
-
-    
-	% compute matrix of absolute differences in the third direction
-	diff3 = abs(diff(img, 1, 3));
-	
-	% find non zero values (region changes)
-	[i1 i2 i3] = ind2sub(size(diff3), find(diff3));
-	
-	% delete values close to border
-	i1 = i1(i3<dim(3)-1);
-	i2 = i2(i3<dim(3)-1);
-	i3 = i3(i3<dim(3)-1);
-	
-	% get values of consecutive changes
-	val1 = diff3(sub2ind(size(diff3), i1, i2, i3));
-	val2 = diff3(sub2ind(size(diff3), i1, i2, i3+1));
-	
-	% find changes separated with 2 pixels
-	ind = find(val2 & val1~=val2);
-	edges = [edges ; unique([val1(ind) val2(ind)], 'rows')];
+% Number of background pixels or voxels between two regions
+% gap = 0 -> regions are contiguous
+% gap = 1 -> there is a 1-pixel large line or surface between two adjacent
+% 	pixel, for example the result of a watershed
+gap = 1;
+if ~isempty(varargin) && isnumeric(varargin{1})
+    gap = varargin{1};
 end
+
+
+if nd == 2
+
+    %% First direction of 2D image
+    
+    % identify transitions
+    [i1 i2] = find(img(1:end-1,:) ~= img(2:end, :));
+    
+	% remove values close to border
+    inds = i1 >= dim(1) - gap;
+    i1(inds) = [];
+	i2(inds) = [];
+	
+	% get values of consecutive changes
+	val1 = img(sub2ind(dim, i1, i2));
+	val2 = img(sub2ind(dim, i1+1, i2));
+	
+    if gap == 1
+        % find changes separated by a background pixel
+        valg = val2;
+        val2 = img(sub2ind(dim, i1+2, i2));
+        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
+    else
+        % find all changes not involving background
+        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
+    end
+    edges = unique([val1(inds) val2(inds)], 'rows');
+	
+
+    %% Second direction of 2D image
+    
+    % identify transitions
+    [i1 i2] = find(img(:, 1:end-1) ~= img(:, 2:end));
+    
+	% remove values close to border
+    inds = i2 >= dim(2) - gap;
+    i1(inds) = [];
+	i2(inds) = [];
+	
+	% get values of consecutive changes
+	val1 = img(sub2ind(dim, i1, i2));
+	val2 = img(sub2ind(dim, i1, i2+1));
+    
+    if gap == 1
+        % find changes separated by a background pixel
+        valg = val2;
+        val2 = img(sub2ind(dim, i1, i2+2));
+        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
+    else
+        % find all changes not involving background
+        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
+    end
+    edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
+    
+    
+elseif nd == 3
+    %% First direction of 3D image
+    
+    % identify transitions
+    [i1 i2 i3] = ind2sub(dim-[1 0 0], find(img(1:end-1,:,:) ~= img(2:end,:,:)));
+    
+	% remove values close to border
+    inds = i1 >= dim(1) - gap;
+    i1(inds) = [];
+	i2(inds) = [];
+	i3(inds) = [];
+	
+	% get values of consecutive changes
+	val1 = img(sub2ind(dim, i1,   i2, i3));
+	val2 = img(sub2ind(dim, i1+1, i2, i3));
+
+    if gap == 1
+        % find changes separated by a background pixel
+        valg = val2;
+        val2 = img(sub2ind(dim, i1+2, i2, i3));
+        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
+    else
+        % find all changes not involving background
+        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
+    end
+    edges = unique([val1(inds) val2(inds)], 'rows');
+	
+
+    %% Second direction of 3D image
+    
+    % identify transitions
+    [i1 i2 i3] = ind2sub(dim-[0 1 0], find(img(:,1:end-1,:) ~= img(:,2:end,:)));
+    
+	% remove values close to border
+    inds = i2 >= dim(2) - gap;
+    i1(inds) = [];
+	i2(inds) = [];
+	i3(inds) = [];
+	
+	% get values of consecutive changes
+	val1 = img(sub2ind(dim, i1,   i2, i3));
+	val2 = img(sub2ind(dim, i1, i2+1, i3));
+
+    if gap == 1
+        % find changes separated by a background pixel
+        valg = val2;
+        val2 = img(sub2ind(dim, i1, i2+2, i3));
+        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
+    else
+        % find all changes not involving background
+        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
+    end
+    edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
+
+    
+    %% Third direction of 3D image
+    
+    % identify transitions
+    [i1 i2 i3] = ind2sub(dim-[0 0 1], find(img(:,:,1:end-1) ~= img(:,:,2:end)));
+    
+	% remove values close to border
+    inds = i3 >= dim(3) - gap;
+    i1(inds) = [];
+	i2(inds) = [];
+	i3(inds) = [];
+	
+	% get values of consecutive changes
+	val1 = img(sub2ind(dim, i1, i2,   i3));
+    val2 = img(sub2ind(dim, i1, i2, i3+1));
+    
+    if gap == 1
+        % find changes separated by a background pixel
+        valg = val2;
+        val2 = img(sub2ind(dim, i1, i2, i3+2));
+        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
+    else
+        % find all changes not involving background
+        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
+    end
+    edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
+
+end
+
 
 % format output to have increasing order of n1,  n1<n2, and
 % increasing order of n2 for n1=constant.
@@ -193,14 +244,17 @@ edges = unique(edges, 'rows');
 
 if nargout == 1
     varargout{1} = edges;
+    
 elseif nargout == 2
     % Also compute region centroids
+    N = max(img(:));
     points = zeros(N, nd);
     labels = unique(img);
     labels(labels==0) = [];
-    if nd==2
+    
+    if nd == 2
         % compute 2D centroids
-        for i=1:length(labels)
+        for i = 1:length(labels)
             label = labels(i);
             [iy ix] = ind2sub(dim, find(img==label));
             points(label, 1) = mean(ix);
@@ -208,7 +262,7 @@ elseif nargout == 2
         end
     else
         % compute 3D centroids
-        for i=1:length(labels)
+        for i = 1:length(labels)
             label = labels(i);
             [iy ix iz] = ind2sub(dim, find(img==label));
             points(label, 1) = mean(ix);
@@ -221,3 +275,5 @@ elseif nargout == 2
     varargout{1} = points;
     varargout{2} = edges;
 end
+
+

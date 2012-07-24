@@ -68,6 +68,15 @@ exp = [96 96 96];
 assertEqual(exp, size(img));
 
 
+function test_TifSlicesRGB
+% Test call of function without argument
+
+fName = 'mriOverlay/mriOvr-000.tif';
+img = readstack(fName);
+
+exp = [128 128 3 27];
+assertEqual(exp, size(img));
+
 
 function test_TifStackRGB
 % Test call of function without argument
@@ -83,5 +92,15 @@ function test_rawImage
 
 img = readstack('img_10x15x20_int16.raw', [10 15 20], 'int16');
 
-exp = [10 15 20];
+exp = [15 10 20];
 assertEqual(exp, size(img));
+
+
+function test_LSM
+
+fName = fullfile('images', '16c_col0_607.lsm');
+img = readstack(fName);
+exp = [512 512 89];
+assertEqual(exp, size(img));
+
+

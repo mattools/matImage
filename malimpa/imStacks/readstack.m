@@ -150,115 +150,41 @@ if length(varargin) > 1
     return;
 end
 
-% check if image stored in one bundle file or as several stacks
-bundle =  sum(ismember('#?', fname)) == 0;
-if exist(fname, 'file')
-    bundle = length(imfinfo(fname)) > 1;
+
+%% Read LSM image using tiffread
+
+if strcmp(fname(end-2:end), 'lsm')
+    % read all data
+    infos = tiffread(fname);
+    
+    % convert result of tiffread to matlab array
+    if ndims(infos(1).data) == 2
+        img = cat(3, infos.data);
+    else
+        img = permute(cat(4, infos.data), [1 2 4 3]);
+    end
+    return;
 end
 
 
-if ~bundle    
-    %% images stored in several 2D files ------------------------
-    % -> need to know numbers of slices to read.
-        
-    % Compute the base name of the image, by removing '#', '?' or '0'
-    
-    % characters to replace with numbers
-    chars = '#?0';
-    
-    index = [];    
-    for c = 1:length(chars)
-        % identify number of chars in file name
-        n = 5;
-        while isempty(index) && n > 1
-            n = n - 1;
-            index = strfind(fname, repmat(chars(c), [1 n]));
-        end
 
-        % escape if special characters have been found
-        if  ~isempty(index)
-            break;
-        end
-    end
-    
-    % In the case of several '00' parts, consider only the last one 
-    index = index(end);
-        
-    % create file basename and endname
-	basename = fname(1:index-1);
-    endname = fname(index+n:end);
+%% Read Image stored in one bundle file
 
-    
-    % compute indices of slices to read
-    
-    if ~isempty(varargin)
-        % slice indices are given as parameters
-        range = varargin{1};
-    else            
-        % identify slices to read by detecting last index of slices
-        i = 0;
-        while true
-            % check existence of file for given index
-            %imgname = sprintf(['%s' sprintf('%%0%dd', n) '%s'], basename, i, endname);
-            imgname = [basename sprintf(sprintf('%%0%dd', n), i) endname];
-            if ~exist(imgname, 'file')
-                break;
-            end
-            i = i + 1;
-        end
-        % read slices from the first one to the last existing one
-        range = 0:i-1;
-    end
-    
-    if verbose
-        msg = sprintf('read slices from %d to %d', range(1), range(end));
-        disp(msg);
-    end
-    
-    % Read each slice of the image
-    
-    % read slice for each range index
-    string = [basename sprintf('%%0%dd', n)  endname];
-    
-    % adapt filename format to windows if needed
-    if ispc
-        string = strrep(string, '\', '\\');
-    end    
-    
-    % read the first image
-    img = imread(sprintf(string, range(1)));
-    
-    % read each image one after the other
-    if length(size(img)) == 2
-        % allocate memory
-        img(1, 1, length(range)) = 0;
-        
-        % read each gray scale image successively
-        for i = 2:length(range)
-            img(:,:,i) = imread(sprintf(string, range(i)));
-        end
-        
-    else
-        % pre-allocate memory
-        img(1, 1, 1, length(range)) = 0;
-        
-        % read each color image successively
-        for i = 2:length(range)
-            img(:,:,:,i) = imread(sprintf(string, range(i)));
-        end
-    end
-    
+% check if image stored in one bundle file or as several stacks
+if exist(fname, 'file')
+    bundle = length(imfinfo(fname)) > 1;
 else
-    %% Read Image stored in one bundle file
-    
-    % get image dimensions
-    info = imfinfo(fname);
-    
+    bundle = sum(ismember('#?', fname)) == 0;
+end
+
+if bundle
     % If input argument is found, it is used as the number of slices to
-    % read. Anyway, read all the slices.
-    range = 1:length(info);
+    % read. Otherwise, read all the slices.
     if ~isempty(varargin)
         range = varargin{1};
+    else
+        info = imfinfo(fname);
+        range = 1:length(info);
     end
 
     if verbose
@@ -266,10 +192,10 @@ else
         disp(msg);
     end
     
-    % read each slice of the 3D image
+    % read first slice of the 3D image to get width, height, and bit depth
     img = imread(fname, range(1));
     
-    if ndims(img) == 2             % read gray scale images -----        
+    if ndims(img) == 2             % read gray scale images -----
         % pre-allocate memory
         img(1, 1, length(range)) = 0;
         
@@ -287,5 +213,99 @@ else
             img(:,:,:,i) = imread(fname, range(i));
         end
     end 
+   
+    return;
 end
+
+
+%% Read images stored in several 2D files
+% -> need to know numbers of slices to read.
+
+% Compute the base name of the image, by removing '#', '?' or '0'
+
+% characters to replace with numbers
+chars = '#?0';
+
+index = [];
+for c = 1:length(chars)
+    % identify number of chars in file name
+    n = 5;
+    while isempty(index) && n > 1
+        n = n - 1;
+        index = strfind(fname, repmat(chars(c), [1 n]));
+    end
+    
+    % escape if special characters have been found
+    if  ~isempty(index)
+        break;
+    end
+end
+
+% In the case of several '00' parts, consider only the last one
+index = index(end);
+
+% create file basename and endname
+basename = fname(1:index-1);
+endname = fname(index+n:end);
+
+
+% compute indices of slices to read
+
+if ~isempty(varargin)
+    % slice indices are given as parameters
+    range = varargin{1};
+else
+    % identify slices to read by detecting last index of slices
+    i = 0;
+    while true
+        % check existence of file for given index
+        %imgname = sprintf(['%s' sprintf('%%0%dd', n) '%s'], basename, i, endname);
+        imgname = [basename sprintf(sprintf('%%0%dd', n), i) endname];
+        if ~exist(imgname, 'file')
+            break;
+        end
+        i = i + 1;
+    end
+    % read slices from the first one to the last existing one
+    range = 0:i-1;
+end
+
+if verbose
+    msg = sprintf('read slices from %d to %d', range(1), range(end));
+    disp(msg);
+end
+
+% Read each slice of the image
+
+% read slice for each range index
+string = [basename sprintf('%%0%dd', n)  endname];
+
+% adapt filename format to windows if needed
+if ispc
+    string = strrep(string, '\', '\\');
+end
+
+% read the first image
+img = imread(sprintf(string, range(1)));
+
+% read each image one after the other
+if length(size(img)) == 2
+    % allocate memory
+    img(1, 1, length(range)) = 0;
+    
+    % read each gray scale image successively
+    for i = 2:length(range)
+        img(:,:,i) = imread(sprintf(string, range(i)));
+    end
+    
+else
+    % pre-allocate memory
+    img(1, 1, 1, length(range)) = 0;
+    
+    % read each color image successively
+    for i = 2:length(range)
+        img(:,:,:,i) = imread(sprintf(string, range(i)));
+    end
+end
+
 

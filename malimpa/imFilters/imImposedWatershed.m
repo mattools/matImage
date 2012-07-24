@@ -1,12 +1,18 @@
-function [wat emin] = imImposedWatershed(img, h, varargin)
+function [wat emin] = imImposedWatershed(img, emin, varargin)
 %IMIMPOSEDWATERSHED Compute watershed after imposition of extended minima
 %
-%   RES = imImposedWatershed(IMG, H)
-%   IMG is an image, and H is a threshold. The extended minima are
-%   computed, superimposed on the original image, and the resulting image
-%   is returned.
+%   RES = imImposedWatershed(IMG, MARKERS)
+%   IMG is an image, and MARKERS is a binary image the same size as IMG.
+%   The marker image is superimposed on the original image, the watershed
+%   computed, and the resulting label matrix is returned.
 %
-%   RES = imImposedWatershed(IMG, H, CONN)
+%   RES = imImposedWatershed(IMG, H)
+%   Specifies the marker as a level of dynamic between minima and watershed
+%   crests. The extended minima are computed using the parameter H, the
+%   result is superimposed on the original image, the watershed computed,
+%   and the resulting label matrix is returned.
+%
+%   RES = imImposedWatershed(..., CONN)
 %   Specifies the connectivity to use for each step (default is 4 for 2D
 %   images, and 6 for 3D images).
 %
@@ -14,7 +20,12 @@ function [wat emin] = imImposedWatershed(img, h, varargin)
 %   Also displays information on processing.
 %
 %   Example
-%   imImposedWatershed
+%     % Computes watershed on gradient of rice image
+%     img = imread('rice.png');
+%     grad = imGradient(img);
+%     wat = imImposedWatershed(grad, 10, 4);
+%     ovr = imOverlay(img, wat==0);
+%     imshow(ovr)
 %
 %   See also
 %   watershed, imextendedmin, imimposemin
@@ -27,13 +38,14 @@ function [wat emin] = imImposedWatershed(img, h, varargin)
 
 % HISTORY
 % 2010-09-11 fix bug in connectivity, add verbosity option
+% 2012-07-24 add possibility to specify directly the markers, add doc
 
 
 %% Default options
 
 % determines the default connectivity, depending on image dimension
 c = 4;
-if ndims(img)>2
+if ndims(img) > 2
     c = 6;
 end
 
@@ -69,14 +81,16 @@ end
 %% Main processing
 
 % detection of extended minima
-if verbose
-    disp('Compute extended minima');
+if isscalar(emin)
+    if verbose
+        disp('Compute extended minima');
+    end
+    emin = imextendedmin(img, emin, c);
 end
-emin = imextendedmin(img, h, c);
 
 % imposition of minima on the image
 if verbose
-    disp('Impose minima on images');
+    disp('Impose minima on image');
 end
 img = imimposemin(img, emin, c);
 

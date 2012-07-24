@@ -2,13 +2,15 @@ function res = imGaussianFilter(img, kernelSize, sigma, varargin)
 %IMGAUSSIANFILTER Apply gaussian filter to an image, using separability
 %
 %   IMGF = imGaussianFilter(IMG, SIZE, SIGMA)
-%   IMG is the input image,
+%   Applies gaussian filtering on input image IMG with kernel size defined
+%   by SIZE and SIGMA.
+%   IMG is the input image, 
 %   SIZE is the size of the convolution kernel, either as a scalar, or as a
 %   1-by-ND row vector containging size in the X, Y, and eventually z
-%   direction.
+%   direction. Default is 3.
 %   SIGMA is the width of the kernel, either as a scalar (the same sigma
 %   will be used in each direction), or as a row vector containing sigmax,
-%   sigmay, and eventually sigmaz.
+%   sigmay, and eventually sigmaz. Default is SIZE/2.
 %
 %   IMGF = imGaussianFilter(IMG, SIZE, SIGMA, OPTIONS)
 %   Apply the same kind of options than for imfilter.
@@ -28,13 +30,13 @@ function res = imGaussianFilter(img, kernelSize, sigma, varargin)
 %     % Using anisotropic filtering
 %     img = imread('cameraman.tif');
 %     imgf = imGaussianFilter(img, [13 5], [4 2]);
-%     figure; subplot(121); show(img); subplot(122); show(imgf);
+%     figure; subplot(121); imshow(img); subplot(122); imshow(imgf);
 % 
 %     % Gaussian filtering of a color image
 %     img = imread('peppers.png');
 %     imgf = imGaussianFilter(img, [5 5], [2 2]);
-%     show(imgf)
-
+%     imshow(imgf)
+%
 %   Note that there can be slight differences due to rounding effects. To
 %   minimize them, it is possible to use something like:
 %   imgf3 = uint8(imGaussianFilter(single(img), 11, 4));
@@ -90,10 +92,10 @@ if length(kernelSize) == 1
 end
 
 % process filter sigma
-if nargin<3
-    sigma = 3;
+if nargin < 3
+    sigma = kernelSize / 2;
 end
-if length(sigma)==1
+if length(sigma) == 1
     sigma = repmat(sigma, 1, nd);
 end
 
@@ -112,7 +114,7 @@ for i = 1:nd
     lx = -s0:s1;
     
     % compute normalized kernel
-    sigma2 = 2*sigma(i).^2;
+    sigma2 = 2 * sigma(i) .^ 2;
     h = exp(-(lx.^2 / sigma2));
     h = h / sum(h);
     

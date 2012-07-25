@@ -146,10 +146,13 @@ methods
             end
             varargin(1) = [];
             
+            if isempty(this.imageData)
+                return;
+            end
+            
         else
             this.imageData = [];
             this.imageType = 'none';
-            
         end
         
         % initialize to empty LUT
@@ -409,6 +412,8 @@ methods
                 importDicomImage(this, fileName);
             case '.hdr'
                 importAnalyzeImage(this, fileName);
+            case '.vm'
+                importVoxelMatrix(this, fileName);
             otherwise
                 readImageStack(this, fileName);
         end
@@ -575,8 +580,41 @@ methods
         this.lastPath = pathName;
     end
     
-end
+    function importVoxelMatrix(this, fileName)
+        
+        types = {'uint8', 'uint16', 'int16', 'single', 'double'};
+        [sel, ok] = listdlg(...
+            'PromptString', 'Choose data type:',...
+            'SelectionMode', 'single',...
+            'ListString', types, ...
+            'Name', 'Data Type');
+        if ~ok 
+            return;
+        end
+        dataType = types{sel};
+        
+        % read image data
+        try
+            data = readVoxelMatrix(fileName, dataType);
+        catch %#ok<CTCH>
+            [path name] = fileparts(fileName); %#ok<ASGLU>
+            errordlg(['Could not import voxel Matrix File ' name], ...
+                'File Error', 'modal');
+            return;
+        end
+        
+        % determine image name
+        [pathName baseName ext] = fileparts(fileName);
+        imgName = [baseName ext];
 
+        % update display
+        setupImageData(this, data, imgName);
+       
+        this.lastPath = pathName;
+
+    end 
+end
+    
 %% Some methods for image manipulation
 methods
     function [mini maxi] = computeGrayScaleExtent(this)
@@ -767,7 +805,7 @@ methods
         % Display the dialog, determines image type, and setup image accordingly
         
         [fileName, pathName] = uigetfile( ...
-            {'*.gif;*.jpg;*.jpeg;*.tif;*.tiff;*.bmp;*.hdr;*.dcm;*.mhd;*.lsm', ...
+            {'*.gif;*.jpg;*.jpeg;*.tif;*.tiff;*.bmp;*.hdr;*.dcm;*.mhd;*.lsm;*.vm', ...
             'All Image Files (*.tif, *.hdr, *.dcm, *.mhd, *.lsm, *.bmp, *.jpg)'; ...
             '*.tif;*.tiff',             'TIF Files (*.tif, *.tiff)'; ...
             '*.bmp',                    'BMP Files (*.bmp)'; ...
@@ -775,6 +813,7 @@ methods
             '*.dcm',                    'DICOM Files (*.dcm)'; ...
             '*.mhd;*.mha',              'MetaImage data files (*.mha, *.mhd)'; ...
             '*.lsm',                    'Zeiss LSM files(*.lsm)'; ...
+            '*.vm',                     'Voxel Matrix data files(*.vm)'; ...
             '*.*',                      'All Files (*.*)'}, ...
             'Choose a stack or the first slice of a series:', ...
             this.lastPath);
@@ -1519,7 +1558,7 @@ methods
         info = dir(which('Slicer.m'));
         message = {...
             '       3D Slicer for Matlab', ...
-            ['         v ' datestr(info.datenum, 1) ' beta'], ...
+            ['         v ' datestr(info.datenum, 1)], ...
             '', ...
             '     Author: David Legland', ...
             ' david.legland@grignon.inra.fr ', ...
@@ -2105,8 +2144,12 @@ methods
         
         fprintf(emptyLine);
         
-        fprintf('Slicer object, containing a %d x %d x %d %s image.\n', ...
-            this.imageSize, this.imageType);
+        if isempty(this.imageData)
+            fprintf('Slicer object, with no image.\n')
+        else
+            fprintf('Slicer object, containing a %d x %d x %d %s image.\n', ...
+                this.imageSize, this.imageType);
+        end
         
         % calibration information for image
         if this.calibrated

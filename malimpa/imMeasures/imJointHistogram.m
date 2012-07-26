@@ -32,7 +32,7 @@ function res = imJointHistogram(img1, img2, varargin)
 %     colormap jet
 %
 %   See also
-%   imhist, imHistogram
+%   imhist, imHistogram, imJointEntropy
 %
 % ------
 % Author: David Legland
@@ -46,7 +46,7 @@ function res = imJointHistogram(img1, img2, varargin)
 
 
 % check input dimensions
-if sum(size(img1)~=size(img2))>0
+if sum(size(img1) ~= size(img2)) > 0
     error('Inputs must have same size');
 end
 

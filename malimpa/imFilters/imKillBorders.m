@@ -32,7 +32,7 @@ function lbl = imKillBorders(lbl, varargin)
 %     imshow(bin2);
 % 
 %   See also:
-%   bwmorph, imreconstruct
+%   bwmorph, imreconstruct, imAreaOpening, imLargestRegion
 %
 %   ---------
 %   author : David Legland 

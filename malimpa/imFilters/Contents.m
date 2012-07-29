@@ -52,6 +52,7 @@
 %   label2rgb3d         - Convert a 3D label image to a 3D RGB image
 %   imKillBorders       - Remove regions on the border of an image
 %   imAreaOpening       - Remove all regions smaller than a given area
+%   imAttributeOpening  - Filter regions on a size or shape criterium
 %   imLargestRegion     - Keep the largest region in a binary or label image
 %   imMergeLabels       - Merge regions in a labeled image
 %   mergeRegions        - Merge regions of labeled image, using inclusion criteria

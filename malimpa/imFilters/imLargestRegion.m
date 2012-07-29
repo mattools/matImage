@@ -39,7 +39,7 @@ function [bin indMax] = imLargestRegion(lbl, varargin)
 %     imshow(imOverlay(img, bin2));
 %
 %   See also
-%    regionprops, imKillBorders, imAreaOpening, imMergeLabels
+%    regionprops, imKillBorders, imAreaOpening, imAttributeOpening
 %
 % ------
 % Author: David Legland

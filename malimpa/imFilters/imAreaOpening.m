@@ -12,7 +12,7 @@ function [bin inds] = imAreaOpening(lbl, areaMin, varargin)
 %     imshow(imOverlay(img, bin2));
 %
 %   See also
-%   regionprops, imLargestRegion, imKillBorders
+%   regionprops, imLargestRegion, imKillBorders, imAttributeOpening
 %
 % ------
 % Author: David Legland

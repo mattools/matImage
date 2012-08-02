@@ -25,7 +25,8 @@ function [bin value] = imOtsuThreshold(img, varargin)
 %
 %
 %   See also
-%   imHistogram
+%   imHistogram, waterhsed, imNormalizeBackground
+
 %
 % ------
 % Author: David Legland

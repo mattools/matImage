@@ -31,18 +31,20 @@ function varargout = histo(X, varargin)
 %   30/11/2006 : use similar behaviour as hist, and update doc.
 
 % extract unique values
-[B, I, J] = unique(X);
+[B, I, J] = unique(X); %#ok<ASGLU>
 
 % compute occurences of each unique value
 N = hist(J, 1:max(J));
 
-if nargout==0
+if nargout == 0
     % if no output argument, display the histogram
     stem(B, N, varargin{:});
+    xlim([B(1)-.5 B(end)+.5]);
+    
 else
     % return output arguments
     varargout{1} = N;
-    if nargout>1
+    if nargout > 1
         varargout{2} = B;
     end
 end

@@ -15,13 +15,16 @@ function installMalimpa(varargin)
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@grignon.inra.fr
 % Created: 2008-01-17,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2008 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
 % Licensed under the terms of the modified BSD licence
 
 % base directory of the library
 p = pwd;
+
+% The main path of the library
+addpath(p);
 
 % general use toolboxe
 addpath(fullfile(p, 'util'));

@@ -5,7 +5,7 @@ function rgb = double2rgb(img, map, bounds, varargin)
 %   Scales the values in IMG between in the interval specified by BOUNDS,
 %   then convert each value to the corresponding value of the color map
 %   given in MAP.
-%   If the image contains inf or NaN values, they stay black.
+%   If the image contains inf or NaN values, they are set to white.
 %
 %   RGB = double2rgb(IMG, MAP)
 %   Assumes extreme values are given by extreme values in image. Only
@@ -13,8 +13,9 @@ function rgb = double2rgb(img, map, bounds, varargin)
 %
 %   RGB = double2rgb(IMG, MAP, BOUNDS, BACKGROUND)
 %   Specifies the value of the background value for Nan and Inf values in
-%   IMG. BACKGROUND should be a 1-by-3 row vector with values between 0 
-%   and 1.
+%   IMG. BACKGROUND should be either a 1-by-3 row vector with values
+%   between 0 and 1, or one of the color shortcuts 'r', 'b', 'g', 'c', 'y',
+%   'm', 'k', 'w'.
 %
 %   Example
 %   % Converts peaks to RGB
@@ -24,11 +25,12 @@ function rgb = double2rgb(img, map, bounds, varargin)
 %   % Display distance map as color image.
 %     img = imread('circles.png');
 %     bwd = bwdist(img);
-%     rgb = double2rgb(bwd, jet, [], [1 1 1]);
+%     bwd(img) = NaN;
+%     rgb = double2rgb(bwd, jet, [], 'k');
 %     imshow(rgb);
 % 
 %   See also
-%   ind2rgb, angle2rgb
+%   ind2rgb, angle2rgb, label2rgb
 %
 % ------
 % Author: David Legland
@@ -37,9 +39,9 @@ function rgb = double2rgb(img, map, bounds, varargin)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % extract background value
-bg = [0 0 0];
+bgColor = [1 1 1];
 if ~isempty(varargin)
-    bg = varargin{1};
+    bgColor = parseColor(varargin{1});
 end
 
 % get valid pixels (finite value)
@@ -55,9 +57,9 @@ inds = floor(min(max(inds, 0), n-1))+1;
 
 % compute the 3 bands
 dim = size(img);
-r = ones(dim)*bg(1); r(valid) = map(inds, 1);
-g = ones(dim)*bg(2); g(valid) = map(inds, 2);
-b = ones(dim)*bg(3); b(valid) = map(inds, 3);
+r = ones(dim) * bgColor(1); r(valid) = map(inds, 1);
+g = ones(dim) * bgColor(2); g(valid) = map(inds, 2);
+b = ones(dim) * bgColor(3); b(valid) = map(inds, 3);
 
 % concatenate the 3 bands to form an rgb image
 if length(dim) == 2
@@ -71,4 +73,29 @@ else
     rgb(:,:,1,:) = r;
     rgb(:,:,2,:) = g;
     rgb(:,:,3,:) = b;
+end
+
+function color = parseColor(color)
+
+if ischar(color)
+    switch(color)
+        case 'k'
+            color = [0 0 0];
+        case 'w'
+            color = [1 1 1];
+        case 'r'
+            color = [1 0 0];
+        case 'g'
+            color = [0 1 0];
+        case 'b'
+            color = [0 0 1];
+        case 'c'
+            color = [0 1 1];
+        case 'm'
+            color = [1 0 1];
+        case 'y'
+            color = [1 1 0];
+        otherwise 
+            error('Unknown color string');
+    end
 end

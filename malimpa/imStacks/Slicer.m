@@ -105,7 +105,11 @@ properties
     
     % Look-up table for display of uint8 images
     colorMap;
-    
+
+    % background color for label to RGB conversion. Given as RGB triplet
+    % value bewteen 0 and 1. Default is white.
+    bgColor = [1 1 1];
+
     % calibration information for image
     voxelOrigin;
     voxelSize;
@@ -1041,7 +1045,7 @@ methods
         createNewSlicer(this, newData, this.imageName);
     end
     
-    function onConvertToColor(this, hObject, eventData)
+    function onConvertIntensityToColor(this, hObject, eventData)
         % convert grayscale to RGB using current colormap
         
         if isempty(this.imageData)
@@ -1053,9 +1057,43 @@ methods
             return;
         end
         
+        % choose the colormap
+        cmap = this.colorMap;
+        if isempty(cmap)
+            cmap = gray(max(this.imageData(:)));
+        end
+        
         % convert inner image data
         newData = uint8(double2rgb(this.imageData, ...
-            this.colorMap, this.displayRange, [1 1 1]) * 255);
+            cmap, this.displayRange, this.bgColor) * 255);
+        createNewSlicer(this, newData, this.imageName);
+    end
+    
+    function onConvertLabelsToColor(this, hObject, eventData)
+        % convert grayscale to RGB using current colormap
+        
+        if isempty(this.imageData)
+            return;
+        end
+        
+        % check that image is grayscale
+        if ~strcmp(this.imageType, 'grayscale')
+            return;
+        end
+        
+        % choose the colormap
+        cmap = this.colorMap;
+        if isempty(cmap)
+            cmap = jet(256);
+        end
+        
+        % colormap has 256 entries, we need only a subset
+        nLabels = max(this.imageData(:));
+        inds = round(linspace(1, 256, nLabels));
+        cmap = cmap(inds, :);
+        
+        % convert inner image data
+        newData = label2rgb3d(this.imageData, cmap, this.bgColor, 'shuffle');
         createNewSlicer(this, newData, this.imageName);
     end
     
@@ -1403,6 +1441,23 @@ methods
         
         colormap(this.handles.imageAxis, this.colorMap);
     end
+    
+    function onSelectBackgroundColor(this, varargin)
+        
+        colorNames = {'White', 'Black', 'Red', 'Green', 'Blue', 'Cyan', 'Magenta', 'Yellow'};
+        colors = [1 1 1; 0 0 0; 1 0 0; 0 1 0; 0 0 1; 0 1 1; 1 0 1; 1 1 0];
+        
+        [ind, ok] = listdlg(...
+            'PromptString', 'Background Color:',...
+            'SelectionMode', 'Single',...
+            'ListString', colorNames);
+        if ~ok 
+            return;
+        end
+        
+        this.bgColor = colors(ind, :);
+    end
+    
     
     function onShowOrthoPlanes(this, varargin)
         
@@ -1896,9 +1951,14 @@ methods
             'Callback', @this.onChangeDataType);
         
         uimenu(menuImage, ...
-            'Label', 'Color image from LUT', ...
+            'Label', 'Convert Intensity to Color', ...
             'Enable', grayscaleFlag, ...
-            'Callback', @this.onConvertToColor);
+            'Callback', @this.onConvertIntensityToColor);
+        
+        uimenu(menuImage, ...
+            'Label', 'Convert Labels to Color', ...
+            'Enable', grayscaleFlag, ...
+            'Callback', @this.onConvertLabelsToColor);
         
         uimenu(menuImage, ...
             'Label', 'RGB to Gray', ...
@@ -2084,6 +2144,12 @@ methods
             'Label', 'Magenta', ...
             'UserData', 'magentaLUT', ...
             'Callback', @this.onSelectLUT);
+        
+        uimenu(menuLut, ...
+            'Label', 'Background Color...', ...
+            'Separator', 'On', ...
+            'Callback', @this.onSelectBackgroundColor);
+
         
         uimenu(menuView, ...
             'Label', 'Show Ortho Slices', ...

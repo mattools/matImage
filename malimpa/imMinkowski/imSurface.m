@@ -53,8 +53,10 @@ if ~islogical(img)
     for i = 1:nLabels
         label = labels(i);
         box = props(label).BoundingBox;
-        i0 = ceil(box(1:3));
-        i1 = i0 + box(4:6) - 1;
+        % convert bounding box to image extent, in x, y and z directions
+        i0 = ceil(box([2 1 3]));
+        i1 = i0 + box([5 4 6]) - 1;
+        % crop image of current label
         bin = img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
         surf(i) = imSurface(bin, varargin{:});
     end

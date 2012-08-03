@@ -8,13 +8,14 @@ function res = imSkeleton(img, varargin)
 %
 %   Example
 %     img = imread('circles.png');
-%     skel = bwmorph(BW,'thin',Inf);
+%     skel = imSkeleton(img);
 %     ovr = imOverlay(img, skel);
 %     imshow(ovr)
 %
 %   See also
-%     bwmorph, imBoundary, imOverlay
+%     bwmorph, imLabelSkeleton, imBoundary, imOverlay
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

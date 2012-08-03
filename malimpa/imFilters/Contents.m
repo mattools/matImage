@@ -44,6 +44,7 @@
 %   imBoundary            - Compute the boundary image of a binary image
 %   imFillHoles           - Fill holes in a binary image
 %   imSkeleton            - Homothopic skeleton of a binary image 
+%   imLabelSkeleton       - Label skeleton pixels according to local topology
 %   imChainPixels         - Chain neighbor pixels in an image to form a contour
 %   imConvexImage         - Compute smallest convex image containing the original pixels
 %   imDistance            - Distance map computed from a set of points
@@ -86,7 +87,6 @@
 % e-mail: david.legland@grignon.inra.fr
 % created the 19/04/2004.
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the BSD License, see the file license.txt
 
 % display help if executed
 help Contents

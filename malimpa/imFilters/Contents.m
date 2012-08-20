@@ -47,6 +47,7 @@
 %   imLabelSkeleton       - Label skeleton pixels according to local topology
 %   imChainPixels         - Chain neighbor pixels in an image to form a contour
 %   imConvexImage         - Compute smallest convex image containing the original pixels
+%   imDistanceClasses     - Converts a distance map to a label image of regions
 %   imDistance            - Distance map computed from a set of points
 %   imDistance3d          - Create distance image from a set of 3D points
 %

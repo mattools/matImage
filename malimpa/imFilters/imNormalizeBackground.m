@@ -1,4 +1,4 @@
-function [res bg rmse] = imNormalizeBackground(img, bin)
+function [res bg rmse] = imNormalizeBackground(img, varargin)
 %IMNORMALIZEBACKGROUND Normalize image by removing background estimate
 %
 %   IMG2 = imNormalizeBackground(IMG, BIN)
@@ -65,9 +65,23 @@ function [res bg rmse] = imNormalizeBackground(img, bin)
 
 %% Pre-processing
 
+% in case of color image, process each band separatly
+if ndims(img) > 2 && size(img, 3) == 3
+    [r g b] = imSplitBands(img);
+    [r bgR rmseR] = imNormalizeBackground(r, varargin{:});
+    [g bgG rmseG] = imNormalizeBackground(g, varargin{:});
+    [b bgB rmseB] = imNormalizeBackground(b, varargin{:});
+    res = imMergeBands(r, g, b);
+    bg  = imMergeBands(bgR, bgG, bgB);
+    rmse = [rmseR ; rmseG ; rmseB];
+    return;
+end
+
 % if no segmentation is provided, try Otsu
 if nargin < 2
     bin = imOtsuThreshold(img);
+else
+    bin = varargin{1};
 end
 
 % keep a small gard area around structure

@@ -101,9 +101,9 @@ function dist = imChamferDistance(img, varargin)
 markers = [];
 if ~isempty(varargin)
     var = varargin{1};
-    if sum(size(var)~=size(img))==0
+    if sum(size(var) ~= size(img))==0
         % use binarised markers
-        markers = var>0;
+        markers = var > 0;
         varargin(1) = [];
     end
 end
@@ -127,14 +127,14 @@ if ~isempty(varargin)
     w2 = var(2);
     % small check up to avoid degenerate cases
     if w2 == 0
-        w2 = 2*w1;
+        w2 = 2 *  w1;
     end
 end
 
 
 % extract verbosity option
 verbose = false;
-if length(varargin)>1
+if length(varargin) > 1
     varName = varargin{1};
     if ~ischar(varName)
         error('unknown option');
@@ -160,7 +160,7 @@ dj2 = [-1 0 1 +1];
 ws =  [w2 w1 w2 w1];
 
 % binarisation of mask image
-mask = img>0;
+mask = img > 0;
 
 % allocate memory for result
 dist = ones(size(mask), outputType);
@@ -192,11 +192,11 @@ while modif
     end
     
     % Process first line
-    for j=2:D2
+    for j = 2:D2
         if mask(1, j)
             newVal = dist(1,j);
             newVal = min(newVal, dist(1, j-1)+w1);     % left pixel
-            if newVal~=dist(1,j)
+            if newVal ~= dist(1,j)
                 modif = true;
                 dist(1,j) = newVal;
             end
@@ -204,20 +204,20 @@ while modif
     end
     
     % iteration on lines
-    for i=2:D1
+    for i = 2:D1
         % special processing for first pixel of the line
         if mask(i, 1)
             newVal = dist(i, 1);
             newVal = min(newVal, dist(i-1, 1)+w1);     % top pixel
             newVal = min(newVal, dist(i-1, 2)+w2);     % top-left diag
-            if newVal~=dist(i,1)
+            if newVal ~= dist(i,1)
                 modif = true;
                 dist(i,1) = newVal;
             end
         end
 
         % process all pixels inside the current line
-        for j=2:D2-1            
+        for j = 2:D2-1            
             % computes only for pixel inside structure
             if ~mask(i, j)
                 continue;
@@ -225,12 +225,12 @@ while modif
             
             % compute minimal propagated distance
             newVal = dist(i, j);
-            for k=1:4
+            for k = 1:4
                 newVal = min(newVal, dist(i+di1(k), j+dj1(k))+ws(k));
             end
             
             % if distance was changed, update result, and toggle flag
-            if newVal~=dist(i,j)
+            if newVal ~= dist(i,j)
                 modif = true;
                 dist(i,j) = newVal;
             end
@@ -242,7 +242,7 @@ while modif
             newVal = min(newVal, dist(i,   D2-1) + w1);  % left pixel
             newVal = min(newVal, dist(i-1, D2-1) + w2);  % top-left pixel
             newVal = min(newVal, dist(i-1, D2)   + w1);  % top pixel
-            if newVal~=dist(i,D2)
+            if newVal ~= dist(i,D2)
                 modif = true;
                 dist(i,D2) = newVal;
             end
@@ -251,7 +251,7 @@ while modif
     end % iteration on lines
 
     % check end of iteration
-    if modif==false && nIter ~= 1;
+    if ~modif && nIter ~= 1;
         break;
     end
     
@@ -263,31 +263,31 @@ while modif
     end
     
     % Process last image line
-    for j=D2-1:-1:1
+    for j = D2-1:-1:1
         if mask(D1, j)
             newVal = dist(D1,j);
             newVal = min(newVal, dist(D1, j+1)+w1);     % left pixel
-            if newVal~=dist(D1,j)
+            if newVal ~= dist(D1,j)
                 modif = true;
                 dist(D1,j) = newVal;
             end
         end
     end
     
-    for i=D1-1:-1:1
+    for i = D1-1:-1:1
         % special processing for last pixel of the line
         if mask(i, D2)
             newVal = dist(i, D2);
             newVal = min(newVal, dist(i+1,   D2) + w1); % bottom pixel
             newVal = min(newVal, dist(i+1, D2-1) + w2); % bottom-left diag
-            if newVal~=dist(i,D2)
+            if newVal ~= dist(i,D2)
                 modif = true;
                 dist(i,D2) = newVal;
             end
         end
 
         % process all pixels inside the current line
-        for j=D2-1:-1:2
+        for j = D2-1:-1:2
             % computes only for pixel inside structure
             if ~mask(i, j)
                 continue;
@@ -295,12 +295,12 @@ while modif
             
             % compute minimal propagated distance
             newVal = dist(i, j);
-            for k=1:4
+            for k = 1:4
                 newVal = min(newVal, dist(i+di2(k), j+dj2(k))+ws(k));
             end
             
             % if distance was changed, update result, and toggle flag
-            if newVal~=dist(i,j)
+            if newVal ~= dist(i,j)
                 modif = true;
                 dist(i,j) = newVal;
             end
@@ -312,7 +312,7 @@ while modif
             newVal = min(newVal, dist(i,   2) + w1);  % right pixel
             newVal = min(newVal, dist(i+1, 2) + w2);  % bottom-right pixel
             newVal = min(newVal, dist(i+1, 1) + w1);  % bottom pixel
-            if newVal~=dist(i,1)
+            if newVal ~= dist(i,1)
                 modif = true;
                 dist(i,1) = newVal;
             end

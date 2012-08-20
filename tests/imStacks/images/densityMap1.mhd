@@ -1,0 +1,9 @@
+ObjectType = Image
+NDims = 3
+DimSize = 20 40 40
+HeaderSize = 12
+ElementType = MET_FLOAT
+ElementByteOrderMSB = False
+ElementSpacing = 385.05 431.10 429.64
+Offset = -3872.37 -4680.01 2768.19
+ElementDataFile = densityMap1.vm

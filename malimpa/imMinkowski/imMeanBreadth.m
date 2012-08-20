@@ -24,7 +24,7 @@ function [breadth labels] = imMeanBreadth(img, varargin)
 %% Basic error checking
 
 % check image dimension
-if ndims(img)~=3
+if ndims(img) ~= 3
     error('first argument should be a 3D image');
 end
 
@@ -33,7 +33,7 @@ if ~islogical(img)
     labels = unique(img);
     labels(labels==0) = [];
     breadth = zeros(length(labels), 1);
-    for i=1:length(labels)
+    for i = 1:length(labels)
         breadth(i) = imMeanBreadth(img==labels(i), varargin{:});
     end
     return;
@@ -74,7 +74,7 @@ end
 d1  = delta(1);
 d2  = delta(2);
 d3  = delta(3);
-vol = d1*d2*d3;
+vol = d1 * d2 * d3;
 
 
 %% Main processing for 3 directions
@@ -104,12 +104,12 @@ b2 = nv - (ne1 + ne3) + nf2;
 b3 = nv - (ne1 + ne2) + nf3;
 
 % inverse of planar density (in m = m^3/m^2) in each direction
-a1 = vol/(d2*d3);
-a2 = vol/(d1*d3);
-a3 = vol/(d1*d2);
+a1 = vol / (d2 * d3);
+a2 = vol / (d1 * d3);
+a3 = vol / (d1 * d2);
 
-if nDirs==3
-    breadth = (b1*a1 + b2*a2 + b3*a3)/3;
+if nDirs == 3
+    breadth = (b1 * a1 + b2 * a2 + b3 * a3) / 3;
     return;
 end
 
@@ -163,7 +163,7 @@ if nDirs == 9
 end
 
 
-% number of traingular faces on plane with normal directions 10 to 13
+% number of triangular faces on plane with normal directions 10 to 13
 nf10 = sum(sum(sum(...
     img(2:end,1:end-1,1:end-1) & img(1:end-1,2:end,1:end-1) & ...
     img(1:end-1,1:end-1,2:end)    ))) ...
@@ -198,12 +198,13 @@ d13 = hypot(d1, d3);
 d23 = hypot(d2, d3);
 
 % inverse of planar density (in m = m^3/m^2) in directions 4 to 13
-a4 = vol/(d3*d12);
-a6 = vol/(d2*d13);
-a8 = vol/(d1*d23);
+a4 = vol / (d3 * d12);
+a6 = vol / (d2 * d13);
+a8 = vol / (d1 * d23);
 
-s  = (d12+d13+d23)/2;
-a10 = vol/(2*sqrt( s*(s-d12)*(s-d13)*(s-d23) ));
+% compute area of diagonal triangle via Heron's formula
+s  = (d12 + d13 + d23) / 2;
+a10 = vol / (2 * sqrt( s * (s-d12) * (s-d13) * (s-d23) ));
 
 
 b10 = nv - (ne5 + ne7 + ne9) + nf10;

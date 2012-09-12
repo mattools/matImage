@@ -82,7 +82,14 @@ properties
     % reference image (can be 2D, 3D or 4D)
     imageData;
     
-    % type of image. Can be one of {'grayscale', 'color', 'vector', 'none'}
+    % type of image. Can be one of:
+    % 'binary'
+    % 'grayscale'
+    % 'intensity'
+    % 'label'
+    % 'color' 
+    % 'vector'
+    % 'none'
     imageType;
     
     % physical size of the reference image (1-by-3 row vector)
@@ -631,15 +638,15 @@ methods
         end
         
         % check image data type
-        if isa(this.imageData, 'uint8')
-            % use min-max values depending on image type
-            mini = 0;
-            maxi = 255;
-            
-        elseif islogical(this.imageData)
+        if strcmp(this.imageType, 'binary') || islogical(this.imageData)
             % for binary images, the grayscale extent is defined by the type
             mini = 0;
             maxi = 1;
+            
+        elseif strcmp(this.imageType, 'grayscale') && isa(this.imageData, 'uint8')
+            % use min-max values depending on image type
+            mini = 0;
+            maxi = 255;
             
         elseif strcmp(this.imageType, 'vector')
             % case of vector image: compute max of norm
@@ -654,6 +661,10 @@ methods
             
             mini = 0;
             maxi = sqrt(max(norm(:)));
+            
+        elseif strcmp(this.imageType, 'label')
+            mini = 0;
+            maxi = max(this.imageData(:));
             
         else
             % for float images, display 99 percents of dynamic
@@ -1021,20 +1032,23 @@ methods
             ~isempty(this.voxelSizeUnit);
     end
     
-    function onConvertToGray(this, hObject, eventData)
+    function onConvertColorToGray(this, hObject, eventData)
         % convert RGB image to grayscale
         
         if isempty(this.imageData)
             return;
         end
         
-        % check that image is grayscale
+        % check that image is color
         if ~strcmp(this.imageType, 'color')
             return;
         end
         
         % compute conversion coefficients
-        mat = inv([1.0 0.956 0.621; 1.0 -0.272 -0.647; 1.0 -1.106 1.703]);
+        mat = inv([...
+            1.0  0.956  0.621; ...
+            1.0 -0.272 -0.647; ...
+            1.0 -1.106  1.703 ]);
         coefs = mat(1, :);
 
         % convert inner image data
@@ -1053,7 +1067,7 @@ methods
         end
         
         % check that image is grayscale
-        if ~strcmp(this.imageType, 'grayscale')
+        if ~ismember(this.imageType, {'grayscale', 'intensity'})
             return;
         end
         
@@ -1076,8 +1090,8 @@ methods
             return;
         end
         
-        % check that image is grayscale
-        if ~strcmp(this.imageType, 'grayscale')
+        % check that image is label
+        if ~ismember(this.imageType, {'label', 'binary'})
             return;
         end
         
@@ -1096,7 +1110,49 @@ methods
         newData = label2rgb3d(this.imageData, cmap, this.bgColor, 'shuffle');
         createNewSlicer(this, newData, this.imageName);
     end
-    
+
+    function onChangeImageType(this, hObject, eventData)
+        if isempty(this.imageData)
+            return;
+        end
+        
+        % check that image is grayscale
+        if ~ismember(this.imageType, {'grayscale', 'binary', 'label', 'intensity'})
+            return;
+        end
+
+        % convert inner data array
+        newType = get(hObject, 'UserData');
+        switch newType
+            case 'binary'
+                this.imageData = this.imageData > 0;
+            case 'grayscale'
+                this.imageData = uint8(this.imageData);
+            case 'intensity'
+                this.imageData = double(this.imageData);
+            case 'label'
+                maxValue = max(this.imageData(:));
+                if maxValue <= 255
+                    this.imageData = uint8(this.imageData);
+                elseif maxValue < 2^16
+                    this.imageData = uint16(this.imageData);
+                end
+        end
+        
+        % update image type
+        this.imageType = newType;
+        
+        % update display range
+        [mini maxi] = computeGrayScaleExtent(this);
+        this.displayRange  = [mini maxi];
+
+        % update display
+        updateSlice(this);
+        displayNewImage(this);
+        updateColorMap(this);
+        updateTitle(this);
+    end
+
     function onChangeDataType(this, hObject, eventData)
         
         if isempty(this.imageData)
@@ -1247,14 +1303,16 @@ methods
             img = sqrt(sum(double(img) .^ 2, 3));
         end
         
-        if ~strcmp(this.imageType, 'color')
-            % Process gray-scale or vector image
-            [minimg maximg] = this.computeGrayScaleExtent();
-            x = linspace(double(minimg), double(maximg), 256);
-            hist(double(img(:)), x);
+            
+        if strcmp(this.imageType, 'label')
+            % process label images -> do not count the zero
+            nLabels = max(this.imageData(:));
+            x = 1:nLabels;
+            hist(double(img(img > 0)), double(x));
+            xlim([0 nLabels+1]);        
             colormap jet;
             
-        else
+        elseif strcmp(this.imageType, 'color')
             % process 8-bits RGB 3D image
             
             % compute histogram of each channel
@@ -1270,11 +1328,17 @@ methods
             set(hh(2), 'color', [0 1 0]); % green
             set(hh(3), 'color', [0 0 1]); % blue
             
-            minimg = 0;
-            maximg = 255;
+            xlim([0 255]);
+        
+        else
+            % Process gray-scale or vector image
+            [minimg maximg] = this.computeGrayScaleExtent();
+            x = linspace(double(minimg), double(maximg), 256);
+            hist(double(img(:)), x);
+            xlim([minimg-.5 maximg+.5]);        
+            colormap jet;
         end
         
-        xlim([minimg maximg]);        
         fprintf('done\n');
         
         this.handles.subFigures = [this.handles.subFigures, h];
@@ -1291,17 +1355,21 @@ methods
             return;
         end
         
-        if ~strcmp(this.imageType, 'grayscale')
+        if ~ismember(this.imageType, {'grayscale', 'intensity'})
             return;
         end
         
         % extreme values in image
         minValue = min(this.imageData(isfinite(this.imageData)));
         maxValue = max(this.imageData(isfinite(this.imageData)));
+        
+        % avoid special degenerate cases
         if abs(maxValue - minValue) < 1e-12
             minValue = 0;
             maxValue = 1;
         end
+        
+        % set up range
         this.displayRange = [minValue maxValue];
         set(this.handles.imageAxis, 'CLim', this.displayRange);
     end
@@ -1313,7 +1381,7 @@ methods
             return;
         end
         
-        if ~strcmp(this.imageType, 'grayscale')
+        if ~ismember(this.imageType, {'grayscale', 'intensity'})
             return;
         end
         
@@ -1333,7 +1401,7 @@ methods
             return;
         end
         
-        if ~strcmp(this.imageType, 'grayscale')
+        if ~ismember(this.imageType, {'grayscale', 'intensity'})
             return;
         end
         
@@ -1438,8 +1506,22 @@ methods
         else
             this.colorMap = feval(cmapName, nGrays);
         end
-        
-        colormap(this.handles.imageAxis, this.colorMap);
+
+        updateColorMap(this);
+    end
+    
+    function updateColorMap(this)
+        % refresh the color map of current display
+        if strcmp(this.imageType, 'label')
+            cmap = this.colorMap;
+            if isempty(cmap)
+                cmap = jet(256);
+            end
+            cmap = [this.bgColor; cmap(2:end,:)];
+            colormap(this.handles.imageAxis, cmap);
+        else
+            colormap(this.handles.imageAxis, this.colorMap);
+        end
     end
     
     function onSelectBackgroundColor(this, varargin)
@@ -1456,6 +1538,7 @@ methods
         end
         
         this.bgColor = colors(ind, :);
+        updateColorMap(this);
     end
     
     
@@ -1525,7 +1608,7 @@ methods
             return;
         end
         
-        if strcmp(this.imageType, 'grayscale')
+        if ismember(this.imageType, {'grayscale', 'label', 'binary'})
             data = double(this.imageData);
             
         elseif strcmp(this.imageType, 'vector')
@@ -1604,6 +1687,25 @@ methods
         this.updateTitle();
     end
 
+    function onZoomValue(this, hObject, eventData)
+        % zoom to a given scale, stored in user data of calling object.
+        % zoom value is given as binary power:
+        % v positive ->  zoom = 2^v:1
+        % v = 0      ->  zoom =   1:1
+        % v negative ->  zoom = 1:2^v
+        if isempty(this.imageData)
+            return;
+        end
+
+        % get magnification
+        mag = get(hObject, 'Userdata');
+            
+        % setup magnification of current view
+        api = iptgetapi(this.handles.scrollPanel);
+        api.setMagnification(mag);
+        this.updateTitle();
+    end
+    
 end
 
 %% Callbacks for Help menu
@@ -1681,11 +1783,7 @@ methods
         end
         
         index = this.sliceIndex;
-        if ~strcmp(this.imageType, 'vector')
-            % graycale or color image
-            this.slice = stackSlice(this.imageData, 3, index);
-            
-        else
+        if strcmp(this.imageType, 'vector')
             % vector image
             dim = size(this.imageData);
             this.slice = zeros([dim(1) dim(2)]);
@@ -1693,6 +1791,30 @@ methods
                 this.slice = this.slice + this.imageData(:,:,i,index) .^ 2;
             end
             this.slice = sqrt(this.slice);
+            
+%         elseif strcmp(this.imageType, 'label')
+%             % label image
+%             
+%             % choose the colormap
+%             cmap = this.colorMap;
+%             if isempty(cmap)
+%                 cmap = jet(256);
+%             end
+%             
+%             % colormap has 256 entries, we need only a subset
+%             nLabels = max(this.imageData(:));
+%             inds = round(linspace(1, 256, nLabels));
+%             cmap = cmap(inds, :);
+%             
+%             % extract slice of labels
+%             labelSlice = stackSlice(this.imageData, 3, index);
+%             rgb = label2rgb(labelSlice, cmap, this.bgColor);
+%             this.slice = rgb;
+            
+        else
+            % graycale or color image
+            this.slice = stackSlice(this.imageData, 3, index);
+            
         end
         
     end
@@ -1724,8 +1846,6 @@ methods
         switch this.imageType
             case 'grayscale'
                 type = class(this.imageData);
-            case 'color'
-                type = 'color';
             otherwise
                 type = this.imageType;
         end
@@ -1876,10 +1996,15 @@ methods
         else
             colorFlag = 'off';
         end
-        if strcmp(this.imageType, 'grayscale')
+        if ismember(this.imageType, {'grayscale', 'label', 'binary'})
             grayscaleFlag = 'on';
         else
             grayscaleFlag = 'off';
+        end
+        if ismember(this.imageType, {'grayscale', 'label', 'binary', 'intensity'})
+            scalarFlag = 'on';
+        else
+            scalarFlag = 'off';
         end
         
         % files
@@ -1929,10 +2054,30 @@ methods
             'Enable', imageFlag, ...
             'Callback', @this.onChangeImageOrigin);
         
+        menuChangeImageType = uimenu(menuImage, ...
+            'Label', 'Change Image Type', ...
+            'Enable', scalarFlag, ...
+            'Separator', 'On');
+        uimenu(menuChangeImageType, ...
+            'Label', 'Binary', ...
+            'UserData', 'binary', ...
+            'Callback', @this.onChangeImageType);
+        uimenu(menuChangeImageType, ...
+            'Label', 'Gray scale', ...
+            'UserData', 'grayscale', ...
+            'Callback', @this.onChangeImageType);
+        uimenu(menuChangeImageType, ...
+            'Label', 'Intensity', ...
+            'UserData', 'intensity', ...
+            'Callback', @this.onChangeImageType);
+        uimenu(menuChangeImageType, ...
+            'Label', 'Label', ...
+            'UserData', 'label', ...
+            'Callback', @this.onChangeImageType);
+
         menuChangeGrayLevels = uimenu(menuImage, ...
             'Label', 'Change Gray levels', ...
-            'Enable', grayscaleFlag, ...
-            'Separator', 'On');
+            'Enable', grayscaleFlag);
         uimenu(menuChangeGrayLevels, ...
             'Label', '2 levels (Binary)', ...
             'UserData', 'binary', ...
@@ -1963,7 +2108,7 @@ methods
         uimenu(menuImage, ...
             'Label', 'RGB to Gray', ...
             'Enable', colorFlag, ...
-            'Callback', @this.onConvertToGray);
+            'Callback', @this.onConvertColorToGray);
         
         uimenu(menuImage, ...
             'Label', 'Split RGB', ...
@@ -2169,10 +2314,41 @@ methods
         uimenu(menuView, ...
             'Label', 'Zoom 1:1', ...
             'Callback', @this.onZoomOne);
+        menuZoom = uimenu(menuView, ...
+            'Label', 'Choose value');
         uimenu(menuView, ...
             'Label', 'Zoom &Best', ...
             'Accelerator', 'B', ...
             'Callback', @this.onZoomBest);
+        uimenu(menuZoom, ...
+            'Label', '10:1', ...
+            'UserData', 10, ...
+            'Callback', @this.onZoomValue);
+        uimenu(menuZoom, ...
+            'Label', '4:1', ...
+            'UserData', 4, ...
+            'Callback', @this.onZoomValue);
+        uimenu(menuZoom, ...
+            'Label', '2:1', ...
+            'UserData', 2, ...
+            'Callback', @this.onZoomValue);
+        uimenu(menuZoom, ...
+            'Label', '1:1', ...
+            'UserData', 1, ...
+            'Callback', @this.onZoomValue);
+        uimenu(menuZoom, ...
+            'Label', '1:2', ...
+            'UserData', 1/2, ...
+            'Callback', @this.onZoomValue);
+        uimenu(menuZoom, ...
+            'Label', '1:4', ...
+            'UserData', 1/4, ...
+            'Callback', @this.onZoomValue);
+        uimenu(menuZoom, ...
+            'Label', '1:10', ...
+            'UserData', 1/10, ...
+            'Callback', @this.onZoomValue);
+        
         
         % Help
         menuHelp = uimenu(hf, 'Label', '&Help');

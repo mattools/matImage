@@ -1512,16 +1512,22 @@ methods
     
     function updateColorMap(this)
         % refresh the color map of current display
-        if strcmp(this.imageType, 'label')
-            cmap = this.colorMap;
-            if isempty(cmap)
-                cmap = jet(256);
-            end
-            cmap = [this.bgColor; cmap(2:end,:)];
-            colormap(this.handles.imageAxis, cmap);
-        else
-            colormap(this.handles.imageAxis, this.colorMap);
+        
+        % get current color map, or create a new one
+        cmap = this.colorMap;
+        if isempty(cmap)
+            cmap = jet(256);
         end
+
+        % adapt color map for label or binary images
+        if strcmp(this.imageType, 'label')
+            cmap = [this.bgColor; cmap(2:end,:)];
+        elseif strcmp(this.imageType, 'binary')
+            cmap = cmap([1 end], :);
+        end
+        
+        colormap(this.handles.imageAxis, cmap);
+        
     end
     
     function onSelectBackgroundColor(this, varargin)
@@ -1596,6 +1602,69 @@ methods
         view(3);
     end
 
+    function onShowLabelIsosurfaces(this, varargin)
+        
+        if isempty(this.imageData)
+            return;
+        end
+        if ~ismember(this.imageType, {'label', 'binary'})
+            return;
+        end
+        
+        % compute display settings
+        spacing = this.voxelSize;
+        origin  = this.voxelOrigin;
+        
+        % compute grid positions
+        dim = this.imageSize;
+        lx = (0:dim(1)-1) * spacing(1) + origin(1);
+        ly = (0:dim(2)-1) * spacing(2) + origin(2);
+        lz = (0:dim(3)-1) * spacing(3) + origin(3);
+
+        % number of different labels
+        nLabels = double(max(this.imageData(:)));
+
+        % determine the color map to use (default is empty)
+        cmap = [];
+        if ~isColorStack(this.imageData) && ~isempty(this.colorMap)
+            cmap = this.colorMap;
+        end
+        if isempty(cmap)
+            cmap = jet(256);
+        end
+        inds = round(linspace(2, length(cmap), nLabels));
+        cmap = cmap(inds, :);
+        
+        % create figure 
+        hf = figure(); hold on;
+        set(hf, 'renderer', 'opengl');
+        
+        % compute an isosurface for each label
+        for i = 1:nLabels
+            im = this.imageData==i;
+            if ~any(im)
+                continue;
+            end
+            
+            % display isosurface
+            p = patch(isosurface(ly, lx, lz, im, .5));
+            
+            % set face color
+            set(p, 'FaceColor', cmap(i,:), 'EdgeColor', 'none');
+        end
+        
+        % compute display extent (add a 0.5 limit around each voxel)
+        extent = stackExtent(this.imageSize, spacing, origin);
+        
+        % setup display
+        axis equal;
+        axis(extent);
+        view(3);
+        axis('vis3d');
+        
+        light;
+    end
+    
     function rgb = createRGBImage(this)
         % compute a RGB stack that can be easily displayed
         
@@ -2298,10 +2367,14 @@ methods
         
         uimenu(menuView, ...
             'Label', 'Show Ortho Slices', ...
+            'Separator', 'On', ...
             'Callback', @this.onShowOrthoPlanes);
         uimenu(menuView, ...
             'Label', 'Show 3D Ortho Slices', ...
             'Callback', @this.onShowOrthoSlices3d);
+        uimenu(menuView, ...
+            'Label', 'Surface rendering', ...
+            'Callback', @this.onShowLabelIsosurfaces);
         
         % Zoom menu items
         uimenu(menuView, ...

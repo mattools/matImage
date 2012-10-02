@@ -1,0 +1,401 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>demoShapes2d</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2011-08-05"><meta name="m-file" content="demoShapes2d"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">initialisations</a></li><li><a href="#3">Disc</a></li><li><a href="#4">Ellipse</a></li><li><a href="#5">Square</a></li><li><a href="#6">Rectangle</a></li><li><a href="#7">Capsule</a></li><li><a href="#8">Egg</a></li><li><a href="#9">Trefoil</a></li><li><a href="#10">Starfish</a></li></ul></div><pre class="codeinput"><span class="comment">%DEMOIMSHAPES2D Display various 2D demo shapes</span>
+<span class="comment">%</span>
+<span class="comment">%   output = demoShapes2d(input)</span>
+<span class="comment">%</span>
+<span class="comment">%   Example</span>
+<span class="comment">%   demoImShapes</span>
+<span class="comment">%</span>
+<span class="comment">%   See also</span>
+<span class="comment">%</span>
+<span class="comment">%</span>
+<span class="comment">% ------</span>
+<span class="comment">% Author: David Legland</span>
+<span class="comment">% e-mail: david.legland@grignon.inra.fr</span>
+<span class="comment">% Created: 2011-06-29,    using Matlab 7.9.0.529 (R2009b)</span>
+<span class="comment">% Copyright 2011 INRA - Cepia Software Platform.</span>
+</pre><h2>initialisations<a name="2"></a></h2><pre class="codeinput"><span class="comment">% generate cubic images</span>
+lx = 1:100;
+ly = 1:100;
+
+<span class="comment">% choose a center not aligned with the grid</span>
+center = [50+sqrt(2)-1 50+sqrt(3)-1];
+
+angles = [<span class="keyword">...</span>
+    0; <span class="keyword">...</span>
+    10; <span class="keyword">...</span>
+    30; <span class="keyword">...</span>
+    45];
+</pre><h2>Disc<a name="3"></a></h2><pre class="codeinput"><span class="comment">% sphere is defined by center and radius</span>
+disc = [center 40];
+
+<span class="comment">% generation of 3D image</span>
+img = discreteDisc(lx, ly, disc);
+
+<span class="comment">% display image</span>
+f = figure;
+imshow(~img);
+
+<span class="comment">% decorate</span>
+title(<span class="string">'Disc, radius=40'</span>);
+</pre><img vspace="5" hspace="5" src="demoShapes2d_01.png" alt=""> <h2>Ellipse<a name="4"></a></h2><pre class="codeinput">figure;
+<span class="keyword">for</span> i = 1:4
+    <span class="comment">% sphere is defined by center and radius</span>
+    ellipse = [center 40 20 angles(i)];
+
+    <span class="comment">% generation of 3D image</span>
+    img = discreteEllipse(lx, ly, ellipse);
+
+    <span class="comment">% display image</span>
+    subplot(2, 2, i);
+    imshow(~img);
+
+    <span class="comment">% decorate</span>
+    title(sprintf(<span class="string">'Ellipse, Th=%02d'</span>, angles(i)));
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="demoShapes2d_02.png" alt=""> <h2>Square<a name="5"></a></h2><pre class="codeinput">figure;
+<span class="keyword">for</span> i = 1:4
+    <span class="comment">% sphere is defined by center and radius</span>
+    square = [center 60 angles(i)];
+
+    <span class="comment">% generation of 3D image</span>
+    img = discreteSquare(lx, ly, square);
+
+    <span class="comment">% display image</span>
+    subplot(2, 2, i);
+    imshow(~img);
+
+    <span class="comment">% decorate</span>
+    title(sprintf(<span class="string">'Square, Th=%02d'</span>, angles(i)));
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="demoShapes2d_03.png" alt=""> <h2>Rectangle<a name="6"></a></h2><pre class="codeinput">figure;
+<span class="keyword">for</span> i = 1:4
+    <span class="comment">% sphere is defined by center and radius</span>
+    rect = [center 60 30 angles(i)];
+
+    <span class="comment">% generation of 3D image</span>
+    img = discreteRectangle(lx, ly, rect);
+
+    <span class="comment">% display image</span>
+    subplot(2, 2, i);
+    imshow(~img);
+
+    <span class="comment">% decorate</span>
+    title(sprintf(<span class="string">'Rectangle, Th=%02d'</span>, angles(i)));
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="demoShapes2d_04.png" alt=""> <h2>Capsule<a name="7"></a></h2><pre class="codeinput">figure;
+<span class="keyword">for</span> i = 1:4
+    <span class="comment">% sphere is defined by center and radius</span>
+    [dx dy] = pol2cart(deg2rad(angles(i)), 30);
+    caps = [center-[dx dy] center+[dx dy] 15];
+
+    <span class="comment">% generation of 3D image</span>
+    img = discreteCapsule(lx, ly, caps);
+
+    <span class="comment">% display image</span>
+    subplot(2, 2, i);
+    imshow(~img);
+
+    <span class="comment">% decorate</span>
+    title(sprintf(<span class="string">'Capsule, Th=%02d'</span>, angles(i)));
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="demoShapes2d_05.png" alt=""> <h2>Egg<a name="8"></a></h2><pre class="codeinput">figure;
+<span class="keyword">for</span> i = 1:4
+    <span class="comment">% egg defined by a center, a size and an angle</span>
+    egg = [center 30 angles(i)];
+
+    <span class="comment">% generation of 3D image</span>
+    img = discreteEgg(lx, ly, egg);
+
+    <span class="comment">% display image</span>
+    subplot(2, 2, i);
+    imshow(~img);
+
+    <span class="comment">% decorate</span>
+    title(sprintf(<span class="string">'Egg, Th=%02d'</span>, angles(i)));
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="demoShapes2d_06.png" alt=""> <h2>Trefoil<a name="9"></a></h2><pre class="codeinput">figure;
+<span class="keyword">for</span> i = 1:4
+    <span class="comment">% trefoil defined by a center, two radii and an angle</span>
+    trefoil = [center 40 15 angles(i)];
+
+    <span class="comment">% generation of 3D image</span>
+    img = discreteTrefoil(lx, ly, trefoil);
+
+    <span class="comment">% display image</span>
+    subplot(2, 2, i);
+    imshow(~img);
+
+    <span class="comment">% decorate</span>
+    title(sprintf(<span class="string">'Trefoil, Th=%02d'</span>, angles(i)));
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="demoShapes2d_07.png" alt=""> <h2>Starfish<a name="10"></a></h2><pre class="codeinput">figure;
+<span class="keyword">for</span> i = 1:4
+    <span class="comment">% starfish defined by a center, two radii and an angle</span>
+    starfish = [center 40 20 angles(i)];
+
+    <span class="comment">% generation of 3D image</span>
+    img = discreteStarfish(lx, ly, starfish);
+
+    <span class="comment">% display image</span>
+    subplot(2, 2, i);
+    imshow(~img);
+
+    <span class="comment">% decorate</span>
+    title(sprintf(<span class="string">'Starfish, Th=%02d'</span>, angles(i)));
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="demoShapes2d_08.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+%DEMOIMSHAPES2D Display various 2D demo shapes
+%
+%   output = demoShapes2d(input)
+%
+%   Example
+%   demoImShapes
+%
+%   See also
+%
+%
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Author: David Legland
+% e-mail: david.legland@grignon.inra.fr
+% Created: 2011-06-29,    using Matlab 7.9.0.529 (R2009b)
+% Copyright 2011 INRA - Cepia Software Platform.
+
+
+%% initialisations
+
+% generate cubic images
+lx = 1:100;
+ly = 1:100;
+
+% choose a center not aligned with the grid
+center = [50+sqrt(2)-1 50+sqrt(3)-1];
+
+angles = [...
+    0; ...
+    10; ...
+    30; ...
+    45];
+
+
+
+%% Disc
+
+% sphere is defined by center and radius
+disc = [center 40];
+
+% generation of 3D image
+img = discreteDisc(lx, ly, disc);
+
+% display image
+f = figure; 
+imshow(~img);
+    
+% decorate
+title('Disc, radius=40');
+
+
+%% Ellipse
+
+figure;
+for i = 1:4
+    % sphere is defined by center and radius
+    ellipse = [center 40 20 angles(i)];
+
+    % generation of 3D image
+    img = discreteEllipse(lx, ly, ellipse);
+
+    % display image
+    subplot(2, 2, i); 
+    imshow(~img);
+
+    % decorate
+    title(sprintf('Ellipse, Th=%02d', angles(i)));
+end
+
+
+%% Square
+
+figure;
+for i = 1:4
+    % sphere is defined by center and radius
+    square = [center 60 angles(i)];
+
+    % generation of 3D image
+    img = discreteSquare(lx, ly, square);
+
+    % display image
+    subplot(2, 2, i); 
+    imshow(~img);
+
+    % decorate
+    title(sprintf('Square, Th=%02d', angles(i)));
+end
+
+
+%% Rectangle
+
+figure;
+for i = 1:4
+    % sphere is defined by center and radius
+    rect = [center 60 30 angles(i)];
+
+    % generation of 3D image
+    img = discreteRectangle(lx, ly, rect);
+
+    % display image
+    subplot(2, 2, i); 
+    imshow(~img);
+
+    % decorate
+    title(sprintf('Rectangle, Th=%02d', angles(i)));
+end
+
+
+%% Capsule
+
+figure;
+for i = 1:4
+    % sphere is defined by center and radius
+    [dx dy] = pol2cart(deg2rad(angles(i)), 30);
+    caps = [center-[dx dy] center+[dx dy] 15];
+
+    % generation of 3D image
+    img = discreteCapsule(lx, ly, caps);
+
+    % display image
+    subplot(2, 2, i); 
+    imshow(~img);
+
+    % decorate
+    title(sprintf('Capsule, Th=%02d', angles(i)));
+end
+
+
+%% Egg
+
+figure;
+for i = 1:4
+    % egg defined by a center, a size and an angle
+    egg = [center 30 angles(i)];
+
+    % generation of 3D image
+    img = discreteEgg(lx, ly, egg);
+
+    % display image
+    subplot(2, 2, i); 
+    imshow(~img);
+
+    % decorate
+    title(sprintf('Egg, Th=%02d', angles(i)));
+end
+
+
+%% Trefoil
+
+figure;
+for i = 1:4
+    % trefoil defined by a center, two radii and an angle
+    trefoil = [center 40 15 angles(i)];
+
+    % generation of 3D image
+    img = discreteTrefoil(lx, ly, trefoil);
+
+    % display image
+    subplot(2, 2, i); 
+    imshow(~img);
+
+    % decorate
+    title(sprintf('Trefoil, Th=%02d', angles(i)));
+end
+
+
+%% Starfish
+
+figure;
+for i = 1:4
+    % starfish defined by a center, two radii and an angle
+    starfish = [center 40 20 angles(i)];
+
+    % generation of 3D image
+    img = discreteStarfish(lx, ly, starfish);
+
+    % display image
+    subplot(2, 2, i); 
+    imshow(~img);
+
+    % decorate
+    title(sprintf('Starfish, Th=%02d', angles(i)));
+end
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

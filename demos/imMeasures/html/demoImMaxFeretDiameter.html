@@ -1,0 +1,189 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>demoImMaxFeretDiameter</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2011-07-19"><meta name="m-file" content="demoImMaxFeretDiameter"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#3">Image segmentation</a></li><li><a href="#4">Compute enclosing oriented boxes</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> demoImMaxFeretDiameter(varargin)
+</pre><pre class="codeinput"><span class="comment">%DEMOIMORIENTEDBOX Demo file for using function imOrientedBox</span>
+<span class="comment">%</span>
+<span class="comment">%   Syntax</span>
+<span class="comment">%   demoImMaxFeretDiameter</span>
+<span class="comment">%   The demo runs automatically.</span>
+<span class="comment">%</span>
+<span class="comment">%   Example</span>
+<span class="comment">%   demoImMaxFeretDiameter</span>
+<span class="comment">%</span>
+<span class="comment">%   See also</span>
+<span class="comment">%</span>
+<span class="comment">%</span>
+<span class="comment">% ------</span>
+<span class="comment">% Author: David Legland</span>
+<span class="comment">% e-mail: david.legland@grignon.inra.fr</span>
+<span class="comment">% Created: 2011-05-09,    using Matlab 7.9.0.529 (R2009b)</span>
+<span class="comment">% Copyright 2011 INRA - Cepia Software Platform.</span>
+</pre><h2>Image segmentation<a name="3"></a></h2><pre class="codeinput"><span class="comment">% read image</span>
+img = imread(<span class="string">'rice.png'</span>);
+figure(1); clf;
+imshow(img);
+
+<span class="comment">% compute background</span>
+bg = imopen(img, ones(30, 30));
+img2 = img - bg;
+figure(2); clf;
+imshow(img2);
+
+<span class="comment">% display histogram, to identify the threshold value</span>
+figure(3); clf;
+imHistogram(img2);
+
+<span class="comment">% image binarisation, and remove particles touching border</span>
+bin = img2 &gt; 50;
+bin = imclearborder(bin, 4);
+imshow(bin);
+
+<span class="comment">% compute image labels, using minimal connectivity</span>
+lbl = bwlabel(bin, 4);
+nLabels = max(lbl(:));
+
+<span class="comment">% display label image</span>
+rgb = label2rgb(lbl, jet(nLabels), <span class="string">'w'</span>, <span class="string">'shuffle'</span>);
+figure(4); clf;
+imshow(rgb);
+</pre><img vspace="5" hspace="5" src="demoImMaxFeretDiameter_01.png" alt=""> <img vspace="5" hspace="5" src="demoImMaxFeretDiameter_02.png" alt=""> <img vspace="5" hspace="5" src="demoImMaxFeretDiameter_03.png" alt=""> <img vspace="5" hspace="5" src="demoImMaxFeretDiameter_04.png" alt=""> <h2>Compute enclosing oriented boxes<a name="4"></a></h2><pre class="codeinput"><span class="comment">% compute diameters with corresponding angles</span>
+[diams thetas] = imMaxFeretDiameter(lbl);
+
+<span class="comment">% also compute centroids</span>
+centros = imCentroid(lbl);
+
+<span class="comment">% overlay result on image</span>
+hold <span class="string">on</span>;
+drawCenteredEdge([centros diams thetas], <span class="string">'linewidth'</span>, 2, <span class="string">'color'</span>, <span class="string">'k'</span>);
+</pre><img vspace="5" hspace="5" src="demoImMaxFeretDiameter_05.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+function demoImMaxFeretDiameter(varargin)
+%DEMOIMORIENTEDBOX Demo file for using function imOrientedBox
+%
+%   Syntax
+%   demoImMaxFeretDiameter
+%   The demo runs automatically.
+%
+%   Example
+%   demoImMaxFeretDiameter
+%
+%   See also
+%
+%
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Author: David Legland
+% e-mail: david.legland@grignon.inra.fr
+% Created: 2011-05-09,    using Matlab 7.9.0.529 (R2009b)
+% Copyright 2011 INRA - Cepia Software Platform.
+
+
+%% Image segmentation
+
+% read image
+img = imread('rice.png');
+figure(1); clf;
+imshow(img);
+
+% compute background
+bg = imopen(img, ones(30, 30));
+img2 = img - bg;
+figure(2); clf;
+imshow(img2);
+
+% display histogram, to identify the threshold value
+figure(3); clf;
+imHistogram(img2);
+
+% image binarisation, and remove particles touching border
+bin = img2 > 50;
+bin = imclearborder(bin, 4);
+imshow(bin);
+
+% compute image labels, using minimal connectivity
+lbl = bwlabel(bin, 4);
+nLabels = max(lbl(:));
+
+% display label image
+rgb = label2rgb(lbl, jet(nLabels), 'w', 'shuffle');
+figure(4); clf;
+imshow(rgb);
+
+
+%% Compute enclosing oriented boxes
+
+% compute diameters with corresponding angles
+[diams thetas] = imMaxFeretDiameter(lbl);
+
+% also compute centroids
+centros = imCentroid(lbl);
+
+% overlay result on image
+hold on;
+drawCenteredEdge([centros diams thetas], 'linewidth', 2, 'color', 'k');
+
+
+##### SOURCE END #####
+--></body></html>

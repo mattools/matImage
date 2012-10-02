@@ -1,0 +1,232 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>demoImJointHistogram</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2009-12-09"><meta name="m-file" content="demoImJointHistogram"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#3">Chargement des images</a></li><li><a href="#4">Avant recalage</a></li><li><a href="#5">Apres recalage</a></li><li><a href="#6">Decalage de l'image de depart</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> varargout = demoImJointHistogram(varargin)
+</pre><pre class="codeinput"><span class="comment">%DEMOIMJOINTHISTOGRAM  One-line description here, please.</span>
+<span class="comment">%   output = demoImJointHistogram(input)</span>
+<span class="comment">%</span>
+<span class="comment">%   Example</span>
+<span class="comment">%   demoImJointHistogram</span>
+<span class="comment">%</span>
+<span class="comment">%   See also</span>
+<span class="comment">%</span>
+<span class="comment">%</span>
+<span class="comment">% ------</span>
+<span class="comment">% Author: David Legland</span>
+<span class="comment">% e-mail: david.legland@grignon.inra.fr</span>
+<span class="comment">% Created: 2009-12-09,    using Matlab 7.9.0.529 (R2009b)</span>
+<span class="comment">% Copyright 2009 INRA - Cepia Software Platform.</span>
+</pre><h2>Chargement des images<a name="3"></a></h2><pre class="codeinput"><span class="comment">% image fixe</span>
+img1 = imread(<span class="string">'img1.bmp'</span>);
+
+<span class="comment">% image a recaler</span>
+img2 = imread(<span class="string">'img2.bmp'</span>);
+
+<span class="comment">% image apres recalage</span>
+rec = imread(<span class="string">'res-rigid2.tif'</span>);
+
+<span class="comment">% nouvelle figure</span>
+figure(1); clf;
+
+<span class="comment">% affiche image de base</span>
+subplot(131);
+imshow(img1);
+title(<span class="string">'image fixe'</span>);
+subplot(132);
+imshow(img2);
+title(<span class="string">'image a recaler'</span>);
+subplot(133);
+imshow(rec);
+title(<span class="string">'image recalee'</span>);
+</pre><img vspace="5" hspace="5" src="demoImJointHistogram_01.png" alt=""> <h2>Avant recalage<a name="4"></a></h2><pre class="codeinput"><span class="comment">% calcule histo joint</span>
+res = imJointHistogram(img1, img2);
+
+<span class="comment">% affiche image et histo joint (log)</span>
+figure(2);
+subplot(121);
+imshow(img2)
+title(<span class="string">'image a recaler'</span>);
+subplot(122);
+imshow(log(res), [0 log(max(res(:)))]);
+title(<span class="string">'joint histo'</span>);
+</pre><img vspace="5" hspace="5" src="demoImJointHistogram_02.png" alt=""> <h2>Apres recalage<a name="5"></a></h2><pre class="codeinput"><span class="comment">% calcule histo joint</span>
+res2 = imJointHistogram(img1, rec);
+
+<span class="comment">% affiche image et histo joint  (log)</span>
+figure(3);
+subplot(121);
+imshow(rec);
+title(<span class="string">'image recalee'</span>);
+subplot(122);
+imshow(log(res2), [0 log(max(res2(:)))]);
+title(<span class="string">'joint histo'</span>);
+</pre><img vspace="5" hspace="5" src="demoImJointHistogram_03.png" alt=""> <h2>Decalage de l'image de depart<a name="6"></a></h2><pre class="codeinput"><span class="comment">% histo joint apres decalage de 1 pixel</span>
+hDec1 = imJointHistogram(img1(1:end-1, :), img1(2:end, :));
+
+<span class="comment">% histo joint apres decalage de 2 pixels</span>
+hDec2 = imJointHistogram(img1(1:end-2, :), img1(3:end, :));
+
+<span class="comment">% affiche les histo joints</span>
+figure(4); clf;
+subplot(121);
+imshow(log(hDec1), [0 log(max(hDec1(:)))]);
+title(<span class="string">'decalage 1 px'</span>);
+subplot(122);
+imshow(log(hDec2), [0 log(max(hDec2(:)))]);
+title(<span class="string">'decalage 2 px'</span>);
+</pre><img vspace="5" hspace="5" src="demoImJointHistogram_04.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+function varargout = demoImJointHistogram(varargin)
+%DEMOIMJOINTHISTOGRAM  One-line description here, please.
+%   output = demoImJointHistogram(input)
+%
+%   Example
+%   demoImJointHistogram
+%
+%   See also
+%
+%
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Author: David Legland
+% e-mail: david.legland@grignon.inra.fr
+% Created: 2009-12-09,    using Matlab 7.9.0.529 (R2009b)
+% Copyright 2009 INRA - Cepia Software Platform.
+
+%% Chargement des images
+
+% image fixe
+img1 = imread('img1.bmp');
+
+% image a recaler
+img2 = imread('img2.bmp');
+
+% image apres recalage
+rec = imread('res-rigid2.tif');
+
+% nouvelle figure
+figure(1); clf;
+
+% affiche image de base
+subplot(131);
+imshow(img1);
+title('image fixe');
+subplot(132);
+imshow(img2);
+title('image a recaler');
+subplot(133);
+imshow(rec);
+title('image recalee');
+
+
+%% Avant recalage
+
+% calcule histo joint
+res = imJointHistogram(img1, img2);
+
+% affiche image et histo joint (log)
+figure(2);
+subplot(121);
+imshow(img2)
+title('image a recaler');
+subplot(122);
+imshow(log(res), [0 log(max(res(:)))]);
+title('joint histo');
+
+
+%% Apres recalage
+
+% calcule histo joint
+res2 = imJointHistogram(img1, rec);
+
+% affiche image et histo joint  (log)
+figure(3);
+subplot(121);
+imshow(rec);
+title('image recalee');
+subplot(122);
+imshow(log(res2), [0 log(max(res2(:)))]);
+title('joint histo');
+
+
+%% Decalage de l'image de depart
+
+% histo joint apres decalage de 1 pixel
+hDec1 = imJointHistogram(img1(1:end-1, :), img1(2:end, :));
+
+% histo joint apres decalage de 2 pixels
+hDec2 = imJointHistogram(img1(1:end-2, :), img1(3:end, :));
+
+% affiche les histo joints
+figure(4); clf;
+subplot(121);
+imshow(log(hDec1), [0 log(max(hDec1(:)))]);
+title('decalage 1 px');
+subplot(122);
+imshow(log(hDec2), [0 log(max(hDec2(:)))]);
+title('decalage 2 px');
+
+
+##### SOURCE END #####
+--></body></html>

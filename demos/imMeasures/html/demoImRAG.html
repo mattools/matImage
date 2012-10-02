@@ -1,0 +1,160 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>demoImRAG</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2012-10-02"><meta name="m-file" content="demoImRAG"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#3">Read input image</a></li><li><a href="#4">compute Skeleton by Influence Zone (SKIZ)</a></li><li><a href="#5">Region adjacency graph</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> demoImRAG(varargin)
+</pre><pre class="codeinput"><span class="comment">%Demo program for imRAG: apply on SKIZ computed on coins image</span>
+<span class="comment">%</span>
+<span class="comment">%</span>
+<span class="comment">%</span>
+<span class="comment">% ------</span>
+<span class="comment">% Author: David Legland</span>
+<span class="comment">% e-mail: david.legland@grignon.inra.fr</span>
+<span class="comment">% Created: 2010-01-22,    using Matlab 7.9.0.529 (R2009b)</span>
+<span class="comment">% Copyright 2010 INRA - Cepia Software Platform.</span>
+</pre><h2>Read input image<a name="3"></a></h2><pre class="codeinput">img = imread(<span class="string">'coins.png'</span>);
+
+<span class="comment">% make binary, and remove noise</span>
+bin = imopen(img &gt; 80, ones(3, 3));
+imshow(bin);
+</pre><img vspace="5" hspace="5" src="demoImRAG_01.png" alt=""> <h2>compute Skeleton by Influence Zone (SKIZ)<a name="4"></a></h2><pre class="codeinput"><span class="comment">% distance function</span>
+dist = bwdist(bin);
+imshow(dist, []); title(<span class="string">'distance function'</span>);
+
+<span class="comment">% compute watershed</span>
+distf = imfilter(dist, ones(3, 3)/9, inf);
+wat = watershed(distf, 4);
+
+<span class="comment">% superposition of watershed on original image</span>
+ovr = imOverlay(img, imdilate(wat==0, ones(3, 3)));
+
+<span class="comment">% display result</span>
+figure;
+imshow(ovr);
+title(<span class="string">'watershed'</span>);
+</pre><img vspace="5" hspace="5" src="demoImRAG_02.png" alt=""> <img vspace="5" hspace="5" src="demoImRAG_03.png" alt=""> <h2>Region adjacency graph<a name="5"></a></h2><pre class="codeinput"><span class="comment">% Compute Region adjacency graph</span>
+[n e] = imRAG(wat);
+
+<span class="comment">% diplay RAG with surimpression</span>
+hold <span class="string">on</span>;
+<span class="keyword">for</span> i = 1:size(e, 1)
+    plot(n(e(i,:), 1), n(e(i,:), 2), <span class="string">'linewidth'</span>, 2, <span class="string">'color'</span>, <span class="string">'g'</span>);
+<span class="keyword">end</span>
+plot(n(:,1), n(:,2), <span class="string">'bo'</span>);
+</pre><img vspace="5" hspace="5" src="demoImRAG_04.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+function demoImRAG(varargin)
+%Demo program for imRAG: apply on SKIZ computed on coins image
+%   
+%
+%
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Author: David Legland
+% e-mail: david.legland@grignon.inra.fr
+% Created: 2010-01-22,    using Matlab 7.9.0.529 (R2009b)
+% Copyright 2010 INRA - Cepia Software Platform.
+
+
+%% Read input image
+
+img = imread('coins.png');
+
+% make binary, and remove noise
+bin = imopen(img > 80, ones(3, 3));
+imshow(bin);
+
+
+%% compute Skeleton by Influence Zone (SKIZ)
+
+% distance function
+dist = bwdist(bin);
+imshow(dist, []); title('distance function');
+
+% compute watershed
+distf = imfilter(dist, ones(3, 3)/9, inf);
+wat = watershed(distf, 4);
+
+% superposition of watershed on original image
+ovr = imOverlay(img, imdilate(wat==0, ones(3, 3)));
+
+% display result
+figure;
+imshow(ovr);
+title('watershed');
+
+
+%% Region adjacency graph
+
+% Compute Region adjacency graph
+[n e] = imRAG(wat);
+
+% diplay RAG with surimpression
+hold on;
+for i = 1:size(e, 1)
+    plot(n(e(i,:), 1), n(e(i,:), 2), 'linewidth', 2, 'color', 'g');
+end
+plot(n(:,1), n(:,2), 'bo');
+
+##### SOURCE END #####
+--></body></html>

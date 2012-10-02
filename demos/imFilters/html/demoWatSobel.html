@@ -1,0 +1,177 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>demoWatSobel</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2010-01-07"><meta name="m-file" content="demoWatSobel"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#3">Base image</a></li><li><a href="#4">Edge enhancement</a></li><li><a href="#5">Filtering</a></li><li><a href="#6">Computation of watershed</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> varargout = demoWatSobel(varargin)
+</pre><pre class="codeinput"><span class="comment">%DEMOWATSOBEL  Segmentation by watershed on Sobel filtered rice image</span>
+<span class="comment">%   demoWatSobel</span>
+<span class="comment">%</span>
+<span class="comment">%   Example</span>
+<span class="comment">%   demoWatSobel</span>
+<span class="comment">%</span>
+<span class="comment">%   See also</span>
+<span class="comment">%   imEdgeStrength, watershed</span>
+<span class="comment">%</span>
+<span class="comment">% ------</span>
+<span class="comment">% Author: David Legland</span>
+<span class="comment">% e-mail: david.legland@grignon.inra.fr</span>
+<span class="comment">% Created: 2010-01-07,    using Matlab 7.9.0.529 (R2009b)</span>
+<span class="comment">% Copyright 2010 INRA - Cepia Software Platform.</span>
+</pre><h2>Base image<a name="3"></a></h2><pre class="codeinput"><span class="comment">% read image</span>
+img = imread(<span class="string">'rice.png'</span>);
+
+<span class="comment">% show it</span>
+imshow(img);
+</pre><img vspace="5" hspace="5" src="demoWatSobel_01.png" alt=""> <h2>Edge enhancement<a name="4"></a></h2><pre class="codeinput"><span class="comment">% use sobel filters</span>
+edg = imEdgeStrength(img);
+
+<span class="comment">% show result</span>
+imshow(edg, [0 max(edg(:))]);
+</pre><img vspace="5" hspace="5" src="demoWatSobel_02.png" alt=""> <h2>Filtering<a name="5"></a></h2><pre class="codeinput"><span class="comment">% smooth</span>
+edgf = imfilter(edg, ones(3,3)/9);
+figure(1); clf;
+imshow(edgf, [0 max(edgf(:))]);
+
+<span class="comment">% compute extended minima</span>
+emin = imextendedmin(edgf, 30, 4);
+figure(2); clf;
+imshow(emin);
+</pre><img vspace="5" hspace="5" src="demoWatSobel_03.png" alt=""> <img vspace="5" hspace="5" src="demoWatSobel_04.png" alt=""> <h2>Computation of watershed<a name="6"></a></h2><pre class="codeinput"><span class="comment">% impose minima on image, then compute watershed</span>
+imp = imimposemin(edgf, emin, 4);
+wat = watershed(imp, 4);
+
+<span class="comment">% show resulting segmentation</span>
+figure(1); clf;
+imshow(wat==0);
+
+<span class="comment">% Show result superimposed on original image</span>
+figure(2); clf;
+imshow(imoverlay(img, wat==0));
+</pre><img vspace="5" hspace="5" src="demoWatSobel_05.png" alt=""> <img vspace="5" hspace="5" src="demoWatSobel_06.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+function varargout = demoWatSobel(varargin)
+%DEMOWATSOBEL  Segmentation by watershed on Sobel filtered rice image
+%   demoWatSobel
+%
+%   Example
+%   demoWatSobel
+%
+%   See also
+%   imEdgeStrength, watershed
+%
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Author: David Legland
+% e-mail: david.legland@grignon.inra.fr
+% Created: 2010-01-07,    using Matlab 7.9.0.529 (R2009b)
+% Copyright 2010 INRA - Cepia Software Platform.
+
+
+%% Base image
+
+% read image
+img = imread('rice.png');
+
+% show it
+imshow(img);
+
+
+%% Edge enhancement
+
+% use sobel filters
+edg = imEdgeStrength(img);
+
+% show result
+imshow(edg, [0 max(edg(:))]);
+
+
+%% Filtering
+
+% smooth
+edgf = imfilter(edg, ones(3,3)/9);
+figure(1); clf;
+imshow(edgf, [0 max(edgf(:))]);
+
+% compute extended minima
+emin = imextendedmin(edgf, 30, 4);
+figure(2); clf;
+imshow(emin);
+
+
+%% Computation of watershed
+
+% impose minima on image, then compute watershed
+imp = imimposemin(edgf, emin, 4);
+wat = watershed(imp, 4);
+
+% show resulting segmentation
+figure(1); clf;
+imshow(wat==0);
+
+% Show result superimposed on original image
+figure(2); clf;
+imshow(imoverlay(img, wat==0));
+
+
+##### SOURCE END #####
+--></body></html>

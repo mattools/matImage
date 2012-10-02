@@ -1,0 +1,191 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>demoImChamferDistance</title><meta name="generator" content="MATLAB 7.9"><meta name="date" content="2011-07-11"><meta name="m-file" content="demoImChamferDistance"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#3">Read image a create marker</a></li><li><a href="#4">compute using quasi-enclidean weights</a></li><li><a href="#5">compute using integer weights, giving integer results</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> demoImChamferDistance(varargin)
+</pre><pre class="codeinput"><span class="comment">%DEMOIMCHAMFERDISTANCE computes distance function inside a complex particle</span>
+<span class="comment">%</span>
+<span class="comment">%   output = demoImChamferDistance(input)</span>
+<span class="comment">%</span>
+<span class="comment">%   Example</span>
+<span class="comment">%   demoImChamferDistance</span>
+<span class="comment">%</span>
+<span class="comment">%   See also</span>
+<span class="comment">%</span>
+<span class="comment">%</span>
+<span class="comment">% ------</span>
+<span class="comment">% Author: David Legland</span>
+<span class="comment">% e-mail: david.legland@grignon.inra.fr</span>
+<span class="comment">% Created: 2010-08-02,    using Matlab 7.9.0.529 (R2009b)</span>
+<span class="comment">% Copyright 2010 INRA - Cepia Software Platform.</span>
+</pre><h2>Read image a create marker<a name="3"></a></h2><pre class="codeinput"><span class="comment">% read image</span>
+img = imread(<span class="string">'circles.png'</span>);
+
+<span class="comment">% create marker</span>
+marker = false(size(img));
+marker(80, 80) = 1;
+
+<span class="comment">% show image</span>
+imshow(imOverlay(img, imdilate(marker, ones(3, 3))));
+</pre><img vspace="5" hspace="5" src="demoImChamferDistance_01.png" alt=""> <h2>compute using quasi-enclidean weights<a name="4"></a></h2><pre class="codeinput"><span class="comment">% compute distance map</span>
+dist = imChamferDistance(img, marker);
+
+<span class="comment">% convert to rgb (use function in 'imFilters')</span>
+rgb = double2rgb(dist, jet, [], [1 1 1]);
+
+<span class="comment">% display result</span>
+figure;
+imshow(rgb);
+
+<span class="comment">% decorate</span>
+title(<span class="string">'Quasi-euclidean distance'</span>);
+</pre><img vspace="5" hspace="5" src="demoImChamferDistance_02.png" alt=""> <h2>compute using integer weights, giving integer results<a name="5"></a></h2><pre class="codeinput"><span class="comment">% compute distance using integer weights</span>
+dist34 = imChamferDistance(img, marker, int16([3 4]));
+
+<span class="comment">% convert to double and normalize</span>
+dist34d = double(dist34);
+dist34d = dist34d / 3;
+dist34d(~img) = inf;
+
+<span class="comment">% convert to RGB</span>
+bounds = [0 210];
+rgb34 = double2rgb(dist34d, jet, bounds, [1 1 1]);
+
+<span class="comment">% display rgb</span>
+figure;
+imshow(rgb34);
+
+<span class="comment">% decorate</span>
+title(<span class="string">'Borgefors 3-4 weights'</span>);
+</pre><img vspace="5" hspace="5" src="demoImChamferDistance_03.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.9<br></p></div><!--
+##### SOURCE BEGIN #####
+function demoImChamferDistance(varargin)
+%DEMOIMCHAMFERDISTANCE computes distance function inside a complex particle
+%
+%   output = demoImChamferDistance(input)
+%
+%   Example
+%   demoImChamferDistance
+%
+%   See also
+%
+%
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Author: David Legland
+% e-mail: david.legland@grignon.inra.fr
+% Created: 2010-08-02,    using Matlab 7.9.0.529 (R2009b)
+% Copyright 2010 INRA - Cepia Software Platform.
+
+%% Read image a create marker
+
+% read image
+img = imread('circles.png');
+
+% create marker
+marker = false(size(img));
+marker(80, 80) = 1;
+
+% show image
+imshow(imOverlay(img, imdilate(marker, ones(3, 3))));
+
+
+%% compute using quasi-enclidean weights
+
+% compute distance map
+dist = imChamferDistance(img, marker);
+
+% convert to rgb (use function in 'imFilters')
+rgb = double2rgb(dist, jet, [], [1 1 1]);
+
+% display result
+figure; 
+imshow(rgb);
+
+% decorate
+title('Quasi-euclidean distance');
+
+
+%% compute using integer weights, giving integer results
+
+% compute distance using integer weights
+dist34 = imChamferDistance(img, marker, int16([3 4]));
+
+% convert to double and normalize
+dist34d = double(dist34);
+dist34d = dist34d / 3;
+dist34d(~img) = inf;
+
+% convert to RGB
+bounds = [0 210];
+rgb34 = double2rgb(dist34d, jet, bounds, [1 1 1]);
+
+% display rgb
+figure;
+imshow(rgb34);
+
+% decorate
+title('Borgefors 3-4 weights');
+ 
+##### SOURCE END #####
+--></body></html>

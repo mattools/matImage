@@ -13,17 +13,17 @@ function res = imDirectionalFilter(img, varargin)
 %   or imclose.
 %
 %   Usage
-%   RES = imDirectionalFilter(SRC, 'immean', 'max', 20, 8);
+%   RES = imDirectionalFilter(SRC, 'imMeanFilter', 'max', 20, 8);
 %   computes the mean in each 8 directions, with linear structuring element
 %   of length 20, and keep the max value over all directions.
 %   
-%   RES = imDirectionalFilter(SRC, 'immean', 20, 8); 
+%   RES = imDirectionalFilter(SRC, 'imMeanFilter', 20, 8); 
 %   uses 'max' as default for second operator.
 %
 %   RES = imDirectionalFilter(SRC, 20, 8); also work, the
 %   uses 'imopen' as default operator for first transform.
 %
-%   RES = imDirectionalFilter(SRC, 'immean', 'max', 20, 8, 3);
+%   RES = imDirectionalFilter(SRC, 'imMeanFilter', 'max', 20, 8, 3);
 %   Specifies width of the line (obtained by dilation).
 %
 %

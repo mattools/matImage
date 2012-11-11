@@ -7,14 +7,26 @@ function res = imMorphoLaplacian(img, se)
 %
 %   Morphological laplacian is defined as the sum of a morphological
 %   dilation and a morphological erosion with the same structuring element,
-%   minus twice the original image.
+%   minus twice the original image. 
 %   This function is mainly a shortcut to apply all operations in one call.
 %
+%   Note: the output type is the same as the input image type, but
+%   morphological laplacian produces signed results. It is therefore
+%   necessary to cast the input image to signed data type before computing
+%   filter.
+%
 %   Example
-%   img = imread('cameraman.tif');
-%   se = ones(3, 3);
-%   grad = imMorphoLaplacian(double(img), se);
-%   imshow(grad, []);
+%     % Morphological Laplacian computed on rice image
+%     img = imread('rice.png');
+%     se = ones(3, 3);
+%     grad = imMorphoLaplacian(double(img), se);
+%     imshow(grad, []);
+%
+%     % Morphological Laplacian computed on cameraman image
+%     img = imread('cameraman.tif');
+%     se = ones(3, 3);
+%     grad = imMorphoLaplacian(double(img), se);
+%     imshow(grad, []);
 %
 %   See also
 %   imdilate, imerode, imsubtract, rangefilt, imLaplacian

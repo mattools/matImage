@@ -32,7 +32,7 @@ function res = imMeanFilter(img, se, varargin)
 
 % transform STREL object into single array
 if strcmp(class(se), 'strel')
-    filtre = getnhood(se);
+    se = getnhood(se);
 end
 
 % get Padopt option
@@ -42,4 +42,4 @@ if ~isempty(varargin)
 end
 
 % perform filtering
-res = imfilter(img, filtre ./ sum(se(:)), padopt);
+res = imfilter(img, se ./ sum(se(:)), padopt);

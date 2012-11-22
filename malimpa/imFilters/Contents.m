@@ -80,7 +80,7 @@
 %   strelDisk             - Discrete disk structuring element
 %
 %   Utilities
-%   createImage           - Create a new image with given size and type
+%   imCreate              - Create a new image with given the size and type
 %   imCheckerBoard        - Create a checkerboard image from 2 images
 %   imDrawLine            - Draw a line between two points in the image
 %
@@ -102,6 +102,7 @@ help Contents
 %   findContour           - Chain neigbor pixels to form a contour
 %   imGaussFilter         - Apply gaussian filter to an image, using separability
 %   removeBorderRegions   - Remove regions on the border of an image
+%   createImage           - Create a new image with given size and type
 
 %   Not supported functions
 %   imMergeCells          - merge labeled cell of an image

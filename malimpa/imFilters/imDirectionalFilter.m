@@ -45,7 +45,7 @@ function res = imDirectionalFilter(img, varargin)
 %   02/12/2011 rename to "imDirectionalFilter", update doc
 
 
-%% default values
+%% Default values
 
 % operators
 op1 = 'imopen';
@@ -65,7 +65,7 @@ if ~isempty(varargin)
 end
 
 % other arguments
-if length(varargin)>1
+if length(varargin) > 1
     
     var = varargin{2};    
     if ischar(var)
@@ -73,15 +73,15 @@ if length(varargin)>1
         op2 = var;
         
         % fourth argument is length of the line
-        if length(varargin)>2
+        if length(varargin) > 2
             N = varargin{3};
         end
         % fifth argument is number of directions
-        if length(varargin)>3
+        if length(varargin) > 3
             Nd = varargin{4};
         end
         % sixth argument is width of the line
-        if length(varargin)>4
+        if length(varargin) > 4
             w = varargin{5};
         end
     else
@@ -89,11 +89,11 @@ if length(varargin)>1
         N = varargin{2};
         
         % fourth argument is number of directions
-        if length(varargin)>2
+        if length(varargin) > 2
             Nd = varargin{3};
         end
         % fifth argument is width of the line
-        if length(varargin)>3
+        if length(varargin) > 3
             w = varargin{4};
         end
     end
@@ -128,12 +128,12 @@ end
 
 %% Iteration on directions
 
-% iterate on each directions
-for d=1:Nd
-    % compute structuring element base is a  line, eventually dilated by a
-    % ball
-    filt = getnhood(strel('line', N,  (d-1)*180/Nd));
-    if w>1
+% iterate on directions
+for d = 1:Nd
+    % compute structuring element. 
+    % base is a  line, eventually dilated by a  ball
+    filt = getnhood(strel('line', N,  (d-1) * 180 / Nd));
+    if w > 1
         filt = imdilate(filt, ones(3*ones(1, length(size(img)))), 'full');
     end
     

@@ -45,8 +45,10 @@
 %   specificIntMeanCurvDetails - Ohser's Integral of Mean Curvature with details
 %
 % General information on images
+%   imSize                     - Compute the size of an image in [x y z] format
 %   is3DImage                  - Check if an image is 3D
 %   isColorImage               - Check if an image is a color image
+%   imPhysicalExtent           - Compute the physical extent of an image
 %   imGrayscaleExtent          - Grayscale extent of an image
 %
 %  Descriptive statistics on pixel values
@@ -76,4 +78,5 @@ help Contents
 
 %   Deprecated:
 %   specificIMCDetails         - Ohser's Integral of Mean Curvature
+
 

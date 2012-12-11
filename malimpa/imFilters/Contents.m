@@ -63,6 +63,12 @@
 %   imBoundaryIndices     - Find indices of boundary between 2 cells
 %   imLabelEdges          - Label edges between adjacent regions of labeled image.
 %
+%   Utilities and drawing
+%   imCreate              - Create a new image with given the size and type
+%   imCheckerBoard        - Create a checkerboard image from 2 images
+%   imDrawLine            - Draw a line between two points in the image
+%   bresenhamLine         - Integer coordinates of a bresenham line
+%
 %   Indexed images:
 %   imLUT                 - Apply a look-up table (LUT) to a gray-scale image.
 %   grayFilter            - Compute configuration map of a binary image
@@ -72,17 +78,12 @@
 %   createTile3d          - Create a 3D binary tile (2x2x2) from its index
 %   tileIndex3d           - Return the index of a 2x2x2 binary tile
 %
-%   Structuring elements:
+%   Kernels and structuring elements:
 %   ball                  - Generate a ball in a matrix in 2 or 3 dimensions
 %   gaussianKernel3d      - Create a 3D gaussian kernel for image filtering
 %   cross3d               - Return a 3D structuring element with cross shape
 %   intline               - Integer-coordinate line drawing algorithm.
 %   strelDisk             - Discrete disk structuring element
-%
-%   Utilities
-%   imCreate              - Create a new image with given the size and type
-%   imCheckerBoard        - Create a checkerboard image from 2 images
-%   imDrawLine            - Draw a line between two points in the image
 %
 % -----
 % Author: David Legland

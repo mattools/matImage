@@ -12,6 +12,15 @@ function img = imDrawLine(img, pos1, pos2, varargin)
 %   FLIPUD(imDrawLine(X2, X1, Y2, Y1)).
 %
 %   Example
+%   % Draw some lines to make a diamond
+%     img = imCreate([16 16], 'uint8');
+%     img = imDrawLine(img, [8 1], [16 8]);
+%     img = imDrawLine(img, [16 8], [8 16]);
+%     img = imDrawLine(img, [8 16], [1 8]);
+%     img = imDrawLine(img, [1 8], [8 1]);
+%     image(img);
+% 
+%   % Overlay some lines on a grayscale image
 %     % read image
 %     img = imread('cameraman.tif');
 %     % draw white line
@@ -22,7 +31,7 @@ function img = imDrawLine(img, pos1, pos2, varargin)
 %     imshow(img);
 %
 %   See also
-%
+%     bresenhamLine
 %
 % ------
 % Author: David Legland
@@ -30,28 +39,17 @@ function img = imDrawLine(img, pos1, pos2, varargin)
 % Created: 2011-11-25,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
-%   Function adapted from the 'strel' function of matlab.
-
-
 
 %% Input argument extraction
 
-% extract coordinates
+% process case of input given as imDrawLine(IMG, X1, Y1, X2, Y2)
 if isscalar(pos1)
     if nargin < 5
         error('Please give coordinates either as 2 points, or as 4 coords');
     end
-    x1 = pos1;
-    y1 = pos2;
-    x2 = varargin{1};
-    y2 = varargin{2};
-    varargin(1:2) = [];
-    
-else
-    x1 = pos1(1);
-    y1 = pos1(2);
-    x2 = pos2(1);
-    y2 = pos2(2);
+    pos1 = [pos1 pos2];
+    pos2 = [varargin{1} varargin{2}];
+    varargin(1:2) = [];    
 end
 
 % extract color
@@ -61,60 +59,12 @@ if ~isempty(varargin)
 end
 
 
-%% Pre-processing
-
-dx = abs(x2 - x1);
-dy = abs(y2 - y1);
-
-% Check for degenerate case
-if dx == 0 && dy == 0
-    return;
-end
-
-
 %% Coordinates computation
 
-flip = 0;
-if dx >= dy
-    % process "horizontal" lines
-    
-	% eventually swap coordinates to draw from left to right.
-    if x1 > x2
-        [x1 x2] = swap(x1, x2);
-        [y1 y2] = swap(y1, y2);
-        flip = 1;
-    end
-    
-    % compute line slope, and y from x
-    s = (y2 - y1) / (x2 - x1);
-    x = (x1:x2)';
-    y = round(y1 + s * (x - x1));
-    
-else
-    % process "vertical" lines
-    
-    if y1 > y2
-        % swap coordinates to draw from bottom to top.
-        [x1 x2] = swap(x1, x2);
-        [y1 y2] = swap(y1, y2);
-        flip = 1;
-    end
-    
-    % compute line slope, and x from y
-    s = (x2 - x1) / (y2 - y1);
-    y = (y1:y2)';
-    x = round(x1 + s * (y - y1));
-end
+% coordinates of pixels
+[x y] = bresenhamLine(pos1, pos2, varargin{:});
 
-% ensure correct ordering
-if flip
-    x = x(end:-1:1);
-    y = y(end:-1:1);
-end
-
-
-%% remove line pixels outside image
-
+% remove line pixels outside image
 xOut = x < 1 | x > size(img, 2); 
 yOut = y < 1 | y > size(img, 1); 
 x(xOut | yOut) = [];
@@ -124,17 +74,16 @@ y(xOut | yOut) = [];
 %% Write the line into image
 
 if size(img, 3) == 1
+    % grayscale image
     for i = 1:length(x)
         img(y(i), x(i)) = color;
     end
+    
 else
+    % color image
     for i = 1:length(x)
         img(y(i), x(i), :) = color(:);
     end
 end
 
 
-% Swaping functions
-function [a2 b2] = swap(a, b)
-a2 = b;
-b2 = a;

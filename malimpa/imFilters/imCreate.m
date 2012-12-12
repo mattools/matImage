@@ -8,8 +8,7 @@ function img = imCreate(size, type, varargin)
 %   IMG = imCreate(SIZE, TYPE)
 %   SIZE is a row vector containing the size of the result image, and TYPE
 %   is a string representating the class of result image.
-%   The effect is similar to the function 'zeros' or 'false', but attends
-%   to provide a unified method to create image.
+%   The size is given in XY or XYZ order, contrary to 
 %
 %   Examples
 %   % create uint8 image
@@ -21,8 +20,8 @@ function img = imCreate(size, type, varargin)
 %   imshow(img);
 %
 %   % create an image with same size and type as another image
-%   baseImage = imread('cameraman.tif');
-%   img = imCreate(size(baseImage), class(baseImage));
+%   baseImage = imread('peppers.png');
+%   img = imCreate(imSize(baseImage), class(baseImage));
 %   imshow(img);
 %
 %   % create uint8 image filled with dark gray pixels
@@ -43,14 +42,35 @@ if nargin < 2
     type = 'uint8';
 end
 
+% copnvert from XYZ to Matlab ordering
+dim = size([2 1 3:end]);
+
+% add a color component if requested
+color = false;
+if strcmp(type, 'color') || strcmp(type, 'rgb')
+    dim = [dim(1:2) 3 dim(3:end)];
+    type = 'uint8';
+    color = true;
+end
+
 % allocate memory depending on type
 if strcmp(type, 'logical')
-    img = false(size);
+    img = false(dim);
 else
-    img = zeros(size, type);
+    img = zeros(dim, type);
 end
 
 % initialize with given value
 if ~isempty(varargin)
-    img(:) = varargin{1};
+    if color
+        init = varargin{1};
+        if isscalar(init)
+            init = [init init init];
+        end
+        img(:,:,1) = init(1);
+        img(:,:,2) = init(2);
+        img(:,:,3) = init(3);
+    else
+        img(:) = varargin{1};
+    end
 end

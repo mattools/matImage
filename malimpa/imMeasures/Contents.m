@@ -9,6 +9,7 @@
 %
 % Image investigation
 %   imHistogram                - Histogram of 2D/3D grayscale or color images
+%   imColorHistogram           - Plot 3D histogram of a color image
 %   imLineProfile              - Evaluate image value along a line segment
 %   imEvaluate                 - Evaluate image value at given position(s)
 %
@@ -78,5 +79,6 @@ help Contents
 
 %   Deprecated:
 %   specificIMCDetails         - Ohser's Integral of Mean Curvature
+
 
 

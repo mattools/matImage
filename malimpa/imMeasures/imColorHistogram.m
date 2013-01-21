@@ -1,11 +1,16 @@
 function histo = imColorHistogram(img, varargin)
 %IMCOLORHISTOGRAM Plot 3D histogram of a color image
 %
-%   imColorHistogram(IMG)
+%   imColorHistogram(IMG);
 %   Displays the color histogram of the given image. Input image must be
 %   color.
 %
-%   HISTO = imColorHistogram(input)
+%   imColorHistogram(IMG, NBINS);
+%   Specifies a different number of bins for each channel. Default number
+%   is 8. Using a number of bins greater than 20 often results in slow
+%   display.
+%
+%   HISTO = imColorHistogram(IMG)
 %   Returns the color histogram as a 3D array.
 %
 %
@@ -27,16 +32,23 @@ function histo = imColorHistogram(img, varargin)
 % Created: 2013-01-10,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
+nBins = 16;
+if ~isempty(varargin)
+    nBins = varargin{1};
+end
 
-histo = zeros(16, 16, 16);
+histo = zeros(nBins, nBins, nBins);
+
+% The coefficient to convert from [0 255] to [0 nBins-1]
+ratio = nBins / 256;
 
 if ndims(img) == 3
     % Process planar image
     for i = 1:size(img, 1)
         for j = 1:size(img, 2);
-            ir = floor(double(img(i, j, 1)) / 16) + 1;
-            ig = floor(double(img(i, j, 2)) / 16) + 1;
-            ib = floor(double(img(i, j, 3)) / 16) + 1;
+            ir = floor(double(img(i, j, 1)) * ratio) + 1;
+            ig = floor(double(img(i, j, 2)) * ratio) + 1;
+            ib = floor(double(img(i, j, 3)) * ratio) + 1;
 
             histo(ir, ig, ib) = histo(ir, ig, ib) + 1;
         end
@@ -48,9 +60,9 @@ elseif ndims(img) == 4
     for i = 1:size(img, 1)
         for j = 1:size(img, 2);
             for k = 1:size(img, 4);
-                ir = floor(double(img(i, j, 1, k)) / 16) + 1;
-                ig = floor(double(img(i, j, 2, k)) / 16) + 1;
-                ib = floor(double(img(i, j, 3, k)) / 16) + 1;
+                ir = floor(double(img(i, j, 1, k)) * ratio) + 1;
+                ig = floor(double(img(i, j, 2, k)) * ratio) + 1;
+                ib = floor(double(img(i, j, 3, k)) * ratio) + 1;
                 
                 histo(ir, ig, ib) = histo(ir, ig, ib) + 1;
             end
@@ -75,11 +87,8 @@ lb = (.5:size(histo,3)-.5) / size(histo, 3);
 rgb = [r(:) g(:) b(:)];
 
 % get values greater than given threshold
-% histo2 = permute(histo, [2 1 3]);
-% vals = histo2(:);
 vals = histo(:);
-
-inds = find(vals > 10);
+inds = find(vals > 0);
 vals2 = vals(inds) / max(vals(:));
 
 % scales coordinates betwenn 0 and 255
@@ -90,7 +99,8 @@ rgb2 = rgb(inds, :);
 
 % scatter plot of each color
 figure; 
-scatter3(r2, g2, b2, vals2*1000, 'filled', 'CData', rgb2);
-
+% scatter3(r2, g2, b2, vals2*1000, 'filled', 'CData', rgb2);
+scatter3(r2, g2, b2, 20, 'filled', 'Marker', 'o', 'CData', rgb2);
+ 
 % display settings
 axis([0 255 0 255 0 255]);

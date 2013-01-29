@@ -75,6 +75,7 @@
 %
 %  Surface area in 3D images
 %   imSurface           - Surface area measure of a binary 3D structure
+%   imJointSurface      - Surface area of the interface between two labels
 %   imSurfaceDensity    - Surface area density of a 3D binary structure
 %   imSurfaceEstimate   - Estimate surface area of a binary 3D structure
 %
@@ -112,4 +113,4 @@
 % Copyright 2011 INRA - Cepia Software Platform.
 
 %% under development
-%   imSurfaceLut        - Look-Up Table for computing surface of 3D image
+

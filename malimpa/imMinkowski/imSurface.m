@@ -7,7 +7,7 @@ function [surf labels] = imSurface(img, varargin)
 %
 %   S = imSurface(IMG, NDIRS)
 %   Specifies the number of directions used for estimating surface area.
-%   NDIRS can be either 3 or 13.
+%   NDIRS can be either 3 or 13, default is 3.
 %
 %   S = imSurface(..., RESOL)
 %   Specifies image resolution. RESOL is a 1-by-3 row vector containing

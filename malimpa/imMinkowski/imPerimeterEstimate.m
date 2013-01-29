@@ -6,10 +6,10 @@ function [perim labels] = imPerimeterEstimate(img, varargin)
 %   counting intersections with 2D lines, and using discretized version of
 %   the Crofton formula.
 %
-%   P = imPerimeter(IMG, CONN);
-%   Specify connectivity to use. Either 4 or 8. Default is 4.
+%   P = imPerimeter(IMG, NDIRS);
+%   Specify the number of directions to use. Either 2 or 4. Default is 4.
 %
-%   P = imPerimeter(IMG, CONN, SCALE);
+%   P = imPerimeter(IMG, NDIRS, SCALE);
 %   Also specify scale of image tile. SCALE si a 2x1 array, containing
 %   pixel size in each direction. Default is [1 1].
 %   
@@ -26,7 +26,7 @@ function [perim labels] = imPerimeterEstimate(img, varargin)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % check image dimension
-if ndims(img)~=2
+if ndims(img) ~= 2
     error('first argument should be a 2D image');
 end
 
@@ -58,8 +58,8 @@ end
 % in case of binary image, compute only one label
 labels = 1;
 
-% default connectivity
-conn = 4;
+% default number of directions
+nDirs = 4;
 
 % default image resolution
 delta = [1 1];
@@ -70,9 +70,9 @@ while ~isempty(varargin)
         error('option should be numeric');
     end
     
-    % option is either connectivity or resolution
+    % option is either number of directions or resolution
     if isscalar(var)
-        conn = var;
+        nDirs = var;
     else
         delta = var;
     end
@@ -85,8 +85,8 @@ end
 % distances between a pixel and its neighbours.
 d1  = delta(1);
 d2  = delta(2);
-d12 = sqrt(delta(1)^2 + delta(2)^2);
-vol = d1*d2;
+d12 = hypot(d1, d2);
+vol = d1 * d2;
 
 % size of image
 dim = size(img);
@@ -100,19 +100,30 @@ D2 = dim(2);
 n1 = sum(sum(img(1:D1-1,:) ~= img(2:D1,:)));
 n2 = sum(sum(img(:,1:D2-1) ~= img(:,2:D2)));
 
-% compute for 4 closest neighbours
-% equivalent to:
-% perim = mean([n1/(d1/a) n2/(d2/a)])*pi/2;
-% with a = d1*d2 being the area of the unit tile
-if conn==4
-    perim = mean([n1*d2 n2*d1])*pi/2;
-else
+if nDirs == 2
+    % compute for 2 directions: horizontal and vertical
+    perim = mean([n1*d2 n2*d1]) * pi/2;
+    % equivalent to:
+    % perim = mean([n1/(d1/a) n2/(d2/a)])*pi/2;
+    % with a = d1*d2 being the area of the unit tile
+    
+elseif nDirs == 4
     
     % check the 2 diagonal directions
     n3 = sum(sum(img(1:D1-1, 1:D2-1) ~= img(2:D1, 2:D2)   )) ;
     n4 = sum(sum(img(1:D1-1, 2:D2  ) ~= img(2:D1, 1:D2-1) )) ;
     
+    % compute direction weights (necessary for anisotropic case)
+    if any(delta ~= 1);
+        c = computeDirectionWeights2d4(delta)';
+    else
+        c = [1 1 1 1] / 4;
+    end
+    
     % average over directions
-    perim = mean([n1*d2 n2*d1 [n3 n4]*vol/d12])*pi/2;    
+    perim = sum([n1*d2 n2*d1 [n3 n4]*vol/d12] .* c) * pi/2;
+    
+else
+    error(['Can not process number of directions equal to ' num2str(Dirs)]);
 end
 

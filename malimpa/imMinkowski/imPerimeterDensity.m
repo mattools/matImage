@@ -55,7 +55,7 @@ end
 p = imPerimeterEstimate(img, varargin{:});
 
 % total area of image
-totalArea = prod(size(img)-1)*prod(delta);
+totalArea = prod(size(img)-1) * prod(delta);
 
-% compute area density
+% compute perimeter density
 pd = p / totalArea;

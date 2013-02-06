@@ -8,7 +8,9 @@ function img = imCreate(size, type, varargin)
 %   IMG = imCreate(SIZE, TYPE)
 %   SIZE is a row vector containing the size of the result image, and TYPE
 %   is a string representating the class of result image.
-%   The size is given in XY or XYZ order, contrary to 
+%   The size is given in XY or XYZ order, contrary to creation using the
+%   ones or zeros functions. The objectiove is to have a unified function
+%   for creating 2D or 3D images, with different number of channels.
 %
 %   Examples
 %   % create uint8 image

@@ -1,13 +1,23 @@
 function [cv labels] = imConvexity(img)
 %IMCONVEXITY Convexity of particles in label image
 %
-%   CV = imConvexity(IMG)
+%   CV = imConvexity(BIN)
+%   CV = imConvexity(LBL)
+%   Computes the convexity of the binary image BIN, or of the label image
+%   LBL. The result is a scalar in the case of binary image, and a column
+%   vector in the case of a label image.
+%
+%   The convexity (also known as solidity) is defined by the ratio of
+%   particle volum over the volume of the particle convex hull.
 %
 %   Example
-%   imConvexity
+%     img = imread('circles.png');
+%     imConvexity(img)
+%     ans =
+%         0.6062
 %
 %   See also
-%
+%   imConvexImage
 %
 % ------
 % Author: David Legland
@@ -19,12 +29,11 @@ function [cv labels] = imConvexity(img)
 labels = unique(img(:));
 labels(labels==0) = [];
 
-nLabels = length(labels);
-
 % allocate memory for result
+nLabels = length(labels);
 cv = zeros(nLabels, 1);
 
-% iterate on particules
+% compute convexity of each particule
 for i = 1:nLabels
     imgConv = imConvexImage(img==i);
     cv(i) = sum(img(:)==i) / sum(imgConv(:));

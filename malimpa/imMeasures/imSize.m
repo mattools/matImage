@@ -1,10 +1,10 @@
 function dim = imSize(img, varargin)
-%IMSIZE  Compute the size of an image in [x y z] format
+%IMSIZE  Compute the size of an image in [x y z] order
 %
 %   SIZ = imSize(IMG)
-%   Return the size of the image, in x-y-z order, for a grayscale or a
+%   Returns the size of the image, in x-y-z order, for a grayscale or a
 %   color image.
-%   In the case of a 3D color image, return only the 3 physical dimension
+%   In the case of a 3D color image, returns only the 3 physical dimensions
 %   of the image.
 %
 %   S = imSize(IMG, DIR)
@@ -24,7 +24,7 @@ function dim = imSize(img, varargin)
 %     imSize(img)
 %     ans = 
 %        512   384
-%     (returns width, then height)
+%     (returns the width, then the height)
 %
 %   % compute size of a portion of MRI image
 %     img = analyze75read(analyze75info('brainMRI.hdr'));

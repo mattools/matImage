@@ -7,7 +7,7 @@
 %   Some geometrical measures are provided as well, for description of
 %   particles in binary or in label images.
 %
-% Image investigation
+% Image exploration
 %   imHistogram                - Histogram of 2D/3D grayscale or color images
 %   imColorHistogram           - Plot 3D histogram of a color image
 %   imLineProfile              - Evaluate image value along a line segment
@@ -19,7 +19,7 @@
 %   imJointEntropy             - Joint entropy between two images
 %   imMutualInformation        - Mutual information between two images
 %
-% Particle analysis
+% Regions / particle analysis
 %   imCentroid                 - Centroid of regions in a label image
 %   imBoundingBox              - Bounding box of a binary or label image
 %   imInertiaEllipse           - Inertia ellipse of a binary or label image
@@ -30,6 +30,7 @@
 %   imFeretDiameter            - Feret diameter of a particle(s) for a given direction(s)
 %   imMaxFeretDiameter         - Maximum Feret diameter of a binary or label image
 %   imConvexity                - Convexity of particles in label image
+%   imRegionFun                - Apply a function to each region of a label image
 %
 % Particle moments
 %   imMoment                   - Compute simple moment(s) of an image
@@ -46,7 +47,7 @@
 %   specificIntMeanCurvDetails - Ohser's Integral of Mean Curvature with details
 %
 % General information on images
-%   imSize                     - Compute the size of an image in [x y z] format
+%   imSize                     - Compute the size of an image in [x y z] order
 %   is3DImage                  - Check if an image is 3D
 %   isColorImage               - Check if an image is a color image
 %   imPhysicalExtent           - Compute the physical extent of an image
@@ -79,6 +80,3 @@ help Contents
 
 %   Deprecated:
 %   specificIMCDetails         - Ohser's Integral of Mean Curvature
-
-
-

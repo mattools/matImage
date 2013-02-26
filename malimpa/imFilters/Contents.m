@@ -66,6 +66,7 @@
 %   Utilities and drawing
 %   imCreate              - Create a new image with given the size and type
 %   imCheckerBoard        - Create a checkerboard image from 2 images
+%   imCheckerboardLabels  - Create a checkerboard label image
 %   imThumbnail           - Resize an image to bound the size in each direction
 %   imDrawLine            - Draw a line between two points in the image
 %   bresenhamLine         - Integer coordinates of a bresenham line

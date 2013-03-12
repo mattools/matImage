@@ -8,7 +8,11 @@ function [cv labels] = imConvexity(img)
 %   vector in the case of a label image.
 %
 %   The convexity (also known as solidity) is defined by the ratio of
-%   particle volum over the volume of the particle convex hull.
+%   particle volume over the volume of the convex hull of the particle.
+%
+%   [CV LABELS] = imConvexity(LBL)
+%   Also returns the labels for which the convexity has been computed.
+%
 %
 %   Example
 %     img = imread('circles.png');
@@ -17,7 +21,7 @@ function [cv labels] = imConvexity(img)
 %         0.6062
 %
 %   See also
-%   imConvexImage
+%     imConvexImage
 %
 % ------
 % Author: David Legland
@@ -25,9 +29,14 @@ function [cv labels] = imConvexity(img)
 % Created: 2011-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
-% extract the set of labels, and remove label for background
-labels = unique(img(:));
-labels(labels==0) = [];
+% determine the unique values in image (only one in case of binary image)
+if islogical(img)
+    labels = 1;
+else
+    % extract the set of labels, and remove label for background
+    labels = unique(img(:));
+    labels(labels==0) = [];
+end
 
 % allocate memory for result
 nLabels = length(labels);

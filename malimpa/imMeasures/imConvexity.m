@@ -15,10 +15,26 @@ function [cv labels] = imConvexity(img)
 %
 %
 %   Example
+%   % compute convexity on a binary image
 %     img = imread('circles.png');
 %     imConvexity(img)
 %     ans =
 %         0.6062
+%
+%   % Compute convexity of rice grains
+%     % read image, remove background, threshold and compute labels
+%     img = imread('rice.png');
+%     bin = imtophat(img, ones(25, 25)) > 50;
+%     lbl = bwlabel(imopen(bin, [0 1 0;1 1 1;0 1 0]), 4);
+%     % remove border labels
+%     lbl0 = unique([unique(lbl([1 end], :)) ; unique(lbl(:, [1 end]))]);
+%     lbl(ismember(lbl, lbl0)) = 0;
+%     % Compute convexity
+%     [conv labels] = imConvexity(lbl);
+%     % Display convexity of each particle (note that some labels are not
+%     % computed, as they were removed)
+%     stem(labels, conv)
+%     % the particle with low convexity corresponds to two touching grains
 %
 %   See also
 %     imConvexImage
@@ -44,6 +60,6 @@ cv = zeros(nLabels, 1);
 
 % compute convexity of each particule
 for i = 1:nLabels
-    imgConv = imConvexImage(img==i);
-    cv(i) = sum(img(:)==i) / sum(imgConv(:));
+    imgConv = imConvexImage(img==labels(i));
+    cv(i) = sum(img(:)==labels(i)) / sum(imgConv(:));
 end

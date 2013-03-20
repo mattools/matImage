@@ -47,7 +47,8 @@ function varargout = imGradient(img, varargin)
 %   imshow(grad, [0 max(grad(:))]);
 %
 %   See also
-%   imLaplacian, imMorphoGradient, imfilter, fspecial, angle2rgb, gradient
+%   imLaplacian, imMorphoGradient, imHesssian
+%   imfilter, fspecial, angle2rgb, gradient
 %
 % ------
 % Author: David Legland

@@ -1,23 +1,25 @@
 % IMFILTERS Generic filters for image processing
 % Version 1.1 01-Jul-2011 .
 %
-%   Generic filters:
+%   Image enhancement, noise removal:
 %   imAdjustDynamic       - Rescale gray levels of image to get better dynamic
+%   imMeanFilter          - Compute mean value in the neighboorhood of each pixel
+%   imMedianFilter        - Compute median value in the neighboorhood of each pixel
+%   imGaussianFilter      - Apply gaussian filter to an image, using separability
+%   imDirectionalFilter   - Apply and combine several directional filters
+%   imNormalizeBackground - Normalize image by removing background estimate
+%
+%   Gradient and Laplacian filters:
 %   imGradient            - Compute gradient magnitude in a grayscale image
 %   imLaplacian           - Discrete Laplacian of an image
+%   imHessian             - Compute coefficients of Hessian matrix for each pixel
+%   imEigenValues         - Image eigen values from second derivatives
 %   imMorphoGradient      - Morphological gradient of an image
 %   imMorphoLaplacian     - Morphological laplacian of an image
 %   imrecerode            - Perform a morphological reconstruction by erosion
 %   imHConcave            - H-concave transformation of an image
 %   imHConvex             - H-convex transformation of an image
 %   imNeighborhood        - Return the neighborhood of a given pixel
-%
-%   Enhance Image, remove noise:
-%   imMeanFilter          - Compute mean value in the neighboorhood of each pixel
-%   imMedianFilter        - Compute median value in the neighboorhood of each pixel
-%   imGaussianFilter      - Apply gaussian filter to an image, using separability
-%   imDirectionalFilter   - Apply and combine several directional filters
-%   imNormalizeBackground - Normalize image by removing background estimate
 %
 %   Geometric filters:
 %   imFlip                - Flip an image along one of its dimensions

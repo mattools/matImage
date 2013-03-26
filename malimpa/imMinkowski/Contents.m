@@ -74,13 +74,13 @@
 %   imVolumeEstimate    - Estimate volume of a 3D binary structure with edge correction
 %
 %  Surface area in 3D images
-%   imSurface           - Surface area measure of a binary 3D structure
-%   imJointSurface      - Surface area of the interface between two labels
+%   imSurface           - Surface area of a 3D binary structure
 %   imSurfaceDensity    - Surface area density of a 3D binary structure
 %   imSurfaceEstimate   - Estimate surface area of a binary 3D structure
+%   imJointSurface      - Surface area of the interface between two labels
 %
 %  Mean breadth (integral of mean curvature) in 3D images
-%   imMeanBreadth       - Global mean breadth in 3D image
+%   imMeanBreadth       - Mean breadth of a 3D binary or label image
 %
 %  Euler-Poincare characteristic in 3D images
 %   imEuler3d           - Euler number of a binary 3D image
@@ -111,6 +111,7 @@
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % Copyright 2011 INRA - Cepia Software Platform.
+
 
 %% under development
 

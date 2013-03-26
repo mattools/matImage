@@ -1,5 +1,5 @@
 function [surf labels] = imSurface(img, varargin)
-%IMSURFACE Surface area measure of a binary 3D structure
+%IMSURFACE Surface area of a 3D binary structure
 %
 %   S = imSurface(IMG)
 %   Estimates the surface area of the 3D binary structure represented by
@@ -11,7 +11,7 @@ function [surf labels] = imSurface(img, varargin)
 %
 %   S = imSurface(..., RESOL)
 %   Specifies image resolution. RESOL is a 1-by-3 row vector containing
-%   resoltion in the X, Y and Z direction (in that order).
+%   resolution in the X, Y and Z direction (in that order).
 %
 %   S = imSurface(LBL)
 %   [S L] = imSurface(LBL)
@@ -20,10 +20,21 @@ function [surf labels] = imSurface(img, varargin)
 %
 %
 %   Example
-%   imSurface
+%     % Create a binary image of a ball
+%     [x y z] = meshgrid(1:100, 1:100, 1:100);
+%     img = sqrt( (x-50.12).^2 + (y-50.23).^2 + (z-50.34).^2) < 40;
+%     % compute surface area of the ball
+%     S = imSurface(img)
+%     S =
+%         20108
+%     % compare with theoretical value
+%     Sth = 4*pi*40^2;
+%     100 * (S - Sth) / Sth
+%     ans = 
+%         0.0090
 %
 %   See also
-%
+%     imVolume, imMeanBreadth, imSurfaceDensity, imJointSurface
 %
 % ------
 % Author: David Legland
@@ -49,7 +60,9 @@ if ~islogical(img)
 
     props = regionprops(img, 'BoundingBox');
     
-    % compute surface area of each label considered as binary image
+    % Compute surface area of each label considered as binary image
+    % The computation is performed on a subset of the image for reducing
+    % memory footprint.
     for i = 1:nLabels
         label = labels(i);
         box = props(label).BoundingBox;

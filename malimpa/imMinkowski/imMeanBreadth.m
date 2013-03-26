@@ -1,18 +1,33 @@
 function [breadth labels] = imMeanBreadth(img, varargin)
-%IMMEANBREADTH Global mean breadth in 3D image
+%IMMEANBREADTH Mean breadth of a 3D binary or label image
 %
 %   B = imMeanBreadth(IMG)
-%   B = imMeanBreadth(IMG, NDIR)
-%   B = imMeanBreadth(IMG, NDIR, DELTA)
+%   Computes the mean breadth of the binary structure in IMG, or of each
+%   particle in the label image IMG.
+%
+%   B = imMeanBreadth(IMG, NDIRS)
+%   Specifies the number of directions used for estimating the mean breadth
+%   from the Crofton formula. Can be either 3 (the default) or 13.
+%
+%   B = imMeanBreadth(..., DELTA)
+%   Specifies the resolution of the image, as a 1by-3 row vector containing
+%   pixel spacing in X, Y and Z directions respectively.
 %
 %   [B LABELS]= imMeanBreadth(LBL, ...)
-%
+%   Also returns the set of labels for which the mean breadth was computed.
 %
 %   Example
-%   imMeanBreadth
+%     % Create a binary image of a ball
+%     [x y z] = meshgrid(1:100, 1:100, 1:100);
+%     img = sqrt( (x-50.12).^2 + (y-50.23).^2 + (z-50.34).^2) < 40;
+%     % compute mean breadth of the ball 
+%     % (expected: the diameter of the ball)
+%     b = imMeanBreadth(img)
+%     b =
+%         80
 %
 %   See also
-%
+%     imVolume, imSurface
 %
 % ------
 % Author: David Legland

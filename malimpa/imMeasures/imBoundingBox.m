@@ -13,6 +13,12 @@ function [boxes labels] = imBoundingBox(img)
 %   advantage of using imBoundingBox is that equivalent boxes can be
 %   obtained in one call. 
 %
+%   BOX = imBoundingBox(IMG3D)
+%   If input image is a 3D array, the result is a N-by-6 array, containing
+%   the maximal coordinates in the X, Y and Z directions:
+%   BOX = [XMIN XMAX YMIN YMAX ZMIN ZMAX].
+%
+%
 %   Example
 %   % Draw a complex particle together with its bounding box
 %     img = imread('circles.png');
@@ -29,7 +35,7 @@ function [boxes labels] = imBoundingBox(img)
 %     drawBox(boxes, 'linewidth', 2, 'color', 'g');
 %
 %   See also
-%   regionprops, drawEllipse, imOrientedBox
+%   regionprops, drawBox, imOrientedBox, imInertiaEllipse
 %
 % ------
 % Author: David Legland
@@ -37,25 +43,58 @@ function [boxes labels] = imBoundingBox(img)
 % Created: 2011-03-30,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
+% History
+% 2013-03-29 add supoprt for 3D images
+
+
+%% Initialisations
+
 % extract the set of labels, and remove label for background
 labels = unique(img(:));
 labels(labels==0) = [];
 
 nLabels = length(labels);
+nd = ndims(img);
 
 % allocate memory for result
-boxes = zeros(nLabels, 4);
+boxes = zeros(nLabels, 2*nd);
 
-for i = 1:nLabels
-    % extract points of the current particle
-    [y x] = find(img==labels(i));
+if nd == 2
+    %% Process planar case 
+    for i = 1:nLabels
+        % extract points of the current particle
+        [y x] = find(img==labels(i));
+
+        % compute extreme coordinates, and add the half-width of the pixel
+        xmin = min(x) - .5;
+        xmax = max(x) + .5;
+        ymin = min(y) - .5;
+        ymax = max(y) + .5;
+
+        % create the resulting bounding box
+        boxes(i,:) = [xmin xmax ymin ymax];
+    end
     
-    % compute extreme coordinates, and add the half-width of the pixel
-    xmin = min(x) - .5;
-    xmax = max(x) + .5;
-    ymin = min(y) - .5;
-    ymax = max(y) + .5;
+elseif nd == 3
+    %% Process 3D case
+    dim = size(img);
+    for i = 1:nLabels
+        % extract points of the current particle
+        inds = find(img==labels(i));
+        [y x z] = ind2sub(dim, inds);
+
+        % compute extreme coordinates, and add the half-width of the pixel
+        xmin = min(x) - .5;
+        xmax = max(x) + .5;
+        ymin = min(y) - .5;
+        ymax = max(y) + .5;
+        zmin = min(z) - .5;
+        zmax = max(z) + .5;
+
+        % create the resulting bounding box
+        boxes(i,:) = [xmin xmax ymin ymax zmin zmax];
+    end
     
-    % create the resulting bounding box
-    boxes(i,:) = [xmin xmax ymin ymax];
+else
+    error('Image dimension must be 2 or 3');
 end

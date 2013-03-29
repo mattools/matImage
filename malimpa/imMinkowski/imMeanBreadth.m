@@ -10,7 +10,7 @@ function [breadth labels] = imMeanBreadth(img, varargin)
 %   from the Crofton formula. Can be either 3 (the default) or 13.
 %
 %   B = imMeanBreadth(..., DELTA)
-%   Specifies the resolution of the image, as a 1by-3 row vector containing
+%   Specifies the resolution of the image as a 1-by-3 row vector containing
 %   pixel spacing in X, Y and Z directions respectively.
 %
 %   [B LABELS]= imMeanBreadth(LBL, ...)
@@ -35,6 +35,8 @@ function [breadth labels] = imMeanBreadth(img, varargin)
 % Created: 2010-10-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
+% histrory
+% 2013-03-29 accelerate processing of 3D images
 
 %% Basic error checking
 
@@ -45,12 +47,34 @@ end
 
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
+    % identify the labels in image
     labels = unique(img);
     labels(labels==0) = [];
-    breadth = zeros(length(labels), 1);
-    for i = 1:length(labels)
-        breadth(i) = imMeanBreadth(img==labels(i), varargin{:});
+    
+    % allocate result array
+    nLabels = length(labels);
+    breadth = zeros(nLabels, 1);
+    
+    props = regionprops(img, 'BoundingBox');
+    
+    % Compute the mean breadth of each label considered as binary image
+    % The computation is performed on a subset of the image for reducing
+    % memory footprint.
+    for i = 1:nLabels
+        label = labels(i);
+        box = props(label).BoundingBox;
+        
+        % convert bounding box to image extent, in x, y and z directions
+        i0 = ceil(box([2 1 3]));
+        i1 = i0 + box([5 4 6]) - 1;
+        
+        % crop image of current label, keeping a background border
+        bin = false(box([5 4 6]) + 2);
+        bin(2:end-1, 2:end-1, 2:end-1) = ...
+            img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
+        breadth(i) = imMeanBreadth(bin, varargin{:});
     end
+
     return;
 end
 

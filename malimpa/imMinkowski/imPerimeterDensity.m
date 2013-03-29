@@ -15,8 +15,11 @@ function [pd labels] = imPerimeterDensity(img, varargin)
 % Created: 2010-01-21,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
+
+%% Pre-processing
+
 % check image dimension
-if ndims(img)~=2
+if ndims(img) ~= 2
     error('first argument should be a 2D image');
 end
 
@@ -28,7 +31,7 @@ if ~islogical(img)
     
     % allocate result array
     nLabels = length(labels);
-    perim = zeros(nLabels, 1);
+    pd = zeros(nLabels, 1);
 
     props = regionprops(img, 'BoundingBox');
     
@@ -36,25 +39,61 @@ if ~islogical(img)
     for i = 1:nLabels
         label = labels(i);
         bin = imcrop(img, props(label).BoundingBox) == label;
-        perim(i) = imPerimeterDensity(bin, varargin{:});
+        pd(i) = imPerimeterDensity(bin, varargin{:});
     end
     
     return;
 end
 
-% in case of binary image, compute only one label...
+
+%% Extract input arguments
+
+% in case of binary image, compute only one label
 labels = 1;
 
-% check image resolution
+% default number of directions
+nDirs = 4;
+
+% default image resolution
 delta = [1 1];
-if ~isempty(varargin)
-    delta = varargin{1};
+
+% parse parameter name-value pairs
+while ~isempty(varargin)
+    var = varargin{1};
+    
+    if isnumeric(var)        
+        % option is either number of directions or resolution
+        if isscalar(var)
+            nDirs = var;
+        else
+            delta = var;
+        end
+        varargin(1) = [];
+        
+    elseif ischar(var)
+        if length(varargin) < 2
+            error('Parameter name must be followed by parameter value');
+        end
+    
+        if strcmpi(var, 'ndirs')
+            nDirs = varargin{2};
+        elseif strcmpi(var, 'resolution')
+            delta = varargin{2};
+        else
+            error(['Unknown parameter name: ' var]);
+        end
+        
+        varargin(1:2) = [];
+    end
 end
 
-% component area in image
-p = imPerimeterEstimate(img, varargin{:});
 
-% total area of image
+%% Compute perimeter within image, and normalize by area
+
+% component area in image
+p = imPerimeterEstimate(img, nDirs, delta);
+
+% total area of image, without borders
 totalArea = prod(size(img)-1) * prod(delta);
 
 % compute perimeter density

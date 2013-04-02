@@ -1647,7 +1647,7 @@ methods
             end
             
             % display isosurface
-            p = patch(isosurface(ly, lx, lz, im, .5));
+            p = patch(isosurface(lx, ly, lz, im, .5));
             
             % set face color
             set(p, 'FaceColor', cmap(i,:), 'EdgeColor', 'none');

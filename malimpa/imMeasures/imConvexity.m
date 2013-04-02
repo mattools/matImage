@@ -45,21 +45,52 @@ function [cv labels] = imConvexity(img)
 % Created: 2011-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
-% determine the unique values in image (only one in case of binary image)
-if islogical(img)
-    labels = 1;
-else
-    % extract the set of labels, and remove label for background
-    labels = unique(img(:));
+% identify the labels in image
+if ~islogical(img)
+    labels = unique(img);
     labels(labels==0) = [];
+else
+    % binary images have only one label
+    labels = 1;
 end
 
 % allocate memory for result
 nLabels = length(labels);
 cv = zeros(nLabels, 1);
 
-% compute convexity of each particule
+dim = size(img);
+nd = length(dim);
+
+% Compute the convexity of each label considered as binary image
+% The computation is performed on a subset of the image for reducing
+% memory footprint.
+props = regionprops(img, 'BoundingBox');
 for i = 1:nLabels
-    imgConv = imConvexImage(img==labels(i));
-    cv(i) = sum(img(:)==labels(i)) / sum(imgConv(:));
+    label = labels(i);
+    box = props(label).BoundingBox;
+    
+    % convert bounding box to image extent, in x, y (and z) direction
+    % and crop image of current label, keeping a background border
+    if nd == 2
+        % case of planar images
+        i0 = ceil(box([2 1]));
+        i1 = i0 + box([4 3]) - 1;
+        bin = false(box([4 3]) + 2);
+        bin(2:end-1, 2:end-1) = img(i0(1):i1(1), i0(2):i1(2)) == label;
+        
+    elseif nd == 3
+        % case of 3D images
+        i0 = ceil(box([2 1 3]));
+        i1 = i0 + box([5 4 6]) - 1;
+        bin = false(box([5 4 6]) + 2);
+        bin(2:end-1, 2:end-1, 2:end-1) = ...
+            img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
+    end
+    
+    % call the computation of convexity on current cropped image
+    imgConv = imConvexImage(bin);
+    cv(i) = sum(bin(:)) / sum(imgConv(:));
 end
+
+
+

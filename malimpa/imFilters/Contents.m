@@ -60,6 +60,7 @@
 %   imAreaOpening         - Remove all regions smaller than a given area
 %   imAttributeOpening    - Filter regions on a size or shape criterium
 %   imLargestRegion       - Keep the largest region in a binary or label image
+%   imCropLabel           - Extract the portion of image that contains the specified label
 %   imMergeLabels         - Merge regions in a labeled image
 %   mergeRegions          - Merge regions of labeled image, using inclusion criteria
 %   imBoundaryIndices     - Find indices of boundary between 2 cells

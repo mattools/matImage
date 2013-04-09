@@ -13,9 +13,10 @@ function gl = imGeodesicDiameter3d(img, varargin)
 %   
 %   GL = imGeodesicDiameter3d(IMG, WS)
 %   Specifies the weights associated to neighbor pixels. WS(1) is the
-%   distance to orthogonal pixels, and WS(2) is the distance to diagonal
-%   pixels. Default is [3 4], recommended by Borgefors. The final length is
-%   normalized by weight for orthogonal pixels.
+%   distance to orthogonal pixels, WS(2) is the distance to diagonal pixels
+%   in same plane, and WS(3) is the distance to opposite pixel in cube. 
+%   Default is [3 4 5 ], recommended by Borgefors. The final length is 
+%   normalized by weight associated to orthogonal pixels.
 %   
 %   GL = imGeodesicDiameter3d(..., 'verbose', true);
 %   Display some informations about the computation procedure, that may
@@ -72,7 +73,7 @@ function gl = imGeodesicDiameter3d(img, varargin)
 %% Default values 
 
 % weights for computing geodesic lengths
-ws = [1 sqrt(2) sqrt(3)];
+ws = [3 4 5];
 
 % no verbosity by default
 verbose = 0;

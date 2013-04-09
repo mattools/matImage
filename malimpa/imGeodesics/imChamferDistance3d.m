@@ -99,7 +99,7 @@ function dist = imChamferDistance3d(img, varargin)
 markers = [];
 if ~isempty(varargin)
     var = varargin{1};
-    if sum(size(var) ~= size(img))==0
+    if ndims(var) == ndims(img) && sum(size(var) ~= size(img)) == 0
         % use binarised markers
         markers = var > 0;
         varargin(1) = [];
@@ -244,7 +244,7 @@ while modif
       % iteration on planes
     for k = D3-1:-1:2
         % iteration on lines
-        for j = D1-1:-1:2
+        for j = D2-1:-1:2
             % iteration on columns
             for i = D1-1:-1:2
 

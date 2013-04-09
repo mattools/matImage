@@ -101,7 +101,7 @@ function dist = imChamferDistance(img, varargin)
 markers = [];
 if ~isempty(varargin)
     var = varargin{1};
-    if sum(size(var) ~= size(img))==0
+    if ndims(var) == ndims(img) && sum(size(var) ~= size(img)) == 0
         % use binarised markers
         markers = var > 0;
         varargin(1) = [];

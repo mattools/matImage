@@ -54,6 +54,10 @@ classdef Slicer < handle
 %   * 'colorMap'    The colormap used for displaying grayscale images
 %         (default is gray).
 %
+%   * 'imageType'   The type of image, used for adapting display. Can be
+%           one of 'binary', 'grayscale', 'intensity', 'label', 'color',
+%           'vector', 'none'. Default value is assessed from data type and
+%           size.
 %
 %   Example
 %   % Explore human brain MRI
@@ -183,12 +187,19 @@ methods
         this.handles.figure = fig;
         this.handles.subFigures = [];
         
-        % create main figure menu
+        % create main figure menu and layout
         setupMenuBar(this);
-        
         setupLayout(fig);
         
-        this.displayNewImage();
+        % setup new image display
+        if strcmp(this.imageType, 'label')
+            maxi = max(this.imageData(:));
+            this.displayRange  = [0 maxi];
+        end
+        updateSlice(this);
+        displayNewImage(this);
+        updateColorMap(this);
+        
         updateTitle(this);
         
         % setup listeners associated to the figure
@@ -224,6 +235,9 @@ methods
                        
                     case 'name'
                         this.imageName = varargin{2};
+                        
+                    case 'imagetype'
+                        this.imageType = varargin{2};
                         
                     % Setup image display
                     case 'displayrange'

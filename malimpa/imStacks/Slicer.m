@@ -195,11 +195,14 @@ methods
         if strcmp(this.imageType, 'label')
             maxi = max(this.imageData(:));
             this.displayRange  = [0 maxi];
+            
+            this.colorMap = jet(256);
         end
         updateSlice(this);
         displayNewImage(this);
-        updateColorMap(this);
-        
+        if strcmp(this.imageType, 'label')
+            updateColorMap(this);
+        end
         updateTitle(this);
         
         % setup listeners associated to the figure
@@ -1585,35 +1588,52 @@ methods
     end
     
     function onShowOrthoSlices3d(this, varargin)
+        OrthoSlicer3dOptionsDialog(this);
         
-        if isempty(this.imageData)
-            return;
-        end
-        
-        % compute display settings
-        pos = ceil(this.imageSize / 2);
-        spacing = this.voxelSize;
-        origin  = this.voxelOrigin;
-        
-        % determine the color map to use (default is empty)
-        cmap = [];
-        if ~isColorStack(this.imageData) && ~isempty(this.colorMap)
-            cmap = this.colorMap;
-        end
-        
-        % create figure with 3 orthogonal slices in 3D
-        figure();
-        OrthoSlicer3d(this.imageData, 'Position', pos, ...
-            'Origin', origin, 'Spacing', spacing, ...
-            'DisplayRange', this.displayRange, 'ColorMap', cmap);
-        
-        % compute display extent (add a 0.5 limit around each voxel)
-        extent = stackExtent(this.imageSize, spacing, origin);
-        
-        % setup display
-        axis equal;
-        axis(extent);
-        view(3);
+%         imgData = this.imageData;
+%         if isempty(imgData)
+%             return;
+%         end
+%         
+%         imgSize = this.imageSize;
+%         
+%         % eventually rotate image around X-axis
+%         rotateAxis = true;
+%         if rotateAxis
+%             imgData = stackRotate90(imgData, 'x', 1);
+%             imgSize = imgSize([1 3 2]);
+%         end
+%         
+%         
+%         % compute display settings
+%         pos = ceil(imgSize / 2);
+%         spacing = this.voxelSize;
+%         origin  = this.voxelOrigin;
+%         
+%         % determine the color map to use (default is empty)
+%         cmap = [];
+%         if ~isColorStack(imgData) && ~isempty(this.colorMap)
+%             cmap = this.colorMap;
+%         end
+%         
+%         % create figure with 3 orthogonal slices in 3D
+%         figure();
+%         OrthoSlicer3d(imgData, 'Position', pos, ...
+%             'Origin', origin, 'Spacing', spacing, ...
+%             'DisplayRange', this.displayRange, 'ColorMap', cmap);
+%         
+%         % compute display extent (add a 0.5 limit around each voxel)
+%         extent = stackExtent(imgSize, spacing, origin);
+%         
+%         % setup display
+%         axis equal;
+%         axis(extent);
+%         view(3);
+%         
+%         if rotateAxis
+%             set(gca, 'ydir', 'reverse');
+%             set(gca, 'zdir', 'reverse');
+%         end
     end
 
     function onShowLabelIsosurfaces(this, varargin)

@@ -25,7 +25,7 @@ function [img newInds] = rotateStack90(img, axis, varargin)
 %   title('slice of rotated image');
 %
 %   See also
-%   stacks, stackRotate90
+%   imStacks, stackRotate90
 %
 %
 % ------

@@ -42,6 +42,8 @@ function [points labels] = imCentroid(img)
 % Created: 2011-03-30,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
+% 2013-04-19 fix bug for z-coordinate of 3D centroids
+
 % extract the set of labels, and remove label for background
 labels = unique(img(:));
 labels(labels==0) = [];
@@ -57,7 +59,7 @@ if nd == 2
         % extract points of the current particle
         [y x] = find(img==labels(i));
 
-        % compute coordiante of particle centroid
+        % coordinates of particle centroid
         xc = mean(x);
         yc = mean(y);
 
@@ -65,11 +67,13 @@ if nd == 2
     end
     
 elseif nd == 3
+    dim = size(img);
     for i = 1:nLabels
         % extract points of the current particle
-        [y x z] = find(img==labels(i));
+        inds = find(img==labels(i));
+        [y x z] = ind2sub(dim, inds);
 
-        % compute coordiante of particle centroid
+        % coordinates of particle centroid
         xc = mean(x);
         yc = mean(y);
         zc = mean(z);

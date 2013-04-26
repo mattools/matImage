@@ -29,6 +29,9 @@ end
 
 % open file and read data
 f = fopen(fname, 'r');
+if f == -1
+    error(['Unable to open file: ' fname]);
+end
 
 % read image dimension, and transform to row vector
 dim = fread(f, 3, 'int32');

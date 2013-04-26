@@ -68,7 +68,7 @@ function dist = imDistanceMap(img, varargin)
 %
 %   
 %   See also
-%   imChamferDistances, bwdist
+%   imChamferDistance, bwdist
 %
 % ------
 % Author: David Legland
@@ -77,8 +77,8 @@ function dist = imDistanceMap(img, varargin)
 % Copyright 2012 INRA - Cepia Software Platform.
 
 %   HISTORY
-%   2010.08.25 fix memory allocation for large images, add vebosity option
-%   2012.08.20 adapt imChamferDistances to create imDistanceMap
+%   2010-08-25 fix memory allocation for large images, add vebosity option
+%   2012-08-20 adapt imChamferDistance to create imDistanceMap
 
 %% Process input arguments
 

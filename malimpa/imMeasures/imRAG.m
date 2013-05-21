@@ -81,70 +81,46 @@ dim = size(img);
 % number of dimensions
 nd = length(dim);
 
-% initialize array
+% initialize array of neighbor regions
 edges = [];
 
 % Number of background pixels or voxels between two regions
 % gap = 0 -> regions are contiguous
 % gap = 1 -> there is a 1-pixel large line or surface between two adjacent
-% 	pixel, for example the result of a watershed
+% 	pixels, for example the result of a watershed
 gap = 1;
 if ~isempty(varargin) && isnumeric(varargin{1})
     gap = varargin{1};
 end
-
+shift = gap + 1;
 
 if nd == 2
 
     %% First direction of 2D image
     
     % identify transitions
-    [i1 i2] = find(img(1:end-1,:) ~= img(2:end, :));
+    [i1 i2] = find(img(1:end-shift,:) ~= img((shift+1):end, :));
     
-	% remove values close to border
-    inds = i1 >= dim(1) - gap;
-    i1(inds) = [];
-	i2(inds) = [];
-	
 	% get values of consecutive changes
 	val1 = img(sub2ind(dim, i1, i2));
-	val2 = img(sub2ind(dim, i1+1, i2));
+	val2 = img(sub2ind(dim, i1+shift, i2));
 	
-    if gap == 1
-        % find changes separated by a background pixel
-        valg = val2;
-        val2 = img(sub2ind(dim, i1+2, i2));
-        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
-    else
-        % find all changes not involving background
-        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    end
+    % keep only changes not involving background
+    inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
     edges = unique([val1(inds) val2(inds)], 'rows');
 	
 
     %% Second direction of 2D image
     
     % identify transitions
-    [i1 i2] = find(img(:, 1:end-1) ~= img(:, 2:end));
+    [i1 i2] = find(img(:, 1:end-shift) ~= img(:, (shift+1):end));
     
-	% remove values close to border
-    inds = i2 >= dim(2) - gap;
-    i1(inds) = [];
-	i2(inds) = [];
-	
 	% get values of consecutive changes
 	val1 = img(sub2ind(dim, i1, i2));
-	val2 = img(sub2ind(dim, i1, i2+1));
+	val2 = img(sub2ind(dim, i1, i2+shift));
     
-    if gap == 1
-        % find changes separated by a background pixel
-        valg = val2;
-        val2 = img(sub2ind(dim, i1, i2+2));
-        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
-    else
-        % find all changes not involving background
-        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    end
+    % keep only changes not involving background
+    inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
     edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
     
     
@@ -152,81 +128,45 @@ elseif nd == 3
     %% First direction of 3D image
     
     % identify transitions
-    [i1 i2 i3] = ind2sub(dim-[1 0 0], find(img(1:end-1,:,:) ~= img(2:end,:,:)));
-    
-	% remove values close to border
-    inds = i1 >= dim(1) - gap;
-    i1(inds) = [];
-	i2(inds) = [];
-	i3(inds) = [];
+    [i1 i2 i3] = ind2sub(dim-[shift 0 0], ...
+        find(img(1:end-shift,:,:) ~= img((shift+1):end,:,:)));
 	
 	% get values of consecutive changes
-	val1 = img(sub2ind(dim, i1,   i2, i3));
-	val2 = img(sub2ind(dim, i1+1, i2, i3));
+	val1 = img(sub2ind(dim, i1, i2, i3));
+	val2 = img(sub2ind(dim, i1+shift, i2, i3));
 
-    if gap == 1
-        % find changes separated by a background pixel
-        valg = val2;
-        val2 = img(sub2ind(dim, i1+2, i2, i3));
-        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
-    else
-        % find all changes not involving background
-        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    end
+    % keep only changes not involving background
+    inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
     edges = unique([val1(inds) val2(inds)], 'rows');
 	
 
     %% Second direction of 3D image
     
     % identify transitions
-    [i1 i2 i3] = ind2sub(dim-[0 1 0], find(img(:,1:end-1,:) ~= img(:,2:end,:)));
-    
-	% remove values close to border
-    inds = i2 >= dim(2) - gap;
-    i1(inds) = [];
-	i2(inds) = [];
-	i3(inds) = [];
+    [i1 i2 i3] = ind2sub(dim-[0 shift 0], ...
+        find(img(:,1:end-shift,:) ~= img(:,(shift+1):end,:)));
 	
 	% get values of consecutive changes
-	val1 = img(sub2ind(dim, i1,   i2, i3));
-	val2 = img(sub2ind(dim, i1, i2+1, i3));
+	val1 = img(sub2ind(dim, i1, i2, i3));
+	val2 = img(sub2ind(dim, i1, i2+shift, i3));
 
-    if gap == 1
-        % find changes separated by a background pixel
-        valg = val2;
-        val2 = img(sub2ind(dim, i1, i2+2, i3));
-        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
-    else
-        % find all changes not involving background
-        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    end
+    % keep only changes not involving background
+    inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
     edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
 
     
     %% Third direction of 3D image
     
     % identify transitions
-    [i1 i2 i3] = ind2sub(dim-[0 0 1], find(img(:,:,1:end-1) ~= img(:,:,2:end)));
-    
-	% remove values close to border
-    inds = i3 >= dim(3) - gap;
-    i1(inds) = [];
-	i2(inds) = [];
-	i3(inds) = [];
+    [i1 i2 i3] = ind2sub(dim-[0 0 shift], ...
+        find(img(:,:,1:end-shift) ~= img(:,:,(shift+1):end)));
 	
 	% get values of consecutive changes
-	val1 = img(sub2ind(dim, i1, i2,   i3));
-    val2 = img(sub2ind(dim, i1, i2, i3+1));
+	val1 = img(sub2ind(dim, i1, i2, i3));
+    val2 = img(sub2ind(dim, i1, i2, i3+shift));
     
-    if gap == 1
-        % find changes separated by a background pixel
-        valg = val2;
-        val2 = img(sub2ind(dim, i1, i2, i3+2));
-        inds = val1 ~= 0 & valg == 0 & val2 ~= 0 & val1 ~= val2;
-    else
-        % find all changes not involving background
-        inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    end
+    % keep only changes not involving background
+    inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
     edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
 
 end

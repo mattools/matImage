@@ -31,12 +31,25 @@ function rgb = double2rgb(img, map, bounds, varargin)
 % 
 %   See also
 %   ind2rgb, angle2rgb, label2rgb
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2010-03-03,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
+
+% HISTORY
+% 2013-06-17 add support for map given as string
+
+
+if nargin < 2
+    error('Need to specify a colormap');
+end
+
+% ensure map is a numeric array
+if ischar(map)
+    map = feval(map, 256);
+end
 
 % extract background value
 bgColor = [1 1 1];

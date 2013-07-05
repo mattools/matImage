@@ -21,7 +21,7 @@ function [circle labels] = imInscribedCircle(lbl, varargin)
 %     drawCircle(circles, 'linewidth', 2, 'color', 'g');
 %
 %   See also
-%     drawCircle, imEnclosingCircle, imInertiaEllipse, imInertiaEllipse
+%     drawCircle, imEnclosingCircle, imInertiaEllipse, imInscribedBall
 %
 %
 % ------

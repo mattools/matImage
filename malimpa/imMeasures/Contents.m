@@ -25,6 +25,7 @@
 %   imInertiaEllipse           - Inertia ellipse of a binary or label image
 %   imInertiaEllipsoid         - Inertia ellipsoid of a 3D binary image
 %   imInscribedCircle          - Maximal circle inscribed in a particle
+%   imInscribedBall            - Maximal ball inscribed in a 3D particle
 %   imEnclosingCircle          - Minimal enclosing circle of a particle
 %   imOrientedBox              - Minimum-area oriented bounding box of particles in image
 %   imFeretDiameter            - Feret diameter of a particle(s) for a given direction(s)

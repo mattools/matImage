@@ -31,19 +31,16 @@ function [ball labels] = imInscribedBall(lbl, varargin)
 % Created: 2013-07-05,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
-% extract the set of labels, and remove label for background
-labels = unique(lbl(:));
-labels(labels==0) = [];
-
+% extract the set of labels, without label for background
+labels = imFindLabels(lbl);
 nLabels = length(labels);
 
 % allocate memory for result (3 coords + 1 radius)
 ball = zeros(nLabels, 4);
 
 for i = 1:nLabels
-    % compute distance map
-%     distMap = imChamferDistance(lbl==i);
-    distMap = bwdist(lbl~=i);
+    % compute distance map from background
+    distMap = bwdist(lbl ~= labels(i));
     
     % find value and position of the maximum
     [maxi ind] = max(distMap(:));

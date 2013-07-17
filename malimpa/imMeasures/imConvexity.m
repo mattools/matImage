@@ -47,8 +47,7 @@ function [cv labels] = imConvexity(img)
 
 % identify the labels in image
 if ~islogical(img)
-    labels = unique(img);
-    labels(labels==0) = [];
+    labels = imFindLabels(img);
 else
     % binary images have only one label
     labels = 1;

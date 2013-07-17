@@ -27,10 +27,9 @@ end
 
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
-    labels = unique(img);
-    labels(labels==0) = [];
+    labels = imFindLabels(img);
     vol = zeros(length(labels), 1);
-    for i=1:length(labels)
+    for i = 1:length(labels)
         vol(i) = imVolume(img==labels(i), varargin{:});
     end
     return;

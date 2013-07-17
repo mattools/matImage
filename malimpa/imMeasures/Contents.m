@@ -53,6 +53,7 @@
 %   isColorImage               - Check if an image is a color image
 %   imPhysicalExtent           - Compute the physical extent of an image
 %   imGrayscaleExtent          - Grayscale extent of an image
+%   imFindLabels               - Find unique labels in a label image
 %
 %  Descriptive statistics on pixel values
 %   imSum                      - Sum of a grayscale image, or sum of each color component
@@ -74,7 +75,6 @@
 % created the  19/04/2004.
 % Copyright INRA - Cepia Software Platform.
 % http://www.pfl-cepia.inra.fr/index.php?page=imael
-% Licensed under the terms of the BSD License, see the file license.txt
  
 % display help if executed
 help Contents

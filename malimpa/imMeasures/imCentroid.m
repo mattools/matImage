@@ -44,10 +44,8 @@ function [points labels] = imCentroid(img)
 
 % 2013-04-19 fix bug for z-coordinate of 3D centroids
 
-% extract the set of labels, and remove label for background
-labels = unique(img(:));
-labels(labels==0) = [];
-
+% extract the set of labels, without the background
+labels = imFindLabels(img);
 nLabels = length(labels);
 
 % allocate memory for result

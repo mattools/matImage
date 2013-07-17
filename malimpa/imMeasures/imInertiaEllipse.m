@@ -72,15 +72,8 @@ end
 
 %% Initialisations
 
-% determine the unique values in image (only one in case of binary image)
-if islogical(img)
-    labels = 1;
-else
-    % extract the set of labels, and remove label for background
-    labels = unique(img(:));
-    labels(labels==0) = [];
-end
-
+% extract the set of labels, without the background
+labels = imFindLabels(img);
 nLabels = length(labels);
 
 % allocate memory for result

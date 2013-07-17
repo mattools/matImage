@@ -48,8 +48,7 @@ end
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
     % identify the labels in image
-    labels = unique(img);
-    labels(labels==0) = [];
+    labels = imFindLabels(img);
     
     % allocate result array
     nLabels = length(labels);

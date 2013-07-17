@@ -49,15 +49,14 @@ function [boxes labels] = imBoundingBox(img)
 
 %% Initialisations
 
-% extract the set of labels, and remove label for background
-labels = unique(img(:));
-labels(labels==0) = [];
-
+% extract the set of labels, without the background
+labels = imFindLabels(img);
 nLabels = length(labels);
-nd = ndims(img);
 
 % allocate memory for result
-boxes = zeros(nLabels, 2*nd);
+nd = ndims(img);
+boxes = zeros(nLabels, 2 * nd);
+
 
 if nd == 2
     %% Process planar case 

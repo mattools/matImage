@@ -38,9 +38,8 @@ else
     end
 end
 
-% number of particles
-labels = unique(img(:));
-labels(labels==0) = [];
+% extract the set of labels, without the background
+labels = imFindLabels(img);
 nLabels = length(labels);
 
 % allocate memory for result

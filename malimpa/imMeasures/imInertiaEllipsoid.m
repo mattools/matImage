@@ -47,10 +47,8 @@ if ~isempty(varargin)
     scales = varargin{1};
 end
 
-% extract the set of labels, and remove label for background
-labels = unique(img(:));
-labels(labels==0) = [];
-
+% extract the set of labels, without the background
+labels = imFindLabels(img);
 nLabels = length(labels);
 
 % allocate memory for result

@@ -17,7 +17,7 @@ function bin = imCropLabel(img, label)
 %     imshow(bin3);
 %
 %   See also
-%   imcrop, label2rgb
+%   imcrop, label2rgb, imFindLabels
 %
 % ------
 % Author: David Legland

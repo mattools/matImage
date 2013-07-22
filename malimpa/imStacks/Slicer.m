@@ -96,7 +96,7 @@ properties
     % 'none'
     imageType;
     
-    % physical size of the reference image (1-by-3 row vector)
+    % size of the reference image (1-by-3 row vector, in XYZ order)
     imageSize;
     
     % extra info for image, such as the result of imfinfo
@@ -1237,10 +1237,31 @@ methods
     end
         
     function onRotateImage(this, hObject, eventdata)
+        % Rotate an image by 90 degrees along x, y or z axis.
+        % Axis ID and number of 90 degrees rotations are given by user data
+        % of the calling menu
+        
+        if isempty(this.imageData)
+            return;
+        end
+                
         data = get(hObject, 'UserData');
         this.rotateImage(data(1), data(2));
     end
 
+    function onCropImage(this, hObject, eventdata)
+        % Crop the 3D image.
+        % Opens a dialog, that choose options, then create new slicer
+        % object with cropped image.
+
+        if isempty(this.imageData)
+            return;
+        end
+         
+        CropStackDialog(this);
+    end
+    
+    
     function onDisplayImageInfo(this, varargin)
         % hObject    handle to itemDisplayImageInfo (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
@@ -2263,6 +2284,12 @@ methods
             'UserData', [2 -1], ...
             'Callback', @this.onRotateImage);
         
+        uimenu(menuImage, ...
+            'Label', 'Crop Image', ...
+            'Separator', 'On', ...
+            'Enable', imageFlag, ...
+            'Callback', @this.onCropImage);
+
         uimenu(menuImage, ...
             'Label', 'View &Histogram', ...
             'Separator', 'On', ...

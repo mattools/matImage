@@ -1,5 +1,5 @@
 classdef OrthoSlicer3dOptionsDialog < handle
-%ORTHOSLICER3DOPTIONSDIALOG  One-line description here, please.
+%ORTHOSLICER3DOPTIONSDIALOG Open a dialog for 3D orthoslices display
 %
 %   Class OrthoSlicer3dOptionsDialog
 %

@@ -65,8 +65,10 @@
 %   imMedian                   - Median value of a grayscale image, or of each color component
 %   imMode                     - Mode of pixel values in an image
 %
-% Other
+% Extract geometric primitives
+%   imFind                     - Return coordinates of non-zero pixels in an image
 %   imRAG                      - Region adjacency graph of a labeled image
+%   imContours                 - Extract polygonal contours of a binary image
 %
 %
 % -----
@@ -81,3 +83,4 @@ help Contents
 
 %   Deprecated:
 %   specificIMCDetails         - Ohser's Integral of Mean Curvature
+

@@ -195,14 +195,10 @@ methods
         if strcmp(this.imageType, 'label')
             maxi = max(this.imageData(:));
             this.displayRange  = [0 maxi];
-            
-            this.colorMap = jet(256);
+            this.colorMap = [this.bgColor; jet(255)];
         end
         updateSlice(this);
         displayNewImage(this);
-        if strcmp(this.imageType, 'label')
-            updateColorMap(this);
-        end
         updateTitle(this);
         
         % setup listeners associated to the figure

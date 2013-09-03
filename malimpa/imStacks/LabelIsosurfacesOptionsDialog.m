@@ -1,10 +1,10 @@
-classdef OrthoSlicer3dOptionsDialog < handle
-%ORTHOSLICER3DOPTIONSDIALOG Open a dialog for 3D orthoslices display
+classdef LabelIsosurfacesOptionsDialog < handle
+%LABELISOSURFACESOPTIONSDIALOG Open a dialog for 3D label isosurfaces
 %
-%   Class OrthoSlicer3dOptionsDialog
+%   Class LabelIsosurfacesOptionsDialog
 %
 %   Example
-%   OrthoSlicer3dOptionsDialog
+%   LabelIsosurfacesOptionsDialog
 %
 %   See also
 %
@@ -26,8 +26,8 @@ end % end properties
 
 %% Constructor
 methods
-    function this = OrthoSlicer3dOptionsDialog(parent, varargin)
-    % Constructor for OrthoSlicer3dOptionsDialog class
+    function this = LabelIsosurfacesOptionsDialog(parent, varargin)
+    % Constructor for LabelIsosurfacesOptionsDialog class
         
          % call parent constructor to initialize members
         this = this@handle();
@@ -38,7 +38,7 @@ methods
             'MenuBar', 'none', ...
             'NumberTitle', 'off', ...
             'HandleVisibility', 'On', ...
-            'Name', 'OrthoSlicer3D Options', ...
+            'Name', 'Label Isosurfaces Options', ...
             'CloseRequestFcn', @this.close);
         this.handles.figure = fig;
             
@@ -64,13 +64,13 @@ methods
             this.handles.rotateOx = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Rotate around X-axis', ...
-                'Value', 0, ...
+                'Value', 1, ...
                 'HorizontalAlignment', 'Left');
 
-            this.handles.convertToRGB = uicontrol(...
+            this.handles.smooth = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
-                'String', 'Convert to RGB', ...
-                'Value', 0, ...
+                'String', 'Smooth', ...
+                'Value', 1, ...
                 'HorizontalAlignment', 'Left');
             
             this.handles.showAxisLabel = uicontrol(...
@@ -107,62 +107,80 @@ end % end constructors
 methods
     function onApplyButtonClicked(this, hObject, eventdata) %#ok<INUSD>
         
+        % extract options from widgets
         rotateXAxis = get(this.handles.rotateOx, 'Value');
-        convertToRGB = get(this.handles.convertToRGB, 'Value');
+        smooth = get(this.handles.smooth, 'Value');
         showAxesLabel = get(this.handles.showAxisLabel, 'Value');
         
-        
+        % get image data stored in parent Slicer
         imgData = this.parent.imageData;
+        imgSize = this.parent.imageSize;
+        
+        % avoid the case of empty image
         if isempty(imgData)
             return;
         end
         
-        imgSize = this.parent.imageSize;
-        
-        if convertToRGB
-            % choose the colormap
-            cmap = this.parent.colorMap;
-            if isempty(cmap)
-                cmap = jet(256);
-            end
-        
-            % if colormap has 256 entries, we need only a subset
-            % otherwise, we assume colormap has as manu rows as the number
-            % of labels.
-            nLabels = max(imgData(:));
-            if size(cmap, 1) == 256
-                inds = round(linspace(2, 256, nLabels));
-                cmap = cmap(inds, :);
-            end
-            
-            % convert inner image data
-            imgData = label2rgb3d(imgData, cmap, this.parent.bgColor, 'shuffle');
-
-        end
-        
         % eventually rotate image around X-axis
         if rotateXAxis
-            imgData = flipStack(stackRotate90(imgData, 'x', 1), 2);
+            imgData = stackRotate90(imgData, 'x', 1);
             imgSize = imgSize([1 3 2]);
         end
         
-        
         % compute display settings
-        pos = ceil(imgSize / 2);
         spacing = this.parent.voxelSize;
         origin  = this.parent.voxelOrigin;
         
+        % compute grid positions
+        lx = (0:imgSize(1)-1) * spacing(1) + origin(1);
+        ly = (0:imgSize(2)-1) * spacing(2) + origin(2);
+        lz = (0:imgSize(3)-1) * spacing(3) + origin(3);
+
+        if rotateXAxis
+            ly = ly(end:-1:1);
+        end
+        
+        % number of different labels
+        nLabels = double(max(imgData(:)));
+
         % determine the color map to use (default is empty)
         cmap = [];
         if ~isColorStack(imgData) && ~isempty(this.parent.colorMap)
             cmap = this.parent.colorMap;
         end
+        if isempty(cmap)
+            cmap = jet(256);
+        end
         
-        % create figure with 3 orthogonal slices in 3D
-        figure();
-        OrthoSlicer3d(imgData, 'Position', pos, ...
-            'Origin', origin, 'Spacing', spacing, ...
-            'DisplayRange', this.parent.displayRange, 'ColorMap', cmap);
+        % if colormap has 256 entries, we need only a subset
+        % otherwise, we assume colormap has as many rows as the number
+        % of labels.
+        if size(cmap, 1) == 256
+            inds = round(linspace(2, 256, nLabels));
+            cmap = cmap(inds, :);
+        end
+        
+        % create figure 
+        hf = figure(); hold on;
+        set(hf, 'renderer', 'opengl');
+        
+        % compute an isosurface for each label
+        for i = 1:nLabels
+            im = imgData==i;
+            if ~any(im)
+                continue;
+            end
+            
+            if smooth
+                im = imGaussianFilter(double(im), [5 5 5], 2);
+            end
+            
+            % display isosurface
+            p = patch(isosurface(lx, ly, lz, im, .5));
+            
+            % set face color
+            set(p, 'FaceColor', cmap(i,:), 'EdgeColor', 'none');
+        end
         
         % compute display extent (add a 0.5 limit around each voxel)
         extent = stackExtent(imgSize, spacing, origin);
@@ -171,7 +189,10 @@ methods
         axis equal;
         axis(extent);
         view(3);
+        axis('vis3d');
         
+        light;
+         
         if rotateXAxis
             set(gca, 'zdir', 'reverse');
         end

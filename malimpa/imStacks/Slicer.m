@@ -1494,12 +1494,17 @@ methods
         disp(['Change LUT to: ' cmapName]);
         
         nGrays = 256;
+        if strcmp(this.imageType, 'label')
+            nGrays = double(max(this.imageData(:)));
+        end
+        
         if strmatch(cmapName, 'gray')
             % for gray-scale, use an empty LUT
             this.colorMap = [];
             
         elseif strmatch(cmapName, 'inverted')
-            this.colorMap = repmat((255:-1:0)', 1, 3) / 255;
+            grayMax = nGrays - 1;
+            this.colorMap = repmat((grayMax:-1:0)', 1, 3) / grayMax;
             
         elseif strmatch(cmapName, 'blue-gray-red')
             this.colorMap = gray(nGrays);
@@ -1605,115 +1610,22 @@ methods
     end
     
     function onShowOrthoSlices3d(this, varargin)
+        % Open a dialog to choose options, then display 3D orthoslices
+        if isempty(this.imageData)
+            return;
+        end
         OrthoSlicer3dOptionsDialog(this);
-        
-%         imgData = this.imageData;
-%         if isempty(imgData)
-%             return;
-%         end
-%         
-%         imgSize = this.imageSize;
-%         
-%         % eventually rotate image around X-axis
-%         rotateAxis = true;
-%         if rotateAxis
-%             imgData = stackRotate90(imgData, 'x', 1);
-%             imgSize = imgSize([1 3 2]);
-%         end
-%         
-%         
-%         % compute display settings
-%         pos = ceil(imgSize / 2);
-%         spacing = this.voxelSize;
-%         origin  = this.voxelOrigin;
-%         
-%         % determine the color map to use (default is empty)
-%         cmap = [];
-%         if ~isColorStack(imgData) && ~isempty(this.colorMap)
-%             cmap = this.colorMap;
-%         end
-%         
-%         % create figure with 3 orthogonal slices in 3D
-%         figure();
-%         OrthoSlicer3d(imgData, 'Position', pos, ...
-%             'Origin', origin, 'Spacing', spacing, ...
-%             'DisplayRange', this.displayRange, 'ColorMap', cmap);
-%         
-%         % compute display extent (add a 0.5 limit around each voxel)
-%         extent = stackExtent(imgSize, spacing, origin);
-%         
-%         % setup display
-%         axis equal;
-%         axis(extent);
-%         view(3);
-%         
-%         if rotateAxis
-%             set(gca, 'ydir', 'reverse');
-%             set(gca, 'zdir', 'reverse');
-%         end
     end
 
     function onShowLabelIsosurfaces(this, varargin)
-        
+        % Open a dialog to choose options, then display label isosurfaces
         if isempty(this.imageData)
             return;
         end
         if ~ismember(this.imageType, {'label', 'binary'})
             return;
         end
-        
-        % compute display settings
-        spacing = this.voxelSize;
-        origin  = this.voxelOrigin;
-        
-        % compute grid positions
-        dim = this.imageSize;
-        lx = (0:dim(1)-1) * spacing(1) + origin(1);
-        ly = (0:dim(2)-1) * spacing(2) + origin(2);
-        lz = (0:dim(3)-1) * spacing(3) + origin(3);
-
-        % number of different labels
-        nLabels = double(max(this.imageData(:)));
-
-        % determine the color map to use (default is empty)
-        cmap = [];
-        if ~isColorStack(this.imageData) && ~isempty(this.colorMap)
-            cmap = this.colorMap;
-        end
-        if isempty(cmap)
-            cmap = jet(256);
-        end
-        inds = round(linspace(2, length(cmap), nLabels));
-        cmap = cmap(inds, :);
-        
-        % create figure 
-        hf = figure(); hold on;
-        set(hf, 'renderer', 'opengl');
-        
-        % compute an isosurface for each label
-        for i = 1:nLabels
-            im = this.imageData==i;
-            if ~any(im)
-                continue;
-            end
-            
-            % display isosurface
-            p = patch(isosurface(lx, ly, lz, im, .5));
-            
-            % set face color
-            set(p, 'FaceColor', cmap(i,:), 'EdgeColor', 'none');
-        end
-        
-        % compute display extent (add a 0.5 limit around each voxel)
-        extent = stackExtent(this.imageSize, spacing, origin);
-        
-        % setup display
-        axis equal;
-        axis(extent);
-        view(3);
-        axis('vis3d');
-        
-        light;
+        LabelIsosurfacesOptionsDialog(this);
     end
     
     function rgb = createRGBImage(this)

@@ -1,4 +1,4 @@
-function [gxx gxy gyy] = imHessian(img, varargin)
+function [gxx gxy gyy] = imHessian(img, sigma, varargin)
 %IMHESSIAN Compute coefficients of Hessian matrix for each pixel
 %
 %   [GXX GXY GYY] = imHessian(IMG, SIGMA)

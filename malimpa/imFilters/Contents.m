@@ -19,7 +19,6 @@
 %   imrecerode            - Perform a morphological reconstruction by erosion
 %   imHConcave            - H-concave transformation of an image
 %   imHConvex             - H-convex transformation of an image
-%   imNeighborhood        - Return the neighborhood of a given pixel
 %
 %   Geometric filters:
 %   imFlip                - Flip an image along one of its dimensions
@@ -89,6 +88,7 @@
 %   cross3d               - Return a 3D structuring element with cross shape
 %   intline               - Integer-coordinate line drawing algorithm.
 %   strelDisk             - Discrete disk structuring element
+%   imNeighborhood        - Return the neighborhood of a given pixel
 %
 % -----
 % Author: David Legland

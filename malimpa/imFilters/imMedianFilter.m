@@ -10,14 +10,18 @@ function res = imMedianFilter(img, se, varargin)
 %
 %
 %   RES = imMedianFilter(IMG, SE, PADOPT) 
-%   also specify padding option. PADOPT can be one of X (numeric value),
-%   'symmetric', 'replicate', 'circular' (see imfilter for details). 
-%   Default is 'replicate'.
+%   also specify padding option. PADOPT can be one 'zeros' or 'symmetric'
+%   (see ordfilt2 for details). Default value is 'symmetric'.
+%
+%   Example
+%     img = imread('rice.png');
+%     img2 = imMedianFilter(img, ones(5, 5));
+%     imshow(img2);
 %
 %   See Also: 
 %   imMeanFilter, imDirectionalFilter, medfilt2, ordfilt2
 %
-%
+
 %   ---------
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
@@ -28,6 +32,8 @@ function res = imMedianFilter(img, se, varargin)
 %   2004-02-17 add support for 'strel' objects.
 %   2004-02-20 add 'padopt' option, and documentation
 %   2011-11-05 rename from immedian to imMedianFilter
+%   2013-10-10 change default behaviour of padopt to 'replicate', add
+%       example
 
 % transform STREL object into single array
 if isa(se, 'strel')
@@ -35,7 +41,7 @@ if isa(se, 'strel')
 end
 
 % get padopt option.
-padopt = 'zeros'; % default for standard median filtering in matlab
+padopt = 'symmetric';
 if ~isempty(varargin)
     padopt = varargin{1};
 end

@@ -469,12 +469,15 @@ methods
         % update display
         setupImageData(this, metaImageRead(info), imgName);
 
-        % setup calibration
+        % setup spatial calibration
         if isfield(info, 'ElementSize')
             this.voxelSize = info.('ElementSize');
         else
             isfield(info, 'ElementSpacing')
             this.voxelSize = info.('ElementSpacing');
+        end
+        if isfield(info, 'Offset')
+            this.voxelOrigin = info.('Offset');
         end
         if isfield(info, 'ElementOrigin')
             this.voxelOrigin = info.('ElementOrigin');

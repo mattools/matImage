@@ -25,26 +25,36 @@ function val = imEvaluate(img, varargin)
 % Created: 2012-05-22,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
+%% Default values
+
+% use linear interpolation as default
+method = 'linear';
+
+% fill background with black
+fillValue = 0;
+
+
 %% Process input arguments
 
+% parse coordinates
 nd = ndims(img);
 if isColorImage(img)
     nd = nd - 1;
 end
 [point dim varargin] = mergeCoordinates(varargin{:});
 
-method = 'linear';
-fillValue = 0;
-
+% parse interpolation method
 if ~isempty(varargin)
     method = varargin{1};
     varargin{1} = [];
 end
 
-if ischar(method) && method(1)~= '*'
+% use fast interpolation, because images are monotonic
+if ischar(method) && method(1) ~= '*'
     method = ['*' method];
 end
 
+% parse background value
 if ~isempty(varargin)
     fillValue = varargin{1};
 end
@@ -84,6 +94,7 @@ if nd == 2
                 point(:, 1), point(:, 2), method, fillValue);
         end
     end
+    
 elseif nd == 3
     % 3D Case
     x = 1:size(img, 2);

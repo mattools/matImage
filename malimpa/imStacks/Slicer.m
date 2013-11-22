@@ -1332,8 +1332,8 @@ methods
             return;
         end
         
-        h = figure;
-        fprintf('Computing histogram...');
+%         h = figure;
+%         fprintf('Computing histogram...');
         
         % in the case of vector image, compute histogram of image norm
         img = this.imageData;
@@ -1341,45 +1341,48 @@ methods
             img = sqrt(sum(double(img) .^ 2, 3));
         end
         
-            
-        if strcmp(this.imageType, 'label')
-            % process label images -> do not count the zero
-            nLabels = max(this.imageData(:));
-            x = 1:nLabels;
-            hist(double(img(img > 0)), double(x));
-            xlim([0 nLabels+1]);        
-            colormap jet;
-            
-        elseif strcmp(this.imageType, 'color')
-            % process 8-bits RGB 3D image
-            
-            % compute histogram of each channel
-            h = zeros(256, 3);
-            for i = 1:3
-                im = img(:,:,i,:);
-                h(:, i) = hist(double(im(:)), 0:255);
-            end
-            
-            % display each color histogram as stairs, to see the 3 curves
-            hh = stairs(0:255, h);
-            set(hh(1), 'color', [1 0 0]); % red
-            set(hh(2), 'color', [0 1 0]); % green
-            set(hh(3), 'color', [0 0 1]); % blue
-            
-            xlim([0 255]);
         
-        else
-            % Process gray-scale or vector image
-            [minimg maximg] = this.computeGrayScaleExtent();
-            x = linspace(double(minimg), double(maximg), 256);
-            hist(double(img(:)), x);
-            xlim([minimg-.5 maximg+.5]);        
-            colormap jet;
-        end
+        useBackground = ~strcmp(this.imageType, 'label');
+        hd = imHistogramDialog(img, 'useBackground', useBackground);
+            
+%         if strcmp(this.imageType, 'label')
+%             % process label images -> do not count the zero
+%             nLabels = max(this.imageData(:));
+%             x = 1:nLabels;
+%             hist(double(img(img > 0)), double(x));
+%             xlim([0 nLabels+1]);        
+%             colormap jet;
+%             
+%         elseif strcmp(this.imageType, 'color')
+%             % process 8-bits RGB 3D image
+%             
+%             % compute histogram of each channel
+%             h = zeros(256, 3);
+%             for i = 1:3
+%                 im = img(:,:,i,:);
+%                 h(:, i) = hist(double(im(:)), 0:255);
+%             end
+%             
+%             % display each color histogram as stairs, to see the 3 curves
+%             hh = stairs(0:255, h);
+%             set(hh(1), 'color', [1 0 0]); % red
+%             set(hh(2), 'color', [0 1 0]); % green
+%             set(hh(3), 'color', [0 0 1]); % blue
+%             
+%             xlim([0 255]);
+%         
+%         else
+%             % Process gray-scale or vector image
+%             [minimg maximg] = this.computeGrayScaleExtent();
+%             x = linspace(double(minimg), double(maximg), 256);
+%             hist(double(img(:)), x);
+%             xlim([minimg-.5 maximg+.5]);        
+%             colormap jet;
+%         end
+%         
+%         fprintf('done\n');
         
-        fprintf('done\n');
-        
-        this.handles.subFigures = [this.handles.subFigures, h];
+        this.handles.subFigures = [this.handles.subFigures, hd.handles.histoFigure];
     end
     
 end    

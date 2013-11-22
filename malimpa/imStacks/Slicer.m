@@ -1163,6 +1163,7 @@ methods
         this.displayRange  = [mini maxi];
 
         % update display
+        setupMenuBar(this);
         updateSlice(this);
         displayNewImage(this);
         updateColorMap(this);
@@ -2020,6 +2021,11 @@ methods
         
         hf = this.handles.figure;
         
+        % remove menuitems that could already exist
+        % (this is the case when the image type is changed, for example)
+        children = get(hf, 'children');
+        delete(children(strcmp(get(children, 'Type'), 'uimenu')));
+        
         % setup some flags that will able/disable some menu items
         if ~isempty(this.imageData)
             imageFlag = 'on';
@@ -2030,6 +2036,11 @@ methods
             colorFlag = 'on';
         else
             colorFlag = 'off';
+        end
+        if ismember(this.imageType, {'label', 'binary'})
+            labelFlag = 'on';
+        else
+            labelFlag = 'off';
         end
         if ismember(this.imageType, {'grayscale', 'label', 'binary'})
             grayscaleFlag = 'on';
@@ -2137,7 +2148,7 @@ methods
         
         uimenu(menuImage, ...
             'Label', 'Convert Labels to Color', ...
-            'Enable', grayscaleFlag, ...
+            'Enable', labelFlag, ...
             'Callback', @this.onConvertLabelsToColor);
         
         uimenu(menuImage, ...
@@ -2346,6 +2357,7 @@ methods
             'Callback', @this.onShowOrthoSlices3d);
         uimenu(menuView, ...
             'Label', 'Surface rendering', ...
+            'Enable', labelFlag, ...
             'Callback', @this.onShowLabelIsosurfaces);
         
         % Zoom menu items

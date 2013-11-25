@@ -108,10 +108,12 @@ sliceZY = squeeze(permute(stackSlice(img, 1, pos(1)), [2 1 3]));
 sliceXZ = squeeze(permute(stackSlice(img, 2, pos(2)), [2 1 3]));
 
 % If necessary, convert slice to RGB image to facilitate display
-if ~isempty(lut) || any(displayRange ~= [0 255]) || ~isa(img, 'uint8')
-    sliceXY = computeSliceRGB(sliceXY, displayRange, lut);
-    sliceZY = computeSliceRGB(sliceZY, displayRange, lut);
-    sliceXZ = computeSliceRGB(sliceXZ, displayRange, lut);
+if size(img, 3) == 1
+    if ~isempty(lut) || any(displayRange ~= [0 255]) || ~isa(img, 'uint8')
+        sliceXY = computeSliceRGB(sliceXY, displayRange, lut);
+        sliceZY = computeSliceRGB(sliceZY, displayRange, lut);
+        sliceXZ = computeSliceRGB(sliceXZ, displayRange, lut);
+    end
 end
 
 % get spatial calibration

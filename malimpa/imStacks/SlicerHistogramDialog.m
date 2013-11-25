@@ -1,14 +1,14 @@
-classdef imHistogramDialog < handle
-%IMHISTOGRAMDIALOG Open a dialog to setup image histogram display options
+classdef SlicerHistogramDialog < handle
+%SLICERHISTOGRAMDIALOG Open a dialog to setup image histogram display options
 %
 %   usage:
-%   imHistogramDialog
+%   SlicerHistogramDialog
 %   This opens a dialog with several widgets, as well as a figure that
 %   displays image histogram with current settings.
 %
 %   Example
 %     img = Image.read('cameraman.tif');
-%     imHistogramDialog(img)
+%     SlicerHistogramDialog(img)
 %
 %   See also
 %     imHistogram, imhist
@@ -67,8 +67,8 @@ end % end properties
 
 %% Constructor
 methods
-    function this = imHistogramDialog(img, varargin)
-    % Constructor for imHistogramDialog class
+    function this = SlicerHistogramDialog(img, varargin)
+    % Constructor for SlicerHistogramDialog class
         
         % initialize inner variables
         this.image = img;
@@ -519,7 +519,7 @@ methods
         % display histogram
         switch this.displayType
             case 'bars'
-                bar(ax, x, h, 'histc');
+                bar(ax, x, h, 'hist');
             case 'stems'
                 stem(ax, x, h);
             case 'stairs'
@@ -542,7 +542,7 @@ methods
         % display histogram
         switch this.displayType
             case 'bars'
-                hh = bar(ax, x, h, 5, 'histc');
+                hh = bar(ax, x, h, 5, 'hist');
                 % setup colors
                 set(hh(1), 'EdgeColor', 'none', 'FaceColor', [1 0 0]); % red
                 set(hh(2), 'EdgeColor', 'none', 'FaceColor', [0 1 0]); % green

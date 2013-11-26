@@ -114,7 +114,8 @@ properties
     % used to adjust constrast of the slice
     displayRange;
     
-    % Look-up table for display of uint8 images
+    % Look-up table for display of uint8, label and binary images.
+    % can be empty, in this case gray colormap is assumed 
     colorMap;
 
     % background color for label to RGB conversion. Given as RGB triplet
@@ -818,6 +819,12 @@ methods
         showOpenImageDialog(this);
     end
     
+    function onOpenDemoImage(this, hObject, eventdata) %#ok<MANU>
+        metadata = analyze75info('brainMRI.hdr');
+        img = analyze75read(metadata);
+        Slicer(img, 'spacing', [1 1 2.5], 'name', 'Brain', 'displayRange', [0 90]);
+    end
+    
     function onImportRawData(this, hObject, eventdata)
         [fileName, pathName] = uigetfile( ...
        {'*.raw', 'Raw data file(*.raw)'; ...
@@ -1505,6 +1512,7 @@ methods
         if strmatch(cmapName, 'gray')
             % for gray-scale, use an empty LUT
             this.colorMap = [];
+            this.colorMap = gray(nGrays);
             
         elseif strmatch(cmapName, 'inverted')
             grayMax = nGrays - 1;
@@ -1516,8 +1524,8 @@ methods
             this.colorMap(end,:) = [1 0 0];
             
         elseif strmatch(cmapName, 'colorcube')
-            nLabels = round(max(this.imageData(:)));
-            map = colorcube(double(nLabels)+2);
+            nLabels = round(double(max(this.imageData(:))));
+            map = colorcube(nLabels+2);
             % remove black and white colors
             isValidColor = sum(map==0, 2) ~= 3 & sum(map==1, 2) ~= 3;
             this.colorMap = [0 0 0; map(isValidColor, :)];
@@ -2066,6 +2074,12 @@ methods
         uimenu(menuFiles, ...
             'Label', '&Import From Workspace...', ...
             'Callback', @this.onImportFromWorkspace);
+        menuDemo = uimenu(menuFiles, ...
+            'Label', 'Demo Images');
+        uimenu(menuDemo, ...
+            'Label', 'Brain MRI', ...
+            'UserData', 'brainMRI', ...
+            'Callback', @this.onOpenDemoImage);
         uimenu(menuFiles, ...
             'Label', '&Save Image...', ...
             'Separator', 'On', ...

@@ -154,6 +154,17 @@ end
 %% Read LSM image using tiffread
 
 if strcmp(fname(end-2:end), 'lsm')
+    if exist('tiffread', 'file') == 0
+        errordlg(...
+            {'Requires the ''tiffread'' library'; ...
+            'to work properly'; ''; 'Please check:'; ...
+            'http://www.cytosim.org/other/'}, ...
+            'Missing library', ...
+            'modal');
+        img = [];
+        return;
+    end
+    
     % read all data
     infos = tiffread(fname);
     

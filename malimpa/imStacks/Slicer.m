@@ -148,7 +148,11 @@ methods
         % call parent constructor
         this = this@handle();
         
+        % initialize structure containing handles
         this.handles = struct();
+        
+        % keep pointer to current path
+        this.lastPath = pwd;
         
         % initialize using image given as argument
         if ~isempty(varargin)

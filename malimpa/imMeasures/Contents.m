@@ -9,6 +9,7 @@
 %
 % Image exploration
 %   imHistogram                - Histogram of 2D/3D grayscale or color images
+%   imHistogramDialog          - Open a dialog to setup image histogram display options
 %   imColorHistogram           - Plot 3D histogram of a color image
 %   imLineProfile              - Evaluate image value along a line segment
 %   imEvaluate                 - Evaluate image value at given position(s)

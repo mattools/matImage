@@ -52,7 +52,11 @@ classdef Slicer < handle
 %         gray levels for other image types.
 %
 %   * 'colorMap'    The colormap used for displaying grayscale images
-%         (default is gray).
+%         (default is gray). Should be a N-by-3 array of double, with N=256
+%         for grayscale or intensity images, as N=the number of labels for
+%         label images, and N=2 for binary images.
+%
+%   * 'backgroundColor'    the color used as background for label images.
 %
 %   * 'imageType'   The type of image, used for adapting display. Can be
 %           one of 'binary', 'grayscale', 'intensity', 'label', 'color',
@@ -197,10 +201,14 @@ methods
         setupLayout(fig);
         
         % setup new image display
-        if strcmp(this.imageType, 'label')
+        if ismember(this.imageType, {'label', 'binary'})
             maxi = max(this.imageData(:));
             this.displayRange  = [0 maxi];
-            this.colorMap = [this.bgColor; jet(255)];
+            
+            if isempty(this.colorMap)
+                this.colorMap = jet(maxi);
+            end
+            colormap([this.bgColor ; this.colorMap]);
         end
         updateSlice(this);
         displayNewImage(this);
@@ -248,6 +256,8 @@ methods
                         this.displayRange = varargin{2};
                     case 'colormap'
                         this.colorMap = varargin{2};
+                    case 'backgroundcolor'
+                        this.bgColor = varargin{2};
                         
                     otherwise
                         error(['Unknown parameter name: ' param]);
@@ -802,8 +812,15 @@ methods
         % for grayscale and vector images, adjust displayrange and LUT
         if ~strcmp(this.imageType, 'color')
             set(this.handles.imageAxis, 'CLim', this.displayRange);
-            if  ~isempty(this.colorMap)
-                colormap(this.handles.imageAxis, this.colorMap);
+            
+            % setup the appropriate color map (stored color map, plus
+            % eventuallay the background color for label images)
+            cmap = this.colorMap;
+            if  ~isempty(cmap)
+                if strcmp(this.imageType, 'label')
+                    cmap = [this.bgColor ; cmap];
+                end
+                colormap(this.handles.imageAxis, cmap);
             end
         end
         
@@ -1150,8 +1167,10 @@ methods
         
         % colormap has 256 entries, we need only a subset
         nLabels = max(this.imageData(:));
-        inds = round(linspace(1, 256, nLabels));
-        cmap = cmap(inds, :);
+        if size(cmap, 1) ~= nLabels
+            inds = round(linspace(1, size(cmap,1), nLabels));
+            cmap = cmap(inds, :);
+        end
         
         % convert inner image data
         newData = label2rgb3d(this.imageData, cmap, this.bgColor, 'shuffle');
@@ -1290,6 +1309,52 @@ methods
         end
          
         CropStackDialog(this);
+    end
+    
+    function onCropLabel(this, hObject, eventdata)
+        % Crop the 3D image portion corresponding to a label.
+        % Opens a dialog, that choose options, then create new slicer
+        % object with cropped image.
+
+        % basic input check
+        if isempty(this.imageData)
+            return;
+        end
+        if ~strcmp(this.imageType, 'label')
+            return;
+        end
+        
+        % open a dialog to choose a label
+        maxLabel = max(this.imageData(:));
+        prompt = sprintf('Input Label Index (max=%d)', maxLabel);
+        answer = inputdlg(...
+            prompt,...
+            'Crop Label Dialog', ...
+            1, ...
+            {'1'});
+        
+        % parse answer
+        if isempty(answer)
+            return;
+        end
+        index = str2double(answer{1});
+        if isnan(index)
+            return;
+        end
+        
+        % apply crop label operation
+        img2 = imCropLabel(this.imageData, index);
+
+        % compute colormap of new slicer object
+        cmap = this.colorMap;
+        if isempty(cmap)
+            cmap = jet(maxLabel);
+        end
+        cmap = [this.bgColor ; cmap(index, :)];
+
+        % create new Slicer object with the crop result
+        Slicer(img2, 'imageType', 'binary', ...
+            'colorMap', cmap, 'backgroundColor', this.bgColor);
     end
     
     
@@ -1594,11 +1659,9 @@ methods
             cmap = jet(256);
         end
 
-        % adapt color map for label or binary images
+        % adapt color map for label
         if strcmp(this.imageType, 'label')
             cmap = [this.bgColor; cmap(2:end,:)];
-        elseif strcmp(this.imageType, 'binary')
-            cmap = cmap([1 end], :);
         end
         
         colormap(this.handles.imageAxis, cmap);
@@ -2446,6 +2509,10 @@ methods
         uimenu(menuProcess, ...
             'Label', 'Crop Image', ...
             'Callback', @this.onCropImage);
+        uimenu(menuProcess, ...
+            'Label', 'Crop Label', ...
+            'Enable', labelFlag, ...
+            'Callback', @this.onCropLabel);
 
         uimenu(menuProcess, ...
             'Label', 'View &Histogram', ...

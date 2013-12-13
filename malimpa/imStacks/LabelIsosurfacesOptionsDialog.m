@@ -160,6 +160,12 @@ methods
             cmap = cmap(inds, :);
         end
         
+        % for binary images, colormap has two entries, so we need to keep
+        % the last one
+        if strcmp(this.parent.imageType, 'binary')
+            cmap = cmap(2,:);
+        end
+        
         % create figure 
         hf = figure(); hold on;
         set(hf, 'renderer', 'opengl');

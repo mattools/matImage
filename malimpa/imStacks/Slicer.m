@@ -804,7 +804,7 @@ methods
         set(this.handles.image, 'XData', xdata);
         set(this.handles.image, 'YData', ydata);
         
-        % compute image extent
+        % compute image extent in physical coordinates
         p0 = ([0 0]    - .5) .* spacing + origin;
         p1 = (dim(1:2) - .5) .* spacing + origin;
         
@@ -812,12 +812,12 @@ methods
         set(this.handles.imageAxis, 'XLim', [p0(1) p1(1)]);
         set(this.handles.imageAxis, 'YLim', [p0(2) p1(2)]);
         
-        % for grayscale and vector images, adjust displayrange and LUT
+        % for grayscale and vector images, adjust display range and LUT
         if ~strcmp(this.imageType, 'color')
             set(this.handles.imageAxis, 'CLim', this.displayRange);
             
             % setup the appropriate color map (stored color map, plus
-            % eventuallay the background color for label images)
+            % eventullay the background color for label images)
             cmap = this.colorMap;
             if  ~isempty(cmap)
                 if strcmp(this.imageType, 'label')

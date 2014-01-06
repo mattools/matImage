@@ -109,7 +109,18 @@ elseif nd == 3
         base = base / sum(base(:))/2;
         sx = permute(cat(3, base, zeros(3, 3), -base), [2 3 1]);
     else
-        error('Kernel size not supported for 3D images');
+        lx = (-3*sigma):(3*sigma);
+        sy = exp(-((lx / sigma) .^2) * .5);
+        sx = -(lx / sigma) .* sy;
+        sz = permute(sy, [3 1 2]);
+
+        n = length(lx);
+        tmp = zeros(n, n , n);
+        for i = 1:n
+            tmp(:,:,i) = sz(i) * sy' * sx;
+        end
+        sx = tmp;
+        sx = sx / sum(sx(sx > 0));
     end
     
 else

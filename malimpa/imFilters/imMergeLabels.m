@@ -29,10 +29,9 @@ function img = imMergeLabels(img, lbls, varargin)
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@grignon.inra.fr
 % Created: 2007-08-07
 % Copyright 2007 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 dim = size(img);
 

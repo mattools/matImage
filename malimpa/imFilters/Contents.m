@@ -34,8 +34,8 @@
 %
 %   Color and gray-scale conversions
 %   imOverlay             - Add colored markers to an image (2D or 3D, grayscale or color)
-%   imMergeBands          - Merge 3 bands to create a 2D or 3D color image
-%   imSplitBands          - Split the 3 bands of a 2D or 3D image
+%   imSplitChannels       - Split the 3 channels of a 2D or 3D image
+%   imMergeChannels       - Merge 3 channels to create a 2D or 3D color image
 %   double2rgb            - Create a RGB image from double values
 %   angle2rgb             - Convert an image of angles to color image
 %   imGetHue              - Extract hue of a color image, using rgb2hsv.
@@ -110,6 +110,8 @@ help Contents
 %   imGaussFilter         - Apply gaussian filter to an image, using separability
 %   removeBorderRegions   - Remove regions on the border of an image
 %   createImage           - Create a new image with given size and type
+%   imMergeBands          - Merge 3 bands to create a 2D or 3D color image
+%   imSplitBands          - Split the 3 bands of a 2D or 3D image
 
 %   Not supported functions
 %   imMergeCells          - merge labeled cell of an image

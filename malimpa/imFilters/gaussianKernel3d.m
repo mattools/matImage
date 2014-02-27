@@ -1,5 +1,5 @@
 function varargout = gaussianKernel3d(size, sigma, varargin)
-%GAUSSIANKERNEL3D Create a 3D gaussian kernel for image filtering
+%GAUSSIANKERNEL3D Create a 3D Gaussian kernel for image filtering
 %
 %   K = gaussianKernel3d(SIZE, SIGMA)
 %   SIZE is either a scalar or a 1-by-3 row vector. SIGMA is the standard
@@ -9,9 +9,9 @@ function varargout = gaussianKernel3d(size, sigma, varargin)
 %
 %   [KX KY KZ] = gaussianKernel3d(SIZE, SIGMA)
 %   Returns the elementary linear kernels for each direction of the 3D
-%   image. This can be used for decompose the 3D gaussien filtering. Each
+%   image. This can be used for decomposing the 3D Gaussian filtering. Each
 %   kernel is normalised such that the sum of its values equals 1. Note
-%   that the function 'imGaussianFilter' encapsulates the whoke processing. 
+%   that the function 'imGaussianFilter' encapsulates the whole processing. 
 %
 %   Examples
 %     % Basic 3D kernel:
@@ -28,7 +28,7 @@ function varargout = gaussianKernel3d(size, sigma, varargin)
 %         0
 %
 %   Note: it is faster to use the function 'imGaussianFilter', that uses
-%   separability of the gaussian kernel.
+%   separability of the Gaussian kernel.
 %   
 %   See also
 %   imGaussianFilter, fspecial, imfilter

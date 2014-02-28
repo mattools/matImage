@@ -30,13 +30,16 @@ function [ellipsoid labels] = imInertiaEllipsoid(img, varargin)
 %     drawEllipsoid(elli)
 %
 %   See also
-%     drawEllipsoid
-%
+%     inertiaEllipse, drawEllipsoid
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2011-12-01,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
+
+%   HISTORY
+%   2014-02-28 fix bug for labels with only one voxel
 
 % size of image
 dim = size(img);
@@ -77,7 +80,7 @@ for i = 1:nLabels
     points = [x y z];
     
     % compute the covariance matrix
-    covPts = cov(points) / n;
+    covPts = cov(points) / n + diag(1/12 * ones(1, 3));
     
     % perform a principal component analysis with 2 variables,
     % to extract inertia axes

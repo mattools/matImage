@@ -70,6 +70,7 @@
 %   imFind                     - Return coordinates of non-zero pixels in an image
 %   imRAG                      - Region adjacency graph of a labeled image
 %   imContours                 - Extract polygonal contours of a binary image
+%   imBinaryToGraph            - Transform a binary image into a graph structure
 %
 %
 % -----
@@ -84,4 +85,5 @@ help Contents
 
 %   Deprecated:
 %   specificIMCDetails         - Ohser's Integral of Mean Curvature
+
 

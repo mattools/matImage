@@ -3,7 +3,7 @@ function [ellipsoid labels] = imInertiaEllipsoid(img, varargin)
 %
 %   ELLI = imInertiaEllipsoid(IMG)
 %   IMG is a binary image of a single particle or region.
-%   ELLI = [XC YC ZC A B C PHI THETA PSI] is an ellispoid defined by its
+%   ELLI = [XC YC ZC A B C PHI THETA PSI] is an ellipsoid defined by its
 %   center [XC YC ZC], 3 radii A, B anc C, and a 3D orientation angle given
 %   by (PHI, THETA, PSI).
 %
@@ -18,6 +18,14 @@ function [ellipsoid labels] = imInertiaEllipsoid(img, varargin)
 %   direction.
 %
 %   Example
+%     % Generate an ellipsoid image and computes the inertia ellipsoid
+%     % (one expects to obtain nearly same results)
+%     elli = [50 50 50   50 30 10  40 30 20];
+%     img = discreteEllipsoid(1:100, 1:100, 1:100, elli);
+%     elli2 = imInertiaEllipsoid(img)
+%     elli2 =
+%       50.00  50.00  50.00  50.0076  30.0035  10.0073  40.0375  29.9994  20.0182
+%
 %     % Draw inertia ellipsoid of human head image
 %     % (requires image processing toolbox, and slicer program for display)
 %     metadata = analyze75info('brainMRI.hdr');
@@ -28,7 +36,7 @@ function [ellipsoid labels] = imInertiaEllipsoid(img, varargin)
 %     view(3);
 %     elli = imInertiaEllipsoid(bin, [1 1 2.5]);
 %     drawEllipsoid(elli)
-%
+%     
 %   See also
 %     inertiaEllipse, drawEllipsoid
 
@@ -40,6 +48,7 @@ function [ellipsoid labels] = imInertiaEllipsoid(img, varargin)
 
 %   HISTORY
 %   2014-02-28 fix bug for labels with only one voxel
+%   2014-03-07 change constant to fit ellipsoids
 
 % size of image
 dim = size(img);
@@ -62,8 +71,8 @@ for i = 1:nLabels
     inds = find(img==labels(i));
     [y x z] = ind2sub(dim, inds);
     
-    % number of points
-    n = length(inds);
+%     % number of points
+%     n = length(inds);
 
     % compute approximate location of ellipsoid center
     xc = mean(x);
@@ -80,14 +89,16 @@ for i = 1:nLabels
     points = [x y z];
     
     % compute the covariance matrix
-    covPts = cov(points) / n + diag(1/12 * ones(1, 3));
-    
-    % perform a principal component analysis with 2 variables,
+%     covPts = cov(points) / n;
+    covPts = cov(points) + diag(1/12 * ones(1, 3));
+      
+    % perform a principal component analysis with 3 variables,
     % to extract inertia axes
     [U S] = svd(covPts);
     
     % extract length of each semi axis
-    radii = 2 * sqrt(diag(S)*n)';
+%     radii = 2 * sqrt(diag(S)*n)';
+    radii = sqrt(5) * sqrt(diag(S))';
     
     % sort axes from greater to lower
     [radii ind] = sort(radii, 'descend');

@@ -127,7 +127,7 @@ lz = 1:54;
 r = uint8(discreteBall(lx, ly, lz, [20 30 30], 15)*255);
 g = uint8(discreteBall(lx, ly, lz, [30 20 30], 15)*255);
 b = uint8(discreteBall(lx, ly, lz, [30 30 20], 15)*255);
-img = imMergeBands(r, g, b);
+img = imMergeChannels(r, g, b);
 
 % basic checks
 assertEqual('uint8', class(img));

@@ -1,4 +1,4 @@
-function img = readstack(fname, varargin)
+function [img map] = readstack(fname, varargin)
 %READSTACK Read either a list of 2D images (slices), or a 3D image
 %
 %   Syntax
@@ -7,6 +7,7 @@ function img = readstack(fname, varargin)
 %   IMG = readstack(FNAME, TYPE, DIM)
 %   IMG = readstack(..., 'verbose')
 %   IMG = readstack(..., 'quiet')
+%   [IMG X] = readstack(...)
 %
 %   Description
 %
@@ -48,6 +49,7 @@ function img = readstack(fname, varargin)
 %   See also:
 %   savestack, imread
 %
+
 %   ---------
 %   author: David Legland, david.legland(at)grignon.inra.fr
 %   INRA - Cepia Software Platform
@@ -107,6 +109,9 @@ for i = 1:length(varargin)
         break;
     end
 end
+
+% empty map by default
+map = [];
 
 
 %% Read data in a raw file
@@ -179,7 +184,7 @@ end
 
 
 
-%% Read Image stored in one bundle file
+%% Read Image stored in one bundle file (usually tif)
 
 % check if image stored in one bundle file or as several stacks
 if exist(fname, 'file')
@@ -204,7 +209,11 @@ if bundle
     end
     
     % read first slice of the 3D image to get width, height, and bit depth
-    img = imread(fname, range(1));
+    if nargout < 2
+        img = imread(fname, range(1));
+    else
+        [img map] = imread(fname, range(1));
+    end
     
     if ndims(img) == 2             % read gray scale images -----
         % pre-allocate memory
@@ -270,7 +279,6 @@ else
     i = 0;
     while true
         % check existence of file for given index
-        %imgname = sprintf(['%s' sprintf('%%0%dd', n) '%s'], basename, i, endname);
         imgname = [basename sprintf(sprintf('%%0%dd', n), i) endname];
         if ~exist(imgname, 'file')
             break;
@@ -297,7 +305,11 @@ if ispc
 end
 
 % read the first image
-img = imread(sprintf(string, range(1)));
+if nargout < 2
+    img = imread(sprintf(string, range(1)));
+else
+    [img map] = imread(sprintf(string, range(1)));
+end
 
 % read each image one after the other
 if length(size(img)) == 2

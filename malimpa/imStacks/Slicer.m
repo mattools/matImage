@@ -120,7 +120,7 @@ properties
     
     % Look-up table for display of uint8, label and binary images.
     % can be empty, in this case gray colormap is assumed 
-    colorMap;
+    colorMap = [];
 
     % background color for label to RGB conversion. Given as RGB triplet
     % value bewteen 0 and 1. Default is white.
@@ -178,9 +178,6 @@ methods
             this.imageData = [];
             this.imageType = 'none';
         end
-        
-        % initialize to empty LUT
-        this.colorMap = [];
         
         % parses input arguments
         parsesInputArguments();
@@ -463,14 +460,19 @@ methods
     end
     
     function readImageStack(this, fileName)
+        % Read image stack, either as single file bundle or as file series
         
-        img = readstack(fileName);
+        [img map] = readstack(fileName);
         
         % determine image name
         [pathName baseName ext] = fileparts(fileName);
         imgName = [baseName ext];
         
         setupImageData(this, img, imgName);
+        
+        if ~isempty(map)
+            this.colorMap = map;
+        end
         
         this.lastPath = pathName;        
     end

@@ -1,10 +1,10 @@
 function savestack(img, fname, varargin)
-%SAVESTACK Save an image stack to a file or a serie of files
+%SAVESTACK Save an image stack to a file or a series of files
 %
 %   If file name contains '??', '##' or '%0xd' (x being an integer), then
 %   the image is saved into a series of files, with increasing index.
 %
-%   Example :
+%   Examples:
 %   savestack(img, 'imgBundle.tif');        % save as stack
 %   savestack(img, 'imgBundle???.tif');     % save as image series
 %   savestack(img, 'imgBundle###.tif');     % save as image series
@@ -20,6 +20,7 @@ function savestack(img, fname, varargin)
 %   See also:
 %   readstack, imwrite
 %
+
 %   ---------
 %   author: David Legland, david.legland(at)grignon.inra.fr
 %   INRA - Cepia Software Platform
@@ -37,11 +38,25 @@ function savestack(img, fname, varargin)
 %       windows, add verbosity options
 %   28/11/2008 update doc, remove unused variable 'slice'
 
-% check input number
-error(nargchk(1, 4, nargin));
+
+%% Process input arguments
+
+% check input number: at least two, at most five
+error(nargchk(2, 5, nargin));
 
 % image size
 dim = size(img);
+
+% check if colormap is specified
+map = [];
+if isnumeric(fname)
+    map = fname;
+    if nargin < 3 
+        error('Should specify file name as third input');
+    end
+    fname = varargin{1};
+    varargin(1) = [];
+end
 
 % default verbosity is true
 verbose = true;
@@ -57,6 +72,18 @@ if ~isempty(varargin)
     end
 end
 
+% check image number of dimensions
+nd = length(dim);
+if nd < 3 || nd > 4
+    error('Requires an image array with 3 or 4 dimensions');
+end
+if nd > 3 && ~isempty(map)
+    error('Can not save a 4D image array with map ');
+end
+
+
+%% Compute file name pattern
+
 % replace wildcard '??' or '???' by wildcard '%02d' or '%03d'
 pos = strfind(fname, '?');
 npos = length(pos);
@@ -70,6 +97,9 @@ npos = length(pos);
 if npos > 0
     fname = strrep(fname, repmat('#', [1 npos]), ['%0' num2str(npos) 'd']);
 end
+
+
+%% Save image file(s)
 
 pos = strfind(fname, '%0');
 if ~isempty(pos)
@@ -90,7 +120,7 @@ if ~isempty(pos)
     format = ['%s%0' fname(pos+2) 'd%s'];
     
     % save each slice of the image (gray-scale->3D or color->4D)
-    if length(dim) == 3
+    if length(dim) == 3 && isempty(map)
         % save grayscale slice
         for i = 1:dim(3)
             fileName = sprintf(format, basename, i-1, endname);
@@ -98,7 +128,15 @@ if ~isempty(pos)
                 'WriteMode', 'overwrite', varargin{:});
         end
         
-    else
+    elseif length(dim) == 3 && ~isempty(map)
+        % save grayscale slice with colormap
+        for i = 1:dim(3)
+            fileName = sprintf(format, basename, i-1, endname);
+            imwrite(img(:,:,i), map, fileName, ...
+                'WriteMode', 'overwrite', varargin{:});
+        end
+        
+    elseif length(dim) == 4
         % save color slice
         for i = 1:dim(4)
             fileName = sprintf(format, basename, i-1, endname);
@@ -113,7 +151,8 @@ else
         disp('save a stack');
     end
     
-    if length(dim) == 3
+    if length(dim) == 3 && isempty(map)
+        % save grayscale stack
         % overwrite existing file
         imwrite(img(:,:,1), fname, varargin{:}, 'WriteMode', 'overwrite');
         
@@ -122,7 +161,20 @@ else
             imwrite(img(:,:,i), fname, varargin{:}, ...
                 'WriteMode', 'append');
         end
-    else
+        
+    elseif length(dim) == 3 && ~isempty(map)
+        % save grayscale stack with colormap
+        % overwrite existing file
+        imwrite(img(:,:,1), map, fname, varargin{:}, 'WriteMode', 'overwrite');
+        
+        % append other slices
+        for i = 2:dim(3)
+            imwrite(img(:,:,i), map, fname, varargin{:}, ...
+                'WriteMode', 'append');
+        end
+        
+    elseif length(dim) == 4
+        % save color stack
         % overwrite existing file
         imwrite(img(:,:,:,1), fname, varargin{:}, 'WriteMode', 'overwrite');
 

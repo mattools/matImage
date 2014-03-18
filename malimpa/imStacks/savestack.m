@@ -1,8 +1,27 @@
 function savestack(img, fname, varargin)
 %SAVESTACK Save an image stack to a file or a series of files
 %
+%   savestack(IMG, FNAME)
+%   Saves the 3D image given in IMG into the file(s) given by FNAME.
+%   IMG should be either a 3D array of grayscale or intensity values, or a
+%   4D array of color values (coded as uint8).
+%   FNAME is either a single file name, or a file name pattern that is used
+%   to save the stack into a file series.
+%
 %   If file name contains '??', '##' or '%0xd' (x being an integer), then
 %   the image is saved into a series of files, with increasing index.
+%
+%   savestack(IMG, MAP, FNAME)
+%   Saves a grayscale image together with a colormap. IMG should be a uint8
+%   or uint16 image, and MAP should be a valid Matlab colormap (N-by-3
+%   array coded as double, between 0 and 1)
+%
+%   savestack(..., OPTIONS)
+%   use options to write each slice. See imwrite to details.
+%
+%   savestack(..., VERBOSITY)
+%   also specify verbosity. VERBOSITY can be either 'verbose' or 'quiet'.
+%
 %
 %   Examples:
 %   savestack(img, 'imgBundle.tif');        % save as stack
@@ -10,12 +29,6 @@ function savestack(img, fname, varargin)
 %   savestack(img, 'imgBundle###.tif');     % save as image series
 %   savestack(img, 'imgBundle%03d.tif');    % save as image series
 %   
-%   savestack(..., OPTIONS)
-%   use options to write each slice. See imwrite to details.
-%
-%   savestack(..., VERBOSITY)
-%   also specify verbosity. VERBOSITY can be either 'verbose' or 'quiet'.
-%
 %
 %   See also:
 %   readstack, imwrite

@@ -115,3 +115,50 @@ for i = 1:length(list)
     delete(list(i).name);
 end
 
+function test_SaveGrayStackMap
+
+D = load ('mri');
+D = squeeze(D.D);
+
+fName = 'testSaveGrayStackMap.tif';
+if exist(fName, 'file')
+    delete(fName);
+end
+map = jet(256);
+
+savestack(D, map, fName);
+
+info = imfinfo(fName);
+assertEqual(27, length(info));
+assertFalse(isempty(info(1).Colormap));
+
+delete(fName);
+
+
+function test_SaveGraySlicesMap
+
+D = load ('mri');
+D = squeeze(D.D);
+map = jet(256);
+
+genericName = 'testSaveGraySlicesMap*.tif';
+patternName = 'testSaveGraySlicesMap###.tif';
+
+list = dir(genericName);
+for i = 1:length(list)
+    delete(list(i).name);
+end
+
+savestack(D, map, patternName);
+
+list = dir(genericName);
+assertEqual(27, length(list));
+info = imfinfo(list(1).name);
+assertFalse(isempty(info.Colormap));
+
+
+list = dir(genericName);
+for i = 1:length(list)
+    delete(list(i).name);
+end
+

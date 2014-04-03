@@ -57,17 +57,20 @@ if ~islogical(img)
     nLabels = length(labels);
     surf = zeros(nLabels, 1);
 
-    props = regionprops(img, 'BoundingBox');
+%     props = regionprops(img, 'BoundingBox');
+    boxes = imBoundingBox(img);
     
     % Compute surface area of each label considered as binary image
     % The computation is performed on a subset of the image for reducing
     % memory footprint.
     for i = 1:nLabels
         label = labels(i);
-        box = props(label).BoundingBox;
+        
         % convert bounding box to image extent, in x, y and z directions
-        i0 = ceil(box([2 1 3]));
-        i1 = i0 + box([5 4 6]) - 1;
+        box = boxes(i,:);
+        i0 = ceil(box([3 1 5]));
+        i1 = floor(box([4 2 6]));
+
         % crop image of current label
         bin = img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
         surf(i) = imSurface(bin, varargin{:});
@@ -113,7 +116,7 @@ d2  = delta(2);
 d3  = delta(3);
 
 % volume of a voxel (used for computing line densities)
-vol = d1*d2*d3;
+vol = d1 * d2 * d3;
 
 
 %% Main processing for 3 directions

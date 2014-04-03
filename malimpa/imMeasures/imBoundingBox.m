@@ -44,7 +44,7 @@ function [boxes labels] = imBoundingBox(img)
 % Copyright 2011 INRA - Cepia Software Platform.
 
 % History
-% 2013-03-29 add supoprt for 3D images
+% 2013-03-29 add support for 3D images
 
 
 %% Initialisations

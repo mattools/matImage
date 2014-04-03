@@ -91,6 +91,10 @@ while length(varargin) > 1
             origin = varargin{2};
         case 'displayrange'
             displayRange = varargin{2};
+            if isempty(displayRange)
+                displayRange = [0 255];
+            end
+            
         case {'lut', 'colormap'}
             lut = varargin{2};
         otherwise

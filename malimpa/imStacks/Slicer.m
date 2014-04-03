@@ -882,7 +882,7 @@ methods
             return;
         end
         
-        importRawDataImage(this, fileName);
+        importRawDataImage(this, fullfile(pathName, fileName));
     end
     
     function showOpenImageDialog(this, hObject, eventdata)

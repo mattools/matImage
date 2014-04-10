@@ -73,29 +73,29 @@ end
 % 'N' (for negative), 'P' (for Positive) or 'Z' (for Zero)
 
 % points below the OXY plane
-ptPNN = normalize([+1 -1 -1].*delta);
-ptPZN = normalize([+1  0 -1].*delta);
-ptNPN = normalize([-1 +1 -1].*delta);
-ptZPN = normalize([ 0 +1 -1].*delta);
-ptPPN = normalize([+1 +1 -1].*delta);
+ptPNN = normalizeVector3d([+1 -1 -1].*delta);
+ptPZN = normalizeVector3d([+1  0 -1].*delta);
+ptNPN = normalizeVector3d([-1 +1 -1].*delta);
+ptZPN = normalizeVector3d([ 0 +1 -1].*delta);
+ptPPN = normalizeVector3d([+1 +1 -1].*delta);
 
 % points belonging to the OXY plane
-ptPNZ = normalize([+1 -1  0].*delta);
-ptPZZ = normalize([+1  0  0].*delta);
-ptNPZ = normalize([-1 +1  0].*delta);
-ptZPZ = normalize([ 0 +1  0].*delta);
-ptPPZ = normalize([+1 +1  0].*delta);
+ptPNZ = normalizeVector3d([+1 -1  0].*delta);
+ptPZZ = normalizeVector3d([+1  0  0].*delta);
+ptNPZ = normalizeVector3d([-1 +1  0].*delta);
+ptZPZ = normalizeVector3d([ 0 +1  0].*delta);
+ptPPZ = normalizeVector3d([+1 +1  0].*delta);
 
 % points above the OXY plane
-ptNNP = normalize([-1 -1 +1].*delta);
-ptZNP = normalize([ 0 -1 +1].*delta);
-ptPNP = normalize([+1 -1 +1].*delta);
-ptNZP = normalize([-1  0 +1].*delta);
-ptZZP = normalize([ 0  0 +1].*delta);
-ptPZP = normalize([+1  0 +1].*delta);
-ptNPP = normalize([-1 +1 +1].*delta);
-ptZPP = normalize([ 0 +1 +1].*delta);
-ptPPP = normalize([+1 +1 +1].*delta);
+ptNNP = normalizeVector3d([-1 -1 +1].*delta);
+ptZNP = normalizeVector3d([ 0 -1 +1].*delta);
+ptPNP = normalizeVector3d([+1 -1 +1].*delta);
+ptNZP = normalizeVector3d([-1  0 +1].*delta);
+ptZZP = normalizeVector3d([ 0  0 +1].*delta);
+ptPZP = normalizeVector3d([+1  0 +1].*delta);
+ptNPP = normalizeVector3d([-1 +1 +1].*delta);
+ptZPP = normalizeVector3d([ 0 +1 +1].*delta);
+ptPPP = normalizeVector3d([+1 +1 +1].*delta);
 
 
 %% Spherical cap type 1, direction [1 0 0]

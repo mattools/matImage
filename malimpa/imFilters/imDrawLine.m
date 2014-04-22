@@ -4,11 +4,10 @@ function img = imDrawLine(img, pos1, pos2, varargin)
 %   IMG2 = imDrawLine(IMG, P1, P2);
 %   IMG2 = imDrawLine(IMG, X1, Y1, X2, Y2);
 %
-%   [X, Y] = imDrawLine(X1, X2, Y1, Y2) computes an
-%   approximation to the line segment joining (X1, Y1) and
-%   (X2, Y2) with integer coordinates.  X1, X2, Y1, and Y2
-%   should be integers.  imDrawLine is reversible; that is,
-%   imDrawLine(X1, X2, Y1, Y2) produces the same results as
+%   [X, Y] = imDrawLine(X1, X2, Y1, Y2) computes an approximation to the
+%   line segment joining (X1, Y1) and (X2, Y2) with integer coordinates.
+%   X1, X2, Y1, and Y2 should be integers. imDrawLine is reversible; that
+%   is, imDrawLine(X1, X2, Y1, Y2) produces the same results as 
 %   FLIPUD(imDrawLine(X2, X1, Y2, Y1)).
 %
 %   Example
@@ -32,7 +31,7 @@ function img = imDrawLine(img, pos1, pos2, varargin)
 %
 %   See also
 %     bresenhamLine
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

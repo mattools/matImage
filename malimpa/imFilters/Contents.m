@@ -72,6 +72,7 @@
 %   imThumbnail             - Resize an image to bound the size in each direction
 %   imDrawLine              - Draw a line between two points in the image
 %   bresenhamLine           - Integer coordinates of a bresenham line
+%   imDrawText              - Draw some text in an image
 %   imTpsWarp               - Warp an image using Thin-Plate Splines transform
 %
 %   Indexed images:

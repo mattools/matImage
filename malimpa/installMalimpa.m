@@ -21,7 +21,7 @@ function installMalimpa(varargin)
 % Licensed under the terms of the modified BSD licence
 
 % base directory of the library
-p = pwd;
+p = fileparts(mfilename('fullpath'));
 
 % The main path of the library
 addpath(p);

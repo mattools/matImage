@@ -64,6 +64,7 @@
 %   imMin                      - Minimum value of a grayscale image, or of each color component
 %   imMax                      - Maximum value of a grayscale image, or of each color component
 %   imMedian                   - Median value of a grayscale image, or of each color component
+%   imQuantile                 - Computes value that threshold a given proportion of pixels
 %   imMode                     - Mode of pixel values in an image
 %
 % Extract geometric primitives
@@ -85,5 +86,3 @@ help Contents
 
 %   Deprecated:
 %   specificIMCDetails         - Ohser's Integral of Mean Curvature
-
-

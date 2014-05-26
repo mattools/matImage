@@ -57,8 +57,8 @@ function varargout = imHistogram(img, varargin)
 %     imHistogram(X, X>0, 0:88)
 %
 %   See also
-%   imhist, hist
-%
+%     imhist, hist, imQuantile, imMedian
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

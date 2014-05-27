@@ -95,7 +95,8 @@ if nd <= 2
         % Default 2D case: normalised sobel matrix
         sx = fspecial('sobel')'/8;
     else
-        lx = (-3*sigma):(3*sigma);
+        Nx = ceil((3*sigma));
+        lx = -Nx:Nx;
         sy = exp(-((lx / sigma) .^2) * .5);
         sx = -(lx / sigma) .* sy;
         sx = sy' * sx;
@@ -109,7 +110,8 @@ elseif nd == 3
         base = base / sum(base(:))/2;
         sx = permute(cat(3, base, zeros(3, 3), -base), [2 3 1]);
     else
-        lx = (-3*sigma):(3*sigma);
+        Nx = ceil((3*sigma));
+        lx = -Nx:Nx;
         sy = exp(-((lx / sigma) .^2) * .5);
         sx = -(lx / sigma) .* sy;
         sz = permute(sy, [3 1 2]);

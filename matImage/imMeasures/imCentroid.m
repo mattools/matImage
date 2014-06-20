@@ -1,4 +1,4 @@
-function [points labels] = imCentroid(img)
+function [points labels] = imCentroid(img, varargin)
 %IMCENTROID Centroid of regions in a label image
 %
 %   CENTRO = imCentroid(IMG)
@@ -44,8 +44,16 @@ function [points labels] = imCentroid(img)
 
 % 2013-04-19 fix bug for z-coordinate of 3D centroids
 
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
+end
+
 % extract the set of labels, without the background
-labels = imFindLabels(img);
+if isempty(labels)
+    labels = imFindLabels(img);
+end
 nLabels = length(labels);
 
 % allocate memory for result

@@ -3,7 +3,7 @@ function [rect labels] = imOrientedBox(img, varargin)
 %
 %   OBB = imOrientedBox(IMG);
 %   Computes the minimum area oriented bounding box of labels in image IMG.
-%   IMG is either a bianry or a label image. The result OBB is a N-by-5
+%   IMG is either a binary or a label image. The result OBB is a N-by-5
 %   array, containing the center, the length, the width, and the
 %   orientation of the bounding box of each particle in image.
 %
@@ -36,7 +36,7 @@ function [rect labels] = imOrientedBox(img, varargin)
 %
 %   See also
 %   imFeretDiameter, imInertiaEllipse, imMaxFeretDiameter
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -45,12 +45,13 @@ function [rect labels] = imOrientedBox(img, varargin)
 
 %   HISTORY
 %   2011-03-30 use degrees for angles
+%   2014-06-17 add psb to specify labels
 
 
 %% Extract number of orientations
 
 theta = 180;
-if ~isempty(varargin)
+if ~isempty(varargin) && ~ischar(varargin{1})
     var1 = varargin{1};
     if isscalar(var1)
         % Number of directions given as scalar
@@ -72,17 +73,36 @@ spacing = [1 1];
 origin  = [1 1];
 calib   = false;
 
-% extract spacing
-if ~isempty(varargin)
+% extract spacing (for backward compatibility)
+if ~isempty(varargin) && ~ischar(varargin{1})
     spacing = varargin{1};
     varargin(1) = [];
     calib = true;
     origin = [0 0];
 end
 
-% extract origin
-if ~isempty(varargin)
+% extract origin (for backward compatibility)
+if ~isempty(varargin) && ~ischar(varargin{1})
     origin = varargin{1};
+end
+
+labels  = [];
+while length(varargin) > 1 && ischar(varargin{1})
+    paramName = varargin{1};
+    switch lower(paramName)
+        case 'angles'
+            theta = varargin{2};
+        case 'spacing'
+            spacing = varargin{2};
+        case 'origin'
+            origin = varargin{2};
+        case 'labels'
+            labels = varargin{2};
+        otherwise
+            error(['Can not handle param name: ' paramName]);
+    end
+    
+    varargin(1:2) = [];
 end
 
 
@@ -95,8 +115,10 @@ if isscalar(theta)
 end
 nTheta = length(theta);
 
-% extract the set of labels, without the background
-labels = imFindLabels(img);
+% extract the set of labels is necessary, without the background
+if isempty(labels)
+    labels = imFindLabels(img);
+end
 nLabels = length(labels);
 
 % allocate memory for result

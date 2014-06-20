@@ -33,11 +33,20 @@ if ndims(img) ~= 2
     error('First argument should be a 2D image');
 end
 
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
+    varargin(1) = [];
+end
+
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
-    % extract labels (considers 0 as background)
-    labels = unique(img);
-    labels(labels==0) = [];
+    % extract labels if necessary (considers 0 as background)
+    if isempty(labels)
+        labels = unique(img);
+        labels(labels==0) = [];
+    end
     
     % allocate result array
     nLabels = length(labels);

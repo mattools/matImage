@@ -8,7 +8,7 @@ function [area labels] = imArea(img, varargin)
 %   labels.
 %
 %   A = imArea(IMG, SCALE);
-%   Also specify scale of image tile. SCALE si a 2x1 array, containing
+%   Also specify scale of image tile. SCALE si a 1-by-2 array, containing
 %   pixel size in each direction.
 %   
 %   See Also
@@ -22,8 +22,15 @@ function [area labels] = imArea(img, varargin)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % check image dimension
-if ndims(img)~=2
+if ndims(img) ~= 2
     error('first argument should be a 2D binary or label image');
+end
+
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
+    varargin(1) = [];
 end
 
 % check image resolution
@@ -34,9 +41,11 @@ end
 
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
-    % extract labels (considers 0 as background)
-    labels = unique(img);
-    labels(labels==0) = [];
+    % extract labels if necessary (considers 0 as background)
+    if isempty(labels)
+        labels = unique(img);
+        labels(labels==0) = [];
+    end
     
     % allocate result array
     nLabels = length(labels);

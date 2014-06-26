@@ -470,11 +470,33 @@ methods
         
         setupImageData(this, img, imgName);
         
+        % calibrate colormap if present
         if ~isempty(map)
             this.colorMap = map;
         end
         
-        this.lastPath = pathName;        
+        this.lastPath = pathName;
+        
+        
+        % try to read file info
+        if exist(fileName, 'file')
+            info = imfinfo(fileName);
+            info = info(1);
+            
+            info(1).ImageDescription
+            
+            if isfield(info, 'XResolution')
+                xresol = info.('XResolution');
+                if isfield(info, 'YResolution')
+                    yresol = info.('YResolution');
+                else
+                    yresol = xresol;
+                end
+                this.voxelSize = [xresol yresol 1];
+            end
+            
+            this.imageInfo = info;
+        end
     end
     
     function importMetaImage(this, fileName)

@@ -162,7 +162,7 @@ methods
         
         % for binary images, colormap has two entries, so we need to keep
         % the last one
-        if strcmp(this.parent.imageType, 'binary')
+        if strcmp(this.parent.imageType, 'binary') && size(cmap, 1) > 1
             cmap = cmap(2,:);
         end
         

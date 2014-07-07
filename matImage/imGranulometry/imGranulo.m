@@ -4,14 +4,16 @@ function [gr vols] = imGranulo(img, granuloType, strelShape, strelSizes)
 %   output = imGranulo(IMG, GRTYPE, STRELSHAPE, SIZES)
 %
 %   Example
-%     % Compute granulometric curve by ope,ing on rice image
+%     % Compute granulometric curve by opening with square structuring
+%     % element on rice image 
 %     img = imread('rice.png');
 %     gr = imGranulo(img, 'opening', 'square', 1:20);
 %     % display as a function of strel diameter
 %     plot(2*(1:20)+1, gr);
+%     xlabel('Strel diameter (pixel)'); ylabel('Percentage of Variations');
 %
 %   See also
-%
+%     granuloMeanSize, imGranuloByRegion
  
 % ------
 % Author: David Legland

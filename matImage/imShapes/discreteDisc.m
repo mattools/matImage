@@ -78,12 +78,13 @@ radius  = [radius(:,1) radius(:,1)];
 img = false(size(x));
 
 % iterate over discs, and superimpose images
-for i=1:size(center, 1)
+for i = 1:size(center, 1)
     % transforms voxels according to disc position and size
-    tra     = createTranslation(-center(i,:));
-    sca     = createScaling(1./radius(i,:));
-    [x2 y2] = transformPoint(x, y, sca*tra);
+%     tra     = createTranslation(-center(i,:));
+%     sca     = createScaling(1./radius(i,:));
+%     [x2 y2] = transformPoint(x, y, sca*tra);
 
     % create image: simple threshold over 3 dimensions
-    img = img | hypot(x2, y2) < 1;
+%     img = img | hypot(x - center(i,1), y - center(i,2)) < radius(i,1);
+    img = img | ((x - center(i,1)).^2 + (y - center(i,2)).^2) < radius(i,1)^2;
 end

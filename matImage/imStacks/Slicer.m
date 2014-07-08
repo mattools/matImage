@@ -950,7 +950,7 @@ methods
         
         data = evalin('base', answer{1});
         
-        if ndims(data) < 3
+        if ndims(data) < 3 %#ok<ISMAT>
             errordlg('Input Image must have at least 3 dimensions');
             return;
         end
@@ -1625,48 +1625,48 @@ methods
             nGrays = double(max(this.imageData(:)));
         end
         
-        if strmatch(cmapName, 'gray')
+        if strcmp(cmapName, 'gray')
             % for gray-scale, use an empty LUT
             this.colorMap = [];
             this.colorMap = gray(nGrays);
             
-        elseif strmatch(cmapName, 'inverted')
+        elseif strcmp(cmapName, 'inverted')
             grayMax = nGrays - 1;
             this.colorMap = repmat((grayMax:-1:0)', 1, 3) / grayMax;
             
-        elseif strmatch(cmapName, 'blue-gray-red')
+        elseif strcmp(cmapName, 'blue-gray-red')
             this.colorMap = gray(nGrays);
             this.colorMap(1,:) = [0 0 1];
             this.colorMap(end,:) = [1 0 0];
             
-        elseif strmatch(cmapName, 'colorcube')
+        elseif strcmp(cmapName, 'colorcube')
             nLabels = round(double(max(this.imageData(:))));
             map = colorcube(nLabels+2);
             % remove black and white colors
             isValidColor = sum(map==0, 2) ~= 3 & sum(map==1, 2) ~= 3;
             this.colorMap = [0 0 0; map(isValidColor, :)];
             
-        elseif strmatch(cmapName, 'redLUT')
+        elseif strcmp(cmapName, 'redLUT')
             this.colorMap = gray(nGrays);
             this.colorMap(:, 2:3) = 0;
             
-        elseif strmatch(cmapName, 'greenLUT')
+        elseif strcmp(cmapName, 'greenLUT')
             this.colorMap = gray(nGrays);
             this.colorMap(:, [1 3]) = 0;
             
-        elseif strmatch(cmapName, 'blueLUT')
+        elseif strcmp(cmapName, 'blueLUT')
             this.colorMap = gray(nGrays);
             this.colorMap(:, 1:2) = 0;
             
-        elseif strmatch(cmapName, 'yellowLUT')
+        elseif strcmp(cmapName, 'yellowLUT')
             this.colorMap = gray(nGrays);
             this.colorMap(:, 3) = 0;
             
-        elseif strmatch(cmapName, 'cyanLUT')
+        elseif strcmp(cmapName, 'cyanLUT')
             this.colorMap = gray(nGrays);
             this.colorMap(:, 1) = 0;
             
-        elseif strmatch(cmapName, 'magentaLUT')
+        elseif strcmp(cmapName, 'magentaLUT')
             this.colorMap = gray(nGrays);
             this.colorMap(:, 2) = 0;
             

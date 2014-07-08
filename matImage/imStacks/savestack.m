@@ -54,8 +54,10 @@ function savestack(img, fname, varargin)
 
 %% Process input arguments
 
-% check input number: at least two, at most five
-error(nargchk(2, 5, nargin));
+% check number of input arguments: at least two, at most five
+if nargin < 1 || nargin > 5
+    error('savestack requires at least two arguments, and at most 5');
+end
 
 % image size
 dim = size(img);

@@ -63,7 +63,7 @@ function [img map] = readstack(fname, varargin)
 
 %   HISTORY 
 %   16/02/2004 adapt to read image with name containing several '00'
-%       Example: '~/images/avril2003/collees/cm1500.bmp'
+%       Example: '~/images/april2003/cm1500.bmp'
 %       In this case, consider only the last one.
 %   19/02/2004 don't allocate memory prior to load. This allows the
 %       function to return an image appropriate with stored type.
@@ -82,8 +82,10 @@ function [img map] = readstack(fname, varargin)
 %       according to image datatype
 
 
-% check number of inputs
-error(nargchk(1, 5, nargin));
+% check number of input arguments
+if nargin < 1 || nargin > 5
+    error('readstack requires at least one argument, and at most 5');
+end
 
 % select 'verbose' or 'silent' option  ----------------
 
@@ -178,7 +180,7 @@ if strcmp(fname(end-2:end), 'lsm')
     infos = tiffread(fname);
     
     % convert result of tiffread to matlab array
-    if ndims(infos(1).data) == 2
+    if ndims(infos(1).data) == 2 %#ok<ISMAT>
         img = cat(3, infos.data);
     else
         img = permute(cat(4, infos.data), [1 2 4 3]);
@@ -219,7 +221,7 @@ if bundle
         [img map] = imread(fname, range(1));
     end
     
-    if ndims(img) == 2             % read gray scale images -----
+    if ndims(img) == 2   %#ok<ISMAT> % read gray scale images -----
         % pre-allocate memory
         img(1, 1, length(range)) = 0;
         

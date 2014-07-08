@@ -1,7 +1,17 @@
-function [gr vols] = imGranulo(img, granuloType, strelShape, strelSizes)
+function [gr vols] = imGranulo(img, granuloType, strelShape, strelSizes, varargin)
 %IMGRANULO Compute granulometry curve of a given image
 %
-%   output = imGranulo(IMG, GRTYPE, STRELSHAPE, SIZES)
+%   GR = imGranulo(IMG, GRTYPE, STRELSHAPE, SIZES)
+%   Computes the granulometry curve for input imag IMG, using the operation
+%   GRTYPE, the shape of structuring element given by STRELSHAPE, and the
+%     list of structuring element sizes given by SIZES.
+%   IMG should be a 2D image (binary, grayscale or color)
+%   GRTYPE can be one of {'opening', 'closing', 'erosion', 'dilation'}.
+%   STRELSHAPE can be one of {'square', 'octagon', 'diamond', 'disk',
+%     'lineh', 'linev'}.
+%   SIZES are given as radius. Diameters of strels are obtained as 2*R+1.
+%   The result GR is a 1-by-N array with as many columns as the number of
+%     elements provided in SIZES array.
 %
 %   Example
 %     % Compute granulometric curve by opening with square structuring
@@ -22,6 +32,17 @@ function [gr vols] = imGranulo(img, granuloType, strelShape, strelSizes)
 % Copyright 2014 INRA - Cepia Software Platform.
 
 
+verbose = false;
+while length(varargin) > 1
+    switch lower(varargin{1})
+        case 'verbose', verbose = varargin{2};
+        otherwise
+            error(['Can not understand option: ' varargin{1}]);
+    end
+    varargin(1:2) = [];
+end
+    
+
 nSizes = length(strelSizes);
 
 % allocate memory
@@ -36,12 +57,20 @@ for i = 1:nSizes
     radius = strelSizes(i);
     diam = 2 * radius + 1;
     
+    if verbose 
+        fprintf('iter %d/%d, radius = %f\n', i, nSizes, radius);
+    end
+    
     % create current strel 
     switch lower(strelShape)
         case 'square'
             se = strel('square', diam);
-        case {'octagon', 'diamond', 'ball'}
+        case {'octagon', 'diamond'}
             se = strel(lower(strelShape), radius);
+        case 'disk'
+            % do not use simplification, as it is not suitable for
+            % granulometries
+            se = strel('disk', radius, 0);
         case 'lineh'
             se = ones(1, diam);
         case 'linev'
@@ -56,6 +85,10 @@ for i = 1:nSizes
             img2 = imopen(img, se);
         case 'closing'
             img2 = imclose(img, se);
+        case 'dilation'
+            img2 = imdilate(img, se);
+        case 'erosion'
+            img2 = imerode(img, se);
             
         otherwise
             error(['Could not process granulometry type: ' granuloType]);

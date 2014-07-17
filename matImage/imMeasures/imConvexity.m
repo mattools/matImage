@@ -1,17 +1,20 @@
-function [cv labels] = imConvexity(img)
+function [cv labels] = imConvexity(img, varargin)
 %IMCONVEXITY Convexity of particles in label image
 %
-%   CV = imConvexity(BIN)
-%   CV = imConvexity(LBL)
-%   Computes the convexity of the binary image BIN, or of the label image
-%   LBL. The result is a scalar in the case of binary image, and a column
-%   vector in the case of a label image.
+%   CV = imConvexity(IMG)
+%   Computes the convexity of the binary or label image IMG. The result is
+%   a scalar in the case of binary image, and a column vector in the case
+%   of a label image. 
 %
 %   The convexity (also known as solidity) is defined by the ratio of
 %   particle volume over the volume of the convex hull of the particle.
 %
-%   [CV LABELS] = imConvexity(LBL)
+%   [CV LABELS] = imConvexity(IMG)
 %   Also returns the labels for which the convexity has been computed.
+%
+%   CV = imConvexity(IMG, LABELS)
+%   Specify the labels for which the convexity needs to be computed. The
+%   result is a N-by-1 array with as many rows as the number of labels.
 %
 %
 %   Example
@@ -45,16 +48,19 @@ function [cv labels] = imConvexity(img)
 % Created: 2011-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
-% identify the labels in image
-if ~islogical(img)
-    labels = imFindLabels(img);
-else
-    % binary images have only one label
-    labels = 1;
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
 end
 
-% allocate memory for result
+% extract the set of labels, without the background
+if isempty(labels)
+    labels = imFindLabels(img);
+end
 nLabels = length(labels);
+
+% allocate memory for result
 cv = zeros(nLabels, 1);
 
 dim = size(img);

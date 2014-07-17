@@ -14,6 +14,11 @@ function [points labels] = imCentroid(img, varargin)
 %   If IMG is a 3D image (label or binary), the result is a N-by-3 array
 %   containing x-, y- and z-ccordinates of the 3D centroids.
 %
+%   CENTRO = imCentroid(IMG, LABELS)
+%   Specify the labels for which the centroids needs to be computed. The
+%   result is a N-by-2 or N-by-3 array with as many rows as the number of
+%   labels.
+%
 %   [CENTRO LABELS] = imCentroid(...)
 %   Also returns the label forwhich a centroid was computed. Can be useful
 %   in case of a label image with 'missing' labels.
@@ -35,7 +40,7 @@ function [points labels] = imCentroid(img, varargin)
 %
 %   See also
 %   regionprops, drawPoint, imOrientedBox, imInertiaEllipse
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

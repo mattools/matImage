@@ -1,4 +1,4 @@
-function [boxes labels] = imBoundingBox(img)
+function [boxes labels] = imBoundingBox(img, varargin)
 %IMBOUNDINGBOX Bounding box of a binary or label image
 %
 %   BOX = imBoundingBox(IMG)
@@ -36,7 +36,7 @@ function [boxes labels] = imBoundingBox(img)
 %
 %   See also
 %   regionprops, drawBox, imOrientedBox, imInertiaEllipse
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -49,8 +49,16 @@ function [boxes labels] = imBoundingBox(img)
 
 %% Initialisations
 
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
+end
+
 % extract the set of labels, without the background
-labels = imFindLabels(img);
+if isempty(labels)
+    labels = imFindLabels(img);
+end
 nLabels = length(labels);
 
 % allocate memory for result

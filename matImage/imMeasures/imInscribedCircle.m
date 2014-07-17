@@ -5,6 +5,11 @@ function [circle labels] = imInscribedCircle(lbl, varargin)
 %   Computes the maximal circle inscribed in a given particle, or
 %   around each labeled particle in the input image.
 %
+%   CIRC = imInscribedCircle(IMG, LABELS)
+%   Specify the labels for which the inscribed circle needs to be computed.
+%   The result is a N-by-3 array with as many rows as the number of labels.
+%
+%
 %   Example
 %   % Draw a commplex particle together with its enclosing circle
 %     img = imFillHoles(imread('circles.png'));
@@ -23,17 +28,23 @@ function [circle labels] = imInscribedCircle(lbl, varargin)
 %   See also
 %     drawCircle, imEnclosingCircle, imInertiaEllipse, imInscribedBall
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2012-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
-% extract the set of labels, and remove label for background
-labels = unique(lbl(:));
-labels(labels==0) = [];
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
+end
 
+% extract the set of labels, without the background
+if isempty(labels)
+    labels = imFindLabels(img);
+end
 nLabels = length(labels);
 
 % allocate memory for result

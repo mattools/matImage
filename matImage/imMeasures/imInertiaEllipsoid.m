@@ -17,6 +17,10 @@ function [ellipsoid labels] = imInertiaEllipsoid(img, varargin)
 %   is a 1-by-3 row vector containing size of elementary voxel in each
 %   direction.
 %
+%   ELLI = imInertiaEllipsoid(..., LABELS)
+%   Specify the labels for which the ellipsoid needs to be computed. The
+%   result is a N-by-9 array with as many rows as the number of labels.
+%
 %   Example
 %     % Generate an ellipsoid image and computes the inertia ellipsoid
 %     % (one expects to obtain nearly same results)

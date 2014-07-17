@@ -64,7 +64,7 @@ if ~isempty(varargin)
         theta = var1;
         varargin(1) = [];
         
-    elseif ndims(var1) == 2 && sum(size(var1) ~= [1 2]) ~= 0
+    elseif ndims(var1) == 2 && sum(size(var1) ~= [1 2]) ~= 0 %#ok<ISMAT>
         % direction set given as vector
         theta = var1;
         varargin(1) = [];
@@ -80,7 +80,7 @@ origin  = [1 1];
 calib   = false;
 
 % extract spacing
-if ~isempty(varargin)
+if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
     spacing = varargin{1};
     varargin(1) = [];
     calib = true;
@@ -88,7 +88,7 @@ if ~isempty(varargin)
 end
 
 % extract origin
-if ~isempty(varargin)
+if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
     origin = varargin{1};
 end
 
@@ -97,8 +97,16 @@ end
 
 nTheta = length(theta);
 
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
+end
+
 % extract the set of labels, without the background
-labels = imFindLabels(img);
+if isempty(labels)
+    labels = imFindLabels(img);
+end
 nLabels = length(labels);
 
 % allocate memory for result

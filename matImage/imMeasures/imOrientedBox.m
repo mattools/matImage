@@ -25,6 +25,15 @@ function [rect labels] = imOrientedBox(img, varargin)
 %   If no calibration is specified, spacing = [1 1] and origin = [1 1] are
 %   used. If only the sapcing is specified, the origin is set to [0 0].
 %
+%   OBB = imOrientedBox(..., PNAME, PVALUE);
+%   Specify optional arguments as parameter pair-values. Available names
+%   are:
+%   * 'spacing' the sapcing bewteen pixels
+%   * 'origin'  the position of the first pixel
+%   * 'angles'  the array of angles used for computation
+%   * 'labels'  restrict the computation to the set of specified labels,
+%           given as a N-by-1 array
+%
 %   Example
 %   % Compute and display the oriented box of several particles
 %     img = imread('rice.png');
@@ -58,7 +67,7 @@ if ~isempty(varargin) && ~ischar(varargin{1})
         theta = var1;
         varargin(1) = [];
         
-    elseif ndims(var1) == 2 && sum(size(var1) ~= [1 2]) ~= 0
+    elseif ndims(var1) == 2 && sum(size(var1) ~= [1 2]) ~= 0 %#ok<ISMAT>
         % direction set given as vector
         theta = var1;
         varargin(1) = [];

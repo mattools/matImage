@@ -15,6 +15,10 @@ function [circle labels] = imEnclosingCircle(img, varargin)
 %   If no calibration is specified, spacing = [1 1] and origin = [1 1] are
 %   used. If only the sapcing is specified, the origin is set to [0 0].
 %
+%   CIRC = imEnclosingCircle(..., LABELS)
+%   Specify the labels for which the enclosing circle needs to be computed.
+%   The result is a N-by-3 array with as many rows as the number of labels.
+%
 %
 %   Example
 %   % Draw a commplex particle together with its enclosing circle
@@ -48,7 +52,7 @@ origin  = [1 1];
 calib   = false;
 
 % extract spacing
-if ~isempty(varargin)
+if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
     spacing = varargin{1};
     varargin(1) = [];
     calib = true;
@@ -56,15 +60,23 @@ if ~isempty(varargin)
 end
 
 % extract origin
-if ~isempty(varargin)
+if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
     origin = varargin{1};
 end
 
 
 %% Initialisations
 
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
+end
+
 % extract the set of labels, without the background
-labels = imFindLabels(img);
+if isempty(labels)
+    labels = imFindLabels(img);
+end
 nLabels = length(labels);
 
 % allocate memory for result

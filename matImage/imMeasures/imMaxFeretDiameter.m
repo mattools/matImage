@@ -10,14 +10,21 @@ function [diam thetaMax] = imMaxFeretDiameter(img, varargin)
 %   Also returns the direction for which the diameter is maximal. THETAMAX
 %   is given in degrees, between 0 and 180.
 %
+%   CV = imConvexity(IMG, LABELS)
+%   Specify the labels for which the convexity needs to be computed. The
+%   result is a N-by-1 array with as many rows as the number of labels.
+%
 %
 %   Example
-%   imMaxFeretDiameter
+%     img = imread('circles.png');
+%     diam = imMaxFeretDiameter(img)
+%     diam =
+%         272.7144
 %
 %   See also
 %   imFeretDiameter, imOrientedBox
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -26,21 +33,30 @@ function [diam thetaMax] = imMaxFeretDiameter(img, varargin)
 
 
 % extract orientations
-if isempty(varargin)
-    thetas = linspace(0, 180, 180+1);
-    thetas = thetas(1:end-1);
-else 
+thetas = 180;
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
     thetas = varargin{1};
-    if isscalar(thetas)
-        % assume this is the number of directions to use
-        thetas = linspace(0, 180, thetas+1);
-        thetas = thetas(1:end-1);
-    end
+    varargin(1) = [];
+end
+
+if isscalar(thetas)
+    % assume this is the number of directions to use
+    thetas = linspace(0, 180, thetas+1);
+    thetas = thetas(1:end-1);
+end
+    
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
 end
 
 % extract the set of labels, without the background
-labels = imFindLabels(img);
+if isempty(labels)
+    labels = imFindLabels(img);
+end
 nLabels = length(labels);
+
 
 % allocate memory for result
 diam = zeros(nLabels, 1);

@@ -29,39 +29,8 @@ function [perim labels] = imPerimeter(img, varargin)
 %% Pre-processing
 
 % check image dimension
-if ndims(img) ~= 2
+if ndims(img) ~= 2 %#ok<ISMAT>
     error('First argument should be a 2D image');
-end
-
-% check if labels are specified
-labels = [];
-if ~isempty(varargin) && size(varargin{1}, 2) == 1
-    labels = varargin{1};
-    varargin(1) = [];
-end
-
-% in case of a label image, return a vector with a set of results
-if ~islogical(img)
-    % extract labels if necessary (considers 0 as background)
-    if isempty(labels)
-        labels = unique(img);
-        labels(labels==0) = [];
-    end
-    
-    % allocate result array
-    nLabels = length(labels);
-    perim = zeros(nLabels, 1);
-
-    props = regionprops(img, 'BoundingBox');
-    
-    % compute perimeter of each label considered as binary image
-    for i = 1:nLabels
-        label = labels(i);
-        bin = imcrop(img, props(label).BoundingBox) == label;
-        perim(i) = imPerimeter(bin, varargin{:});
-    end
-    
-    return;
 end
 
 
@@ -104,6 +73,38 @@ while ~isempty(varargin)
         
         varargin(1:2) = [];
     end
+end
+
+
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1 && ~isscalar(varargin{1})
+    labels = varargin{1};
+    varargin(1) = [];
+end
+
+% in case of a label image, return a vector with a set of results
+if ~islogical(img)
+    % extract labels if necessary (considers 0 as background)
+    if isempty(labels)
+        labels = unique(img);
+        labels(labels==0) = [];
+    end
+    
+    % allocate result array
+    nLabels = length(labels);
+    perim = zeros(nLabels, 1);
+
+    props = regionprops(img, 'BoundingBox');
+    
+    % compute perimeter of each label considered as binary image
+    for i = 1:nLabels
+        label = labels(i);
+        bin = imcrop(img, props(label).BoundingBox) == label;
+        perim(i) = imPerimeter(bin, varargin{:});
+    end
+    
+    return;
 end
 
 

@@ -1,12 +1,12 @@
-function [gxx gxy gyy] = imHessian(img, sigma, varargin)
+function [gxx, gxy, gyy] = imHessian(img, sigma, varargin)
 %IMHESSIAN Compute coefficients of Hessian matrix for each pixel
 %
-%   [GXX GXY GYY] = imHessian(IMG, SIGMA)
+%   [GXX, GXY, GYY] = imHessian(IMG, SIGMA)
 %
 %   Example
 %     % compute Hessian coefficients on coins image
 %     img = imread('coins.png');
-%     [gxx gxy gyy] = imHessian(img, 2);
+%     [gxx, gxy, gyy] = imHessian(double(img), 2);
 %     figure; subplot(2, 2, 1); imshow(img);
 %     subplot(2, 2, 2); imshow(gxx, [-60 60]);
 %     subplot(2, 2, 3); imshow(gyy, [-60 60]);
@@ -14,7 +14,7 @@ function [gxx gxy gyy] = imHessian(img, sigma, varargin)
 %
 %   See also
 %     imGradient, imLaplacian, imEigenValues, imfilter
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -28,7 +28,7 @@ end
 
 % Compute kernel coordinates
 nx = round(sigma * 3);
-[x y] = meshgrid(-nx:nx, -nx:nx);
+[x, y] = meshgrid(-nx:nx, -nx:nx);
 
 % Create kernels for 2nd derivatives filters
 hxx = (x.^2/sigma^2 - 1) .* exp( -(x.^2 + y.^2) / (2*sigma^2)) / (2*pi*sigma^4);

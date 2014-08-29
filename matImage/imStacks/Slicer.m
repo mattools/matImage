@@ -401,7 +401,7 @@ methods
         
         % eventually compute grayscale extent
         if ~strcmp(this.imageType, 'color')
-            [mini maxi] = computeGrayScaleExtent(this);
+            [mini, maxi] = computeGrayScaleExtent(this);
             this.displayRange  = [mini maxi];
         end
         
@@ -442,7 +442,7 @@ methods
     function setupImageFromFile(this, fileName)
         % replaces all informations about image
         
-        [filepath basename ext] = fileparts(fileName); %#ok<ASGLU>
+        [filepath, basename, ext] = fileparts(fileName); %#ok<ASGLU>
         
         switch lower(ext)
             case {'.mhd', '.mha'}
@@ -462,10 +462,10 @@ methods
     function readImageStack(this, fileName)
         % Read image stack, either as single file bundle or as file series
         
-        [img map] = readstack(fileName);
+        [img, map] = readstack(fileName);
         
         % determine image name
-        [pathName baseName ext] = fileparts(fileName);
+        [pathName, baseName, ext] = fileparts(fileName);
         imgName = [baseName ext];
         
         setupImageData(this, img, imgName);
@@ -503,7 +503,7 @@ methods
         % Load a metaImage file
         
         % determine image name
-        [pathName baseName ext] = fileparts(fileName);
+        [pathName, baseName, ext] = fileparts(fileName);
         imgName = [baseName ext];
 
         info = metaImageInfo(fileName);
@@ -533,7 +533,7 @@ methods
         
         % read image data
         info = dicominfo(fileName);
-        [img map] = dicomread(info);
+        [img, map] = dicomread(info);
         img = squeeze(img);
         
         % convert indexed image to true RGB image
@@ -547,7 +547,7 @@ methods
         end
         
         % determine image name
-        [pathName baseName ext] = fileparts(fileName);
+        [pathName, baseName, ext] = fileparts(fileName);
         imgName = [baseName ext];
 
         % update display
@@ -560,7 +560,7 @@ methods
     function importAnalyzeImage(this, fileName)
         
         % determine image name
-        [pathName baseName ext] = fileparts(fileName);
+        [pathName, baseName, ext] = fileparts(fileName);
         imgName = [baseName ext];
 
         info = analyze75info(fileName);
@@ -583,7 +583,7 @@ methods
     function importInterfileImage(this, fileName)
         
         % determine image name
-        [pathName baseName ext] = fileparts(fileName);
+        [pathName, baseName, ext] = fileparts(fileName);
         imgName = [baseName ext];
 
         % update display
@@ -640,7 +640,7 @@ methods
         img = readstack(fileName, dataType, dims);
                 
         % determine image name
-        [pathName baseName ext] = fileparts(fileName);
+        [pathName, baseName, ext] = fileparts(fileName);
         imgName = [baseName ext];
         
         Slicer(img, 'name', imgName);
@@ -666,14 +666,14 @@ methods
         try
             data = readVoxelMatrix(fileName, dataType);
         catch %#ok<CTCH>
-            [path name] = fileparts(fileName); %#ok<ASGLU>
+            [path, name] = fileparts(fileName); %#ok<ASGLU>
             errordlg(['Could not import voxel Matrix File ' name], ...
                 'File Error', 'modal');
             return;
         end
         
         % determine image name
-        [pathName baseName ext] = fileparts(fileName);
+        [pathName, baseName, ext] = fileparts(fileName);
         imgName = [baseName ext];
 
         % update display
@@ -686,7 +686,7 @@ end
     
 %% Some methods for image manipulation
 methods
-    function [mini maxi] = computeGrayScaleExtent(this)
+    function [mini, maxi] = computeGrayScaleExtent(this)
         % compute grayscale extent of this inner image
         
         if isempty(this.imageData)
@@ -726,11 +726,11 @@ methods
             
         else
             % for float images, display 99 percents of dynamic
-            [mini maxi] = computeGrayscaleAdjustement(this, .01);            
+            [mini, maxi] = computeGrayscaleAdjustement(this, .01);            
         end
     end
     
-    function [mini maxi] = computeGrayscaleAdjustement(this, alpha)
+    function [mini, maxi] = computeGrayscaleAdjustement(this, alpha)
         % compute grayscale range that maximize vizualisation
         
         if isempty(this.imageData)
@@ -781,7 +781,7 @@ methods
         axis = indices(axis);
         
         % performs image rotation, and get axis permutation parameters
-        [this.imageData inds] = rotateStack90(this.imageData, axis, n);
+        [this.imageData, inds] = rotateStack90(this.imageData, axis, n);
         
         % permute meta info
         this.imageSize   = this.imageSize(inds);
@@ -867,7 +867,7 @@ methods
         showOpenImageDialog(this);
     end
     
-    function onOpenDemoImage(this, hObject, eventdata) %#ok<MANU>
+    function onOpenDemoImage(this, hObject, eventdata)  %#ok<INUSL>
         
         demoName = get(hObject, 'UserData');
         switch demoName
@@ -881,7 +881,7 @@ methods
                 
             case 'unitBall'
                 lx = linspace(-1, 1, 101);
-                [x y z] = meshgrid(lx, lx, lx);
+                [x, y, z] = meshgrid(lx, lx, lx);
                 dist = sqrt(max(1 - (x.^2 + y.^2 + z.^2), 0));
                 Slicer(dist, ...
                     'origin', [-1 -1 -1], ...
@@ -933,7 +933,7 @@ methods
         
     end
     
-    function onImportFromWorkspace(this, hObject, eventdata) %#ok<MANU>
+    function onImportFromWorkspace(this, hObject, eventdata)
         % Import an image from a variable in current workspace
 
         % open dialog to input image name
@@ -984,7 +984,7 @@ methods
         end
 
         % if no extension is specified, put another one
-        [path baseName ext] = fileparts(fileName); %#ok<ASGLU>
+        [path, baseName, ext] = fileparts(fileName); %#ok<ASGLU>
         if isempty(ext)
             filterExtensions = {'.mhd', '.tif', '.dcm', '.mhd'};
             fileName = [fileName filterExtensions{filterIndex}];
@@ -994,7 +994,7 @@ methods
         fullName = fullfile(pathName, fileName);
         
         % save image data
-        [path baseName ext] = fileparts(fileName); %#ok<ASGLU>
+        [path, baseName, ext] = fileparts(fileName); %#ok<ASGLU>
         switch (ext)
             case {'.mha', '.mhd'}
                 metaImageWrite(this.imageData, fullName);
@@ -1236,7 +1236,7 @@ methods
         this.imageType = newType;
         
         % update display range
-        [mini maxi] = computeGrayScaleExtent(this);
+        [mini, maxi] = computeGrayScaleExtent(this);
         this.displayRange  = [mini maxi];
 
         % update display
@@ -1272,7 +1272,7 @@ methods
         end
         
         % update display range
-        [mini maxi] = computeGrayScaleExtent(this);
+        [mini, maxi] = computeGrayScaleExtent(this);
         this.displayRange  = [mini maxi];
 
         % update display
@@ -1308,7 +1308,11 @@ methods
         end
         
         dim = get(hObject, 'UserData');
-        this.imageData = flipdim(this.imageData, dim);
+        if verLessThan('matlab', '8.1')
+            this.imageData = flipdim(this.imageData, dim); %#ok<DFLIPDIM>
+        else
+            this.imageData = flip(this.imageData, dim);
+        end
         this.updateSlice;
         this.displayNewImage;
     end
@@ -1868,7 +1872,7 @@ end
 
 %% Callbacks for Help menu
 methods
-    function onAbout(this, varargin) %#ok<MANU>
+    function onAbout(this, varargin)
         title = 'About Slicer';
         info = dir(which('Slicer.m'));
         message = {...

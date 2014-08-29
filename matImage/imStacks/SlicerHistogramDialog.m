@@ -120,7 +120,7 @@ methods
             'ToolBar', 'none');
         this.handles.optionsDialog = hDlg;
         pos = get(hDlg, 'Position');
-        pos(3:4) = [200 250];
+        pos(3:4) = [250 260];
         set(hDlg, 'Position', pos);
         setupDialogLayout(hDlg);
 
@@ -141,7 +141,7 @@ methods
            
             % control panel: use vertical layout
             mainPanel = uiextras.VButtonBox('Parent', hf, ...
-                'ButtonSize', [150 30], ...
+                'ButtonSize', [200 30], ...
                 'VerticalAlignment', 'Top', ...
                 'Spacing', 5, 'Padding', 5, ...
                 'Units', 'normalized', ...
@@ -195,7 +195,7 @@ methods
                 'Enable', 'off', ...
                 'Callback',@this.onMaxBoundChanged);
             % setup sizes in horizontal direction
-            set(hLine, 'Sizes', [-1 40 40]);
+            set(hLine, 'Sizes', [-1 50 50]);
         
             % Add a check box for automatically computing the number of bins
             this.handles.autoBinNumberCheckBox = uicontrol('Style', 'CheckBox', ...
@@ -468,7 +468,7 @@ methods
         % Recompute and display the histogram
                 
         % recompute histogram
-        [h x] = computeHistogram(this);
+        [h, x] = computeHistogram(this);
         this.histoBins = x;
         this.histoValues = h;
 
@@ -569,7 +569,7 @@ methods
         
     end
     
-    function [h x] = computeHistogram(this)
+    function [h, x] = computeHistogram(this)
         
         % compute bin pos
         extent = this.dataExtent;
@@ -581,7 +581,7 @@ methods
         colorImage = false;
         
         % check special cases: color and vector
-        if ndims(this.image) > 2
+        if ndims(this.image) > 2 %#ok<ISMAT>
             if size(this.image, 3) == 3
                 colorImage = true;
             else

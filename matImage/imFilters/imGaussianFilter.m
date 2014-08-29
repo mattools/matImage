@@ -46,7 +46,7 @@ function res = imGaussianFilter(img, kernelSize, sigma, varargin)
 %
 %   Requires
 %   imfilter in the image processing toolbox
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -62,6 +62,7 @@ nd = ndims(img);
 % case of color images
 
 if isColorImage(img)
+    % allocate result for memory by duplicating original image
     res = img;
     if nd == 3
         for i = 1:3
@@ -105,7 +106,7 @@ end
 % init result
 res = img;
 
-% process each direction
+% apply a 1D filter in each direction
 for i = 1:nd
     % compute spatial reference
     refSize = (kernelSize(i) - 1) / 2;

@@ -1,4 +1,4 @@
-function [fd labels] = imFeretDiameter(img, varargin)
+function [fd, labels] = imFeretDiameter(img, varargin)
 %IMFERETDIAMETER Feret diameter of a particle(s) for a given direction(s)
 %
 %   FD = imFeretDiameter(IMG, THETA);
@@ -19,7 +19,17 @@ function [fd labels] = imFeretDiameter(img, varargin)
 %   1-by-2 row vector that contains the size of a pixel. 
 %   Default spacing value is [1 1].
 %
-%   [FD LABELS] = imFeretDiameter(...);
+%   FD = imFeretDiameter(..., SPACING, ORIGIN);
+%   Also specifies the position of the upper left pixel, as a 1-by-2 row
+%   vector.
+%
+%   FD = imFeretDiameter(..., LABELS);
+%   Specifies the labels for which the Feret diameter should be computed.
+%   LABELS is a N-by-1 column vector. This can be used to save computation
+%   time when only few particles / regions are of interset within the
+%   entire image.
+%
+%   [FD, LABELS] = imFeretDiameter(...);
 %   Also returns the set of labels that were considered for measure.
 %
 %   The maximum Feret diameter can be obtained using a max() function. 
@@ -43,7 +53,7 @@ function [fd labels] = imFeretDiameter(img, varargin)
 %
 %   See also 
 %   imOrientedBox
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -114,7 +124,7 @@ fd = zeros(nLabels, nTheta);
 
 for i = 1:nLabels
     % extract pixel centroids
-    [y x] = find(img==labels(i));
+    [y, x] = find(img==labels(i));
     if isempty(x)
         continue;
     end

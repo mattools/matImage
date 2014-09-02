@@ -3,14 +3,16 @@ function demoImOrientedBox(varargin)
 %
 %   Syntax
 %   demoImOrientedBox
-%   The demo runs automatically.
+%   The demo runs automatically. A basic segmentation is performed on a
+%   demo image, then oriented boxes are computed for each particle and
+%   displayed on the original image. 
 %
 %   Example
 %   demoImOrientedBox
 %
 %   See also
-%
-%
+%   demoImMaxFeretDiameter, imOrientedBox
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -36,7 +38,7 @@ figure(3); clf;
 imHistogram(img2);
 
 % image binarisation, and remove particles touching border
-bin = img2>50;
+bin = img2 > 50;
 bin = imclearborder(bin, 4);
 imshow(bin);
 

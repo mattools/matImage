@@ -138,7 +138,7 @@ rect = zeros(nLabels, 5);
 
 for i = 1:nLabels
     % extract points of the current particle
-    [y x] = find(img==labels(i));
+    [y, x] = find(img==labels(i));
     if isempty(x)
         continue;
     end
@@ -193,7 +193,7 @@ for i = 1:nLabels
     feretArea = fd(:, 1:end/2) .* fd(:, end/2+1:end);
     
     % find the orientation that produces to minimum area rectangle
-    [minArea indMinArea] = min(feretArea, [], 2); %#ok<ASGLU>
+    [minArea, indMinArea] = min(feretArea, [], 2); %#ok<ASGLU>
 
     % convert index to angle (still in degrees)
     indMin90 = indMinArea + nTheta/2;

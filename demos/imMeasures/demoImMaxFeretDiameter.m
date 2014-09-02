@@ -1,16 +1,19 @@
 function demoImMaxFeretDiameter(varargin)
-%DEMOIMORIENTEDBOX Demo file for using function imOrientedBox
+%DEMOIMORIENTEDBOX Demo file for computing maximum Feret diameters
 %
-%   Syntax
+%   Usage:
 %   demoImMaxFeretDiameter
-%   The demo runs automatically.
+%   The demo runs automatically. A basic segmentation is performed on a
+%   demo image, then maximum Feret diameters are computed for each particle
+%   and displayed on the original image.
 %
 %   Example
 %   demoImMaxFeretDiameter
 %
 %   See also
+%   demoImOrientedBox, imMaxFeretDiameter
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

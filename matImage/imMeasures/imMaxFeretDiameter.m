@@ -1,4 +1,4 @@
-function [diam thetaMax] = imMaxFeretDiameter(img, varargin)
+function [diam, thetaMax] = imMaxFeretDiameter(img, varargin)
 %IMMAXFERETDIAMETER Maximum Feret diameter of a binary or label image
 %
 %   FD = imMaxFeretDiameter(IMG)
@@ -67,7 +67,7 @@ for i = 1:nLabels
     diams = imFeretDiameter(img == labels(i), thetas);
     
     % find max diameters, with indices
-    [diam(i) ind] = max(diams, [], 2);
+    [diam(i), ind] = max(diams, [], 2);
     
     % keep max orientation
     thetaMax(i) = thetas(ind);

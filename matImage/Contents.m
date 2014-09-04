@@ -1,5 +1,5 @@
-% MALIMPA MAtlab Library for IMage Processing & Analysis 
-% Version 1.1 01-Jul-2011 .
+% MATIMAGE Library for Image Processing & Analysis 
+% Version 1.0.0 02-Sept-2014 .
 %
 %   Collection of functions for analysis of digital images, in 2D or 3D,
 %   and manipulation of geometric shapes.
@@ -7,7 +7,7 @@
 %   The library is organised into several modules.
 %
 %   General use modules
-%   imFilters       - Image filters
+%   imFilters       - Image filtering (smooth, enhance, gradient...)
 %   imMeasures      - Measurement of various parameters in digital images
 %   imShapes        - Generation of images representing geometric shapes
 %   imStacks        - Functions for manipulation and display of 3D images
@@ -21,13 +21,12 @@
 %
 %
 %   To install the library, with all sub-directories, run the script
-%   'installMalimpa'.
+%   'installMatImage'.
 %
 % -----
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % created the  07/11/2005.
 % Copyright INRA - Cepia Software Platform.
-% http://malimpa.sourceforge.net/
+% http://matimage.sourceforge.net/
 % http://www.pfl-cepia.inra.fr/index.php?page=imael  (in french)
-% Licensed under the terms of the BSD License, see the file license.txt

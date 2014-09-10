@@ -94,10 +94,10 @@
 %   strelDisk               - Discrete disk structuring element
 %   imNeighborhood          - Return the neighborhood of a given pixel
 %
-% -----
+%
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
-% created the 19/04/2004.
+% http://matimage.sourceforge.net/
 % Copyright 2009 INRA - Cepia Software Platform.
 
 % display help if executed

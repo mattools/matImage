@@ -38,12 +38,10 @@
 %   imPowerDiagram        - power diagramm of a set of points
 %
 %
-% -----
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
-% created the 19/04/2004.
+% http://matimage.sourceforge.net/
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the BSD License, see the file license.txt
 
 help('imShapes');
 

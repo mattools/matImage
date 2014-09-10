@@ -110,6 +110,7 @@
 %
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
+% http://matimage.sourceforge.net/
 % Copyright 2011 INRA - Cepia Software Platform.
 
 

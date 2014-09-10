@@ -35,11 +35,11 @@
 %   rotateStack90  - Rotate a 3D image by 90 degrees around one image axis
 %   flipStack      - Flip a 3D image along specified X, Y, or Z dimension
 %
-% -----
+%
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
-% created the  07/11/2005.
 % Copyright INRA - Cepia Software Platform.
+% http://matimage.sourceforge.net/
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 
 %

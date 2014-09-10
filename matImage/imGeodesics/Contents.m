@@ -44,9 +44,9 @@
 % ----
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
-% created:  2011-04-01.
-% Copyright INRA - Cepia Software Platform.
+% http://matimage.sourceforge.net/
 % http://www.pfl-cepia.inra.fr/index.php?page=imGeodesics
+% Copyright INRA - Cepia Software Platform.
 
 % deprecated
 %   geodesicLength        - Compute geodesic length of particles

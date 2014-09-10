@@ -74,11 +74,10 @@
 %   imBinaryToGraph            - Transform a binary image into a graph structure
 %
 %
-% -----
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
-% created the  19/04/2004.
 % Copyright INRA - Cepia Software Platform.
+% http://matimage.sourceforge.net/
 % http://www.pfl-cepia.inra.fr/index.php?page=imael
  
 % display help if executed

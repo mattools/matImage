@@ -19,6 +19,7 @@ function val = imEvaluate(img, varargin)
 %   See also
 %   imLineProfile, interp2, interp3, improfile
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -41,12 +42,12 @@ nd = ndims(img);
 if isColorImage(img)
     nd = nd - 1;
 end
-[point dim varargin] = mergeCoordinates(varargin{:});
+[point, dim, varargin] = mergeCoordinates(varargin{:});
 
 % parse interpolation method
 if ~isempty(varargin)
     method = varargin{1};
-    varargin{1} = [];
+    varargin(1) = [];
 end
 
 % use fast interpolation, because images are monotonic
@@ -123,10 +124,11 @@ else
     dim = [dim nc];
 end
 
+% reshape result to have the same dimension as original point input
 val = reshape(val, dim);
 
 
-function [coords dim varargin] = mergeCoordinates(varargin)
+function [coords, dim, varargin] = mergeCoordinates(varargin)
 %MERGECOORDINATES Merge all coordinates into a single N-by-ND array
 %
 % [coords dim] = mergeCoordinates(X, Y)

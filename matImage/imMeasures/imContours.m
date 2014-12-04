@@ -6,6 +6,11 @@ function [B, L, N, A] = imContours(bin, varargin)
 %   image BIN. The result CNTS is a cell array of polygons, each polygon
 %   being a N-by-2 array containing the vertex coordinates.
 %
+%   CNTS = imContours(IMG, VALUE)
+%   First compute binarized image, then compute the contours. Image is
+%   assumed to have bright foreground, and dark background.
+%
+%
 %   This function is mainly a wrapper to the 'bwboundaries' function, that
 %   returns the resulting set of contours in a different format.
 %   
@@ -18,14 +23,18 @@ function [B, L, N, A] = imContours(bin, varargin)
 %     drawPolygon(polys, 'r')
 %
 %   See also
-%     bwboundaries, imcontour
+%     bwboundaries, imcontour, imOtsuThreshold
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2012-07-27,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
+if ~isempty(varargin)
+    bin = bin >= varargin{1}; 
+end
 
 [B, L, N, A] = bwboundaries(bin);
 

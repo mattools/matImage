@@ -1,4 +1,4 @@
-function [chi labels] = imEuler1d(img, varargin)
+function [chi, labels] = imEuler1d(img, varargin)
 % Compute Euler number of a binary 1D image
 %
 %   The function computes the Euler number, or Euler-Poincare
@@ -14,7 +14,9 @@ function [chi labels] = imEuler1d(img, varargin)
 %   When LBL is a label image, returns the euler number of each label
 %   different from 0. Returns also the set of unique values in LBL.
 %
-%   
+%   See also
+%   imEuler2d, imEuler3d
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

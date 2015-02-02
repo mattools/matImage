@@ -1,4 +1,4 @@
-function [area labels] = imArea(img, varargin)
+function [area, labels] = imArea(img, varargin)
 % Compute area of binary 2D image 
 %
 %   A = imArea(IMG);
@@ -14,7 +14,7 @@ function [area labels] = imArea(img, varargin)
 %   See Also
 %   regionprops, imPerimeter, imEuler2d
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -22,7 +22,7 @@ function [area labels] = imArea(img, varargin)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % check image dimension
-if ndims(img) ~= 2
+if ndims(img) ~= 2 %#ok<ISMAT>
     error('first argument should be a 2D binary or label image');
 end
 
@@ -59,7 +59,6 @@ if ~islogical(img)
     
     return;
 end
-
 
 % compute area, multiplied by image resolution
 area = sum(img(:)) * prod(delta);

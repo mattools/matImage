@@ -20,7 +20,7 @@ function a = imAreaEstimate(img, varargin)
 %% Input arguments processing
 
 % check image dimension
-if ndims(img)~=2
+if ndims(img)~=2 %#ok<ISMAT>
     error('first argument should be a 2D binary or label image');
 end
 

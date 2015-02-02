@@ -1,4 +1,4 @@
-function [chi labels] = imEuler2d(img, varargin)
+function [chi, labels] = imEuler2d(img, varargin)
 % Euler number of a binary 2D image
 %
 %   The function computes the Euler number, or Euler-Poincare
@@ -33,7 +33,7 @@ function [chi labels] = imEuler2d(img, varargin)
 
 
 % check image dimension
-if ndims(img) ~= 2
+if ndims(img) ~= 2 %#ok<ISMAT>
     error('first argument should be a 2D image');
 end
 

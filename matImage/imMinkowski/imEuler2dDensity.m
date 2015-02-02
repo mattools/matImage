@@ -1,4 +1,4 @@
-function [epcd labels] = imEuler2dDensity(img, varargin)
+function [epcd, labels] = imEuler2dDensity(img, varargin)
 % Euler density in a 2D image
 %   EPCD = imEuler2dDensity(IMG)
 %
@@ -6,7 +6,7 @@ function [epcd labels] = imEuler2dDensity(img, varargin)
 %   imEuler2dDensity
 %
 %   See also
-%
+%   imEuler2d, imEuler2dEstimate
 %
 % ------
 % Author: David Legland
@@ -15,7 +15,7 @@ function [epcd labels] = imEuler2dDensity(img, varargin)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % check image dimension
-if ndims(img) ~= 2
+if ndims(img) ~= 2 %#ok<ISMAT>
     error('first argument should be a 2D image');
 end
 

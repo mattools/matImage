@@ -1,4 +1,4 @@
-function [surf labels] = imSurfaceEstimate(img, varargin)
+function [surf, labels] = imSurfaceEstimate(img, varargin)
 % Estimate surface area of a binary 3D structure
 %
 %   Usage
@@ -13,8 +13,8 @@ function [surf labels] = imSurfaceEstimate(img, varargin)
 %   imSurfaceEstimate
 %
 %   See also
-%
-%
+%   imSurface, imSurfaceDensity
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

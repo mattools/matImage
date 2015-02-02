@@ -1,4 +1,4 @@
-function [chi labels] = imEuler3dEstimate(img, varargin)
+function [chi, labels] = imEuler3dEstimate(img, varargin)
 %Estimate Euler number in a 3D image
 %
 %   CHIest = imEuler3dEstimate(IMG)
@@ -20,7 +20,7 @@ function [chi labels] = imEuler3dEstimate(img, varargin)
 %% Process input arguments 
 
 % check image dimension
-if ndims(img) ~= 2
+if ndims(img) ~= 2 %#ok<ISMAT>
     error('first argument should be a 2D image');
 end
 

@@ -1,4 +1,4 @@
-function [len labels] = imLengthEstimate(img, varargin)
+function [len, labels] = imLengthEstimate(img, varargin)
 %Estimate total length  of a binary 1D structure using edge correction
 %
 %   LEN = imLengthEstimate(IMG);
@@ -14,7 +14,7 @@ function [len labels] = imLengthEstimate(img, varargin)
 %   When LBL is a label image, returns the total length of each label
 %   different from 0. Returns also the set of unique values in LBL.
 %
-%   
+   
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -24,7 +24,7 @@ function [len labels] = imLengthEstimate(img, varargin)
 %   HISTORY
 
 % check image dimension
-if ndims(img)>2 || min(size(img))>1
+if ndims(img)>2 || min(size(img))>1 %#ok<ISMAT>
     error('first argument should be a 1D image');
 end
 

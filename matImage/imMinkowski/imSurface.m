@@ -1,4 +1,4 @@
-function [surf labels] = imSurface(img, varargin)
+function [surf, labels] = imSurface(img, varargin)
 %IMSURFACE Surface area of a 3D binary structure
 %
 %   S = imSurface(IMG)

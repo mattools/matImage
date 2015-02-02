@@ -1,4 +1,4 @@
-function [pd labels] = imPerimeterDensity(img, varargin)
+function [pd, labels] = imPerimeterDensity(img, varargin)
 % Perimeter density of a 2D binary structure, using Crofton formula
 %
 %   Pv = imPerimeterDensity(IMG)
@@ -7,8 +7,8 @@ function [pd labels] = imPerimeterDensity(img, varargin)
 %   imPerimeterDensity
 %
 %   See also
-%
-%
+%   imPerimeter
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -19,7 +19,7 @@ function [pd labels] = imPerimeterDensity(img, varargin)
 %% Pre-processing
 
 % check image dimension
-if ndims(img) ~= 2
+if ndims(img) ~= 2 %#ok<ISMAT>
     error('first argument should be a 2D image');
 end
 

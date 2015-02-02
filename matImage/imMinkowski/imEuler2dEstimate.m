@@ -1,4 +1,4 @@
-function [chi labels] = imEuler2dEstimate(img, varargin)
+function [chi, labels] = imEuler2dEstimate(img, varargin)
 %Estimate Euler number in a 2D image
 %
 %   CHIest = imEuler2dEstimate(IMG)
@@ -8,8 +8,8 @@ function [chi labels] = imEuler2dEstimate(img, varargin)
 %   imEuler2dEstimate
 %
 %   See also
-%
-%
+%   imEuler2d, imEuler2dDensity
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -17,7 +17,7 @@ function [chi labels] = imEuler2dEstimate(img, varargin)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % check image dimension
-if ndims(img)~=2
+if ndims(img)~=2 %#ok<ISMAT>
     error('first argument should be a 2D image');
 end
 

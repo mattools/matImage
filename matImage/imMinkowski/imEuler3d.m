@@ -1,4 +1,4 @@
-function [chi labels] = imEuler3d(img, varargin)
+function [chi, labels] = imEuler3d(img, varargin)
 %IMEULER3D Euler number of a binary 3D image
 %
 %   CHI = imEuler3d(IMG)
@@ -17,9 +17,9 @@ function [chi labels] = imEuler3d(img, varargin)
 %   imEuler3d
 %
 %   See also
-%   imEuler2d
+%   imEuler2d, imEuler3dDensity
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -301,17 +301,17 @@ if ~isempty(varargin)
         error('cannot understand input variable');
     end
 end
-    
-    
+
+nd = ndims(img);
     
 % dimension 0
-if ndims(img)==2 && dim(1)==1 && dim(2)==1
+if nd==2 && dim(1)==1 && dim(2)==1
     chi = img==1;
     return
 end
 
 % dimension 1
-if ndims(img)==2 && (dim(2)==1 || dim(1)==1)
+if nd==2 && (dim(2)==1 || dim(1)==1)
     if dim(2)==1
         img = img';
         dim(2)=dim(1);
@@ -321,7 +321,7 @@ if ndims(img)==2 && (dim(2)==1 || dim(1)==1)
 end
 
 % dimension 2
-if ndims(img)==2
+if nd == 2 
     N1 = dim(1); N2=dim(2);
     % compute number of nodes, number of edges (H and V) and number of
     % faces

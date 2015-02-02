@@ -1,4 +1,4 @@
-function [perim labels] = imPerimeter(img, varargin)
+function [perim, labels] = imPerimeter(img, varargin)
 %Perimeter of a 2D image using Crofton formula
 %
 %   P = imPerimeter(IMG);
@@ -18,7 +18,7 @@ function [perim labels] = imPerimeter(img, varargin)
 %   Process a label image, and return also the labels for which a value was
 %   computed.
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -35,9 +35,6 @@ end
 
 
 %% Extract input arguments
-
-% in case of binary image, compute only one label
-labels = 1;
 
 % default number of directions
 nDirs = 4;

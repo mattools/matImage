@@ -1,4 +1,4 @@
-function [perim labels] = imPerimeterEstimate(img, varargin)
+function [perim, labels] = imPerimeterEstimate(img, varargin)
 % Perimeter estimate of a 2D binary structure
 %
 %   P = imPerimeter(IMG);
@@ -18,7 +18,7 @@ function [perim labels] = imPerimeterEstimate(img, varargin)
 %   returned in column array P. The output LABEL returns the LABEL of each
 %   computed phase.
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -26,7 +26,7 @@ function [perim labels] = imPerimeterEstimate(img, varargin)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % check image dimension
-if ndims(img) ~= 2
+if ndims(img) ~= 2 %#ok<ISMAT>
     error('first argument should be a 2D image');
 end
 
@@ -124,6 +124,6 @@ elseif nDirs == 4
     perim = sum([n1*d2 n2*d1 [n3 n4]*vol/d12] .* c) * pi/2;
     
 else
-    error(['Can not process number of directions equal to ' num2str(Dirs)]);
+    error(['Can not process number of directions equal to ' num2str(nDirs)]);
 end
 

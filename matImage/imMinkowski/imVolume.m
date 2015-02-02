@@ -1,4 +1,4 @@
-function [vol labels] = imVolume(img, varargin)
+function [vol, labels] = imVolume(img, varargin)
 % Volume measure of a 3D binary structure
 %
 %   V = imVolume(IMG);
@@ -8,12 +8,13 @@ function [vol labels] = imVolume(img, varargin)
 %   labels.
 %
 %   V = imVolume(IMG, SCALE);
-%   Also specify scale of image tile. SCALE si a 3x1 array, containing
+%   Also specify scale of image tile. SCALE si a 1-by-3 array, containing
 %   voxel size in each direction.
 %   
 %   See Also
+%   imVolumeDensity, imSurface, imMeanBreadth
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -45,4 +46,4 @@ if ~isempty(varargin)
 end
 
 % compute area, multiplied by image resolution
-vol = sum(img(:))*prod(delta);
+vol = sum(img(:)) * prod(delta);

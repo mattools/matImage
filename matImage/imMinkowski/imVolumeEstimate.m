@@ -8,8 +8,8 @@ function vol = imVolumeEstimate(img, varargin)
 %   imVolumeEstimate
 %
 %   See also
-%
-%
+%   imVolume, imSurfaceEstimate
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -20,7 +20,7 @@ function vol = imVolumeEstimate(img, varargin)
 %% Input arguments processing
 
 % check image dimension
-if ndims(img)~=2
+if ndims(img)~=2 %#ok<ISMAT>
     error('first argument should be a 2D binary or label image');
 end
 

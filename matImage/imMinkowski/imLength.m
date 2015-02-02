@@ -1,4 +1,4 @@
-function [len labels] = imLength(img, varargin)
+function [len, labels] = imLength(img, varargin)
 % Compute total length of a binary 1D structure
 %
 %   LEN = imLength(IMG);
@@ -24,7 +24,7 @@ function [len labels] = imLength(img, varargin)
 %   HISTORY
 
 % check image dimension
-if ndims(img)>2 || min(size(img))>1
+if ndims(img)>2 || min(size(img))>1 %#ok<ISMAT>
     error('first argument should be a 1D image');
 end
 

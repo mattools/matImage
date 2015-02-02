@@ -1,4 +1,4 @@
-function [sd labels] = imSurfaceDensity(img, varargin)
+function [sd, labels] = imSurfaceDensity(img, varargin)
 % Surface area density of a 3D binary structure
 %
 %   Sv = imSurfaceDensity(IMG)
@@ -7,8 +7,8 @@ function [sd labels] = imSurfaceDensity(img, varargin)
 %   imSurfaceDensity
 %
 %   See also
-%
-%
+%   imSurface, imSurfaceEstimate
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

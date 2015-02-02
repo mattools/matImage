@@ -1,13 +1,15 @@
-function [ad labels] = imAreaDensity(img, varargin)
-%Compute area density in a 2D image
-%   output = imAreaDensity(input)
+function [ad, labels] = imAreaDensity(img, varargin)
+% Compute area density in a 2D image
+%
+%   DENSITY = imAreaDensity(IMG)
 %
 %   Example
 %   imAreaDensity
 %
 %   See also
+%   imArea
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -15,7 +17,7 @@ function [ad labels] = imAreaDensity(img, varargin)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % check image dimension
-if ndims(img)~=2
+if ndims(img)~=2 %#ok<ISMAT>
     error('first argument should be a 2D image');
 end
 

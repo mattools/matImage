@@ -33,9 +33,32 @@ function [surf labels] = imSurface(img, varargin)
 %     ans = 
 %         0.0090
 %
+%     % compute surface area of several regions in a label image
+%     img = uint8(zeros(10, 10, 10));
+%     img(2:3, 2:3, 2:3) = 1;
+%     img(5:8, 2:3, 2:3) = 2;
+%     img(5:8, 5:8, 2:3) = 4;
+%     img(2:3, 5:8, 2:3) = 3;
+%     img(5:8, 5:8, 5:8) = 8;
+%     [surfs, labels] = imSurface(img)
+%     surfs =
+%        16.0000
+%        26.6667
+%        26.6667
+%        42.6667
+%        64.0000
+%     labels =
+%          1
+%          2
+%          3
+%          4
+%          8
+%
+%
 %   See also
 %     imVolume, imMeanBreadth, imSurfaceDensity, imJointSurface
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -57,7 +80,7 @@ if ~islogical(img)
     nLabels = length(labels);
     surf = zeros(nLabels, 1);
 
-%     props = regionprops(img, 'BoundingBox');
+    % compute bounding box of each label
     boxes = imBoundingBox(img);
     
     % Compute surface area of each label considered as binary image

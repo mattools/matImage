@@ -1,4 +1,4 @@
-function [breadth labels] = imMeanBreadth(img, varargin)
+function [breadth, labels] = imMeanBreadth(img, varargin)
 %IMMEANBREADTH Mean breadth of a 3D binary or label image
 %
 %   B = imMeanBreadth(IMG)
@@ -17,18 +17,44 @@ function [breadth labels] = imMeanBreadth(img, varargin)
 %   Also returns the set of labels for which the mean breadth was computed.
 %
 %   Example
-%     % Create a binary image of a ball
+%     % define a ball from its center and a radius (use a slight shift to
+%     % avoid discretisation artefacts)
+%     xc = 50.12; yc = 50.23; zc = 50.34; radius = 40.0;
+%     % Create a discretized image of the ball
 %     [x y z] = meshgrid(1:100, 1:100, 1:100);
-%     img = sqrt( (x-50.12).^2 + (y-50.23).^2 + (z-50.34).^2) < 40;
+%     img = sqrt( (x - xc).^2 + (y - yc).^2 + (z - zc).^2) < radius;
 %     % compute mean breadth of the ball 
 %     % (expected: the diameter of the ball)
 %     b = imMeanBreadth(img)
 %     b =
 %         80
 %
+%
+%     % compute mean breadth of several regions in a label image
+%     img = uint8(zeros(10, 10, 10));
+%     img(2:3, 2:3, 2:3) = 1;
+%     img(5:8, 2:3, 2:3) = 2;
+%     img(5:8, 5:8, 2:3) = 4;
+%     img(2:3, 5:8, 2:3) = 3;
+%     img(5:8, 5:8, 5:8) = 8;
+%     [breadths, labels] = imMeanBreadth(img)
+%     breadths =
+%         2.0000
+%         2.6667
+%         2.6667
+%         3.3333
+%         4.0000
+%     labels =
+%          1
+%          2
+%          3
+%          4
+%          8
+%
 %   See also
 %     imVolume, imSurface
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -54,23 +80,22 @@ if ~islogical(img)
     nLabels = length(labels);
     breadth = zeros(nLabels, 1);
     
-    props = regionprops(img, 'BoundingBox');
+    % compute bounding box of each label
+    boxes = imBoundingBox(img);
     
-    % Compute the mean breadth of each label considered as binary image
+    % Compute mean breadth of each label considered as binary image
     % The computation is performed on a subset of the image for reducing
     % memory footprint.
     for i = 1:nLabels
         label = labels(i);
-        box = props(label).BoundingBox;
         
         % convert bounding box to image extent, in x, y and z directions
-        i0 = ceil(box([2 1 3]));
-        i1 = i0 + box([5 4 6]) - 1;
-        
-        % crop image of current label, keeping a background border
-        bin = false(box([5 4 6]) + 2);
-        bin(2:end-1, 2:end-1, 2:end-1) = ...
-            img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
+        box = boxes(i,:);
+        i0 = ceil(box([3 1 5]));
+        i1 = floor(box([4 2 6]));
+
+        % crop image of current label
+        bin = img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
         breadth(i) = imMeanBreadth(bin, varargin{:});
     end
 

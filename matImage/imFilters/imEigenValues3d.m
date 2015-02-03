@@ -1,5 +1,5 @@
 function [lambda1, lambda2, lambda3] = imEigenValues3d(Dxx, Dyy, Dzz, Dxy, Dxz, Dyz)
-%IMEIGENVALUES Image eigen values from second derivatives
+%IMEIGENVALUES3D Image eigen values from second derivatives
 %
 %   [LAMBDA1, LAMBDA2, LAMBDA3] = imEigenValues(Dxx, Dyy, Dzz, Dxy, Dxz, Dyz)
 %   Compute eigen values from hessian matrix components.

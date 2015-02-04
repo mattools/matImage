@@ -1,4 +1,4 @@
-function [ellipsoid labels] = imInertiaEllipsoid(img, varargin)
+function [ellipsoid, labels] = imInertiaEllipsoid(img, varargin)
 %IMINERTIAELLIPSOID Inertia ellipsoid of a 3D binary image
 %
 %   ELLI = imInertiaEllipsoid(IMG)
@@ -46,7 +46,7 @@ function [ellipsoid labels] = imInertiaEllipsoid(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2011-12-01,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -73,7 +73,7 @@ ellipsoid = zeros(nLabels, 9);
 for i = 1:nLabels
     % extract points of the current particle
     inds = find(img==labels(i));
-    [y x z] = ind2sub(dim, inds);
+    [y, x, z] = ind2sub(dim, inds);
     
 %     % number of points
 %     n = length(inds);
@@ -98,14 +98,14 @@ for i = 1:nLabels
       
     % perform a principal component analysis with 3 variables,
     % to extract inertia axes
-    [U S] = svd(covPts);
+    [U, S] = svd(covPts);
     
     % extract length of each semi axis
 %     radii = 2 * sqrt(diag(S)*n)';
     radii = sqrt(5) * sqrt(diag(S))';
     
     % sort axes from greater to lower
-    [radii ind] = sort(radii, 'descend');
+    [radii, ind] = sort(radii, 'descend');
     
     % format U to ensure first axis points to positive x direction
     U = U(ind, :);

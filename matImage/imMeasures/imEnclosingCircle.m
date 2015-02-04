@@ -1,4 +1,4 @@
-function [circle labels] = imEnclosingCircle(img, varargin)
+function [circle, labels] = imEnclosingCircle(img, varargin)
 %IMENCLOSINGCIRCLE Minimal enclosing circle of a particle
 %
 %   CIRC = imEnclosingCircle(IMG)
@@ -87,7 +87,7 @@ circle = zeros(nLabels, 3);
 
 for i = 1:nLabels
     % extract points of the current particle
-    [y x] = find(img==labels(i));
+    [y, x] = find(img==labels(i));
 
     % transform to physical space if needed
     if calib

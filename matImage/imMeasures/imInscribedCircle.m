@@ -1,4 +1,4 @@
-function [circle labels] = imInscribedCircle(lbl, varargin)
+function [circle, labels] = imInscribedCircle(lbl, varargin)
 %IMINSCRIBEDCIRCLE Maximal circle inscribed in a particle
 %
 %   CIRC = imInscribedCircle(IMG)
@@ -31,7 +31,7 @@ function [circle labels] = imInscribedCircle(lbl, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2012-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -56,7 +56,7 @@ for i = 1:nLabels
     
     % find value and position of the maximum
     maxi = max(distMap(:));    
-    [yc xc] = find(distMap==maxi, 1, 'first');
+    [yc, xc] = find(distMap==maxi, 1, 'first');
     
     circle(i,:) = [xc yc maxi];
 end

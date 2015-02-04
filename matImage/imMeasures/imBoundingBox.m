@@ -1,4 +1,4 @@
-function [boxes labels] = imBoundingBox(img, varargin)
+function [boxes, labels] = imBoundingBox(img, varargin)
 %IMBOUNDINGBOX Bounding box of a binary or label image
 %
 %   BOX = imBoundingBox(IMG)
@@ -70,7 +70,7 @@ if nd == 2
     %% Process planar case 
     for i = 1:nLabels
         % extract points of the current particle
-        [y x] = find(img==labels(i));
+        [y, x] = find(img==labels(i));
 
         % compute extreme coordinates, and add the half-width of the pixel
         xmin = min(x) - .5;
@@ -88,7 +88,7 @@ elseif nd == 3
     for i = 1:nLabels
         % extract points of the current particle
         inds = find(img==labels(i));
-        [y x z] = ind2sub(dim, inds);
+        [y, x, z] = ind2sub(dim, inds);
 
         % compute extreme coordinates, and add the half-width of the pixel
         xmin = min(x) - .5;

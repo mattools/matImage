@@ -1,7 +1,7 @@
 function varargout = imBinaryToGraph(img)
 %IMBINARYTOGRAPH Transform a binary image into a graph structure
 %
-%   [NODES EDGES] = imBinaryToGraph(IMG);
+%   [NODES, EDGES] = imBinaryToGraph(IMG);
 %   IMG is a binary image, with structure of width 1 pixel (such as the
 %   result of sketetonization)
 %   NODES is a NN-by-2 array of doubles containing node coordinates
@@ -43,7 +43,7 @@ function varargout = imBinaryToGraph(img)
 %% Initialisation of node array
 
 % nodes array
-[y x] = find(img > 0);
+[y, x] = find(img > 0);
 points = [x y];
 
 % intialize empty edges array.

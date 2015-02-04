@@ -1,10 +1,10 @@
-function [gmin gmax] = imGrayscaleExtent(img, varargin)
+function [gmin, gmax] = imGrayscaleExtent(img, varargin)
 %IMGRAYSCALEEXTENT Grayscale extent of an image
 %
-%   [GMIN GMAX] = imGrayscaleExtent(IMG)
+%   [GMIN, GMAX] = imGrayscaleExtent(IMG)
 %   Compute grayscale extent of a grayscale image.
 %
-%   [GMIN GMAX] = imGrayscaleExtent(IMG, ALPHA)
+%   [GMIN, GMAX] = imGrayscaleExtent(IMG, ALPHA)
 %   Compute grayscale extent of the image, such that ALPHA pixel lie out of
 %   the range. ALPHA can be a scalar, or a pair. If ALPHA is scalar,
 %   ALPHA/2 percent will be ignored on each side of the distribution.
@@ -32,6 +32,7 @@ function [gmin gmax] = imGrayscaleExtent(img, varargin)
 %   See also
 %   imRescale, imadjust, stretchlim
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -64,7 +65,7 @@ if ~isempty(varargin)
     
     % normalisation of grayscale distribution function
     cumh    = cumsum(h);
-    cdf     = cumh/cumh(end);
+    cdf     = cumh / cumh(end);
     
     % find indices of extreme values
     ind1    = find(cdf >= alpha(1),   1, 'first');

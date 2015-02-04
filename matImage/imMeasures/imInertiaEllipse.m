@@ -1,4 +1,4 @@
-function [ellipse labels] = imInertiaEllipse(img, varargin)
+function [ellipse, labels] = imInertiaEllipse(img, varargin)
 %IMINERTIAELLIPSE Inertia ellipse of a binary or label image
 %
 %   ELLI = imInertiaEllipse(IMG)
@@ -47,9 +47,10 @@ function [ellipse labels] = imInertiaEllipse(img, varargin)
 %   See also
 %     regionprops, drawEllipse, imOrientedBox, imInertiaEllipsoid
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2011-03-30,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -95,7 +96,7 @@ ellipse = zeros(nLabels, 5);
 
 for i = 1:nLabels
     % extract points of the current particle
-    [y x] = find(img==labels(i));
+    [y, x] = find(img==labels(i));
     
     % transform to physical space if needed
     if calib

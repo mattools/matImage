@@ -468,7 +468,7 @@ methods
         % Recompute and display the histogram
                 
         % recompute histogram
-        [h x] = computeHistogram(this);
+        [h, x] = computeHistogram(this);
         this.histoBins = x;
         this.histoValues = h;
 
@@ -569,7 +569,7 @@ methods
         
     end
     
-    function [h x] = computeHistogram(this)
+    function [h, x] = computeHistogram(this)
         
         % compute bin pos
         extent = this.dataExtent;
@@ -581,7 +581,7 @@ methods
         colorImage = false;
         
         % check special cases: color and vector
-        if ndims(this.image) > 2
+        if ndims(this.image) > 2 %#ok<ISMAT>
             if size(this.image, 3) == 3
                 colorImage = true;
             else

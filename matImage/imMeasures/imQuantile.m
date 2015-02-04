@@ -28,7 +28,7 @@ if q < 0 || q > 1
 end
 
 % compute cumulative histogram
-[h x] = imHistogram(img);
+[h, x] = imHistogram(img);
 cs = cumsum(h);
 
 % iterate for all quantiles to compute

@@ -99,7 +99,7 @@ if nd == 2
     %% First direction of 2D image
     
     % identify transitions
-    [i1 i2] = find(img(1:end-shift,:) ~= img((shift+1):end, :));
+    [i1, i2] = find(img(1:end-shift,:) ~= img((shift+1):end, :));
     
 	% get values of consecutive changes
 	val1 = img(sub2ind(dim, i1, i2));
@@ -113,7 +113,7 @@ if nd == 2
     %% Second direction of 2D image
     
     % identify transitions
-    [i1 i2] = find(img(:, 1:end-shift) ~= img(:, (shift+1):end));
+    [i1, i2] = find(img(:, 1:end-shift) ~= img(:, (shift+1):end));
     
 	% get values of consecutive changes
 	val1 = img(sub2ind(dim, i1, i2));
@@ -128,7 +128,7 @@ elseif nd == 3
     %% First direction of 3D image
     
     % identify transitions
-    [i1 i2 i3] = ind2sub(dim-[shift 0 0], ...
+    [i1, i2, i3] = ind2sub(dim-[shift 0 0], ...
         find(img(1:end-shift,:,:) ~= img((shift+1):end,:,:)));
 	
 	% get values of consecutive changes
@@ -143,7 +143,7 @@ elseif nd == 3
     %% Second direction of 3D image
     
     % identify transitions
-    [i1 i2 i3] = ind2sub(dim-[0 shift 0], ...
+    [i1, i2, i3] = ind2sub(dim-[0 shift 0], ...
         find(img(:,1:end-shift,:) ~= img(:,(shift+1):end,:)));
 	
 	% get values of consecutive changes
@@ -158,7 +158,7 @@ elseif nd == 3
     %% Third direction of 3D image
     
     % identify transitions
-    [i1 i2 i3] = ind2sub(dim-[0 0 shift], ...
+    [i1, i2, i3] = ind2sub(dim-[0 0 shift], ...
         find(img(:,:,1:end-shift) ~= img(:,:,(shift+1):end)));
 	
 	% get values of consecutive changes
@@ -196,7 +196,7 @@ elseif nargout == 2
         % compute 2D centroids
         for i = 1:length(labels)
             label = labels(i);
-            [iy ix] = ind2sub(dim, find(img==label));
+            [iy, ix] = ind2sub(dim, find(img==label));
             points(label, 1) = mean(ix);
             points(label, 2) = mean(iy);
         end
@@ -204,7 +204,7 @@ elseif nargout == 2
         % compute 3D centroids
         for i = 1:length(labels)
             label = labels(i);
-            [iy ix iz] = ind2sub(dim, find(img==label));
+            [iy, ix, iz] = ind2sub(dim, find(img==label));
             points(label, 1) = mean(ix);
             points(label, 2) = mean(iy);
             points(label, 3) = mean(iz);

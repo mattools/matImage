@@ -1,4 +1,4 @@
-function [cv labels] = imConvexity(img, varargin)
+function [cv, labels] = imConvexity(img, varargin)
 %IMCONVEXITY Convexity of particles in label image
 %
 %   CV = imConvexity(IMG)

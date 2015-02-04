@@ -1,4 +1,4 @@
-function [points labels] = imCentroid(img, varargin)
+function [points, labels] = imCentroid(img, varargin)
 %IMCENTROID Centroid of regions in a label image
 %
 %   CENTRO = imCentroid(IMG)
@@ -68,7 +68,7 @@ points = zeros(nLabels, nd);
 if nd == 2
     for i = 1:nLabels
         % extract points of the current particle
-        [y x] = find(img==labels(i));
+        [y, x] = find(img==labels(i));
 
         % coordinates of particle centroid
         xc = mean(x);
@@ -82,7 +82,7 @@ elseif nd == 3
     for i = 1:nLabels
         % extract points of the current particle
         inds = find(img==labels(i));
-        [y x z] = ind2sub(dim, inds);
+        [y, x, z] = ind2sub(dim, inds);
 
         % coordinates of particle centroid
         xc = mean(x);

@@ -29,33 +29,32 @@ function b = is3DImage(img)
 %       1
 %
 %   See also
-%   isColorImage
+%     isColorImage
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2010-05-20,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-b = true;
-
 % check number of dimension
 dim = size(img);
-if length(dim)<3
+if length(dim) < 3
     b = false;
     return
 end
 
 % check all dimensions equal to 3
-if sum(dim([1:2 4:end])~=3)==0
+if sum(dim([1:2 4:end])~=3) == 0
     b = true;
     return
 end
 
 % check third dimension
-if dim(3)==3
+if dim(3) == 3
     dim(3) = [];
 end
 
 % 3D if 3 dimensions...
-b = length(dim)==3;
+b = length(dim) == 3;

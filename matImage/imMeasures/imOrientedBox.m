@@ -1,4 +1,4 @@
-function [rect labels] = imOrientedBox(img, varargin)
+function [rect, labels] = imOrientedBox(img, varargin)
 %IMORIENTEDBOX Minimum-area oriented bounding box of particles in image
 %
 %   OBB = imOrientedBox(IMG);

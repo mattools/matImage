@@ -1,4 +1,4 @@
-function [mv1 mv2 mv3] = specificIntMeanCurvDetails(img, varargin)
+function [mv1, mv2, mv3] = specificIntMeanCurvDetails(img, varargin)
 %SPECIFICINTMEANCURVDETAILS Ohser's Integral of Mean Curvature with details
 %
 %   this version is just for debugging.

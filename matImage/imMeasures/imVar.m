@@ -49,7 +49,7 @@ color = isColorImage(img);
 if length(varargin)>1
     var1 = varargin{end-1};
     if ischar(var1)
-        if strmatch(var1, 'color')
+        if strcmpi(var1, 'color')
             color = varargin{end};
             varargin(end-1:end) = [];
         end

@@ -42,9 +42,9 @@ nd = length(dim);
 
 % convert indices to coords
 if nd == 2
-    [y x] = ind2sub(dim, inds);
+    [y, x] = ind2sub(dim, inds);
 else
-    [y x z] = ind2sub(dim, inds);
+    [y, x, z] = ind2sub(dim, inds);
 end
 
 % format output

@@ -137,7 +137,7 @@ function plotColorHistogram(histo)
 lr = (.5:size(histo,1)-.5) / size(histo, 1);
 lg = (.5:size(histo,2)-.5) / size(histo, 2);
 lb = (.5:size(histo,3)-.5) / size(histo, 3);
-[g r b] = meshgrid(lg, lr, lb);
+[g, r, b] = meshgrid(lg, lr, lb);
 
 % extract colors
 rgb = [r(:) g(:) b(:)];

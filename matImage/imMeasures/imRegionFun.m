@@ -1,4 +1,4 @@
-function [res labels] = imRegionFun(img, lbl, op)
+function [res, labels] = imRegionFun(img, lbl, op)
 %IMREGIONFUN Apply a function to each region of a label image
 %
 %   RES = imRegionFun(IMG, LBL, OP)
@@ -19,7 +19,7 @@ function [res labels] = imRegionFun(img, lbl, op)
 %
 %   See also
 %   
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

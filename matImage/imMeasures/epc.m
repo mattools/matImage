@@ -96,13 +96,13 @@ end
     
     
 % dimension 0
-if ndims(img)==2 && dim(1)==1 && dim(2)==1
+if ndims(img)==2 && dim(1)==1 && dim(2)==1 %#ok<ISMAT>
     chi = img==1;
     return
 end
 
 % dimension 1
-if ndims(img)==2 && (dim(2)==1 || dim(1)==1)
+if ndims(img)==2 && (dim(2)==1 || dim(1)==1) %#ok<ISMAT>
     if dim(2)==1
         img = img';
         dim(2)=dim(1);
@@ -112,7 +112,7 @@ if ndims(img)==2 && (dim(2)==1 || dim(1)==1)
 end
 
 % dimension 2
-if ndims(img)==2
+if ndims(img)==2 %#ok<ISMAT>
     N1 = dim(1); N2=dim(2);
     % compute number of nodes, number of edges (H and V) and number of
     % faces

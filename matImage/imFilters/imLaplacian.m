@@ -14,6 +14,7 @@ function lap = imLaplacian(img, varargin)
 %   See also
 %   imGaussianFilter, imMorphoLaplacian
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -21,10 +22,10 @@ function lap = imLaplacian(img, varargin)
 % Copyright 2012 INRA - Cepia Software Platform.
 
 % first order gradient
-[gx gy] = imGradient(img, varargin{:});
+[gx, gy] = imGradient(img, varargin{:});
 
 % second order gradient
-[gx2 gxy] = imGradient(gx, varargin{:}); %#ok<NASGU>
-[gxy gy2] = imGradient(gy, varargin{:}); %#ok<ASGLU>
+[gx2, gxy] = imGradient(gx, varargin{:}); %#ok<ASGLU>
+[gxy, gy2] = imGradient(gy, varargin{:}); %#ok<ASGLU>
 
 lap = gx2 + gy2;

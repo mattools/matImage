@@ -17,7 +17,7 @@ function res = imMeanFilter(img, se, varargin)
 %   See Also: 
 %   imMedianFilter, imDirectionalFilter, imfilter
 %
-%
+
 %   ---------
 %
 %   author : David Legland 
@@ -31,7 +31,7 @@ function res = imMeanFilter(img, se, varargin)
 %   2011-11-05 rename from imMean to imMeanFilter
 
 % transform STREL object into single array
-if strcmp(class(se), 'strel')
+if strcmp(class(se), 'strel') %#ok<STISA>
     se = getnhood(se);
 end
 

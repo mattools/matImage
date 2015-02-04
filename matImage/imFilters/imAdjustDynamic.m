@@ -34,9 +34,8 @@ function res = imAdjustDynamic(img, varargin)
 %   See Also:
 %   imLUT, imGrayscaleExtent, imadjust, mat2gray
 %
-%
+
 %   ---------
-%
 %   author: David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 21/03/2005.
@@ -62,7 +61,7 @@ if ~isempty(varargin)
     % use min and max values given as parameter
     var = varargin{1};
     if length(var) == 1
-        [mini maxi] = computeGrayscaleAdjustement(img, var);
+        [mini, maxi] = computeGrayscaleAdjustement(img, var);
     else
         mini = var(1);
         maxi = var(2);
@@ -72,7 +71,7 @@ if ~isempty(varargin)
 else
     % use min and max values computed from input image, by saturating 1
     % percent of image elements
-    [mini maxi] = computeGrayscaleAdjustement(img, .01);
+    [mini, maxi] = computeGrayscaleAdjustement(img, .01);
 end
 
 % check if a class cast is specified
@@ -96,7 +95,7 @@ res = cast(res, outputClass);
 
 
     
-function [mini maxi] = computeExtremeValues(img) %#ok<DEFNU>
+function [mini, maxi] = computeExtremeValues(img) %#ok<DEFNU>
 % compute min and max (finite) values in image
 
 mini = min(img(isfinite(img)));
@@ -110,7 +109,7 @@ if abs(maxi-mini) < 1e-12
     maxi = 1;
 end
 
-function [mini maxi] = computeGrayscaleAdjustement(img, alpha)
+function [mini, maxi] = computeGrayscaleAdjustement(img, alpha)
 % compute grayscale range that maximize vizualisation
 
 % use default value for alpha if not specified

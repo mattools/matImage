@@ -1,4 +1,4 @@
-function [r g b] = imSplitChannels(rgb)
+function [r, g, b] = imSplitChannels(rgb)
 %IMSPLITCHANNELS Split the 3 channels of a 2D or 3D image
 %
 %   [R, G, B] = imSplitChannels(RGB);

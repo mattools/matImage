@@ -81,7 +81,7 @@ if nargout == 1
     % Computes a single 3D kernel
     
     % create 3D grid
-    [x y z] = meshgrid(lx, ly, lz);
+    [x, y, z] = meshgrid(lx, ly, lz);
     
     % compute gaussian function for each point of the grid
     h = exp(-(x.^2 / sx2)) .* exp(-(y.^2 / sy2)) .* exp(-(z.^2 / sz2));

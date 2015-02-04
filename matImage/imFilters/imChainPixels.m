@@ -95,13 +95,13 @@ nv = 0;
 for x = xp-1:xp+1
     if img(yp-1, x)
         nv = nv+1;
-        neighList(nv, 1) = x;
-        neighList(nv, 2) = yp-1;
+        neighList(nv, 1) = x; %#ok<AGROW>
+        neighList(nv, 2) = yp-1; %#ok<AGROW>
     end
     if img(yp+1, x)
         nv = nv+1;
-        neighList(nv, 1) = x;
-        neighList(nv, 2) = yp+1;
+        neighList(nv, 1) = x; %#ok<AGROW>
+        neighList(nv, 2) = yp+1; %#ok<AGROW>
     end
 end
 

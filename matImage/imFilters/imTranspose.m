@@ -10,8 +10,8 @@ function res = imTranspose(img)
 %   imshow(img2);
 %
 %   See also
-%
-%
+%   imFlip, imRotate90
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@nantes.inra.fr
@@ -20,7 +20,7 @@ function res = imTranspose(img)
 % Licensed under the terms of the LGPL, see the file "license.txt"
 
 
-if ndims(img)==2
+if ndims(img)==2 %#ok<ISMAT>
     res = img';
 else
     res = permute(img, [2 1 3]);

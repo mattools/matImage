@@ -9,6 +9,7 @@ function res = convexImage(img, varargin)
 %
 %   Requires the 'geom2d' library.
 %
+
 %   ---------
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
@@ -29,7 +30,7 @@ warning('imael:deprecated', ...
 % initialize with image
 res = logical(img);
 
-if ndims(img)==2
+if ndims(img)==2 %#ok<ISMAT>
 
     % first extract the bounding box of the structure
 	stats = regionprops(uint8(img), 'boundingBox');
@@ -192,17 +193,17 @@ end
 
 % first direction in image
 inds = find(img(1:D1-1, 1:D2, 1:D3) ~= img(2:D1, 1:D2, 1:D3));
-[x y z] = ind2sub(dim-[1 0 0], inds);
+[x, y, z] = ind2sub(dim-[1 0 0], inds);
 corners = [corners;x+.5 y-.5 z-.5;x+.5 y+.5 z-.5;x+.5 y+.5 z+.5;x+.5 y-.5 z+.5];
 
 % second direction in image
 inds = find(img(1:D1,1:D2-1,1:D3)~=img(1:D1,2:D2,1:D3));
-[x y z] = ind2sub(dim-[0 1 0], inds);
+[x, y, z] = ind2sub(dim-[0 1 0], inds);
 corners = [corners;x-.5 y+.5 z-.5;x-.5 y+.5 z+.5;x+.5 y+.5 z+.5;x+.5 y+.5 z-.5];
 
 % third direction in image
 inds = find(img(1:D1, 1:D2, 1:D3-1) ~= img(1:D1, 1:D2, 2:D3));
-[x y z] = ind2sub(dim-[0 0 1], inds);
+[x, y, z] = ind2sub(dim-[0 0 1], inds);
 corners = [corners;x-.5 y-.5 z+.5;x-.5 y+.5 z+.5;x+.5 y+.5 z+.5;x+.5 y-.5 z+.5];
 
 corners = unique(corners, 'rows');

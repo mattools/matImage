@@ -15,9 +15,8 @@ function res = immean(img, filtre, varargin)
 %
 %   See Also : IMMEDIAN, IMDIRFILTER, MEDFILT2, ORDFILT2
 %
-%
+
 %   ---------
-%
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 16/02/2004.
@@ -33,7 +32,7 @@ warning('imael:deprecatedFunction', ...
 
 
 % transform STREL object into single array
-if strcmp(class(filtre), 'strel')
+if strcmp(class(filtre), 'strel') %#ok<STISA>
     filtre = getnhood(filtre);
 end
 

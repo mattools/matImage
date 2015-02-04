@@ -68,7 +68,7 @@ function res = imOverlay(img, varargin)
 %   ovr = imOverlay(I*3, bnd);      % compute overlay
 %   montage(ovr);                   % display each slice
 %
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -119,7 +119,7 @@ img = im2uint8(img);
 %% Initializations
 
 % compute size and info flags
-[dim isColor is3D] = computeImageInfo(img);
+[dim, isColor, is3D] = computeImageInfo(img);
 
 
 % initialize each band of the result image with the original image
@@ -141,7 +141,7 @@ end
 while ~isempty(varargin)
     % First argument is the mask, second argument specifies color
     mask    = varargin{1};
-    [r g b]  = parseOverlayBands(varargin{2});
+    [r, g, b]  = parseOverlayBands(varargin{2});
     
     varargin(1:2) = [];
     
@@ -167,7 +167,7 @@ end
 
 
 
-function [dim isColor is3D] = computeImageInfo(img)
+function [dim, isColor, is3D] = computeImageInfo(img)
 % Compute image size, and determines if image is 3D and/or color
 % Returns the dimension of image witghout the color channel, and two binary
 % flags indicating if image is color, and 3D.
@@ -208,7 +208,7 @@ else
 end
 
 
-function [r g b] = parseOverlayBands(color)
+function [r, g, b] = parseOverlayBands(color)
 % determines r g and b values from argument value
 %
 % argument COLOR can be one of:
@@ -222,7 +222,7 @@ function [r g b] = parseOverlayBands(color)
 
 if ischar(color)
     % parse character to  a RGB triplet
-    [r g b] = parseColorString(color);
+    [r, g, b] = parseColorString(color);
     
 elseif isnumeric(color)
     if size(color, 1)==1
@@ -237,7 +237,7 @@ elseif isnumeric(color)
         b = color(3);
     else
         % otherwise, color is another image
-        [dim isColor is3D] = computeImageInfo(color); %#ok<ASGLU>
+        [dim, isColor, is3D] = computeImageInfo(color); %#ok<ASGLU>
         if isColor
             if is3D
                 r = squeeze(color(:,:,1,:));

@@ -31,7 +31,7 @@ warning('imael:deprecatedFunction', ...
 
 
 % transform STREL object into single array
-if strcmp(class(filtre), 'strel')
+if strcmp(class(filtre), 'strel') %#ok<STISA>
     filtre = getnhood(filtre);
 end
 

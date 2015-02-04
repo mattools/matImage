@@ -31,7 +31,7 @@ edges = imRAG(lbl);
 % compute volume of each cell
 disp('compute area');
 area = zeros(n, 1);
-for i=1:n
+for i = 1:n
     area(i) = sum(lbl(:)==i);
 end
 
@@ -43,7 +43,7 @@ se(3,2,2) = 1;
 se(2,:,:) = [0 1 0;1 1 1;0 1 0];
 
 for i=1:n
-    disp(sprintf('cellule : %d/%d', i, n));
+    disp(sprintf('cellule : %d/%d', i, n)); %#ok<DSPS>
     
     % check :
     %   1 - cell still exist
@@ -64,11 +64,11 @@ for i=1:n
         
         common = sum(im(:)&res(:)==neigh(i2));
         if common/area(neigh(i2))>.7
-            disp(sprintf('fusion %d et %d', i, neigh(i2)));
+            disp(sprintf('fusion %d et %d', i, neigh(i2))); %#ok<DSPS>
 
             % update RAG and fusion process information
-            [nodes edges] = mergeNodes(nodes, edges, [i neigh(i2)]);
-            fusion(size(fusion, 1)+1, 1:2) = [i neigh(i2)];
+            [nodes, edges] = mergeNodes(nodes, edges, [i neigh(i2)]);
+            fusion(size(fusion, 1)+1, 1:2) = [i neigh(i2)]; %#ok<AGROW>
             
             % update result image
             %ind = regionsBoundary(res, i, neigh(i2));

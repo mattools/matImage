@@ -39,7 +39,7 @@ function lbl = removeBorderRegions(lbl, varargin)
 %   07/08/2007: relabeling is now optional
 %   01/02/2008: return binImg image if input is binImg
 
-warning('malimpa:deprecated', ...
+warning('matImage:deprecated', ...
     'function "removeBorderRegion" has been replaced by "imKillBorders"');
 
 % default values
@@ -50,7 +50,7 @@ relabel = true;
 if islogical(lbl)
     binImg = true;
     relabel = false;
-    if ndims(lbl)==2
+    if ndims(lbl)==2 %#ok<ISMAT>
         lbl = bwlabel(lbl, 4);
     elseif ndims(lbl)==3
         lbl = bwlabeln(lbl, 6);
@@ -77,7 +77,7 @@ end
 
 % create mask for borders
 mask = false(size(lbl));
-if ndims(lbl)==2
+if ndims(lbl)==2 %#ok<ISMAT>
     for i=1:length(borders)
         border = borders{i};
         if strcmp(border, 'left')

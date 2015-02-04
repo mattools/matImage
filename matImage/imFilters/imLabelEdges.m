@@ -57,7 +57,7 @@ for c=1:N
     
     for c2 = 1:length(lbl)
         limit = imdilate(img==c, se1) & imdilate(img==lbl(c2), se1);
-        edges(size(edges, 1)+1, 1:2) = [c lbl(c2)];
+        edges(size(edges, 1)+1, 1:2) = [c lbl(c2)]; %#ok<AGROW>
         labels(limit) = size(edges, 1);
     end
 end

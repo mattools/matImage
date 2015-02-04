@@ -36,7 +36,7 @@ if length(scale)==1
     scale = ones(2, 1)*scale;
 end
 
-res = zeros([floor(dim(1)/scale(1)) floor(dim(2)/scale(2)) 3], class(src));
+res = zeros([floor(dim(1)/scale(1)) floor(dim(2)/scale(2)) 3], class(src)); %#ok<ZEROLIKE>
 
 res(:,:,1) = subsample(src(:,:,1), scale(1:2)');
 res(:,:,2) = subsample(src(:,:,2), scale(1:2)');

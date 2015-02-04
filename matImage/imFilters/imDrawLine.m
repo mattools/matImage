@@ -61,7 +61,7 @@ end
 %% Coordinates computation
 
 % coordinates of pixels
-[x y] = bresenhamLine(pos1, pos2, varargin{:});
+[x, y] = bresenhamLine(pos1, pos2, varargin{:});
 
 % remove line pixels outside image
 xOut = x < 1 | x > size(img, 2); 

@@ -18,6 +18,7 @@ function ind = imBoundaryIndices(img, c1, c2)
 %   See also:
 %   watershed, imRAG, imLabelEdges
 %
+
 %   -----
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
@@ -40,7 +41,7 @@ if length(dim)==2
 	diff1 = abs(diff(double(img), 1, 1));
 	
 	% find non zero values (region changes)
-	[i1 i2] = find(diff1);
+	[i1, i2] = find(diff1);
 	
 	% delete values close to border
 	i2 = i2(i1<dim(1)-1);
@@ -82,7 +83,7 @@ if length(dim)==2
 	diff2 = abs(diff(double(img), 1, 2));
 	
 	% find non zero values (region changes)
-	[i1 i2] = find(diff2);
+	[i1, i2] = find(diff2);
 	
     
 	% delete values close to border
@@ -132,7 +133,7 @@ elseif length(dim)==3
 	diff1 = abs(diff(double(img), 1, 1));
 	
 	% find non zero values (region changes)
-	[i1 i2 i3] = ind2sub(size(diff1), find(diff1));
+	[i1, i2, i3] = ind2sub(size(diff1), find(diff1));
 
 	% delete values close to border
 	i2 = i2(i1<dim(1)-1);
@@ -171,7 +172,7 @@ elseif length(dim)==3
 	diff2 = abs(diff(double(img), 1, 2));
 	
 	% find non zero values (region changes)
-	[i1 i2 i3] = ind2sub(size(diff2), find(diff2));
+	[i1, i2, i3] = ind2sub(size(diff2), find(diff2));
 	
 	% delete values close to border
 	i1 = i1(i2<dim(2)-1);
@@ -207,7 +208,7 @@ elseif length(dim)==3
 	diff3 = abs(diff(double(img), 1, 3));
 	
 	% find non zero values (region changes)
-	[i1 i2 i3] = ind2sub(size(diff3), find(diff3));
+	[i1, i2, i3] = ind2sub(size(diff3), find(diff3));
 	
 	% delete values close to border
 	i1 = i1(i3<dim(3)-1);

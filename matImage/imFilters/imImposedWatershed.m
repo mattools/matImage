@@ -1,4 +1,4 @@
-function [wat emin] = imImposedWatershed(img, emin, varargin)
+function [wat, emin] = imImposedWatershed(img, emin, varargin)
 %IMIMPOSEDWATERSHED Compute watershed after imposition of extended minima
 %
 %   RES = imImposedWatershed(IMG, MARKERS)
@@ -30,6 +30,7 @@ function [wat emin] = imImposedWatershed(img, emin, varargin)
 %   See also
 %   watershed, imextendedmin, imimposemin
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -45,7 +46,7 @@ function [wat emin] = imImposedWatershed(img, emin, varargin)
 
 % determines the default connectivity, depending on image dimension
 c = 4;
-if ndims(img) > 2
+if ndims(img) > 2 %#ok<ISMAT>
     c = 6;
 end
 

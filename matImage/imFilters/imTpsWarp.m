@@ -29,7 +29,7 @@ function res = imTpsWarp(img, pts1, pts2)
 dim = size(img);
 lx = 1:dim(2);
 ly = 1:dim(1);
-[x y] = meshgrid(lx, ly);
+[x, y] = meshgrid(lx, ly);
 
 % rescale landmarks coordinates and image coordinates for better accuracy
 scaleFactor = max(max(abs(x(:))), max(abs(y(:)))) * .01;

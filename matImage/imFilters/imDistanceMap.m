@@ -70,6 +70,7 @@ function dist = imDistanceMap(img, varargin)
 %   See also
 %   imChamferDistance, bwdist
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -141,7 +142,7 @@ end
 dist(~img) = 0;
 
 % size of image
-[D1 D2] = size(img);
+[D1, D2] = size(img);
 
 
 %% Forward iteration

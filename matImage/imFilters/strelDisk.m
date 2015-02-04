@@ -50,7 +50,7 @@ N = floor(radius+d2);
 % compute coordinates of pixel centers
 l1 = -N:N;
 l2 = -N:N;
-[X2 X1] = meshgrid(l1, l2);
+[X2, X1] = meshgrid(l1, l2);
 
 % compute distance of each pixel center to circle center, and threshold
 im      = false(size(X1));

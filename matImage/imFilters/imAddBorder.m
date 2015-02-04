@@ -86,7 +86,7 @@ if isPlanar
     if islogical(img)
         res = false(dim2);
     else
-        res = ones(dim2, class(img));
+        res = ones(dim2, class(img)); %#ok<ZEROLIKE>
     end
     
     % fill result with background color
@@ -123,7 +123,7 @@ elseif length(dim) - isColor == 3
     if islogical(img)
         res = false(dim2);
     else
-        res = ones(dim2, class(img));
+        res = ones(dim2, class(img)); %#ok<ZEROLIKE>
     end
     
     % fill result with background color

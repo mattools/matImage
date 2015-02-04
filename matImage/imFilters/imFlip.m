@@ -27,8 +27,9 @@ function res = imFlip(img, dim)
 %     subplot(122); imshow(I2(:,:,13));
 %
 %   See also
-%   imRotate90, flipdim
+%   imRotate90, imTranspose, flipdim
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -56,4 +57,9 @@ inds = [2 1 4 3 5];
 dim = inds(dim);
 
 % create result image
-res = flipdim(img, dim);
+% res = flipdim(img, dim);
+if verLessThan('matlab', '8.4.0')
+    res = flipdim(img, dim); %#ok<DFLIPDIM>
+else
+    res = flip(img, dim);
+end

@@ -1,4 +1,4 @@
-function [res permInds flipInds] = imRotate90(img, number, axis)
+function [res, permInds, flipInds] = imRotate90(img, number, axis)
 %IMROTATE90  Rotate a 3D image by 90 degrees around one image axis
 %
 %   RES = imRotate90(IMG, NUMBER);
@@ -69,7 +69,7 @@ end
 axis = parseAxisIndex(axis);
 
 % get rotation parameters in xyz ordering
-[permInds flipInds] = getStackRotate90Params(axis, number);
+[permInds, flipInds] = getStackRotate90Params(axis, number);
 
 % check if image is color
 colorImage = isColorImage(img);
@@ -88,11 +88,21 @@ end
 res = permute(img, permInds2);
 
 % depending on rotation, some dimensions must be fliped
-for i = 1:length(flipInds2)
-    res = flipdim(res, flipInds2(i));
+% for i = 1:length(flipInds2)
+%     res = flipdim(res, flipInds2(i));
+% end
+if verLessThan('matlab', '8.4.0')
+    % use old function 'flipdim'
+    for i = 1:length(flipInds2)
+        res = flipdim(img, flipInds2(i)); %#ok<DFLIPDIM>
+    end
+else
+    for i = 1:length(flipInds2)
+        res = flip(img, flipInds2(i));
+    end
 end
 
-function [permDims flipDims] = getStackRotate90Params(axis, varargin)
+function [permDims, flipDims] = getStackRotate90Params(axis, varargin)
 %GETROTATE90PARAMETERS Return permutation and flip indices of 90° rotation
 %
 %   [PERMDIMS FLIPDIMS] = getStackRotate90Params(AXIS, NUMBER)

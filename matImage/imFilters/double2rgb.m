@@ -82,7 +82,7 @@ if length(dim) == 2
 else
     % case of 3D image: need to play with channels
     dim2 = [dim(1:2) 3 dim(3:end)];
-    rgb = zeros(dim2, class(map));
+    rgb = zeros(dim2, class(map)); %#ok<ZEROLIKE>
     rgb(:,:,1,:) = r;
     rgb(:,:,2,:) = g;
     rgb(:,:,3,:) = b;

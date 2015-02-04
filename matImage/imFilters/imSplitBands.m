@@ -1,4 +1,4 @@
-function [r g b] = imSplitBands(rgb)
+function [r, g, b] = imSplitBands(rgb)
 %IMSPLITBANDS  Split the 3 bands of a 2D or 3D image
 %
 %   Note: deprecated, use imSplitChannels instead

@@ -61,7 +61,7 @@ end
 if islogical(src)
     res = false(floor(size(src)./scale));
 else
-    res = zeros(floor(size(src)./scale), class(src));
+    res = zeros(floor(size(src)./scale), class(src)); %#ok<ZEROLIKE>
 end
 
 % process case DIM=1
@@ -111,7 +111,7 @@ if length(dim)==2
     if islogical(src)
         tab = false([dim2(1) dim2(2) scale(1)*scale(2)]);
     else
-        tab = zeros([dim2(1) dim2(2) scale(1)*scale(2)], class(src));
+        tab = zeros([dim2(1) dim2(2) scale(1)*scale(2)], class(src)); %#ok<ZEROLIKE>
     end
 
     for i=1:scale(1)

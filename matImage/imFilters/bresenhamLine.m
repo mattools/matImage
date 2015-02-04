@@ -1,4 +1,4 @@
-function [x y] = bresenhamLine(pos1, pos2, varargin)
+function [x, y] = bresenhamLine(pos1, pos2, varargin)
 %BRESENHAMLINE Integer coordinates of a bresenham line
 %
 %   [X Y] = bresenhamLine(POS1, POS2)
@@ -69,8 +69,8 @@ if dx >= dy
     
 	% eventually swap coordinates to draw from left to right.
     if x1 > x2
-        [x1 x2] = swap(x1, x2);
-        [y1 y2] = swap(y1, y2);
+        [x1, x2] = swap(x1, x2);
+        [y1, y2] = swap(y1, y2);
         flip = 1;
     end
     
@@ -84,8 +84,8 @@ else
     
     if y1 > y2
         % swap coordinates to draw from bottom to top.
-        [x1 x2] = swap(x1, x2);
-        [y1 y2] = swap(y1, y2);
+        [x1, x2] = swap(x1, x2);
+        [y1, y2] = swap(y1, y2);
         flip = 1;
     end
     
@@ -110,6 +110,6 @@ end
 
 
 % Swaping functions
-function [a2 b2] = swap(a, b)
+function [a2, b2] = swap(a, b)
 a2 = b;
 b2 = a;

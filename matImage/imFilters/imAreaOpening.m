@@ -1,4 +1,4 @@
-function [lbl inds] = imAreaOpening(img, areaMin, varargin)
+function [lbl, inds] = imAreaOpening(img, areaMin, varargin)
 %IMAREAOPENING Remove all regions smaller than a given area
 %
 %   LBL2 = imAreaOpening(LBL, AREAMIN)
@@ -23,6 +23,7 @@ function [lbl inds] = imAreaOpening(img, areaMin, varargin)
 %   See also
 %   regionprops, imLargestRegion, imKillBorders, imAttributeOpening
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

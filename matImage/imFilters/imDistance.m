@@ -34,6 +34,7 @@ function dist = imDistance(varargin)
 %     img = imDistance(lx, ly, pts, 'periodic');
 %     figure; imshow(img, [0 max(img(:))]);
 %
+
 %   ---------
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
@@ -156,7 +157,7 @@ end
 dist = Nx * Ny * ones([Ny Nx]);
 
 % pixels coordinates
-[x y] = meshgrid(lx, ly);
+[x, y] = meshgrid(lx, ly);
 
 % update distance for each point
 for p = 1:N

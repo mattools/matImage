@@ -1,4 +1,4 @@
-function [res bg rmse] = imNormalizeBackground(img, varargin)
+function [res, bg, rmse] = imNormalizeBackground(img, varargin)
 %IMNORMALIZEBACKGROUND Normalize image by removing background estimate
 %
 %   IMG2 = imNormalizeBackground(IMG, BIN)
@@ -56,6 +56,7 @@ function [res bg rmse] = imNormalizeBackground(img, varargin)
 %   See also
 %     imOtsuThreshold, imtophat
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -66,11 +67,11 @@ function [res bg rmse] = imNormalizeBackground(img, varargin)
 %% Pre-processing
 
 % in case of color image, process each band separatly
-if ndims(img) > 2 && size(img, 3) == 3
-    [r g b] = imSplitBands(img);
-    [r bgR rmseR] = imNormalizeBackground(r, varargin{:});
-    [g bgG rmseG] = imNormalizeBackground(g, varargin{:});
-    [b bgB rmseB] = imNormalizeBackground(b, varargin{:});
+if ndims(img) > 2 && size(img, 3) == 3 %#ok<ISMAT>
+    [r, g, b] = imSplitBands(img);
+    [r, bgR, rmseR] = imNormalizeBackground(r, varargin{:});
+    [g, bgG, rmseG] = imNormalizeBackground(g, varargin{:});
+    [b, bgB, rmseB] = imNormalizeBackground(b, varargin{:});
     res = imMergeBands(r, g, b);
     bg  = imMergeBands(bgR, bgG, bgB);
     rmse = [rmseR ; rmseG ; rmseB];
@@ -92,7 +93,7 @@ bin2 = imdilate(bin, se);
 %% Background model fitting
 
 % location of background pixels
-[y x] = find(~bin2);
+[y, x] = find(~bin2);
 
 % Compute the problem matrix for polynomial fitting
 n = length(x);
@@ -117,7 +118,7 @@ clear y;
 % generate whole image grid
 lx = 1:size(img, 2);
 ly = 1:size(img, 1);
-[x y] = meshgrid(lx, ly);
+[x, y] = meshgrid(lx, ly);
 
 % compute the matrix, with all positions
 X = [x(:).^2 x(:).*y(:) y(:).^2 x(:) y(:) ones(size(x(:)))];

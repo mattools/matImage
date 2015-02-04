@@ -108,7 +108,7 @@ if strcmp(op2, 'max')
     if islogical(img)
         res = false(size(img));
     else
-        res = zeros(size(img), class(img));
+        res = zeros(size(img), class(img)); %#ok<ZEROLIKE>
     end
     
 elseif strcmp(op2, 'min')

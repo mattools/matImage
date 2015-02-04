@@ -33,7 +33,7 @@ nx = round((size(1) - 1) / 2);
 ny = round((size(2) - 1) / 2);
 
 % create 3D grid
-[x y] = meshgrid(-nx:nx, -ny:ny);
+[x, y] = meshgrid(-nx:nx, -ny:ny);
 
 % precompute angles
 cot = cosd(-theta);

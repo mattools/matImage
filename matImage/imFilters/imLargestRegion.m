@@ -1,4 +1,4 @@
-function [bin indMax] = imLargestRegion(lbl, varargin)
+function [bin, indMax] = imLargestRegion(lbl, varargin)
 %IMLARGESTREGION Keep the largest region in a binary or label image
 % 
 %   REG = imLargestRegion(LBL)
@@ -41,6 +41,7 @@ function [bin indMax] = imLargestRegion(lbl, varargin)
 %   See also
 %    regionprops, imKillBorders, imAreaOpening, imAttributeOpening
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -60,7 +61,7 @@ for i = 1:nLabels
 end
 
 % find index of largest regions
-[dum indMax] = max(areas); %#ok<ASGLU>
+[dum, indMax] = max(areas); %#ok<ASGLU>
 
 % keep as binary
 bin = lbl == indMax;

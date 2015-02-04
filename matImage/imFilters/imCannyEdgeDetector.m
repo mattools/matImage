@@ -33,14 +33,14 @@ function res = imCannyEdgeDetector(img, varargin)
 
 % relative thresholds
 relativeThresholds = [.05 .15];
-if ~isemtpy(varargin)
+if ~isempty(varargin)
     relativeThresholds = varargin{1};
     varargin(1) = [];
 end
 
 % width of gaussian kernel
 sigma = 1.4;
-if ~isemtpy(varargin)
+if ~isempty(varargin)
     sigma = varargin{1};
 end
 

@@ -17,9 +17,11 @@ function img = imvoronoi3d(varargin)
 %   IMG = imvoronoi3d;
 %   returns a 100*100*100 image with 20 random points as germs.
 %
+%   See Also
+%   imVoronoi2d
 %
+
 %   ---------
-%
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 28/04/2004.
@@ -34,7 +36,7 @@ function img = imvoronoi3d(varargin)
 % ---------------------------------------------
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
 
 points      = [];       % points array
 N           = 20;       % default number of germs
@@ -59,7 +61,6 @@ end
 
 
 %% initialisations
-% ---------------------------------------------
 
 % size in each direction
 Nx = length(lx); 
@@ -115,10 +116,9 @@ end
 
 
 %% Main algorithm
-% ---------------------------------------------
-% - first create distance function: each pixel get the distance to the
+% * first create distance function: each pixel get the distance to the
 %   closest point
-% - then perform watershed  
+% * then perform watershed  
 
 % generation of distance function
 dist = imDistance3d(dim, points);

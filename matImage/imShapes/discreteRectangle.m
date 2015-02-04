@@ -1,5 +1,5 @@
 function img = discreteRectangle(varargin)
-%DISCRETERECTANGLE discretize a planar rectangle
+%DISCRETERECTANGLE Discretize a planar rectangle
 %
 %   IMG = discreteRectangle(DIM, CENTER, SIDE)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1]
@@ -25,7 +25,10 @@ function img = discreteRectangle(varargin)
 %   % add a rotation by 30 degrees
 %   img = discreteRectangle([1 1 100;1 1 100], [50 50 30 10 30]);
 %
+%   See Also
+%   discreteSquare, discretePolygon
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -42,8 +45,8 @@ function img = discreteRectangle(varargin)
 %   2011-03-30 use degrees
 
 % compute coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % default parameters
 center = [lx(ceil(end/2)) ly(ceil(end/2))];
@@ -82,7 +85,7 @@ end
 tra     = createTranslation(-center);
 rot     = createRotation(-deg2rad(theta));
 sca     = createScaling(1./side);
-[x y]   = transformPoint(x, y, sca*rot*tra);
+[x, y]  = transformPoint(x, y, sca*rot*tra);
 
 % create image : simple threshold over 2 dimensions
 img = abs(x)<=.5 & abs(y)<=.5;

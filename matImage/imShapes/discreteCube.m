@@ -35,7 +35,10 @@ function img = discreteCube(varargin)
 %   img = discreteCube([1 1 100;1 1 100;1 1 100], [50 50 50], 30, 10);
 %   img = discreteCube([1 1 100;1 1 100;1 1 100], [50 50 50 30 10]);
 %
+%   See Also
+%   discreteBall, discreteEllipsoid, discreteCylinder
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@jouy.inra.fr
@@ -51,8 +54,8 @@ function img = discreteCube(varargin)
 %   2011-06-21 use degrees for angles
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
-[x y z] = meshgrid(lx, ly, lz);
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
+[x, y, z] = meshgrid(lx, ly, lz);
 
 % default parameters
 center  = [lx(ceil(end/2)) ly(ceil(end/2)) lz(ceil(end/2))];
@@ -92,7 +95,7 @@ elseif ~isempty(varargin)
     end
 end
 
-if length(side)==1
+if length(side) == 1
     side = [side side side];
 end
 
@@ -102,7 +105,7 @@ trans = composeTransforms3d(...
     createRotationOz(-deg2rad(phi)),...
     createRotationOy(-deg2rad(theta)), ...
     createRotationOz(-deg2rad(psi)));
-[x y z] = transformPoint3d(x, y, z, trans);
+[x, y, z] = transformPoint3d(x, y, z, trans);
 
 % create image: simple threshold over 3 dimensions
 img = abs(x) <= side(1)/2 & abs(y) <= side(2)/2 & abs(z) <= side(3)/2;

@@ -27,6 +27,7 @@ function img = discreteCuboid(varargin)
 %   discreteBall, discreteEllipse, discreteTorus, discreteCube
 %   drawEllipsoid
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -37,8 +38,8 @@ function img = discreteCuboid(varargin)
 %   2011-06-29 create from discreteCube and discreteEllipsoid
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
-[x y z]  = meshgrid(lx, ly, lz);
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
+[x, y, z]  = meshgrid(lx, ly, lz);
 
 % default parameters
 
@@ -119,7 +120,7 @@ if size(center, 1) == 1
         createRotationOy(-deg2rad(theta)), ...
         createRotationOx(-deg2rad(psi)), ...
         createScaling3d(1 ./ sides) );
-    [x y z] = transformPoint3d(x, y, z, trans);
+    [x, y, z] = transformPoint3d(x, y, z, trans);
 
     % create image: simple threshold over 3 dimensions
     img = abs(x) <= .5 & abs(y) <= .5 & abs(z) <= .5;
@@ -138,7 +139,7 @@ for i = 1:size(center, 1)
         createRotationOy(-deg2rad(theta(i))), ...
         createRotationOx(-deg2rad(psi(i))), ...
         createScaling3d(1 ./ sides(i,:)) );
-    [xt yt zt] = transformPoint3d(x, y, z, trans);
+    [xt, yt, zt] = transformPoint3d(x, y, z, trans);
 
     % create image: simple threshold over 3 dimensions
     img(abs(xt) <= .5 & abs(yt) <= .5 & abs(zt)) = 1;

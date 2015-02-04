@@ -41,8 +41,8 @@ function img = discreteHalfBall(varargin)
 %   2010-10-21 create from discreteCube and discreteBall
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
-[x y z] = meshgrid(lx, ly, lz);
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
+[x, y, z] = meshgrid(lx, ly, lz);
 
 % default parameters
 center  = [lx(ceil(end/2)) ly(ceil(end/2)) lz(ceil(end/2))];
@@ -50,43 +50,43 @@ radius  = center;
 theta   = 0; phi = 0;
 
 % process input parameters
-if length(varargin)==1
+if length(varargin) == 1
     var = varargin{1};
     center = var(:,1:3);
-    if size(var, 2)>3
+    if size(var, 2) > 3
         radius = var(:,4);
     end
-    if size(var, 2)>4
+    if size(var, 2) > 4
         theta = var(:,5);
     end
-    if size(var, 2)>5
+    if size(var, 2) > 5
         phi = var(:,6);
     end
 
 elseif ~isempty(varargin)
     center = varargin{1};
-    if length(varargin)>1
+    if length(varargin) > 1
         radius = varargin{2};
     end
-    if length(varargin)>2
+    if length(varargin) > 2
         theta = varargin{3};
     end
-    if length(varargin)>3
+    if length(varargin) > 3
         phi = varargin{4};
     end
 end
 
-if length(radius)==1
+if length(radius) == 1
     radius = [radius radius radius];
 end
 
-% compute coordinate of image voxels in cube reference system
+% compute coordinate of image voxels in half-ball reference system
 trans = composeTransforms3d(...
     createTranslation3d(-center),...
     createRotationOz(-deg2rad(phi)),...
     createRotationOy(-deg2rad(theta)),...
     createScaling3d(1./radius));
-[x y z] = transformPoint3d(x, y, z, trans);
+[x, y, z] = transformPoint3d(x, y, z, trans);
 
 % create image: simple threshold over 3 dimensions, and test z axis
 img = ((x.*x + y.*y + z.*z) < 1) & (z>0);

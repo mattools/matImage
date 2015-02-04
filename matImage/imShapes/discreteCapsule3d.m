@@ -27,6 +27,7 @@ function img = discreteCapsule3d(varargin)
 %   See also
 %   discreteBall, discreteCube, discretecylinder
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -40,8 +41,8 @@ function img = discreteCapsule3d(varargin)
 %% Process input arguments
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
-[x y z] = meshgrid(lx, ly, lz);
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
+[x, y, z] = meshgrid(lx, ly, lz);
 
 % process input parameters
 if length(varargin) == 1
@@ -73,7 +74,7 @@ end
 dirVect = p2 - p1;
 
 % compute capsule direction angle (in radians)
-[theta phi height] = cart2sph2(dirVect);
+[theta, phi, height] = cart2sph2(dirVect);
 
 % compute coordinate of image voxels in capsule reference system
 % (capsule pointing upwards)
@@ -82,7 +83,7 @@ trans = composeTransforms3d(...
     createRotationOz(-phi),...
     createRotationOy(-theta),...
     createScaling3d(1 ./ [radius radius radius]));
-[x y z] = transformPoint3d(x, y, z, trans);
+[x, y, z] = transformPoint3d(x, y, z, trans);
 
 height2 = height / radius;
 

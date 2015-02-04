@@ -1,15 +1,16 @@
 function img = discretePolygon(varargin)
-%DISCRETEPOLYGON discretize a planar polygon
+%DISCRETEPOLYGON Discretize a planar polygon
 %
 %   IMG = discretePolygon(DIM, POINTS)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1]
-%   POINTS is a Nx2 array containing coordinate of polygon vertices.
+%   POINTS is a N-by-2 array containing coordinate of polygon vertices.
 %   Returns an image containing a discrete approximation of the polygon.
 %
 %   IMG = discretePolygon(LX, LY, ...);
 %   Specifes the pixels coordinates with the two row vectors LX and LY.
 %
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -21,8 +22,8 @@ function img = discretePolygon(varargin)
 %   29/05/2009: use more possibilities for specifying grid
 
 % compute coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % process input parameters
 if length(varargin)==1

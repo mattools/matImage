@@ -1,24 +1,25 @@
 function img = discreteDisc(varargin)
-%DISCRETEDISC discretize a 3D Disc
+%DISCRETEDISC Discretize a disc
 %
 %   IMG = discreteDisc(LX, LY, DISC);
 %   Compute the discretized image of the disc DISC. LX and LY are two
 %   vectors that contain pixel ccordinate in the reference space. DISC is
-%   the represetnation of the disc, in the form [XC YC R], with XC and YC
+%   the representation of the disc, in the form [XC YC R], with XC and YC
 %   being coordinate of disc center, and R being the radius.
 %
-%   DISC can also repreesnt a collection of discs, in this case DISC is a
-%   Nx3 array, with each row of the array containing parameter of one disc.
+%   DISC can also represent a collection of discs, in this case DISC is a
+%   N-by-3 array, with each row of the array containing parameter of one
+%   disc. 
 %
 %   IMG = discreteDisc(LX, LY, CENTER, RADIUS);
 %   Passes disc arguments as separate parameters. 
-%   CENTER is the center of the disc, given as a 1x2 row vector. RADIUS is
-%   the radius of the disc, given as a scalar.
+%   CENTER is the center of the disc, given as a 1-by-2 row vector. RADIUS
+%   is the radius of the disc, given as a scalar.
 %
 %   IMG = discreteDisc(DIM, ...);
-%   send grid coordinate in a 2x3 array, each row contains parametrization
-%   for a coordinate, in the form [x0 dx xend]. The resulting vector is
-%   created by LX = x0:dx:xend.
+%   send grid coordinate in a 2-by-3 array, each row contains
+%   parameterization for a coordinate, in the form [x0 dx xend]. 
+%   The resulting vector is created by LX = x0:dx:xend.
 %
 %
 %   Example
@@ -28,8 +29,9 @@ function img = discreteDisc(varargin)
 %   img = discreteDisc([1 1 100;1 1 100], [50 50], 30);
 %
 %   See also:
-%   discreteEllipse, discreteSquare
+%   discreteEllipse, discreteSquare, discreteBall
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@jouy.inra.fr
@@ -48,15 +50,15 @@ function img = discreteDisc(varargin)
 
 
 % compute coordinate of image pixels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % default parameters
 center = [lx(ceil(end/2)) ly(ceil(end/2))];
 radius = center;
 
 % process input parameters
-if length(varargin)==1
+if length(varargin) == 1
     % all parameters bundled in first argument
     var = varargin{1};
     center = var(:,1:2);
@@ -66,7 +68,7 @@ if length(varargin)==1
 elseif ~isempty(varargin)
     % parameters are given in different arguments
     center = varargin{1};
-    if length(varargin)>1
+    if length(varargin) > 1
         radius = varargin{2};
     end
 end
@@ -85,6 +87,5 @@ for i = 1:size(center, 1)
 %     [x2 y2] = transformPoint(x, y, sca*tra);
 
     % create image: simple threshold over 3 dimensions
-%     img = img | hypot(x - center(i,1), y - center(i,2)) < radius(i,1);
     img = img | ((x - center(i,1)).^2 + (y - center(i,2)).^2) < radius(i,1)^2;
 end

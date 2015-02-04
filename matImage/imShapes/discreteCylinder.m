@@ -1,5 +1,5 @@
 function img = discreteCylinder(varargin)
-%DISCRETECYLINDER discretize a 3D cylinder
+%DISCRETECYLINDER Discretize a 3D cylinder
 %
 %   IMG = discreteCylinder(LX, LY, LZ, P1, P2, RADIUS)
 %   LX, LY and LZ are row vectors specifying position of vertex centers
@@ -33,7 +33,7 @@ function img = discreteCylinder(varargin)
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2010-10-21
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -44,11 +44,11 @@ function img = discreteCylinder(varargin)
 %% Process input arguments
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
-[x y z] = meshgrid(lx, ly, lz);
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
+[x, y, z] = meshgrid(lx, ly, lz);
 
 % process input parameters
-if length(varargin)==1
+if length(varargin) == 1
     % input is a 1-by-7 row vector
     var = varargin{1};
     if length(var) ~= 7
@@ -60,7 +60,7 @@ if length(varargin)==1
     p2 = var(4:6);
     radius = var(7);
     
-elseif length(varargin)==3
+elseif length(varargin) == 3
     % inputs are P1, P2 and R
     p1 = varargin{1};
     p2 = varargin{2};
@@ -76,7 +76,7 @@ end
 % compute cylinder direction angle
 dirVect = p2-p1;
 
-[theta phi height] = cart2sph2(dirVect);
+[theta, phi, height] = cart2sph2(dirVect);
 
 
 % compute coordinate of image voxels in cylinder reference system
@@ -86,7 +86,7 @@ trans = composeTransforms3d(...
     createRotationOz(-phi),...
     createRotationOy(-theta),...
     createScaling3d(1./[radius radius height]));
-[x y z] = transformPoint3d(x, y, z, trans);
+[x, y, z] = transformPoint3d(x, y, z, trans);
 
 
 %% Compute final image

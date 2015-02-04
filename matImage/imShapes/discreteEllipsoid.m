@@ -10,8 +10,12 @@ function img = discreteEllipsoid(varargin)
 %   where (XC YC ZC) is the ellipsoid center, A, B and C are the lengths of
 %   the semi-axes, PHI is the azimut (or 'Yaw') , THETA is the elevation
 %   (or 'pitch'), and PSI is the proper rotation (or 'roll') of the
-%   ellipsoid. All angles are in degrees.
+%   ellipsoid. All angles are in degrees. The parameter PSI can be omitted,
+%   in that case it is assumed to be equal to zero.
 %   
+%   If ELLI is a N-by-8 or N-by-9 array, the result is a binary image with
+%   as many ellipsoids as the number of rows.
+%
 %   IMG = discreteEllipsoid(DIM, ELLI)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1;z0 dz z1]
 %
@@ -28,6 +32,7 @@ function img = discreteEllipsoid(varargin)
 %   discreteBall, discreteEllipse, discreteTorus, discreteCube
 %   drawEllipsoid
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -39,8 +44,8 @@ function img = discreteEllipsoid(varargin)
 %   2011-06-21 use degrees for angles, and changes angle convention
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
-[x y z]  = meshgrid(lx, ly, lz);
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
+[x, y, z]  = meshgrid(lx, ly, lz);
 
 % default parameters
 
@@ -56,63 +61,63 @@ phi     = 0;
 psi     = 0;
 
 % process input parameters
-if length(varargin)==1
+if length(varargin) == 1
     var = varargin{1};
     % center of the ball
     center = var(:,1:3);
     
     % extract ellipsoid radii
-    if size(var, 2)>5
+    if size(var, 2) > 5
         radius = var(:, 4:6);
     end
     
-    % extract orientation of the ellipsoid
-    if size(var, 2)>6
+    % extract orientation of the ellipsoid (in degrees)
+    if size(var, 2) > 6
         phi = var(:,7);
     end
-    if size(var, 2)>7
+    if size(var, 2) > 7
         theta = var(:,8);
     end
-    if size(var, 2)>8
+    if size(var, 2) > 8
         psi = var(:,9);
     end
     
 elseif ~isempty(varargin)
     center = varargin{1};
-    if length(varargin)>1
+    if length(varargin) > 1
         radius = varargin{2};
     end
-    if length(varargin)>2
+    if length(varargin) > 2
         phi = varargin{3};
     end
-    if length(varargin)>3
+    if length(varargin) > 3
         theta = varargin{4};
     end
-    if length(varargin)>4
+    if length(varargin) > 4
         psi = varargin{5};
     end
 end
 
 % ensure all inputs have the same size
 N = max(size(center, 1), size(radius, 1));
-if size(center, 1)~=N
+if size(center, 1) ~= N
     center = repmat(center, [N 1]);
 end
-if size(radius, 1)~=N
+if size(radius, 1) ~= N
     radius = repmat(radius, [N 1]);
 end
-if size(phi, 1)~=N
+if size(phi, 1) ~= N
     phi = repmat(phi, [N 1]);
 end
-if size(theta, 1)~=N
+if size(theta, 1) ~= N
     theta = repmat(theta, [N 1]);
 end
-if size(psi, 1)~=N
+if size(psi, 1) ~= N
     psi = repmat(psi, [N 1]);
 end
 
-if size(center, 1)==1
-    % case of a single ellipsoid
+%% case of a single ellipsoid
+if size(center, 1) == 1
     
     % transforms voxels according to ellipsoid orientation
     trans = composeTransforms3d(...
@@ -121,17 +126,19 @@ if size(center, 1)==1
         createRotationOy(-deg2rad(theta)), ...
         createRotationOx(-deg2rad(psi)), ...
         createScaling3d(1 ./ radius) );
-    [x y z] = transformPoint3d(x, y, z, trans);
+    [x, y, z] = transformPoint3d(x, y, z, trans);
 
     % create image: simple threshold over 3 dimensions
     img = x.*x + y.*y + z.*z < 1;
     return;
 end
 
-% process a collection of ellipsoids
+%% process a collection of ellipsoids
 
+% allocate empty image
 img = false(size(x));
 
+% iterate over ellipsoids
 for i = 1:size(center, 1)
     % transforms voxels according to ellipsoid orientation
     trans = composeTransforms3d(...
@@ -140,7 +147,7 @@ for i = 1:size(center, 1)
         createRotationOy(-deg2rad(theta(i))), ...
         createRotationOx(-deg2rad(psi(i))), ...
         createScaling3d(1 ./ radius(i,:)) );
-    [xt yt zt] = transformPoint3d(x, y, z, trans);
+    [xt, yt, zt] = transformPoint3d(x, y, z, trans);
 
     % create image: simple threshold over 3 dimensions
     img(xt.*xt + yt.*yt + zt.*zt < 1) = 1;

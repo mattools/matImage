@@ -1,5 +1,5 @@
 function img = discreteSquare(varargin)
-%DISCRETESQUARE discretize a planar square
+%DISCRETESQUARE Discretize a planar square
 %
 %   IMG = discreteSquare(DIM, CENTER, SIDE)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1]
@@ -23,7 +23,10 @@ function img = discreteSquare(varargin)
 %   img = discreteSquare([1 1 100;1 1 100], [50 50 30]);
 %   img = discreteSquare([1 1 100;1 1 100], [50 50 30 30]);
 %
+%   See Also
+%   discreteDisc, discreteRectangle
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -41,8 +44,8 @@ function img = discreteSquare(varargin)
 %   2011-03-30 use degrees
 
 % compute coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % default parameters
 center = [lx(ceil(end/2)) ly(ceil(end/2))];
@@ -80,8 +83,8 @@ side    = [side(1) side(1)];
 tra     = createTranslation(-center);
 rot     = createRotation(-deg2rad(theta));
 sca     = createScaling(1./side);
-[x y]   = transformPoint(x, y, sca*rot*tra);
+[x, y]  = transformPoint(x, y, sca*rot*tra);
 
 % create image: simple threshold over 2 dimensions
-img = abs(x)<=.5 & abs(y)<=.5;
+img = abs(x) <= .5 & abs(y) <= .5;
 

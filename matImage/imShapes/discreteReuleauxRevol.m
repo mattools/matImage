@@ -1,5 +1,5 @@
 function img = discreteReuleauxRevol(varargin)
-%DISCRETEREULEAUXREVOL discretize the revolution of a Reuleaux triangle
+%DISCRETEREULEAUXREVOL Discretize the revolution of a Reuleaux triangle
 %
 %   A Reuleaux triangle is formed by 3 circle arcs, and has the property to
 %   have a constant width whatever the  orientation.
@@ -40,7 +40,11 @@ function img = discreteReuleauxRevol(varargin)
 %
 %   % Alternative syntax
 %     img = discreteReuleauxRevol([1 1 100;1 1 100;1 1 100], reuleaux);
-%  
+%
+%   See Also
+%   discreteEllipsoid, discreteTorus, discreteBall
+%
+
 %
 % ------
 % Author: David Legland
@@ -56,8 +60,8 @@ function img = discreteReuleauxRevol(varargin)
 
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
-[x y z]  = meshgrid(lx, ly, lz);
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
+[x, y, z] = meshgrid(lx, ly, lz);
 
 % parameters of Revolved Reuleaux triangle
 reul    = varargin{1};
@@ -91,7 +95,7 @@ trans = composeTransforms3d(...
     createRotationOz(-phi),...
     createRotationOy(-theta), ...
     createTranslation3d([0 0 h*2/3]));
-[x y z] = transformPoint3d(x, y, z, trans);
+[x, y, z] = transformPoint3d(x, y, z, trans);
 
 
 % distance of the points to the revolution axis

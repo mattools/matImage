@@ -1,5 +1,5 @@
 function img = discreteHalfPlane(varargin)
-%DISCRETEHALFPLANE discretize a half plane
+%DISCRETEHALFPLANE Discretize a half plane
 %
 %   A Halfplane is the set of point delimited by a straight line.
 %   Only the points located 'on the left' of the line belong to the
@@ -22,9 +22,13 @@ function img = discreteHalfPlane(varargin)
 %   Example
 %   img = discreteHalfPlane([1 1 100;1 1 100], [50 50], 30, 10);
 %
+%   See Also
+%   discreteDisc, discreteSquare
+%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2006-10-12
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -36,8 +40,8 @@ function img = discreteHalfPlane(varargin)
 %   22/01/2010: fix auto center with odd image size
 
 % compute coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % default parameters
 center = [lx(ceil(end/2)) ly(ceil(end/2))];
@@ -60,8 +64,8 @@ end
 % transforms voxels according to square orientation
 tra     = createTranslation(-center);
 rot     = createRotation(-theta);
-[x y]   = transformPoint(x, y, rot*tra);
+[x, y]  = transformPoint(x, y, rot*tra); %#ok<ASGLU>
 
 % create image : simple threshold over 1 dimension
-img = y>-1e-14;
+img = y > -1e-14;
 

@@ -1,5 +1,5 @@
 function img = discreteCurve(varargin)
-%DISCRETECURVE discretize a planar curve
+%DISCRETECURVE Discretize a planar curve
 %
 %   IMG = discreteCurve(DIM, CURVE, WIDTH)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1]
@@ -16,6 +16,7 @@ function img = discreteCurve(varargin)
 %   img = discreteCurve([1 1 50;1 1 50], circle, 3);
 %   imshow(img);
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@jouy.inra.fr
@@ -28,8 +29,8 @@ function img = discreteCurve(varargin)
 %   29/05/2009: use more possibilities for specifying grid
 
 % compute coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % get polyline vertex coordinates
 curve = varargin{1};
@@ -47,12 +48,12 @@ try
 catch
     % if not enough memory, use loop instead
     dist = zeros(size(x));
-    for i=1:length(lx)
+    for i = 1:length(lx)
         dist(:, i) = minDistancePoints([x(:,i) y(:,i)], curve);
     end        
 end
 
 % create image : simple threshold over 2 dimensions
-img = abs(dist)<width;
+img = abs(dist) < width;
 
 

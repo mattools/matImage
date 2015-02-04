@@ -17,6 +17,7 @@ function img = discreteStarfish(varargin)
 %   See also
 %   discreteEllipse, discreteTrefoil, discreteEgg
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -24,8 +25,8 @@ function img = discreteStarfish(varargin)
 % Copyright 2011 INRA - Cepia Software Platform.
 
 % compute coordinate of image pixels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % process input parameters
 var = varargin{1};
@@ -42,10 +43,10 @@ dr = (rOut - rIn) / 2;
 tra     = createTranslation(-center);
 rot     = createRotation(-deg2rad(theta));
 
-[x y]   = transformPoint(x, y, rot*tra);
+[x, y]   = transformPoint(x, y, rot*tra);
 
 % convert to polar coordinates
-[th rho] = cart2pol(x(:), y(:));
+[th, rho] = cart2pol(x(:), y(:));
 
 % compute theoretical polar distance
 rhoTh = rc + dr * cos(5 * th);

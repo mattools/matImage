@@ -1,5 +1,5 @@
 function img = imvoronoi2d(varargin)
-%IMVORONOI2D generate a 2D voronoi image from a set of points
+%IMVORONOI2D Generate a 2D voronoi image from a set of points
 %
 %   IMG = imvoronoi2d(DIM, POINTS);
 %   where DIM is a 1*2 array containing the size of the image, and POINTS
@@ -20,8 +20,8 @@ function img = imvoronoi2d(varargin)
 %   Creates an image of size DIM (1*2 array), using N germs with uniform
 %   distribution in the image space. 
 %
-%   imvoronoi2d without argument return a 100*100 image with 10 random
-%   points as germs.
+%   imvoronoi2d 
+%   without argument return a 100*100 image with 10 random points as germs.
 %
 %
 %   Example:
@@ -29,8 +29,9 @@ function img = imvoronoi2d(varargin)
 %   imshow(img);
 %
 %   See also
-%   dilatedVoronoi, parseGridArgs
+%   imVoronoi3d, imPowerDiagram, dilatedVoronoi
 %
+
 %   ---------
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
@@ -46,7 +47,6 @@ function img = imvoronoi2d(varargin)
 
 
 %% extract input arguments
-% ---------------------------------------------
 
 % default values
 points      = [];       % points array
@@ -55,7 +55,7 @@ edgecond    = 'free';   % edge condition
 conn        = 4;        % 4-connectivity by default in dimension 2
 
 % compute coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
+[lx, ly, varargin] = parseGridArgs(varargin{:});
 
 % extraction of points, or number of points
 if ~isempty(varargin)
@@ -75,7 +75,6 @@ end
 
 
 %% initialisations
-% ---------------------------------------------
 
 % size in each direction
 Ny = length(ly); 
@@ -102,16 +101,15 @@ N = size(points, 1);
 
 
 %% Main algorithm
-% ---------------------------------------------
-% - first create distance function: each pixel get the distance to the
+% * first create distance function: each pixel get the distance to the
 %   closest point
-% - then perform watershed  
+% * then perform watershed  
 
 % fill distance with a default value
-dist = Nx*Ny*ones([Ny Nx]);
+dist = Nx * Ny * ones([Ny Nx]);
 
 % update distance map with distance to closest point
-for p=1:N
+for p = 1:N
     dx = repmat(reshape(lx-points(p, 1), [1 Nx]), [Ny 1]);  
     dy = repmat(reshape(ly-points(p, 2), [Ny 1]), [1 Nx]);  
     dist = min(dist, hypot(dx, dy));

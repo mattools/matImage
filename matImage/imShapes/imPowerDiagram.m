@@ -1,5 +1,5 @@
 function img = imPowerDiagram(varargin)
-%IMPOWERDIAGRAM power diagramm of a set of points
+%IMPOWERDIAGRAM Power diagramm of a set of points
 %
 %   imPowerDiagram(DIM, POINTS, RADII) specify the points to use as germs.
 %       POINTS is a N*2 array of double containing positions of germs, and
@@ -25,8 +25,8 @@ function img = imPowerDiagram(varargin)
 %   INRIA Research Report RR-2303
 %   http://citeseer.nj.nec.com/zuyev94poisson.html/zuyev94poisson.html
 %
+
 %   ---------
-%
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 19/05/2004.
@@ -45,7 +45,7 @@ edgecond    = 'free';   % edge condition
 conn        = 4;        % 4-connectivity by default in dimension 2
 
 % compute coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
+[lx, ly, varargin] = parseGridArgs(varargin{:});
 
 % extraction of points, or number of points
 if ~isempty(varargin)
@@ -78,7 +78,6 @@ end
 
 
 %% initialisations
-% ---------------------------------------------
 
 % create array of points, if it does not exist
 if isempty(points)
@@ -104,17 +103,16 @@ N = size(points, 1);
 
 
 %% Main algorithm
-% ---------------------------------------------
-% - first create distance function: each pixel get the distance to the
+% * first create distance function: each pixel get the distance to the
 %   closest point, weighted by power
-% - then perform watershed  
+% * then perform watershed  
 
 % generation of distance function
 distfunc = zeros(dim);
-for i=1:dim(1)
-    for j=1:dim(2)
-        mat = points - ones(N,1)*[j i];
-        distfunc(i, j) = min(diag(mat*mat')-radius.*radius); %power diagram
+for i = 1:dim(1)
+    for j = 1:dim(2)
+        mat = points - ones(N,1) * [j i];
+        distfunc(i, j) = min(diag(mat*mat') - radius.*radius); %power diagram
     end
 end
     
@@ -123,7 +121,6 @@ img = watershed(distfunc, conn) ~= 0;
    
 
 %% post processing
-% ---------------------------------------------
 
 % if edge condition is 'remove', kill all cells touching borders
 if strcmp(edgecond, 'remove')

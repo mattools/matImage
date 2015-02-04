@@ -1,5 +1,5 @@
 function img = discreteEllipse(varargin)
-%DISCRETEELLIPSE discretize a planar ellipse
+%DISCRETEELLIPSE Discretize a planar ellipse
 %
 %   IMG = discreteEllipse(DIM, CENTER, SIDE)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1]
@@ -25,11 +25,12 @@ function img = discreteEllipse(varargin)
 %   img = discreteEllipse(1:100, 1:100, [50 50 30 10 30]);
 %
 %   See also
-%   discreteDisc, parseGridArgs
+%   discreteDisc, discteteEllipsoid
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2006-05-16
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -43,8 +44,8 @@ function img = discreteEllipse(varargin)
 
 
 % compute coordinate of image pixels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % default parameters
 center = [lx(ceil(end/2)) ly(ceil(end/2))];
@@ -83,7 +84,7 @@ end
 tra     = createTranslation(-center);
 rot     = createRotation(-deg2rad(theta));
 sca     = createScaling(1./side);
-[x y]   = transformPoint(x, y, sca*rot*tra);
+[x, y]  = transformPoint(x, y, sca*rot*tra);
 
 % create image : simple threshold over 2 dimensions
 img = x.*x + y.*y <= 1;

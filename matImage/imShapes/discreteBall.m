@@ -1,5 +1,5 @@
 function img = discreteBall(varargin)
-%DISCRETEBALL discretize a 3D Ball
+%DISCRETEBALL Discretize a 3D Ball
 %
 %   IMG = discreteBall(DIM, CENTER, RADIUS)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1;z0 dz z1]
@@ -11,7 +11,7 @@ function img = discreteBall(varargin)
 %   send parameters in a row vector, where BALL contains at least the
 %   center coordinate, and possibly the other parameters.
 %
-%   IMG = discreteDisc(LX, LY, LZ, ...);
+%   IMG = discreteBall(LX, LY, LZ, ...);
 %   Specifes the voxels coordinates with the three row vectors LX, LY and
 %   LZ.
 %
@@ -23,6 +23,7 @@ function img = discreteBall(varargin)
 %   See also:
 %   discreteDisc, discreteEllipsoid
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@jouy.inra.fr
@@ -42,8 +43,8 @@ function img = discreteBall(varargin)
 %% Extract image dimension
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
-[x y z]  = meshgrid(lx, ly, lz);
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
+[x, y, z]  = meshgrid(lx, ly, lz);
 
 
 %% default parameters
@@ -58,10 +59,10 @@ radius  = center;
 %% Extract ball parameters
 
 % process input parameters
-if length(varargin)==1
+if length(varargin) == 1
     var = varargin{1};
     
-    if size(var, 2)==4
+    if size(var, 2) == 4
         % center of the ball
         center = var(:,1:3);
         radius = var(:,4);
@@ -71,7 +72,7 @@ if length(varargin)==1
     
 elseif ~isempty(varargin)
     center = varargin{1};
-    if length(varargin)>1
+    if length(varargin) > 1
         radius = varargin{2};
     end
 end
@@ -87,17 +88,18 @@ end
 
 %% Compute discrete image
 
-if size(center, 1)==1
+nBalls = size(center, 1);
+if nBalls == 1
     % case of a single ball
     
     % transforms voxels according to ball orientation
     trans = composeTransforms3d(...
         createTranslation3d(-center),...
         createScaling3d(1./radius) );
-    [x y z] = transformPoint3d(x, y, z, trans);
+    [x, y, z] = transformPoint3d(x, y, z, trans);
 
     % create image: simple threshold over 3 dimensions
-    img = x.*x + y.*y + z.*z <1;
+    img = x.*x + y.*y + z.*z < 1;
     return;
 end
 
@@ -105,13 +107,13 @@ end
 
 img = false(size(x));
 
-for i=1:size(center, 1)
+for i = 1:nBalls
     % transforms voxels according to ball orientation
     trans = composeTransforms3d(...
         createTranslation3d(-center(i,:)),...
         createScaling3d(1./radius(i,:)) );
-    [xt yt zt] = transformPoint3d(x, y, z, trans);
+    [xt, yt, zt] = transformPoint3d(x, y, z, trans);
 
     % create image: simple threshold over 3 dimensions
-    img(xt.*xt + yt.*yt + zt.*zt <1) = 1;
+    img(xt.*xt + yt.*yt + zt.*zt < 1) = 1;
 end

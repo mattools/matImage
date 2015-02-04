@@ -1,5 +1,5 @@
 function img = discreteParabola(varargin)
-%DISCRETEPARABOLA discretize a planar parabola
+%DISCRETEPARABOLA Discretize a planar parabola
 %
 %   Returns an image formed by all the points of the discrete grid located
 %   inside a vertical parabola, defined by its vertex and a scaling 
@@ -41,6 +41,10 @@ function img = discreteParabola(varargin)
 %     hold on
 %     drawParabola(para, [-100 100], 'linewidth', 2, 'color', 'g');
 %
+%   See Also
+%   discreteDisc, discreteEllipse, discreteSquare
+%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -55,8 +59,8 @@ function img = discreteParabola(varargin)
 %   2011-03-30 use degrees, change meaning of parameter A
 
 % compute coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % default parameters
 vertex  = [lx(ceil(end/2)) ly(ceil(end/2))];
@@ -90,7 +94,7 @@ end
 tra     = createTranslation(-vertex);
 rot     = createRotation(-deg2rad(theta));
 sca     = createScaling(1, 1/a);
-[x y]   = transformPoint(x, y, sca*rot*tra);
+[x, y]  = transformPoint(x, y, sca*rot*tra);
 
 % create image: simple threshold over 2 dimensions
 img = x .^ 2 <= y;

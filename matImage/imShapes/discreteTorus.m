@@ -1,5 +1,5 @@
 function img = discreteTorus(varargin)
-%DISCRETETORUS discretize a 3D Torus
+%DISCRETETORUS Discretize a 3D Torus
 %
 %   IMG = discreteTorus(LX, LY, LZ, TORUS)
 %   Creates a 3D image of a torus, given coordinates of voxel centers in
@@ -29,9 +29,10 @@ function img = discreteTorus(varargin)
 %   discreteEllipsoid, discreteBall, discreteCube
 %   drawTorus
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2006-02-27
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -44,8 +45,8 @@ function img = discreteTorus(varargin)
 
 
 % compute coordinate of image voxels
-[lx ly lz varargin] = parseGridArgs3d(varargin{:});
-[x y z] = meshgrid(lx, ly, lz);
+[lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
+[x, y, z] = meshgrid(lx, ly, lz);
 
 % default parameters
 center  = [lx(ceil(end/2)) ly(ceil(end/2)) lz(ceil(end/2))];
@@ -92,10 +93,10 @@ trans = composeTransforms3d(...
     createTranslation3d(-center),...
     createRotationOz(-deg2rad(phi)),...
     createRotationOy(-deg2rad(theta)));
-[x y z] = transformPoint3d(x, y, z, trans);
+[x, y, z] = transformPoint3d(x, y, z, trans);
 
 % convert coordinates to cylindrical
-[theta r z] = cart2pol(x, y, z); %#ok<ASGLU>
+[theta, r, z] = cart2pol(x, y, z); %#ok<ASGLU>
 
 % create image: all the pixels with distance less than r2 to the great
 % circle

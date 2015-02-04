@@ -11,6 +11,7 @@ function img = discreteEgg(varargin)
 %   See also
 %   discreteEllipse, discreteTrefoil, discreteStarfish
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -18,8 +19,8 @@ function img = discreteEgg(varargin)
 % Copyright 2011 INRA - Cepia Software Platform.
 
 % compute coordinate of image pixels
-[lx ly varargin] = parseGridArgs(varargin{:});
-[x y]   = meshgrid(lx, ly);
+[lx, ly, varargin] = parseGridArgs(varargin{:});
+[x, y]   = meshgrid(lx, ly);
 
 % extract egg parameters
 egg = varargin{1};
@@ -32,7 +33,7 @@ th = egg(4);
 rot = createRotation(-deg2rad(th));
 center = [xc yc];
 tra = createTranslation(-center);
-[x y] = transformPoint(x, y, rot * tra);
+[x, y] = transformPoint(x, y, rot * tra);
 
 % init image with black square
 img = false(size(x));

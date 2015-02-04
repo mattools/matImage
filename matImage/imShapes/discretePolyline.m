@@ -1,5 +1,5 @@
 function img = discretePolyline(varargin)
-%DISCRETEPOLYLINE discretize a planar polyline
+%DISCRETEPOLYLINE Discretize a planar polyline
 %
 %   IMG = discretePolyline(DIM, POINTS, DIST)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1]
@@ -10,7 +10,9 @@ function img = discretePolyline(varargin)
 %   IMG = discretePolyline(LX, LY, ...);
 %   Specifes the pixels coordinates with the two row vectors LX and LY.
 %
-%
+%   See Also
+%   discretePolygon
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -22,7 +24,7 @@ function img = discretePolyline(varargin)
 %% process input parameters
 
 % extract coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
+[lx, ly, varargin] = parseGridArgs(varargin{:});
 
 % coordinate of polyline vertices
 poly = varargin{1};
@@ -35,6 +37,6 @@ end
 
 %% compute discrete version of the polyline
 
-[x y] = meshgrid(lx, ly);
+[x, y] = meshgrid(lx, ly);
 img = reshape(distancePointPolyline([x(:), y(:)], poly)<dist, size(x));
 

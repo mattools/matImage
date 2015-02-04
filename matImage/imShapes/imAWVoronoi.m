@@ -33,8 +33,8 @@ function img = imAWVoronoi(varargin)
 %   John Wiley & sons, 1992
 %   Wiley series in Probability
 %
+
 %   ---------
-%
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 17/05/2004.
@@ -45,7 +45,6 @@ function img = imAWVoronoi(varargin)
 
 
 %% extract input arguments
-% ---------------------------------------------
 
 % default values
 points      = [];       % points array
@@ -55,7 +54,7 @@ edgecond    = 'free';   % edge condition
 conn        = 4;        % 4-connectivity by default in dimension 2
 
 % compute coordinate of image voxels
-[lx ly varargin] = parseGridArgs(varargin{:});
+[lx, ly, varargin] = parseGridArgs(varargin{:});
 
 % extraction of points, or number of points
 if ~isempty(varargin)
@@ -88,7 +87,6 @@ end
 
 
 %% initialisations
-% ---------------------------------------------
 
 % create array of points, if does not exist
 if isempty(points)
@@ -114,17 +112,16 @@ N = size(points, 1);
 
 
 %% Main algorithm
-% ---------------------------------------------
-% - first create distance function: each pixel get the distance to the
+% * first create distance function: each pixel get the distance to the
 %   closest point)
-% - then perform watershed  
+% * then perform watershed  
 
 
 % generation of distance function
 distfunc = zeros(dim);
-for i=1:dim(1)
-    for j=1:dim(2)
-        mat = points - ones(N,1)*[j i];
+for i = 1:dim(1)
+    for j = 1:dim(2)
+        mat = points - ones(N,1) * [j i];
         distfunc(i, j) = min(sqrt(diag(mat*mat'))-radius);
     end
 end

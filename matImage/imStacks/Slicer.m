@@ -1471,47 +1471,9 @@ methods
             img = sqrt(sum(double(img) .^ 2, 3));
         end
         
-        
         useBackground = ~strcmp(this.imageType, 'label');
         hd = SlicerHistogramDialog(img, 'useBackground', useBackground);
             
-%         if strcmp(this.imageType, 'label')
-%             % process label images -> do not count the zero
-%             nLabels = max(this.imageData(:));
-%             x = 1:nLabels;
-%             hist(double(img(img > 0)), double(x));
-%             xlim([0 nLabels+1]);        
-%             colormap jet;
-%             
-%         elseif strcmp(this.imageType, 'color')
-%             % process 8-bits RGB 3D image
-%             
-%             % compute histogram of each channel
-%             h = zeros(256, 3);
-%             for i = 1:3
-%                 im = img(:,:,i,:);
-%                 h(:, i) = hist(double(im(:)), 0:255);
-%             end
-%             
-%             % display each color histogram as stairs, to see the 3 curves
-%             hh = stairs(0:255, h);
-%             set(hh(1), 'color', [1 0 0]); % red
-%             set(hh(2), 'color', [0 1 0]); % green
-%             set(hh(3), 'color', [0 0 1]); % blue
-%             
-%             xlim([0 255]);
-%         
-%         else
-%             % Process gray-scale or vector image
-%             [minimg maximg] = this.computeGrayScaleExtent();
-%             x = linspace(double(minimg), double(maximg), 256);
-%             hist(double(img(:)), x);
-%             xlim([minimg-.5 maximg+.5]);        
-%             colormap jet;
-%         end
-%         
-%         fprintf('done\n');
-        
         this.handles.subFigures = [this.handles.subFigures, hd.handles.histoFigure];
     end
     
@@ -1959,25 +1921,6 @@ methods
                 this.slice = this.slice + this.imageData(:,:,i,index) .^ 2;
             end
             this.slice = sqrt(this.slice);
-            
-%         elseif strcmp(this.imageType, 'label')
-%             % label image
-%             
-%             % choose the colormap
-%             cmap = this.colorMap;
-%             if isempty(cmap)
-%                 cmap = jet(256);
-%             end
-%             
-%             % colormap has 256 entries, we need only a subset
-%             nLabels = max(this.imageData(:));
-%             inds = round(linspace(1, 256, nLabels));
-%             cmap = cmap(inds, :);
-%             
-%             % extract slice of labels
-%             labelSlice = stackSlice(this.imageData, 3, index);
-%             rgb = label2rgb(labelSlice, cmap, this.bgColor);
-%             this.slice = rgb;
             
         else
             % graycale or color image
@@ -2570,30 +2513,9 @@ end
 
 %% Methods for text display
 methods
-    function display(this)
+    function disp(this)
         % display a resume of the slicer structure
-       
-        % determines whether empty lines should be printed or not
-        if strcmp(get(0, 'FormatSpacing'), 'loose')
-            emptyLine = '\n';
-        else
-            emptyLine = '';
-        end
-        
-        % eventually add space
-        fprintf(emptyLine);
-        
-        % get name to display
-        objectname = inputname(1);
-        if isempty(objectname)
-            objectname = 'ans';
-        end
-        
-        % display object name
-        fprintf('%s = \n', objectname);
-        
-        fprintf(emptyLine);
-        
+                        
         if isempty(this.imageData)
             fprintf('Slicer object, with no image.\n')
         else
@@ -2609,7 +2531,10 @@ methods
                 this.voxelOrigin, this.voxelSizeUnit');
         end
 
-        fprintf(emptyLine);
+        % determines whether empty lines should be printed or not
+        if strcmp(get(0, 'FormatSpacing'), 'loose')
+            fprintf('\n');
+        end
         
     end
 end

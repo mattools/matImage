@@ -114,20 +114,34 @@ ndir = 3;
 % default image resolution
 delta = [1 1 1];
 
+% methods to compute direction weights. Can be {'Voronoi'}, 'isotropic'.
+directionWeights = 'voronoi';
+
 % Process user input arguments
 while ~isempty(varargin)
     var = varargin{1};
-    if ~isnumeric(var)
+    if isnumeric(var)
+        % option is either connectivity or resolution
+        if isscalar(var)
+            ndir = var;
+        else
+            delta = var;
+        end
+        varargin(1) = [];
+
+    elseif ischar(var)
+        if length(varargin) < 2
+            error('optional named argument require a second argument as value');
+        end
+        if strcmpi(var, 'directionweights')
+            directionWeights = varargin{2};
+        end
+        varargin(1:2) = [];
+        
+    else
         error('option should be numeric');
     end
     
-    % option is either connectivity or resolution
-    if isscalar(var)
-        ndir = var;
-    else
-        delta = var;
-    end
-    varargin(1) = [];
 end
 
 
@@ -195,7 +209,20 @@ d123 = sqrt(d1^2 + d2^2 + d3^2);
 % c6 = 0.03698062787608 * 2;  % Oxz
 % c8 = 0.03698062787608 * 2;  % Oyz
 % c10 = 0.03519563978232 * 2;  % Oxyz
-c = computeDirectionWeights3d13(delta);
+if strcmp(directionWeights, 'isotropic')
+    c = zeros(13,1);
+    c(1) = 0.04577789120476 * 2;  % Ox
+    c(2) = 0.04577789120476 * 2;  % Oy
+    c(3) = 0.04577789120476 * 2;  % Oz
+    c(4:5)  = 0.03698062787608 * 2;  % Oxy
+    c(6:7)  = 0.03698062787608 * 2;  % Oxz
+    c(8:9)  = 0.03698062787608 * 2;  % Oyz
+    c(10:13) = 0.03519563978232 * 2;  % Oxyz
+    
+else
+    c = computeDirectionWeights3d13(delta);
+end
+
 
 % compute the weighted sum of each direction
 % intersection count * direction weight / line density

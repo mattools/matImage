@@ -4,23 +4,25 @@ function alpha = sphericalAngle(p1, p2, p3)
 %   ALPHA = sphericalAngle(P1, P2, P3)
 %   compute angle (P1, P2, P2), in radians, between 0 and 2*PI.
 %
-%   Points are given either as [x y z] (there will be normalized to lie on
-%   the unit sphere), or as [phi theta], with phi being the longitude in [0
-%   2*PI] and theta being the elevation on horizontal [-pi/2 pi/2].
+%   Points are given either as [X Y Z] (there will be normalized to lie on
+%   the unit sphere), or as [PHI, THETA], with PHI being the longitude in
+%   [0 2*PI] and THETA being the elevation on horizontal [-pi/2 pi/2].
 %
 %
 %   NOTE: 
 %   this is an 'oriented' version of the angle computation, that is, the
-%   result of sphericalAngle(P1, P2, P3) equals
-%   2*pi-sphericalAngle(P3,P2,P1). To have the more classical relation
-%   (with results given betwen 0 and PI), it suffices to take the minimum
-%   of angle and 2*pi-angle.
+%   result of:
+%     sphericalAngle(P1, P2, P3) 
+%   equals:
+%     2*pi - sphericalAngle(P3, P2, P1)
+%   To have the more classical relation with results given betwen 0 and PI,
+%   it suffices to take the minimum of (angle) and (2*pi-angle).
 %   
 %   See also:
 %   angles3d, spheres
 %
+
 %   ---------
-%
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 21/02/2005.
@@ -29,13 +31,14 @@ function alpha = sphericalAngle(p1, p2, p3)
 %   HISTORY
 %   23/05/2006 fix bug for points with angle from center > pi/2
 
-% test if points are given as matlab spherical coordinate
-if size(p1, 2) ==2
-    [x y z] = sph2cart(p1(:,1), p1(:,2));
+% test if points are given as matlab spherical coordinate. If yes, convert
+% to 3D vectors in cartesian coordinates
+if size(p1, 2) == 2
+    [x, y, z] = sph2cart(p1(:,1), p1(:,2));
     p1 = [x y z];
-    [x y z] = sph2cart(p2(:,1), p2(:,2));
+    [x, y, z] = sph2cart(p2(:,1), p2(:,2));
     p2 = [x y z];
-    [x y z] = sph2cart(p3(:,1), p3(:,2));
+    [x, y, z] = sph2cart(p3(:,1), p3(:,2));
     p3 = [x y z];
 end
 

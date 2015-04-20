@@ -18,6 +18,18 @@ function [perim, labels] = imPerimeter(img, varargin)
 %   Process a label image, and return also the labels for which a value was
 %   computed.
 %
+%   Example
+%     % compute the perimeter of a binary disk of radius 40
+%     lx = 1:100; ly = 1:100;
+%     [x, y] = meshgrid(lx, ly);
+%     img = hypot(x - 50.12, y - 50.23) < 40;
+%     imPerimeter(img)
+%     ans =
+%         251.1751
+%     % to be compared to (2 * pi * 40), approximately 251.3274
+%
+%   See also
+%     imArea, imSurface, imMeanBreadth, imPerimeterLut
 
 % ------
 % Author: David Legland

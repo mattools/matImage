@@ -10,7 +10,7 @@ function [perim, labels] = imPerimeter(img, varargin)
 %   Specify number of directions to use. Use either 2 or 4 (the default).
 %
 %   P = imPerimeter(IMG, NDIR, SCALE);
-%   Also specify scale of image tile. SCALE si a 1-by-2 array, containing
+%   Also specify scale of image tile. SCALE is a 1-by-2 array, containing
 %   pixel size in each physical direction. Default is [1 1].
 %   SCALE(1) coresponds to DX, and SCALE(2) coresponds to DY.
 %   
@@ -77,7 +77,7 @@ end
 labels = [];
 if ~isempty(varargin) && size(varargin{1}, 2) == 1 && ~isscalar(varargin{1})
     labels = varargin{1};
-    varargin(1) = [];
+    varargin(1) = []; %#ok<NASGU>
 end
 
 % in case of a label image, return a vector with a set of results
@@ -98,7 +98,7 @@ if ~islogical(img)
     for i = 1:nLabels
         label = labels(i);
         bin = imcrop(img, props(label).BoundingBox) == label;
-        perim(i) = imPerimeter(bin, varargin{:});
+        perim(i) = imPerimeter(bin, nDirs, delta);
     end
     
     return;

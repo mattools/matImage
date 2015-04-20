@@ -1,5 +1,5 @@
 function lut = imSurfaceLut(varargin)
-%SURFACELUT Look-Up Table for computing surface of 3D image
+%SURFACELUT Look-Up Table for computing surface area of a 3D binary image
 %
 %   LUT = surfaceLut
 %   return an array of size 256, which can be used with function imLUT to
@@ -19,11 +19,11 @@ function lut = imSurfaceLut(varargin)
 %   Example
 %     % Create a binary image of a ball
 %     [x, y, z] = meshgrid(1:100, 1:100, 1:100);
-%     img = sqrt( (x-50.12).^2 + (y-50.23).^2 + (z-50.34).^2) < 40;
+%     IMG = sqrt( (x-50.12).^2 + (y-50.23).^2 + (z-50.34).^2) < 40;
 %     % compute surface area of the ball
-%     bch = imBinaryConfigHisto(img);
-%     lut = imSurfaceLut(13);
-%     S = sum(bch .* lut)
+%     HISTO = imBinaryConfigHisto(IMG);
+%     LUT = imSurfaceLut(13);
+%     S = sum(HISTO .* LUT)
 %     S =
 %         2.0103e+04
 %     % compare with theoretical value
@@ -32,8 +32,27 @@ function lut = imSurfaceLut(varargin)
 %     ans = 
 %         -0.0167
 %
+%     % Verifies the additivity property: the sum of measures on sub-images 
+%     % (with one voxel overlap) should equal the measure on the whole
+%     % image. 
+%     sub1 = 1:51; sub2 = 51:100;
+%     imgList = {...
+%         IMG(sub1, sub1, sub1), IMG(sub1, sub1, sub2), ...
+%         IMG(sub1, sub2, sub1), IMG(sub1, sub2, sub2), ...
+%         IMG(sub2, sub1, sub1), IMG(sub2, sub1, sub2), ...
+%         IMG(sub2, sub2, sub1), IMG(sub2, sub2, sub2)};
+%     bList = zeros(8, 1);
+%     for i = 1:8
+%         HISTO = imBinaryConfigHisto(imgList{i});
+%         bList(i) = sum(HISTO .* LUT);
+%     end
+%     sum(bList)
+%     ans =
+%        79.9989
+%
+%
 %   See also
-%     imSurface, imSurfaceEstimate, imPerimeterLut
+%     imSurface, imSurfaceEstimate, imPerimeterLut, imMeanBreadthLut
 %
 
 %   ------

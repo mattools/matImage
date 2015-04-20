@@ -2,8 +2,16 @@ function [breadth, labels] = imMeanBreadthEstimate(img, varargin)
 %IMMEANBREADTHESTIMATE Estimate mean breadth of a binary structure
 %
 %   BREADTH = imMeanBreadthEstimate(IMG)
+%   The aim of this function is to be called by the "imMeanBreadthDensity"
+%   function, for providing an estimate of mean breadth density within a
+%   representative volume of interest.
+%
 %   BREADTH = imMeanBreadthEstimate(IMG, RESOL)
+%   Also specifies the resolution of input image.
+%
 %   BREADTH = imMeanBreadthEstimate(IMG, RESOL, NDIRS)
+%   Also specifies the number of directions used for computation. Can be
+%   either 3 or 13 (the default).
 %
 %   Example
 %   imMeanBreadthEstimate

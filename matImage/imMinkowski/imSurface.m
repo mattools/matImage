@@ -7,7 +7,7 @@ function [surf, labels] = imSurface(img, varargin)
 %
 %   S = imSurface(IMG, NDIRS)
 %   Specifies the number of directions used for estimating surface area.
-%   NDIRS can be either 3 or 13, default is 3.
+%   NDIRS can be either 3 or 13, default is 13.
 %
 %   S = imSurface(..., RESOL)
 %   Specifies image resolution. RESOL is a 1-by-3 row vector containing
@@ -26,12 +26,12 @@ function [surf, labels] = imSurface(img, varargin)
 %     % compute surface area of the ball
 %     S = imSurface(img)
 %     S =
-%         20108
+%         2.0103e+04
 %     % compare with theoretical value
 %     Sth = 4*pi*40^2;
 %     100 * (S - Sth) / Sth
 %     ans = 
-%         0.0090
+%         -0.0167
 %
 %     % compute surface area of several regions in a label image
 %     img = uint8(zeros(10, 10, 10));
@@ -42,11 +42,11 @@ function [surf, labels] = imSurface(img, varargin)
 %     img(5:8, 5:8, 5:8) = 8;
 %     [surfs, labels] = imSurface(img)
 %     surfs =
-%        16.0000
-%        26.6667
-%        26.6667
-%        42.6667
-%        64.0000
+%        16.4774
+%        29.1661
+%        29.1661
+%        49.2678
+%        76.7824
 %     labels =
 %          1
 %          2
@@ -109,7 +109,7 @@ end
 labels = 1;
 
 % default number of directions
-ndir = 3;
+nDirs = 13;
 
 % default image resolution
 delta = [1 1 1];
@@ -123,7 +123,7 @@ while ~isempty(varargin)
     if isnumeric(var)
         % option is either connectivity or resolution
         if isscalar(var)
-            ndir = var;
+            nDirs = var;
         else
             delta = var;
         end
@@ -167,7 +167,7 @@ n1 = nv - sum(sum(sum(img(:,1:end-1,:) & img(:,2:end,:))));
 n2 = nv - sum(sum(sum(img(1:end-1,:,:) & img(2:end,:,:))));
 n3 = nv - sum(sum(sum(img(:,:,1:end-1) & img(:,:,2:end))));
 
-if ndir == 3
+if nDirs == 3
     % compute surface area by averaging over the 3 main directions
     surf = 4/3 * (n1/d1 + n2/d2 + n3/d3) * vol;
     return;

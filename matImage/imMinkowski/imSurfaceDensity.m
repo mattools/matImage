@@ -1,13 +1,46 @@
 function [sd, labels] = imSurfaceDensity(img, varargin)
-% Surface area density of a 3D binary structure
+%IMSURFACEDENSITY Surface area density of a 3D binary structure
 %
 %   Sv = imSurfaceDensity(IMG)
+%   Estimate surface area density (ratio of surface area over volume of the
+%   region of interest) from a binary image IMG.
+%   The intersection of the structure with the bounds of the image is not
+%   taken into account for the computation, making it possible to use ot
+%   for continuous structures observed through a representative window.
 %
 %   Example
-%   imSurfaceDensity
+%     % estimate surface area density of a system of balls with constant
+%     % radius and randomly shifted positions
+%     % first generate ball centers
+%     cx = 10:20:90; cy = 10:20:90; cz = 10:20:90;
+%     [cx, cy, cz] = meshgrid(cx, cy, cz);
+%     % add some randomness to centers
+%     cx = cx + rand(size(cx));
+%     cy = cy + rand(size(cy));
+%     cz = cz + rand(size(cz));
+%     % compute the discretization grid
+%     lx = 1:100; ly = 1:100; lz = 1:100;
+%     [x, y, z] = meshgrid(lx, ly, lz);
+%     img = false(100, 100, 100);
+%     % discretize the system of ball
+%     for i = 1:numel(cx)
+%         bin = hypot(hypot(x-cx(i), y-cy(i)), z-cz(i)) < 8;
+%         img = img | bin;
+%     end
+%     % measured surface area density
+%     imSurfaceDensity(img)
+%     ans =
+%         0.1033
+%     % compare with theoretical surface area density
+%     % (relative error is around 3-4 percents)
+%     svth = numel(cx) * 4*pi*8*8 / (100^3)
+%     svth =
+%         0.1005
+%
 %
 %   See also
-%   imSurface, imSurfaceEstimate
+%     imSurface, imSurfaceEstimate, imSurfaceLut
+%
 
 % ------
 % Author: David Legland

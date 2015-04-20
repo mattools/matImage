@@ -2,11 +2,12 @@ function [surf, labels] = imSurfaceEstimate(img, varargin)
 % Estimate surface area of a binary 3D structure
 %
 %   Usage
-%   Sest = imSurfaceEstimate(IMG)
-%
-%   Descritpion
+%   S = imSurfaceEstimate(IMG)
 %   Estimate the surface area of the structure within the image, without
 %   measuring surface area of borders.
+%   The aim of this function is to be called by the "imSurfaceDensity"
+%   function, for providing an estimate of surface area density within a
+%   representative volume of interest.
 %
 %
 %   Example
@@ -14,6 +15,7 @@ function [surf, labels] = imSurfaceEstimate(img, varargin)
 %
 %   See also
 %   imSurface, imSurfaceDensity
+%
 
 % ------
 % Author: David Legland
@@ -25,7 +27,7 @@ function [surf, labels] = imSurfaceEstimate(img, varargin)
 %% Process input arguments 
 
 % check image dimension
-if ndims(img)~=3
+if ndims(img) ~= 3
     error('first argument should be a 3D image');
 end
 
@@ -47,7 +49,7 @@ end
 labels = 1;
 
 % default number of directions
-ndir = 3;
+nDirs = 13;
 
 % default image resolution
 delta = [1 1 1];
@@ -61,7 +63,7 @@ while ~isempty(varargin)
     
     % option is either connectivity or resolution
     if isscalar(var)
-        ndir = var;
+        nDirs = var;
     else
         delta = var;
     end
@@ -85,7 +87,7 @@ n2 = sum(sum(sum(img(1:end-1,:,:) ~= img(2:end,:,:))))/2;
 n3 = sum(sum(sum(img(:,:,1:end-1) ~= img(:,:,2:end))))/2;
 
 % if only 3 directions are needed, compute the result and return
-if ndir==3
+if nDirs == 3
     surf = 4/3*(n1/d1 + n2/d2 + n3/d3)*vol;
     return;
 end

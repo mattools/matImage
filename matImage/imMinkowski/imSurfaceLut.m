@@ -1,5 +1,5 @@
 function lut = imSurfaceLut(varargin)
-%SURFACELUT Look-Up Table for computing surface area of a 3D binary image
+%IMSURFACELUT Look-Up Table for computing surface area of a 3D binary image
 %
 %   LUT = surfaceLut
 %   return an array of size 256, which can be used with function imLUT to

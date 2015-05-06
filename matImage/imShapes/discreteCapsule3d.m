@@ -42,7 +42,6 @@ function img = discreteCapsule3d(varargin)
 
 % compute coordinate of image voxels
 [lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
-[x, y, z] = meshgrid(lx, ly, lz);
 
 % process input parameters
 if length(varargin) == 1
@@ -83,19 +82,50 @@ trans = composeTransforms3d(...
     createRotationOz(-phi),...
     createRotationOy(-theta),...
     createScaling3d(1 ./ [radius radius radius]));
-[x, y, z] = transformPoint3d(x, y, z, trans);
 
+% noramlised height of capsule
 height2 = height / radius;
 
+try
+    % assume memory is sufficient
+    [x, y, z] = meshgrid(lx, ly, lz);
+    [x, y, z] = transformPoint3d(x, y, z, trans);
+    
+    % init image
+    img = false(size(x));
+    img(((x.*x + y.*y) < 1) & (z > 0) & (z < height2)) = true;
+    
+    % add a ball at each extremity
+    img((x.*x + y.*y + z.*z) < 1) = true;
+    img((x.*x + y.*y + (z-height2).^2) < 1) = true;
+    
+catch ME %#ok<NASGU>
+    % in case of out of memory, use slower method
+    dim = [length(ly) length(lx) length(lz)];
+    img = false(dim);
+    for i = 1:length(ly)
+        for j = 1:length(lx)
+            for k = 1:length(lz)
+                % apply basis transform
+                [x, y, z] = transformPoint3d(lx(j), ly(i), lz(k), trans);
+                
+                % check if inside cylinder
+                if ((x*x + y*y) < 1) && (z > 0) && (z < height2)
+                    img (i, j, k) = true;
+                    continue;
+                end
+                
+                % check if inside extremity ball
+                if (x*x + y*y + z*z) < 1
+                    img (i, j, k) = true;
+                    continue;
+                end
+                if (x*x + y*y + (z-height2)^2) < 1
+                    img (i, j, k) = true;
+                end
+            end
+        end
+    end
+end
 
-%% Create image
 
-% init image
-img = false(size(x));
-
-% capsinder image
-img(((x.*x + y.*y) < 1) & (z > 0) & (z < height2)) = true;
-
-% add a ball at each extremity
-img((x.*x + y.*y + z.*z) < 1) = true;
-img((x.*x + y.*y + (z-height2).^2) < 1) = true;

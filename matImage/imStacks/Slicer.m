@@ -203,7 +203,7 @@ methods
             this.displayRange  = [0 maxi];
             
             if isempty(this.colorMap)
-                this.colorMap = jet(maxi);
+                this.colorMap = jet(double(maxi));
             end
             colormap([this.bgColor ; this.colorMap]);
         end

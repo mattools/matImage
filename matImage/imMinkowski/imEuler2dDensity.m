@@ -8,6 +8,7 @@ function [epcd, labels] = imEuler2dDensity(img, varargin)
 %   See also
 %   imEuler2d, imEuler2dEstimate
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -39,10 +40,10 @@ end
 % Euler-Poincare Characteristic of each component in image
 chi     = imEuler2dEstimate(img, varargin{:});
 
-% total area of image
-totalArea = numel(img) * prod(delta);
+% total area of image, minus borders
+obsArea = prod(size(img) - 1) * prod(delta);
 
 % compute area density
-epcd = chi / totalArea;
+epcd = chi / obsArea;
 
 

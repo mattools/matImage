@@ -47,8 +47,8 @@ end
 chi = imEuler3dEstimate(img, varargin{:});
 
 % total volume of image
-totalVolume = numel(img) * prod(delta);
+obsVolume = prod(size(img) - 1) * prod(delta);
 
 % compute area density
-chi = chi / totalVolume;
+chi = chi / obsVolume;
 

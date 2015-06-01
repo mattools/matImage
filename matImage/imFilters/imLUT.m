@@ -8,9 +8,8 @@ function res = imLUT(img, lut)
 %   element in the LUT. 
 %   The resulting image has the same class as the look-up table.
 %
-%
+
 %   ---------
-%
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 25/10/2004.
@@ -19,6 +18,6 @@ function res = imLUT(img, lut)
 %   HISTORY
 
 res = zeros(size(img), class(lut)); %#ok<ZEROLIKE>
-for i=0:length(lut)-1
+for i = 0:length(lut)-1
     res(img==i) = lut(i+1);
 end

@@ -16,6 +16,8 @@
 %   imEigenValues            - Image eigen values from second derivatives
 %   imEigenValues3d          - Image eigen values from second derivatives
 %   imVesselness2d           - Vesselness of cuvilinear structures from Frangi paper
+%   imRobinsonFilter         - Extract image edges using Robinson directional filters
+%   imKirschFilter           - Extract image edges using Kirsch directional filters
 %
 %   Morphological filters:
 %   imMorphoGradient         - Morphological gradient of an image
@@ -125,3 +127,4 @@ help Contents
 %   imMergeCells             - merge labeled cell of an image
 
 %   Other functions
+

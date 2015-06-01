@@ -166,6 +166,9 @@ methods
             elseif ischar(var)
                 setupImageFromFile(this, var);
             else
+                if ndims(var) < 3 %#ok<ISMAT>
+                    error('Requires input image with at least 3 dimensions');
+                end
                 setupImageData(this, var, inputname(1));
             end
             varargin(1) = [];

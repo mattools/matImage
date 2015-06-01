@@ -104,6 +104,8 @@
 %
 %  Utility function
 %   imBinaryConfigHisto   - Histogram of binary configuration from 2D/3D image
+%   imProjectedDiameter   - Projected diameter in a given direction
+%   imProjectedArea       - Total projected area in a given direction
 % 
 %
 % References
@@ -120,10 +122,11 @@
 % 
 %
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % http://matimage.sourceforge.net/
 % Copyright 2011 INRA - Cepia Software Platform.
 
 
 %% under development
+
 

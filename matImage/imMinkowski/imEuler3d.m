@@ -8,7 +8,7 @@ function [chi, labels] = imEuler3d(img, varargin)
 %   CHI = imEuler3d(IMG, CONN)
 %   Specify the connectivity to use. Can be either 6 (the default) or 26.
 %
-%   [CHI LABELS] = imEuler3d(IMG, ...)
+%   [CHI, LABELS] = imEuler3d(IMG, ...)
 %   When IMG is a label image, the Euler-Poincaré characteristic of each
 %   label is computed and returned in CHI. LABELS is the array of unique
 %   labels in image.
@@ -22,12 +22,12 @@ function [chi, labels] = imEuler3d(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % check image dimension
-if ndims(img)~=3
+if ndims(img) ~= 3
     error('first argument should be a 3D image');
 end
 

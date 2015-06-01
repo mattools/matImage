@@ -3,16 +3,20 @@ function [chi, labels] = imEuler3dEstimate(img, varargin)
 %
 %   CHIest = imEuler3dEstimate(IMG)
 %   CHIest = imEuler3dEstimate(IMG, CONN)
+%   Estimate Euler number in a 3D image, without taking into account the
+%   contribution of the voxels located on image border. The result of this
+%   function is usually divided by the volume the sampling window to obtain
+%   an estimate of Euler number density.
 %
 %   Example
 %   imEuler3dEstimate
 %
 %   See also
-%
-%
+%     imEuler3dDensity, imEuler3d
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
@@ -20,8 +24,8 @@ function [chi, labels] = imEuler3dEstimate(img, varargin)
 %% Process input arguments 
 
 % check image dimension
-if ndims(img) ~= 2 %#ok<ISMAT>
-    error('first argument should be a 2D image');
+if ndims(img) ~= 3
+    error('first argument should be a 3D image');
 end
 
 % in case of a label image, return a vector with a set of results
@@ -104,4 +108,4 @@ chixyz   = mean([ ...
 
 
 % estimate EPC in image using mean edge correction
-chi = chi - (chix + chiy +chiz) + (chixy + chixz + chiyz) - chixyz;
+chi = chi - (chix + chiy + chiz) + (chixy + chixz + chiyz) - chixyz;

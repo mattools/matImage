@@ -41,6 +41,8 @@ properties
     
     useBackground = true;
     
+    logHistogram = false;
+    
     displayType = 'bars';
     displayTypeList = {'bars', 'stems', 'stairs'};
     
@@ -255,6 +257,13 @@ methods
                 'Value', this.useBackground, ...
                 'Callback',@this.onCountBackgroundChanged);
             
+            % Add a check box for log representation of histogram
+            this.handles.logHistogramCheckBox = uicontrol('Style', 'CheckBox', ...
+                'Parent', mainPanel, ...
+                'String', 'Log Histogram', ...
+                'Value', this.logHistogram, ...
+                'Callback',@this.onLogHistogramChanged);
+            
             
             % Add an "auto update" check box
             this.handles.autoUpdateCheckBox = uicontrol('Style', 'CheckBox', ...
@@ -432,6 +441,13 @@ methods
     
     function onCountBackgroundChanged(this, hObject, eventdata) %#ok<INUSD>
         this.useBackground = get(hObject, 'Value');
+        if this.autoUpdate
+            updateHistogram(this);
+        end
+    end
+    
+    function onLogHistogramChanged(this, hObject, eventdata) %#ok<INUSD>
+        this.logHistogram = get(hObject, 'Value');
         if this.autoUpdate
             updateHistogram(this);
         end
@@ -620,7 +636,11 @@ methods
             end
         end
         
-                
+        % eventually converts to log histogram
+        if this.logHistogram
+            h = log(h + 1);
+        end
+            
         function h = calcHistogram(img, x, roi)
             if isempty(roi)
                 % histogram of whole image

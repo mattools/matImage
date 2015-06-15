@@ -63,6 +63,11 @@ classdef Slicer < handle
 %           'vector', 'none'. Default value is assessed from data type and
 %           size.
 %
+%   * 'parent'  another instance of Slicer, that is used to initialize
+%           several parameters like spatial resolution, display range, LUT
+%           for display...
+%           
+%
 %   Example
 %   % Explore human brain MRI
 %     metadata = analyze75info('brainMRI.hdr');
@@ -87,7 +92,7 @@ classdef Slicer < handle
 
 %% Properties
 properties
-    % reference image (can be 2D, 3D or 4D)
+    % Image data stored as a 3D or 4D array, in YX(C)Z order.
     imageData;
     
     % type of image. Can be one of:
@@ -185,6 +190,9 @@ methods
         % parses input arguments
         parsesInputArguments();
         
+        % add checkup on visible image slice
+        this.sliceIndex = min(this.sliceIndex, this.imageSize(3));
+        
         updateCalibrationFlag(this);
 
         % create default figure
@@ -224,6 +232,20 @@ methods
             while length(varargin) > 1
                 param = varargin{1};
                 switch lower(param)
+                    case 'parent'
+                        % copy some settings from parent Slicer 
+                        parent = varargin{2};
+                        this.sliceIndex     = parent.sliceIndex;
+                        this.voxelSize      = parent.voxelSize;
+                        this.voxelOrigin    = parent.voxelOrigin;
+                        this.voxelSizeUnit  = parent.voxelSizeUnit;
+                        this.calibrated     = parent.calibrated;
+                        this.imageType      = parent.imageType;
+                        this.displayRange   = parent.displayRange;
+                        this.colorMap       = parent.colorMap;
+                        this.bgColor        = parent.bgColor;
+                        this.calibrated     = parent.calibrated;
+                        
                     case 'slice'
                         % setup initial slice
                         pos = varargin{2};

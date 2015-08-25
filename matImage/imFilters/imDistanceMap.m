@@ -68,12 +68,12 @@ function dist = imDistanceMap(img, varargin)
 %
 %   
 %   See also
-%   imChamferDistance, bwdist
+%   imChamferDistance, bwdist, imSeparateParticles
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2012-08-20,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2012 INRA - Cepia Software Platform.
 

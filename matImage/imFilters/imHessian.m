@@ -20,7 +20,7 @@ function varargout = imHessian(img, sigma, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2013-03-20,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
@@ -29,6 +29,9 @@ if nargin < 2
     sigma = 1; 
 end
 
+if isempty(varargin)
+    varargin = {'replicate'};
+end
 
 if ndims(img) == 2 %#ok<ISMAT>
     % Compute kernel coordinates
@@ -38,7 +41,7 @@ if ndims(img) == 2 %#ok<ISMAT>
     % Create kernels for 2nd derivatives filters
     smoothing = exp( -(x.^2 + y.^2) / (2*sigma^2)) / (2*pi*sigma^4);
     hxx = (x.^2/sigma^2 - 1) .* smoothing;
-    hxy = (x .* y)           .* smoothing;
+    hxy = (x .* y / sigma^2) .* smoothing;
     hyy = hxx';
 
     % compute second derivatives

@@ -17,7 +17,7 @@ function V = imVesselness2d(img, varargin)
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2014-08-18,    using Matlab 8.3.0.532 (R2014a)
 % Copyright 2014 INRA - Cepia Software Platform.
 
@@ -44,7 +44,8 @@ end
 
 % compute eigen values of hessian matrix. 
 % They are sorted such that |lambda1| < |lambda2|
-[lambda1, lambda2] = imEigenValues(gxx, gxy, gyy);
+s2 = sigma ^ 2;
+[lambda1, lambda2] = imEigenValues(gxx*s2, gxy*s2, gyy*s2);
 
 % combine eigen values to compute so-called "blobness" and "structureness"
 B = lambda1 ./ lambda2;

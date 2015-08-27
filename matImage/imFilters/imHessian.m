@@ -16,7 +16,7 @@ function varargout = imHessian(img, sigma, varargin)
 %     subplot(2, 2, 4); imshow(Dxy, [-60 60]);
 %
 %   See also
-%     imGradient, imLaplacian, imEigenValues, imfilter
+%     imGradientFilter, imLaplacian, imEigenValues, imfilter
 
 % ------
 % Author: David Legland

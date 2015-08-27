@@ -9,7 +9,7 @@ function [res, index] = imRobinsonFilter(img)
 %     figure; imshow(imgf);
 %
 %   See also
-%     imKirschFilter, imGradient
+%     imKirschFilter, imGradientFilter
  
 % ------
 % Author: David Legland

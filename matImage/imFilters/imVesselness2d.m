@@ -13,7 +13,7 @@ function V = imVesselness2d(img, varargin)
 %
 %
 %   See also
-%     imHessian, imEigenValues
+%     imHessian, imEigenValues, imGradientFilter
  
 % ------
 % Author: David Legland

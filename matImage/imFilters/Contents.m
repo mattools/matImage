@@ -10,7 +10,7 @@
 %   imNormalizeBackground    - Normalize image by removing background estimate
 %
 %   Gradient and Laplacian filters:
-%   imGradient               - Compute gradient magnitude in a grayscale image
+%   imGradientFilter         - Compute gradient components of a grayscale image
 %   imLaplacian              - Discrete Laplacian of an image
 %   imHessian                - Compute coefficients of Hessian matrix for each pixel
 %   imEigenValues            - Image eigen values from second derivatives

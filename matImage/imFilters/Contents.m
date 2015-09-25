@@ -66,6 +66,7 @@
 %   imAreaOpening            - Remove all regions smaller than a given area
 %   imAttributeOpening       - Filter regions on a size or shape criterium
 %   imSeparateParticles      - Separate touching particles using watershed algorithm
+
 %   imLargestRegion          - Keep the largest region in a binary or label image
 %   imCropLabel              - Extract the portion of image that contains the specified label
 %   imMergeLabels            - Merge regions in a labeled image

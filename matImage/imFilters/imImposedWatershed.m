@@ -28,7 +28,7 @@ function [wat, emin] = imImposedWatershed(img, emin, varargin)
 %     imshow(ovr)
 %
 %   See also
-%   watershed, imextendedmin, imimposemin, imSeparateParticules
+%   watershed, imextendedmin, imimposemin, imSeparateParticles
 %
 
 % ------

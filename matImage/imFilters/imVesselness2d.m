@@ -1,4 +1,4 @@
-function V = imVesselness2d(img, varargin)
+function [V, B, S] = imVesselness2d(img, varargin)
 %IMVESSELNESS2D Vesselness of cuvilinear structures from Frangi paper
 %
 %   VESSELNESS = imVesselness2d(IMG)
@@ -24,7 +24,7 @@ function V = imVesselness2d(img, varargin)
 % some default values
 sigma = 1;
 beta = .5;
-c = .5;
+c = 5;
 
 % parse input arguments
 if ~isempty(varargin)

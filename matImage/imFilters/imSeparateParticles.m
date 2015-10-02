@@ -2,7 +2,14 @@ function res = imSeparateParticles(img, varargin)
 %IMSEPARATEPARTICLES Separate touching particles using watershed algorithm
 %
 %   RES = imSeparateParticles(BINIMG)
+%   Separates particles in a binary image by applying watershed transform
+%   on the complement of the distance map. A detection of watershed markers
+%   is  performed by applying detection of extended minima.
 %
+%   RES = imSeparateParticles(BINIMG, EMINDYN)
+%   Also specifies the dynamic used to separated extended minima before
+%   computing watershed.
+%   
 %   Example
 %     img = imread('circles.png');
 %     img2 = imSeparateParticles(img);
@@ -23,13 +30,19 @@ if ndims(img) == 2 %#ok<ISMAT>
 elseif ndims(img) == 3
     conn = 6;
 end
- 
+
+% choose dymanic value
+dyn = 2;
+if ~isempty(varargin)
+    dyn = varargin{1};
+end
+
 % compute complement of distance map
 distMap = imDistanceMap(img);
 comp = imcomplement(distMap);
 
 % apply h-minima transform to avoid over-segmentation
-emin = imextendedmin(comp, 2, conn);
+emin = imextendedmin(comp, dyn, conn);
 imp = imimposemin(comp, emin, conn);
 
 % apply watershed transform on filtered distance map

@@ -14,7 +14,7 @@ function labels = imFindLabels(img)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2013-07-17,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
@@ -29,6 +29,10 @@ if isfloat(img)
     return;
 end
 
+if isstruct(img) && isfield(img, 'NumObjects')
+    labels = (1:img.NumObjects)';
+    return;
+end
 
 maxLabel = double(max(img(:)));
 labels = zeros(maxLabel, 1);

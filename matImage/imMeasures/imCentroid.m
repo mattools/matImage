@@ -43,7 +43,7 @@ function [points, labels] = imCentroid(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2011-03-30,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -65,16 +65,33 @@ nLabels = length(labels);
 nd = ndims(img);
 points = zeros(nLabels, nd);
 
+% if isstruct(img)
+%     % TODO: should be possible to interpret the label matrix directly
+%     img = labelmatrix(img);
+% end
+    
 if nd == 2
-    for i = 1:nLabels
-        % extract points of the current particle
-        [y, x] = find(img==labels(i));
-
-        % coordinates of particle centroid
-        xc = mean(x);
-        yc = mean(y);
-
-        points(i, :) = [xc yc];
+    if isnumeric(img)
+        for i = 1:nLabels
+            % extract points of the current particle
+            [y, x] = find(img==labels(i));
+            
+            % coordinates of particle centroid
+            xc = mean(x);
+            yc = mean(y);
+            
+            points(i, :) = [xc yc];
+        end
+        
+    elseif isstruct(img)
+        % process a CC structure (see bwconncomp)
+        for i = 1:nLabels
+            [y, x] = ind2sub(img.ImageSize, img.PixelIdxList{i});
+            % coordinates of particle centroid
+            xc = mean(x);
+            yc = mean(y);
+            points(i, :) = [xc yc];
+        end
     end
     
 elseif nd == 3

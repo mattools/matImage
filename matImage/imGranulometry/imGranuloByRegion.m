@@ -1,7 +1,7 @@
-function [gr vols] = imGranuloByRegion(img, lbl, granuloType, strelShape, strelSizes)
-%IMGRANULO Compute granulometry curve of a given image
+function [gr, vols] = imGranuloByRegion(img, lbl, granuloType, strelShape, strelSizes)
+%IMGRANULOBYREGION Granulometry curve for each region of label image
 %
-%   output = imGranulo(IMG, GRTYPE, STRELSHAPE, SIZES)
+%   GRANULO = imGranulo(IMG, GRTYPE, STRELSHAPE, SIZES)
 %
 %   Example
 %     % Compute granulometric curve by ope,ing on rice image
@@ -10,12 +10,14 @@ function [gr vols] = imGranuloByRegion(img, lbl, granuloType, strelShape, strelS
 %     % display as a function of strel diameter
 %     plot(2*(1:20)+1, gr);
 %
+%
 %   See also
+%     imGranulo, granuloMeanSize
 %
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2014-05-05,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2014 INRA - Cepia Software Platform.
 

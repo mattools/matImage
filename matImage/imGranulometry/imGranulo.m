@@ -1,4 +1,4 @@
-function [gr vols] = imGranulo(img, granuloType, strelShape, strelSizes, varargin)
+function [gr, vols] = imGranulo(img, granuloType, strelShape, strelSizes, varargin)
 %IMGRANULO Compute granulometry curve of a given image
 %
 %   GR = imGranulo(IMG, GRTYPE, STRELSHAPE, SIZES)

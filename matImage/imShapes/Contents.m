@@ -1,6 +1,12 @@
 % IMSHAPES Generation of images representing geometric shapes
 % Version 1.1 01-Jul-2011 .
 %
+%   This module contains several function for creating synthetic images of
+%   common shapes, in 2D (ellipses, rectangles...), or in 3D (balls and
+%   ellipsoids, cuboids, torus...).
+%   Such discrete representation can be used as phantom to test and / or
+%   validate algorithms of binary images measurements.
+%
 %   Requires the 'geom2d', the 'geom3d', and the 'imFilters' toolboxes.
 % 
 % Shapes 2D:
@@ -39,8 +45,8 @@
 %
 %
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
-% http://matimage.sourceforge.net/
+% e-mail: david.legland@nantes.inra.fr
+% http://github.com/dlegland/matImage
 % Copyright 2009 INRA - Cepia Software Platform.
 
 help('imShapes');

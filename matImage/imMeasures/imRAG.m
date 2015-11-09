@@ -102,6 +102,14 @@ if ~isempty(varargin) && isnumeric(varargin{1})
 end
 shift = gap + 1;
 
+% flag indicating whether edge indices should be computed
+computeEdgeInds = nargout > 2;
+if computeEdgeInds && gap ~= 1
+    error('imRAG:wrongGapValue', ...
+        'Edge indices can only be computed for gap equal to 1');
+end
+
+
 if nd == 2
     %% First direction of 2D image
     
@@ -117,8 +125,11 @@ if nd == 2
     edges = sort([val1(inds) val2(inds)], 2);
 
     % keep array of positions as linear indices
-    posD1 = sub2ind(dim, i1(inds)+1, i2(inds));
-
+    if computeEdgeInds
+        posD1 = sub2ind(dim, i1(inds)+1, i2(inds));
+    end
+    
+    
     %% Second direction of 2D image
     
     % identify transitions
@@ -132,10 +143,11 @@ if nd == 2
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
     edges = [edges ; sort([val1(inds) val2(inds)], 2)];
     
-    % keep array of positions as linear indices
-    posD2 = sub2ind(dim, i1(inds), i2(inds)+1);
-
-    posList = [posD1 ; posD2];
+    if computeEdgeInds
+        % keep array of positions as linear indices
+        posD2 = sub2ind(dim, i1(inds), i2(inds)+1);
+        posList = [posD1 ; posD2];
+    end
     
 elseif nd == 3
     %% First direction of 3D image
@@ -152,7 +164,12 @@ elseif nd == 3
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
     edges = unique([val1(inds) val2(inds)], 'rows');
 	
-
+    if computeEdgeInds
+        % keep array of positions as linear indices
+        posD1 = sub2ind(dim, i1(inds)+1, i2(inds), i3(inds));
+    end
+    
+    
     %% Second direction of 3D image
     
     % identify transitions
@@ -167,6 +184,10 @@ elseif nd == 3
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
     edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
 
+    if computeEdgeInds
+        % keep array of positions as linear indices
+        posD2 = sub2ind(dim, i1(inds), i2(inds)+1, i3(inds));
+    end
     
     %% Third direction of 3D image
     
@@ -181,7 +202,12 @@ elseif nd == 3
     % keep only changes not involving background
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
     edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
-
+    
+    if computeEdgeInds
+        % keep array of positions as linear indices
+        posD3 = sub2ind(dim, i1(inds), i2(inds), i3(inds)+1);
+        posList = [posD1 ; posD2 ; posD3];
+    end
 end
 
 
@@ -189,13 +215,14 @@ end
 % original edge
 [edges, indsA, indsC] = unique(edges, 'rows'); %#ok<ASGLU>
 
-nEdges = size(edges, 1);
-edgeInds = cell(nEdges, 1);
-for iEdge = 1:nEdges
-    inds = indsC == iEdge;
-    edgeInds{iEdge} = unique(posList(inds));
+if computeEdgeInds
+    nEdges = size(edges, 1);
+    edgeInds = cell(nEdges, 1);
+    for iEdge = 1:nEdges
+        inds = indsC == iEdge;
+        edgeInds{iEdge} = unique(posList(inds));
+    end
 end
-
 
 %% Output processing
 

@@ -3,10 +3,14 @@ function varargout = imRAG(img, varargin)
 %
 %   Usage:
 %   ADJ = imRAG(IMG);
+%   [NODES, ADJ] = imRAG(IMG);
+%   [NODES, ADJ, BNDINDS] = imRAG(IMG);
+%
+%   ADJ = imRAG(IMG);
 %   computes region adjacencies graph of labeled 2D or 3D image IMG. 
-%   The result is a N*2 array, containing 2 indices for each couple of
+%   The result is a N-by-2 array, containing 2 indices for each couple of
 %   neighbor regions. Two regions are considered as neighbor if they are
-%   separated by a black   (i. e. with color 0) pixel in the horizontal or
+%   separated by a black (i. e. with color 0) pixel in the horizontal or
 %   vertical direction.
 %   ADJ has the format [LBL1 LBL2], LBL1 and LBL2 being vertical arrays the
 %   same size.
@@ -25,6 +29,13 @@ function varargout = imRAG(img, varargin)
 %   of the N labeled region, and ADJ is the adjacency previously described.
 %   For 3D images, the nodes array is [N*3].
 %   
+%   [NODES, ADJ, BNDINDS] = imRAG(IMG);
+%   Also returns for each pair of adjacent regions the linear indices of
+%   the boundary pixels or voxels (located in between the two regions).
+%   BNDINDS is a cell array with as many cells as the number of rows of the
+%   ADJ result.
+%
+%   
 %   Example  (requires image processing toolbox)
 %     % read and display an image with several objects
 %     img = imread('coins.png');
@@ -39,7 +50,7 @@ function varargout = imRAG(img, varargin)
 %     ovr = uint8(cat(3, max(img, uint8(255*(wat==0))), tmp, tmp));
 %     imshow(ovr);
 %     % show the resulting graph
-%     [n e] = imRAG(wat);
+%     [n, e] = imRAG(wat);
 %     for i = 1:size(e, 1)
 %         plot(n(e(i,:), 1), n(e(i,:), 2), 'linewidth', 4, 'color', 'g');
 %     end
@@ -55,14 +66,14 @@ function varargout = imRAG(img, varargin)
 %         img(germs(i,1), germs(i,2), germs(i,3)) = 1;
 %     end
 %     wat = watershed(bwdist(img), 6);
-%     [n e] = imRAG(wat);
+%     [n, e] = imRAG(wat);
 %     figure; drawGraph(n, e);
 %     view(3);
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2004-02-20,  
 % Copyright 2007 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
 
@@ -81,9 +92,6 @@ dim = size(img);
 % number of dimensions
 nd = length(dim);
 
-% initialize array of neighbor regions
-edges = [];
-
 % Number of background pixels or voxels between two regions
 % gap = 0 -> regions are contiguous
 % gap = 1 -> there is a 1-pixel large line or surface between two adjacent
@@ -95,7 +103,6 @@ end
 shift = gap + 1;
 
 if nd == 2
-
     %% First direction of 2D image
     
     % identify transitions
@@ -104,11 +111,13 @@ if nd == 2
 	% get values of consecutive changes
 	val1 = img(sub2ind(dim, i1, i2));
 	val2 = img(sub2ind(dim, i1+shift, i2));
-	
-    % keep only changes not involving background
+
+    % keep only changes not involving background, ordered such that n1 < n2
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    edges = unique([val1(inds) val2(inds)], 'rows');
-	
+    edges = sort([val1(inds) val2(inds)], 2);
+
+    % keep array of positions as linear indices
+    posD1 = sub2ind(dim, i1(inds)+1, i2(inds));
 
     %% Second direction of 2D image
     
@@ -119,10 +128,14 @@ if nd == 2
 	val1 = img(sub2ind(dim, i1, i2));
 	val2 = img(sub2ind(dim, i1, i2+shift));
     
-    % keep only changes not involving background
+    % keep only changes not involving background, ordered such that n1 < n2
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
+    edges = [edges ; sort([val1(inds) val2(inds)], 2)];
     
+    % keep array of positions as linear indices
+    posD2 = sub2ind(dim, i1(inds), i2(inds)+1);
+
+    posList = [posD1 ; posD2];
     
 elseif nd == 3
     %% First direction of 3D image
@@ -172,12 +185,16 @@ elseif nd == 3
 end
 
 
-% format output to have increasing order of n1,  n1<n2, and
-% increasing order of n2 for n1=constant.
-edges = sortrows(sort(edges, 2));
+% remove double edges, keeping in indsC indices of merged edge for each
+% original edge
+[edges, indsA, indsC] = unique(edges, 'rows'); %#ok<ASGLU>
 
-% remove eventual double edges
-edges = unique(edges, 'rows');
+nEdges = size(edges, 1);
+edgeInds = cell(nEdges, 1);
+for iEdge = 1:nEdges
+    inds = indsC == iEdge;
+    edgeInds{iEdge} = unique(posList(inds));
+end
 
 
 %% Output processing
@@ -185,7 +202,7 @@ edges = unique(edges, 'rows');
 if nargout == 1
     varargout{1} = edges;
     
-elseif nargout == 2
+elseif nargout >= 2
     % Also compute region centroids
     N = max(img(:));
     points = zeros(N, nd);
@@ -214,6 +231,10 @@ elseif nargout == 2
     % setup output arguments
     varargout{1} = points;
     varargout{2} = edges;
+    
+    if nargout > 2
+        varargout{3} = edgeInds;
+    end
 end
 
 

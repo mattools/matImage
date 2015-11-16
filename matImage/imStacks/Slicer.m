@@ -2015,6 +2015,8 @@ methods
         if isempty(this.imageData)
             return;
         end
+        
+        % update display of mouse cursor coordinates
         point = get(this.handles.imageAxis, 'CurrentPoint');
         displayPixelCoords(this, point);
     end
@@ -2023,9 +2025,15 @@ methods
         if isempty(this.imageData)
             return;
         end
+
+        % refresh display of current slice
         newIndex = this.sliceIndex - eventdata.VerticalScrollCount;
         newIndex = min(max(newIndex, 1), this.imageSize(3));
         updateSliceIndex(this, newIndex);
+        
+        % update display of mouse cursor coordinates
+        point = get(this.handles.imageAxis, 'CurrentPoint');
+        displayPixelCoords(this, point);
     end
     
     function displayPixelCoords(this, point)

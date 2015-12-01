@@ -17,7 +17,7 @@ function [chi, labels] = imEuler2dEstimate(img, varargin)
 % Copyright 2010 INRA - Cepia Software Platform.
 
 % check image dimension
-if ndims(img)~=2 %#ok<ISMAT>
+if ndims(img) ~= 2 %#ok<ISMAT>
     error('first argument should be a 2D image');
 end
 
@@ -35,8 +35,45 @@ end
 % in case of binary image, compute only one label...
 labels = 1;
 
+% default connectivity
+conn = 4;
+
+% % default image resolution
+% delta = [1 1];
+
+% parse parameter name-value pairs to be consistent with other functions)
+while ~isempty(varargin)
+    var = varargin{1};
+    
+    if isnumeric(var)        
+        % option is either number of directions or resolution
+        if isscalar(var)
+            conn = var;
+%         else
+%             delta = var;
+        end
+        varargin(1) = [];
+        
+    elseif ischar(var)
+        if length(varargin) < 2
+            error('Parameter name must be followed by parameter value');
+        end
+    
+        if strcmpi(var, 'conn')
+            conn = varargin{2};
+%         elseif strcmpi(var, 'resolution')
+%             delta = varargin{2};
+        else
+            error(['Unknown parameter name: ' var]);
+        end
+        
+        varargin(1:2) = [];
+    end
+end
+
+
 % Euler-Poincare Characteristic of the binary structure in image
-chi     = imEuler2d(img, varargin{:});
+chi     = imEuler2d(img, conn);
 
 % compute EPC on each border of image, and keep the average
 chix    = mean([ imEuler1d(img(1,:)) imEuler1d(img(end,:)) ]);

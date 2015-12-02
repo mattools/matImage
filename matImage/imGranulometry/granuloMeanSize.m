@@ -1,4 +1,4 @@
-function res = granuloMeanSize(tab, xi)
+function gm = granuloMeanSize(tab, xi)
 %GRANULOMEANSIZE Compute geometric mean of granulometric curve
 %
 %   GLMS = granuloMeanSize(TAB, XI)
@@ -16,31 +16,30 @@ function res = granuloMeanSize(tab, xi)
 %     xlabel('Strel diameter (pixel)'); ylabel('Percentage of Variations');
 %     glms = granuloMeanSize(gr, diams)
 %     glms = 
-%            gmean
-%      1    7.7274
+%         7.7274
 %
 %   See also
 %     imGranulo, imGranuloByRegion
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nnates.inra.fr
 % Created: 2014-05-06,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2014 INRA - Cepia Software Platform.
 
 % extract data
 data = tab;
-rowNames = cellstr(num2str((1:size(tab, 1))'));
+% rowNames = cellstr(num2str((1:size(tab, 1))'));
 
 % in case data are provided as Table, extract numerical data
 if isa(tab, 'Table')
     data = tab.data;
-    rowNames = tab.rowNames;
+%     rowNames = tab.rowNames;
 end
 
 % compute geometric mean
 gm = exp(sum(bsxfun(@times, log(xi), data / 100), 2));
 
-% create new data table with result
-res = Table(gm, 'colNames', {'gmean'}, 'rowNames', rowNames);
+% % create new data table with result
+% res = Table(gm, 'colNames', {'gmean'}, 'rowNames', rowNames);
 

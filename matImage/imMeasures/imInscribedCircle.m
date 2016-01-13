@@ -43,21 +43,21 @@ end
 
 % extract the set of labels, without the background
 if isempty(labels)
-    labels = imFindLabels(img);
+    labels = imFindLabels(lbl);
 end
 nLabels = length(labels);
 
 % allocate memory for result
 circle = zeros(nLabels, 3);
 
-for i = 1:nLabels
+for iLabel = 1:nLabels
     % compute distance map
-    distMap = imChamferDistance(lbl==i);
+    distMap = imChamferDistance(lbl==iLabel);
     
     % find value and position of the maximum
     maxi = max(distMap(:));    
     [yc, xc] = find(distMap==maxi, 1, 'first');
     
-    circle(i,:) = [xc yc maxi];
+    circle(iLabel,:) = [xc yc maxi];
 end
 

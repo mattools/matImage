@@ -71,7 +71,7 @@ function gl = imGeodesicDiameter(img, varargin)
 %% Default values 
 
 % weights for computing geodesic lengths
-ws = [1 sqrt(2)];
+ws = [3 4];
 
 % no verbosity by default
 verbose = 0;
@@ -132,10 +132,10 @@ dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 
 % compute new seed point in each label, and use it as new marker
 markers = false(size(img));
-for i=1:n
-    % find the pixel with greatest distance in current label
-    [y x] = find(img==i);
-    [maxVal ind] = max(dist(img==i)); %#ok<ASGLU>
+for i = 1:n
+    % find the pixel with largest distance in current label
+    [y, x] = find(img==i);
+    [maxVal, ind] = max(dist(img==i)); %#ok<ASGLU>
     markers(y(ind), x(ind)) = true;
 end
 
@@ -151,10 +151,10 @@ dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 
 % compute new seed point in each label, and use it as new marker
 markers = false(size(img));
-for i=1:n
-    % find the pixel with greatest distance in current label
-    [y x] = find(img==i);
-    [maxVal ind] = max(dist(img==i)); %#ok<ASGLU>
+for i = 1:n
+    % find the pixel with largest distance in current label
+    [y, x] = find(img==i);
+    [maxVal, ind] = max(dist(img==i)); %#ok<ASGLU>
     markers(y(ind), x(ind)) = true;
 end
 
@@ -170,10 +170,10 @@ dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 
 % keep max geodesic distance inside each label
 gl = zeros(n, 1);
-for i=1:n
+for i = 1:n
     % find the pixel with greatest distance in current label
     gl(i) = max(dist(img==i));
 end
 
-% format to have metric in pixels, and not a multiple of the weights
-gl = double(gl)/double(ws(1));
+% normalize to have result in pixel unit, and not as a multiple of the weights
+gl = double(gl) / double(ws(1));

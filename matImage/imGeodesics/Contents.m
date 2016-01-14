@@ -13,7 +13,7 @@
 %   distances and geodesic path between two markers in a particle.
 %
 %   It is also possible to compute morphological parameters, such as the
-%   geodesic length or the geodesic radius. For some parameters, an
+%   geodesic diameter or the geodesic radius. For some parameters, an
 %   exhaustive search is performed, making the computation time rather
 %   high.
 %   
@@ -23,7 +23,8 @@
 %
 %
 % Distance propagation
-%   imChamferDistance     - Compute chamfer distance using scanning algorithm
+%   imChamferDistance     - Chamfer distance transform using scanning algorithm
+%   imChamferDistance5x5  - Chamfer distance transform for 5x5 masks
 %   imChamferDistance3d   - Compute chamfer distance in 3D images
 %   imGeodesicPath        - Compute a geodesic path between two markers in an image
 %   imMaxGeodesicPath     - Find a path in a region with maximal geodesic length

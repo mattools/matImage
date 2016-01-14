@@ -1,5 +1,5 @@
 function dist = imChamferDistance(img, varargin)
-%IMCHAMFERDISTANCE  Compute chamfer distance using scanning algorithm
+%IMCHAMFERDISTANCE Chamfer distance transform using scanning algorithm
 %
 %   RES = imChamferDistance(IMG, MARKERS);
 %   where IMG and MARKERS are binary images, computes for each foreground
@@ -25,11 +25,12 @@ function dist = imChamferDistance(img, varargin)
 %   distance between two orthonal pixels, and WEIGHTS(2) corresponding to
 %   the distance between two diagonal pixels.
 %   Possible choices
-%   WEIGHTS = [1 sqrt(2)]   -> quasi-euclidean distance (default)
+%   WEIGHTS = [1 sqrt(2)]   -> quasi-euclidean distance
 %   WEIGHTS = [1 Inf]       -> "Manhattan" or "cityblock" distance
 %   WEIGHTS = [1 1]         -> "Chessboard" distance
-%   WEIGHTS = [3 4]         -> Borgerfors' weights
+%   WEIGHTS = [3 4]         -> Borgerfors' weights (default)
 %   WEIGHTS = [5 7]         -> close approximation of sqrt(2)
+%   Results are normalized by the value of the first weight.
 %
 %   Note: when specifying weights, the result has the same class/data type
 %   than the array of weights. It is possible to balance between speed and
@@ -82,23 +83,39 @@ function dist = imChamferDistance(img, varargin)
 %
 %   
 %   See also
-%   imGeodesics, bwdist, imGeodesicDistance
+%   imGeodesics, bwdist, imGeodesicDistance, imGeodesicDiameter
+%   imChamferDistance5x5
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2009-05-19,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
 %   HISTORY
 %   2010.08.25 fix memory allocation for large images, add vebosity option
 
+% Implementation notes
+% This function uses a special processing for first and last lines, 
+% and for first and last pixels of each regular line. Then it is not
+% necessary to test if neighbor coordiantes are within image bounds,
+% resulting in a somewhat faster algorithm. 
+% However, this induces an increase in code complexity.
+
 
 %% Process input arguments
 
+% default weights for orthogonal or diagonal neighbors
+weights = [3 4];    
+% normalize map by default
+normalizeMap = true;
+% empty markers by default
+markers = [];
+% no verbosity
+verbose = false;
 
 % extract markers if they are given as parameter
-markers = [];
 if ~isempty(varargin)
     var = varargin{1};
     if ndims(var) == ndims(img) && sum(size(var) ~= size(img)) == 0
@@ -114,26 +131,19 @@ if isempty(markers)
     markers = img==0;
 end
 
-
-% default weights for orthogonal or diagonal
-w1 = 1;
-w2 = sqrt(2);
-
 % extract user-specified weights
 if ~isempty(varargin)
-    var = varargin{1};
+    weights = varargin{1};
     varargin(1) = [];
-    w1 = var(1);
-    w2 = var(2);
-    % small check up to avoid degenerate cases
-    if w2 == 0
-        w2 = 2 *  w1;
-    end
 end
 
+% eventually switch to 5x5 version (slower)
+if length(weights) > 2
+    dist = imChamferDistance5x5(img, markers, weights, varargin{:});
+    return;
+end
 
 % extract verbosity option
-verbose = false;
 if length(varargin) > 1
     varName = varargin{1};
     if ~ischar(varName)
@@ -144,6 +154,15 @@ if length(varargin) > 1
     else
         error(['unknown option: ' varName]);
     end
+end
+
+
+% extract weights in orthogonal and diagonal directions
+w1 = weights(1);
+w2 = weights(2);
+% small check up to avoid degenerate cases
+if w2 == 0
+    w2 = 2 *  w1;
 end
 
 
@@ -174,7 +193,7 @@ end
 dist(markers) = 0;
 
 % size of image
-[D1 D2] = size(img);
+[D1, D2] = size(img);
 
 
 %% Iterations until no more changes
@@ -322,3 +341,8 @@ while modif
     
     nIter = nIter+1;
 end % until no more modif
+
+% normalize map
+if normalizeMap
+    dist = dist / w1;
+end

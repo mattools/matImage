@@ -18,6 +18,7 @@ function res = imMorphoGradient(img, se)
 %   See also
 %   imdilate, imerode, imGradientFilter, imsubtract, rangefilt
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@nantes.inra.fr

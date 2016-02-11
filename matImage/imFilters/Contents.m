@@ -36,6 +36,7 @@
 %
 %   Segmentation:
 %   imOtsuThreshold          - Threshold an image using Otsu method
+%   imMaxEntropyThreshold    - Compute image threshold using maximisation of entropies
 %   imImposedWatershed       - Compute watershed after imposition of extended minima
 %   imCannyEdgeDetector      - Edge detection using Canny-Deriche method
 %
@@ -123,6 +124,7 @@ help Contents
 %   createImage              - Create a new image with given size and type
 %   imMergeBands             - Merge 3 bands to create a 2D or 3D color image
 %   imSplitBands             - Split the 3 bands of a 2D or 3D image
+%   imGradient               - Compute gradient magnitude of a grayscale image
 
 %   Not supported functions
 %   imMergeCells             - merge labeled cell of an image

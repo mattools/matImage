@@ -25,13 +25,13 @@ function [bin, value] = imOtsuThreshold(img, varargin)
 %
 %
 %   See also
-%   imHistogram, imContours, watershed, imNormalizeBackground
+%   imHistogram, imMaxEntropyThreshold, imContours, watershed
 %
 
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2012-01-13,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 

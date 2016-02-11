@@ -5,6 +5,7 @@ Toolbox (IPT), and provides additional features as well as integration of IPT
 functions into more elaborate functions.
 
 Official homepage for the MatImage project is http://github.com/dlegland/matImage.
+A comprenhesive help is provided in the [MatImage wiki](http://github.com/dlegland/matImage/wiki MatImage Wiki homepage)
 
 Installation
 ---
@@ -15,18 +16,18 @@ Some functions need the "MatGeom" library, also available on GitHub
 (http://github.com/dlegland/matGeom)
 
 
-Package prganization
+Library organization
 ---
 
 The library is organised into several modules.
-* imFilters       - Image filtering (smooth, enhance, gradient...)
-* imMeasures      - Measurement of various parameters in digital images
-* imShapes        - Generation of phantom images representing geometric shapes
-* imStacks        - Functions for manipulation and display of 3D images
-* imMinkowski     - Geometric measures (Surface area, Perimeter...) in 2D or 3D
-* imGeodesics     - Geodesic distance transform for 2D/3D binary images
-* imGranulometry  - Computation of gray-level granulometry curves with mathematical morphology
-* util            - General purpose functions
+* [imFilters](http://github.com/dlegland/matImage/wiki/imFilters imFilters Wiki page)       - Image filtering (smooth, enhance, gradient...)
+* [imMeasures](http://github.com/dlegland/matImage/wiki/imMeasures imMeasures Wiki page)      - Measurement of various parameters in digital images
+* [imStacks](http://github.com/dlegland/matImage/wiki/imStacks imStacks Wiki page)       - Functions for manipulation and display of 3D images
+* [imMinkowski](http://github.com/dlegland/matImage/wiki/imMinkowski imMinkowski Wiki page)     - Geometric measures (Surface area, Perimeter...) in 2D or 3D
+* [imGeodesics](http://github.com/dlegland/matImage/wiki/imGeodesics imGeodesics Wiki page)     - Geodesic distance transform for 2D/3D binary images
+* [imGranulometry](http://github.com/dlegland/matImage/wiki/imGranulometry imGranulometry Wiki page)  - Computation of gray-level granulometry curves with mathematical morphology
+* [imShapes](http://github.com/dlegland/matImage/wiki/imShapes imShapes Wiki page)        - Generation of phantom images representing geometric shapes
+* [util](http://github.com/dlegland/matImage/wiki/util image utilities Wiki page)            - General purpose functions
 A comprehensive help is provided in each module directory.
 
 

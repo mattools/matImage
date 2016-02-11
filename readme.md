@@ -5,7 +5,7 @@ Toolbox (IPT), and provides additional features as well as integration of IPT
 functions into more elaborate functions.
 
 Official homepage for the MatImage project is http://github.com/dlegland/matImage.
-A comprenhesive help is provided in the [MatImage wiki](http://github.com/dlegland/matImage/wiki MatImage Wiki homepage)
+A comprenhesive help is provided in the [MatImage wiki](https://github.com/dlegland/matImage/wiki "MatImage Wiki homepage")
 
 Installation
 ---
@@ -20,14 +20,14 @@ Library organization
 ---
 
 The library is organised into several modules.
-* [imFilters](http://github.com/dlegland/matImage/wiki/imFilters imFilters Wiki page)       - Image filtering (smooth, enhance, gradient...)
-* [imMeasures](http://github.com/dlegland/matImage/wiki/imMeasures imMeasures Wiki page)      - Measurement of various parameters in digital images
-* [imStacks](http://github.com/dlegland/matImage/wiki/imStacks imStacks Wiki page)       - Functions for manipulation and display of 3D images
-* [imMinkowski](http://github.com/dlegland/matImage/wiki/imMinkowski imMinkowski Wiki page)     - Geometric measures (Surface area, Perimeter...) in 2D or 3D
-* [imGeodesics](http://github.com/dlegland/matImage/wiki/imGeodesics imGeodesics Wiki page)     - Geodesic distance transform for 2D/3D binary images
-* [imGranulometry](http://github.com/dlegland/matImage/wiki/imGranulometry imGranulometry Wiki page)  - Computation of gray-level granulometry curves with mathematical morphology
-* [imShapes](http://github.com/dlegland/matImage/wiki/imShapes imShapes Wiki page)        - Generation of phantom images representing geometric shapes
-* [util](http://github.com/dlegland/matImage/wiki/util image utilities Wiki page)            - General purpose functions
+* [imFilters](https://github.com/dlegland/matImage/wiki/imFilters "imFilters Wiki page")       - Image filtering (smooth, enhance, gradient...)
+* [imMeasures](https://github.com/dlegland/matImage/wiki/imMeasures "imMeasures Wiki page")      - Measurement of various parameters in digital images
+* [imStacks](https://github.com/dlegland/matImage/wiki/imStacks "imStacks Wiki page")       - Functions for manipulation and display of 3D images
+* [imMinkowski](https://github.com/dlegland/matImage/wiki/imMinkowski "imMinkowski Wiki page")     - Geometric measures (Surface area, Perimeter...) in 2D or 3D
+* [imGeodesics](https://github.com/dlegland/matImage/wiki/imGeodesics "imGeodesics Wiki page")     - Geodesic distance transform for 2D/3D binary images
+* [imGranulometry](https://github.com/dlegland/matImage/wiki/imGranulometry "imGranulometry Wiki page")  - Computation of gray-level granulometry curves with mathematical morphology
+* [imShapes](https://github.com/dlegland/matImage/wiki/imShapes "imShapes Wiki page")        - Generation of phantom images representing geometric shapes
+* [util](https://github.com/dlegland/matImage/wiki/util "image utilities Wiki page")            - General purpose functions
 A comprehensive help is provided in each module directory.
 
 

@@ -10,11 +10,11 @@ function [value, maxEntropy] = imMaxEntropyThreshold(img, varargin)
 %
 %
 %   Example
-%   % Compute 
+%   % Compute threshold for coins image
 %     img = imread('coins.png');
 %     figure; imshow(img);
 %     T = imMaxEntropyThreshold(img);
-%     figure; imshow(bin <= T);
+%     figure; imshow(img > T);
 %
 %   Note
 %   Only implemented for grayscale image coded on uint8.

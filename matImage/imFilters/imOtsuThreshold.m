@@ -1,24 +1,26 @@
-function [bin, value] = imOtsuThreshold(img, varargin)
+function value = imOtsuThreshold(img, varargin)
 %IMOTSUTHRESHOLD Threshold an image using Otsu method
 %
-%   BIN = imOtsuThreshold(IMG)
-%   Automatically computes threshold for segmenting image IMG, based on
-%   Otsu's method, and returns the binary result.
+%   VALUE = imOtsuThreshold(IMG)
+%   Automatically computes threshold value for segmenting image IMG, based
+%   on Otsu's method. The principle of Otsu method is to maximize the
+%   inter-class variance, or equivalently, to minimize the sum of within
+%   class variances.
 %
-%   [BIN VALUE] = imOtsuThreshold(IMG)
-%   Also returns the threshold value.
 %
 %   ... = imOtsuThreshold(IMG, ROI)
-%   Computes Otsu threshold using pixels in the given Region of interest.
+%   Computes Otsu threshold value using only pixels in the specified region
+%   of interest (ROI).
 %   ROI is a binary image the same size as the input image.
 %   
 %
 %   Example
-%   % Compute 
+%     % Compute Otsu threshodl value on coins image, and display segmented
+%     % resulting image.
 %     img = imread('coins.png');
 %     figure; imshow(img);
-%     bin = imOtsuThreshold(img);
-%     figure; imshow(bin);
+%     thresh = imOtsuThreshold(img);
+%     figure; imshow(img > thresh);
 %
 %   Note
 %   Only implemented for grayscale image coded on uint8.
@@ -80,5 +82,3 @@ end
 [mini, ind] = min(sigmaw); %#ok<ASGLU>
 value = ind - 1;
 
-% threshold image
-bin = img > value;

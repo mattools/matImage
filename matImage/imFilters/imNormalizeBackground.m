@@ -34,7 +34,7 @@ function [res, bg, rmse] = imNormalizeBackground(img, varargin)
 %     img = imread('rice.png');
 %     bin1 = img > 150;
 %     img2 = imNormalizeBackground(img, bin1);
-%     bin2 = imOtsuThreshold(img2);
+%     bin2 = img2 > imOtsuThreshold(img2);
 %     img3 = imNormalizeBackground(img, bin2);
 %     figure; 
 %     subplot(1, 2, 1); imshow(img); title('Original');
@@ -80,7 +80,7 @@ end
 
 % if no segmentation is provided, try Otsu
 if nargin < 2
-    bin = imOtsuThreshold(img);
+    bin = img > imOtsuThreshold(img);
 else
     bin = varargin{1};
 end

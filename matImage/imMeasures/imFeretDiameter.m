@@ -32,7 +32,8 @@ function [fd, labels] = imFeretDiameter(img, varargin)
 %   [FD, LABELS] = imFeretDiameter(...);
 %   Also returns the set of labels that were considered for measure.
 %
-%   The maximum Feret diameter can be obtained using a max() function. 
+%   The maximum Feret diameter can be obtained using a max() function, or
+%   by calling the "imMaxFeretDiameter" function.
 %
 %   Example:
 %     % compute Feret diameter for a discrete square
@@ -52,11 +53,11 @@ function [fd, labels] = imFeretDiameter(img, varargin)
 %        84.4386
 %
 %   See also 
-%   imOrientedBox
+%     imMaxFeretDiameter, imOrientedBox
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2010-03-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

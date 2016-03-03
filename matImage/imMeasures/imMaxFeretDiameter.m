@@ -6,7 +6,7 @@ function [diam, thetaMax] = imMaxFeretDiameter(img, varargin)
 %   The result is a N-by-1 column vector, containing the Feret diameter of
 %   each particle in IMG.
 %
-%   [FD THETAMAX] = imMaxFeretDiameter(IMG)
+%   [FD, THETAMAX] = imMaxFeretDiameter(IMG)
 %   Also returns the direction for which the diameter is maximal. THETAMAX
 %   is given in degrees, between 0 and 180.
 %
@@ -27,7 +27,7 @@ function [diam, thetaMax] = imMaxFeretDiameter(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2011-07-19,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -62,7 +62,7 @@ nLabels = length(labels);
 diam = zeros(nLabels, 1);
 thetaMax = zeros(nLabels, 1);
 
-% for each particle, compute set of diamters, and find max
+% for each particle, compute set of diameters, and find max
 for i = 1:nLabels
     diams = imFeretDiameter(img == labels(i), thetas);
     

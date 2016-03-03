@@ -28,7 +28,7 @@ function [rect, labels] = imOrientedBox(img, varargin)
 %   OBB = imOrientedBox(..., PNAME, PVALUE);
 %   Specify optional arguments as parameter pair-values. Available names
 %   are:
-%   * 'spacing' the sapcing bewteen pixels
+%   * 'spacing' the spacing bewteen pixels
 %   * 'origin'  the position of the first pixel
 %   * 'angles'  the array of angles used for computation
 %   * 'labels'  restrict the computation to the set of specified labels,
@@ -48,7 +48,7 @@ function [rect, labels] = imOrientedBox(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2011-02-07,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 

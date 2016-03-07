@@ -42,6 +42,19 @@
 %   chamferDistanceError  - Compute relative error of chamfer distance with euclidean
 %
 %
+% References
+% If you find this package useful, please make a citation to the paper it
+% was developed for: 
+% * Legland, D. and Beaugrand, J. (2013). Automated clustering of
+%     lignocellulosic fibres based on morphometric features and using
+%     clustering of variables. Industrial Crops and Products, 45, 253-261.
+%     URL: http://dx.doi.org/10.1016/j.indcrop.2012.12.021 
+%
+% Another reference of interest:
+% * Lantuéjoul, C. and Beucher, S. On the use of geodesic metric in image
+%     analysis J. Miscrosc., 1981, 121, 39-40 
+%
+%
 % ----
 % Author: David Legland
 % e-mail: david.legland@nantes.inra.fr

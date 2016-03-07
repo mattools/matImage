@@ -53,9 +53,10 @@ function gl = imGeodesicDiameter(img, varargin)
 %   imGeodesics, imChamferDistance, imGeodesicExtremities
 %   imGeodesicRadius, imGeodesicCenter, imMaxGeodesicPath
 %
-%
+
 %   ---------
 %   author : David Legland 
+%   mail: david.legland@nantes.inra.fr
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 06/07/2005.
 %

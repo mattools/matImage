@@ -23,8 +23,9 @@ function res = imMedianFilter(img, se, varargin)
 %
 
 %   ---------
-%   author : David Legland 
-%   INRA - TPV URPOI - BIA IMASTE
+%   author: David Legland 
+%   mail: david.legland@nantes.inra.fr
+%   INRA - BIA BIBS
 %   created the 16/02/2004.
 %
 
@@ -35,10 +36,16 @@ function res = imMedianFilter(img, se, varargin)
 %   2013-10-10 change default behaviour of padopt to 'replicate', add
 %       example
 
+% if input is a vector with two values, assumes this is size of array
+if isnumeric(se) && sum(size(se) ~= [1 2]) == 0
+    se = ones(se);
+end
+
 % transform STREL object into single array
 if isa(se, 'strel')
     se = getnhood(se);
 end
+
 
 % get padopt option.
 padopt = 'symmetric';

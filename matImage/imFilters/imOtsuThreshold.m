@@ -1,4 +1,4 @@
-function value = imOtsuThreshold(img, varargin)
+function [value, segImg] = imOtsuThreshold(img, varargin)
 %IMOTSUTHRESHOLD Threshold an image using Otsu method
 %
 %   VALUE = imOtsuThreshold(IMG)
@@ -7,20 +7,22 @@ function value = imOtsuThreshold(img, varargin)
 %   inter-class variance, or equivalently, to minimize the sum of within
 %   class variances.
 %
-%
 %   ... = imOtsuThreshold(IMG, ROI)
 %   Computes Otsu threshold value using only pixels in the specified region
 %   of interest (ROI).
 %   ROI is a binary image the same size as the input image.
 %   
+%   [VALUE, SEGIMG] = imOtsuThreshold(...)
+%   Also returns the segmented image as a binary image containing TRUE for
+%   foreground pixels.
 %
 %   Example
-%     % Compute Otsu threshodl value on coins image, and display segmented
-%     % resulting image.
+%     % Compute Otsu threshold value on coins image, and display resulting
+%     % segmented image.
 %     img = imread('coins.png');
 %     figure; imshow(img);
 %     thresh = imOtsuThreshold(img);
-%     figure; imshow(img > thresh);
+%     figure; imshow(img >= thresh);
 %
 %   Note
 %   Only implemented for grayscale image coded on uint8.
@@ -37,48 +39,57 @@ function value = imOtsuThreshold(img, varargin)
 % Created: 2012-01-13,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
+% number of gray levels
+L = 256;
+
+% vector of gray levels for variance computation
+levels = 0:L-1;
+
 % compute normalized histogram
 h = imHistogram(img, varargin{:})';
 h = h / sum(h);
 
-% number of gray levels
-L = 256;
+% average value within whole image
+mu = sum(h .* levels);
 
-% just a vector of indices
-li = 1:L;
-
-% average value within image
-mu = sum(h .* li);
+% vector of thresholds to consider (size is number of graylevels minus one)
+threshInds = 2:L;
 
 % allocate memory
-sigmab = zeros(1, L);
-sigmaw = zeros(1, L);
+sigmab = zeros(1, L - 1);
+sigmaw = zeros(1, L - 1);
 
-for t = 1:256
+for i = 1:length(threshInds)
+    % index of current threshold in histogram values, from 2 to L
+    t = threshInds(i);
+    
     % linear indices for each class
-    ind0 = 1:t;
-    ind1 = t+1:L;
+    ind0 = 1:(t-1); % background
+    ind1 = t:L;     % foreground, including threshold
     
     % probabilities associated with each class
     p0 = sum(h(ind0));
     p1 = sum(h(ind1));
     
     % average value of each class
-    mu0 = sum(h(ind0) .* li(ind0)) / p0;
-    mu1 = sum(h(ind1) .* li(ind1)) / p1;
+    mu0 = sum(h(ind0) .* levels(ind0)) / p0;
+    mu1 = sum(h(ind1) .* levels(ind1)) / p1;
     
     % inner variance of each class
-    var0 = sum( h(ind0) .* (li(ind0) - mu0) .^ 2) / p0;
-    var1 = sum( h(ind1) .* (li(ind1) - mu1) .^ 2) / p1;
+    var0 = sum( h(ind0) .* (levels(ind0) - mu0) .^ 2) / p0;
+    var1 = sum( h(ind1) .* (levels(ind1) - mu1) .^ 2) / p1;
     
     % between (inter) class variance
-    sigmab(t) = p0 * (mu0 - mu) ^ 2 + p1 * (mu1 - mu) ^ 2;
+    sigmab(i) = p0 * (mu0 - mu) ^ 2 + p1 * (mu1 - mu) ^ 2;
     
     % within (intra) class variance
-    sigmaw(t) = p0 * var0 + p1 * var1;
+    sigmaw(i) = p0 * var0 + p1 * var1;
 end
 
 % compute threshold value
 [mini, ind] = min(sigmaw); %#ok<ASGLU>
-value = ind - 1;
+value = levels(ind + 1);
 
+if nargout > 1
+    segImg = img >= value;
+end

@@ -14,8 +14,11 @@ function gl = imGeodesicDiameter(img, varargin)
 %   GL = imGeodesicDiameter(IMG, WS)
 %   Specifies the weights associated to neighbor pixels. WS(1) is the
 %   distance to orthogonal pixels, and WS(2) is the distance to diagonal
-%   pixels. Default is [3 4], recommended by Borgefors. The final length is
-%   normalized by weight for orthogonal pixels.
+%   pixels. An optional WS(3) weight may be specified, corresponding to
+%   chess-knight moves. Default is [5 7 11], recommended for 5-by-5 masks.
+%   The final length is normalized by weight for orthogonal pixels. For
+%   thin structures (skeletonization result), the [3 4] weights recommended
+%   by Boregors may be better appropriate.
 %   
 %   GL = imGeodesicDiameter(..., 'verbose', true);
 %   Display some informations about the computation procedure, that may
@@ -40,7 +43,8 @@ function gl = imGeodesicDiameter(img, varargin)
 %       touch by a corner, the result will not be valid.
 %   
 %   Example
-%   % segment and labelize image of grains, and compute their lengths
+%     % segment and labelize image of grains, and compute their geodesic
+%     % diameter
 %     img = imread('rice.png');
 %     img2 = img - imopen(img, ones(30, 30));
 %     bin = imopen(img2 > 50, ones(3, 3));
@@ -67,12 +71,12 @@ function gl = imGeodesicDiameter(img, varargin)
 %   20/05/2009 rewrite using chamfer distance (work now only for 2D)
 %   24/08/2010 add comments, add verbosity option
 %   15/09/2010 add a pass to detect center
-
+%   08/04/2016 use chess-knight weight as default weights
 
 %% Default values 
 
 % weights for computing geodesic lengths
-ws = [3 4];
+ws = [5 7 11];
 
 % no verbosity by default
 verbose = 0;
@@ -175,6 +179,3 @@ for i = 1:n
     % find the pixel with greatest distance in current label
     gl(i) = max(dist(img==i));
 end
-
-% normalize to have result in pixel unit, and not as a multiple of the weights
-gl = double(gl) / double(ws(1));

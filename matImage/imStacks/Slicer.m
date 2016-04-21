@@ -81,11 +81,11 @@ classdef Slicer < handle
 %     imStacks, imscrollpanel
 %
 %   Requires
-%       GUILayout-v1p9
-%
+%       GUI Layout Toolbox version 1.17
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2011-04-12,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2011 INRA - Cepia Software Platform.
@@ -187,11 +187,13 @@ methods
             this.imageType = 'none';
         end
         
-        % parses input arguments
+        % parses input arguments, given as list of name-value pairs
         parsesInputArguments();
         
         % add checkup on visible image slice
-        this.sliceIndex = min(this.sliceIndex, this.imageSize(3));
+        if ~isempty(this.imageData)
+            this.sliceIndex = min(this.sliceIndex, this.imageSize(3));
+        end
         
         updateCalibrationFlag(this);
 

@@ -542,14 +542,12 @@ methods
             info = imfinfo(fileName);
             info = info(1);
             
-            info(1).ImageDescription
-            
+            % extract image resolution (pixel size)
             if isfield(info, 'XResolution')
                 xresol = info.('XResolution');
+                yresol = xresol;
                 if isfield(info, 'YResolution')
                     yresol = info.('YResolution');
-                else
-                    yresol = xresol;
                 end
                 this.voxelSize = [xresol yresol 1];
             end

@@ -292,6 +292,7 @@ methods
         end
         
         function setupLayout(hf)
+            % Creates the widgets that constitute the Slicer main frame
             
             if verLessThan('matlab', 'R2014b')
                 % horizontal layout

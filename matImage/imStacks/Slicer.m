@@ -293,15 +293,27 @@ methods
         
         function setupLayout(hf)
             
-            % horizontal layout
-            mainPanel = uiextras.HBox('Parent', hf, ...
-                'Units', 'normalized', ...
-                'Position', [0 0 1 1]);
-            
-            % panel for slider + slice number
-            leftPanel = uiextras.VBox('Parent', mainPanel, ...
-                'Units', 'normalized', ...
-                'Position', [0 0 1 1]);
+            if verLessThan('matlab', 'R2014b')
+                % horizontal layout
+                mainPanel = uiextras.HBox('Parent', hf, ...
+                    'Units', 'normalized', ...
+                    'Position', [0 0 1 1]);
+                
+                % panel for slider + slice number
+                leftPanel = uiextras.VBox('Parent', mainPanel, ...
+                    'Units', 'normalized', ...
+                    'Position', [0 0 1 1]);
+            else
+                % horizontal layout
+                mainPanel = uix.HBox('Parent', hf, ...
+                    'Units', 'normalized', ...
+                    'Position', [0 0 1 1]);
+                
+                % panel for slider + slice number
+                leftPanel = uix.VBox('Parent', mainPanel, ...
+                    'Units', 'normalized', ...
+                    'Position', [0 0 1 1]);
+            end
             
             if ~isempty(this.imageData)
                 % slider for slice
@@ -319,7 +331,7 @@ methods
                 
                 % code for dragging the slider thumb
                 % @see http://undocumentedmatlab.com/blog/continuous-slider-callback
-                if verLessThan('matlab', '8.3')
+                if verLessThan('matlab', 'R2014b')
                     hListener = handle.listener(this.handles.zSlider, ...
                         'ActionEvent', @this.onSliceSliderChanged);
                     setappdata(this.handles.zSlider, 'sliderListeners', hListener);
@@ -335,12 +347,20 @@ methods
                     'Callback', @this.onSliceEditTextChanged, ...
                     'BackgroundColor', [1 1 1]);
                 
-                leftPanel.Sizes = [-1 20];
+                if verLessThan('matlab', 'R2014b')
+                    leftPanel.Sizes = [-1 20];
+                else
+                    leftPanel.Heights = [-1 20];
+                end
             end
             
             
             % panel for image display + info panel
-            rightPanel = uiextras.VBox('Parent', mainPanel);
+            if verLessThan('matlab', 'R2014b')
+                rightPanel = uiextras.VBox('Parent', mainPanel);
+            else
+                rightPanel = uix.VBox('Parent', mainPanel);
+            end
             
             % scrollable panel for image display
             scrollPanel = uipanel('Parent', rightPanel, ...
@@ -368,8 +388,13 @@ methods
                 'HorizontalAlignment', 'left');
             
             % set up relative sizes of layouts
-            rightPanel.Sizes = [-1 20];
-            mainPanel.Sizes = [30 -1];
+            if verLessThan('matlab', 'R2014b')
+                rightPanel.Sizes = [-1 20];
+                mainPanel.Sizes = [30 -1];
+            else
+                rightPanel.Heights = [-1 20];
+                mainPanel.Widths = [30 -1];
+            end
             
             % once each panel has been resized, setup image magnification
             if ~isempty(this.imageData)

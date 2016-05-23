@@ -50,10 +50,10 @@ function [res, permInds, flipInds] = imRotate90(img, number, axis)
 %
 %   See also
 %   imFlip, rot90
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2012-05-18,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -94,11 +94,11 @@ res = permute(img, permInds2);
 if verLessThan('matlab', '8.4.0')
     % use old function 'flipdim'
     for i = 1:length(flipInds2)
-        res = flipdim(img, flipInds2(i)); %#ok<DFLIPDIM>
+        res = flipdim(res, flipInds2(i)); %#ok<DFLIPDIM>
     end
 else
     for i = 1:length(flipInds2)
-        res = flip(img, flipInds2(i));
+        res = flip(res, flipInds2(i));
     end
 end
 

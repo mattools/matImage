@@ -1,7 +1,7 @@
 function [gr, vols] = imGranuloByRegion(img, lbl, granuloType, strelShape, strelSizes)
 %IMGRANULOBYREGION Granulometry curve for each region of label image
 %
-%   GRANULO = imGranulo(IMG, GRTYPE, STRELSHAPE, SIZES)
+%   GRANULO = imGranulo(IMG, ROILIST, GRTYPE, STRELSHAPE, SIZES)
 %
 %   Example
 %     % Compute granulometric curve by ope,ing on rice image
@@ -29,11 +29,17 @@ labels = unique(lbl(:));
 labels(labels==0) = [];
 nLabels = length(labels);
 
+% initialize list of indices for each ROI to accelerate computation of
+% granulometry curves
+indList = cell(nLabels, 1);
+for j = 1:nLabels
+    indList{j} = find(lbl == labels(j));
+end
 
 % compute reference volume
 vols0 = zeros(nLabels, 1);
 for j = 1:nLabels
-    vols0(j) = sum(img(lbl == labels(j)));
+    vols0(j) = sum(img(indList{j}));
 end
 
 % allocate memory
@@ -42,7 +48,6 @@ vols(:, 1) = vols0;
 
 % iterate over strel sizes
 for i = 1:nSizes
-    
     radius = strelSizes(i);
     diam = 2 * radius + 1;
     
@@ -73,11 +78,11 @@ for i = 1:nSizes
     
     % compute local volumes
     for j = 1:nLabels
-        vols(j, i+1) = sum(img2(lbl == labels(j)));
+        vols(j, i+1) = sum(img2(indList{j}));
     end
 end
 
-% compute granulometry curve
+% compute granulometry curve by finit difference of local volumes
 vols2 = bsxfun(@rdivide, bsxfun(@minus, vols, vols0) , vols(:, end) - vols0);
 gr = 100 * diff(vols2')';
 

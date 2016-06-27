@@ -36,15 +36,23 @@ function [circle, labels] = imEnclosingCircle(img, varargin)
 %     drawCircle(circles, 'linewidth', 2, 'color', 'g');
 %
 %   See also
-%     drawCircle, imInscribedCircle, imInertiaEllipse, imInertiaEllipse
+%     drawCircle, enclosingCircle
+%     imInscribedCircle, imInertiaEllipse, imInertiaEllipse
+%     
+%   References
+%   Based on a file from Yazan Ahed (yash78@gmail.com)
+%   which was rewritten from a Java applet by Shripad Thite:
+%   http://heyoka.cs.uiuc.edu/~thite/mincircle/
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@nantes.inra.fr
 % Created: 2012-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
-%% extract spatial calibration
+
+%% Extract spatial calibration
 
 % default values
 spacing = [1 1];
@@ -89,12 +97,6 @@ for i = 1:nLabels
     % extract points of the current particle
     [y, x] = find(img==labels(i));
 
-    % transform to physical space if needed
-    if calib
-        x = (x-1) * spacing(1) + origin(1);
-        y = (y-1) * spacing(2) + origin(2);
-    end
-    
     % works on convex hull (faster), or on original points if the hull
     % could not be computed
     try 
@@ -102,6 +104,21 @@ for i = 1:nLabels
         pts = [x(inds) y(inds)];
     catch %#ok<CTCH>
         pts = [x y];
+    end
+    
+    % works on pixel corners rather than on pixel centers
+    x = pts(:,1);
+    y = pts(:,2);
+    pts = [x-0.5 y-0.5 ; x+0.5 y-0.5 ; x-0.5 y+0.5 ; x+0.5 y+0.5];
+    
+    % convex hull again, to remove duplicates
+    inds = convhull(pts(:,1), pts(:,2));
+    pts = pts(inds, :);
+    
+    % transform to physical space if needed
+    if calib
+        pts(:,1) = (pts(:,1)-1) * spacing(1) + origin(1);
+        pts(:,2) = (pts(:,2)-1) * spacing(2) + origin(2);
     end
     
     circle(i,:) = recurseCircle(size(pts, 1), pts, 1, zeros(3, 2));

@@ -56,7 +56,7 @@ if n < 256
     typ = 'uint8';
 elseif n < power(2, 16)
     typ = 'uint16';
-elseif n < power(2, 32);
+elseif n < power(2, 32)
     typ = 'uint32';
 else
     typ = 'uint64';

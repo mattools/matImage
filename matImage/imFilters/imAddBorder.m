@@ -39,10 +39,10 @@ function res = imAddBorder(img, pad, varargin)
 %   See also
 %   padarray (does nearly similar job)
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2007-08-24,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2007 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
 
@@ -86,7 +86,7 @@ if isPlanar
     if islogical(img)
         res = false(dim2);
     else
-        res = ones(dim2, class(img)); %#ok<ZEROLIKE>
+        res = ones(dim2, class(img));
     end
     
     % fill result with background color
@@ -123,7 +123,7 @@ elseif length(dim) - isColor == 3
     if islogical(img)
         res = false(dim2);
     else
-        res = ones(dim2, class(img)); %#ok<ZEROLIKE>
+        res = ones(dim2, class(img));
     end
     
     % fill result with background color

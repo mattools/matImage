@@ -17,7 +17,7 @@ function res = imLUT(img, lut)
 
 %   HISTORY
 
-res = zeros(size(img), class(lut)); %#ok<ZEROLIKE>
+res = zeros(size(img), class(lut));
 for i = 0:length(lut)-1
     res(img==i) = lut(i+1);
 end

@@ -13,7 +13,7 @@ function [res, index] = imKirschFilter(img)
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2015-05-06,    using Matlab 8.4.0.150421 (R2014b)
 % Copyright 2015 INRA - Cepia Software Platform.
 
@@ -28,7 +28,7 @@ g8 = [-3  5  5 ; -3 0  5 ; -3 -3 -3];
 
 kernels = {g1, g2, g3, g4, g5, g6, g7, g8};
 
-res = zeros(size(img), class(img)); %#ok<ZEROLIKE>
+res = zeros(size(img), class(img));
 index = zeros(size(img), 'int8');
 for i = 1:8
     imgf = imfilter(img, kernels{i}, 'replicate');

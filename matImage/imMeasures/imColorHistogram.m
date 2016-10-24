@@ -28,7 +28,7 @@ function histo = imColorHistogram(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2013-01-10,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
@@ -65,7 +65,7 @@ if ndims(img) == 3
     if isempty(roi)
         % process the whole image
         for i = 1:size(img, 1)
-            for j = 1:size(img, 2);
+            for j = 1:size(img, 2)
                 ir = floor(double(img(i, j, 1)) * ratio) + 1;
                 ig = floor(double(img(i, j, 2)) * ratio) + 1;
                 ib = floor(double(img(i, j, 3)) * ratio) + 1;
@@ -76,7 +76,7 @@ if ndims(img) == 3
     else
         % Process only pixels within the ROI
         for i = 1:size(img, 1) 
-            for j = 1:size(img, 2);
+            for j = 1:size(img, 2)
                 if ~roi(i,j)
                     continue;
                 end
@@ -95,8 +95,8 @@ elseif ndims(img) == 4
     if isempty(roi)
         % process the whole image
         for i = 1:size(img, 1)
-            for j = 1:size(img, 2);
-                for k = 1:size(img, 4);
+            for j = 1:size(img, 2)
+                for k = 1:size(img, 4)
                     ir = floor(double(img(i, j, 1, k)) * ratio) + 1;
                     ig = floor(double(img(i, j, 2, k)) * ratio) + 1;
                     ib = floor(double(img(i, j, 3, k)) * ratio) + 1;
@@ -109,8 +109,8 @@ elseif ndims(img) == 4
     else
         % process only voxels within the ROI
         for i = 1:size(img, 1)
-            for j = 1:size(img, 2);
-                for k = 1:size(img, 4);
+            for j = 1:size(img, 2)
+                for k = 1:size(img, 4)
                     if ~roi(i,j,k)
                         continue;
                     end

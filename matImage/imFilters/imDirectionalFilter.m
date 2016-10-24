@@ -29,7 +29,7 @@ function res = imDirectionalFilter(img, varargin)
 %
 %   See also
 %   imopen, imclose, imMeanFilter, imMedianFilter
-%
+
 %   ---------
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
@@ -108,7 +108,7 @@ if strcmp(op2, 'max')
     if islogical(img)
         res = false(size(img));
     else
-        res = zeros(size(img), class(img)); %#ok<ZEROLIKE>
+        res = zeros(size(img), class(img));
     end
     
 elseif strcmp(op2, 'min')

@@ -34,7 +34,7 @@ function rgb = double2rgb(img, map, bounds, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-03-03,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
@@ -82,7 +82,7 @@ if length(dim) == 2
 else
     % case of 3D image: need to play with channels
     dim2 = [dim(1:2) 3 dim(3:end)];
-    rgb = zeros(dim2, class(map)); %#ok<ZEROLIKE>
+    rgb = zeros(dim2, class(map));
     rgb(:,:,1,:) = r;
     rgb(:,:,2,:) = g;
     rgb(:,:,3,:) = b;

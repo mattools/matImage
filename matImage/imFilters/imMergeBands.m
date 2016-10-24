@@ -53,7 +53,7 @@ if nd == 2
     if islogical(ref)
         rgb = false([dim 3]);
     else
-        rgb = zeros([dim 3], class(ref)); %#ok<ZEROLIKE>
+        rgb = zeros([dim 3], class(ref));
     end
     
     % fill result with data
@@ -66,7 +66,7 @@ elseif nd == 3
     if islogical(ref)
         rgb = false(newDim);
     else
-        rgb = zeros(newDim, class(ref)); %#ok<ZEROLIKE>
+        rgb = zeros(newDim, class(ref));
     end
     
     % fill result with data

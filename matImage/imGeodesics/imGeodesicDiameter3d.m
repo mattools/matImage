@@ -137,8 +137,8 @@ markers = false(size(img));
 for i = 1:n
     % find the pixel with greatest distance in current label
     inds = find(img == i);
-    [maxVal indMax] = max(dist(img==i)); %#ok<ASGLU>
-    [yi xi zi] = ind2sub(size(img), inds(indMax));
+    [maxVal, indMax] = max(dist(img==i)); %#ok<ASGLU>
+    [yi, xi, zi] = ind2sub(size(img), inds(indMax));
     markers(yi, xi, zi) = true;
 end
 
@@ -157,8 +157,8 @@ markers = false(size(img));
 for i = 1:n
     % find the pixel with greatest distance in current label
     inds = find(img == i);
-    [maxVal indMax] = max(dist(img==i)); %#ok<ASGLU>
-    [yi xi zi] = ind2sub(size(img), inds(indMax));
+    [maxVal, indMax] = max(dist(img==i)); %#ok<ASGLU>
+    [yi, xi, zi] = ind2sub(size(img), inds(indMax));
     markers(yi, xi, zi) = true;
 end
 

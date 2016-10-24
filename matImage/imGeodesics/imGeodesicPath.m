@@ -100,8 +100,8 @@ dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 % find position of closest point belonging to the source
 if sum(size(source) == size(img)) == 2
     % compute in a binary mask
-    [minDist ind] = min(dist(source));
-    [ys xs] = ind2sub(size(source), ind);
+    [minDist, ind] = min(dist(source));
+    [ys, xs] = ind2sub(size(source), ind);
     
 else
     % initialize from set of points
@@ -145,7 +145,7 @@ while true
     neigh = dist(y-1:y+1, x-1:x+1);
     
     % look for the minimum
-    [mini ind] = min(neigh(:));
+    [mini, ind] = min(neigh(:));
     
     % if minimum is the same as current value, minima is found
     if mini == dist(y, x)
@@ -153,7 +153,7 @@ while true
     end
     
     % convert index to sub
-    [iy ix] = ind2sub([3 3], ind(1));
+    [iy, ix] = ind2sub([3 3], ind(1));
     
     % update coord
     x = x + ix - 2;

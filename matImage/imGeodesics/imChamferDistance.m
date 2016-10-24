@@ -270,7 +270,7 @@ while modif
     end % iteration on lines
 
     % check end of iteration
-    if ~modif && nIter ~= 1;
+    if ~modif && nIter ~= 1
         break;
     end
     

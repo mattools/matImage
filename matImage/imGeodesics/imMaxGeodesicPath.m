@@ -74,13 +74,13 @@ img = img > 0;
 %% Initialization: find a point far enough from border
 
 % extract coordinates of image pixels
-[y x] = find(img);
+[y, x] = find(img);
 
 % compute distance map from particle boundary
 dist    = imChamferDistance(img, ws);
 
 % index of "central" pixel, i.e. the furthest pixel from boundary
-[maxVal ind] = max(dist(img)); %#ok<ASGLU>
+[maxVal, ind] = max(dist(img)); %#ok<ASGLU>
 ind = ind(1);
 
 
@@ -94,7 +94,7 @@ markers(y(ind), x(ind)) = true;
 dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 
 % find index of furthest point
-[maxVal ind] = max(dist(img)); %#ok<ASGLU>
+[maxVal, ind] = max(dist(img)); %#ok<ASGLU>
 ind = ind(1);
 
 
@@ -108,7 +108,7 @@ markers(y(ind), x(ind)) = true;
 dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 
 % find index of furthest point
-[maxVal ind] = max(dist(img)); %#ok<ASGLU>
+[maxVal, ind] = max(dist(img)); %#ok<ASGLU>
 ind = ind(1);
 
 
@@ -132,7 +132,7 @@ while true
     neigh = dist(y-1:y+1, x-1:x+1);
     
     % look for the minimum
-    [mini ind] = min(neigh(:));
+    [mini, ind] = min(neigh(:));
     
     % if minimum is the same as current value, minima is found
     if mini == dist(y, x)
@@ -140,7 +140,7 @@ while true
     end
     
     % convert index to sub
-    [iy ix] = ind2sub([3 3], ind(1));
+    [iy, ix] = ind2sub([3 3], ind(1));
     
     % update coord
     x = x + ix - 2;

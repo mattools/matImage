@@ -19,8 +19,8 @@ function gl = geodesicLength(img, varargin)
 %   A definition for the geodesic length can be found in the book from
 %   Coster & Chermant : "Precis d'analyse d'images", Ed. CNRS 1989.
 %
+
 %   ---------
-%
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 06/07/2005.
@@ -35,7 +35,7 @@ warning('malimpa:deprecated', ...
 
 
 % default structuring element
-if ndims(img)==2
+if ndims(img) == 2 %#ok<ISMAT>
     se = [0 1 0;1 1 1;0 1 0];
 else
     se = cross3d;
@@ -44,15 +44,15 @@ end
 % get connectivity from input parameter
 if ~isempty(varargin)
     var = varargin{1};
-    if length(var)==1
+    if length(var) == 1
         if var == 4
-            if ndims(img)==2
+            if ndims(img) == 2 %#ok<ISMAT>
                 se = [0 1 0;1 1 1;0 1 0];
             else
                 se = cross3d;
             end
         elseif var == 8
-            if ndims(img)==2
+            if ndims(img) == 2 %#ok<ISMAT>
                 se = ones(3, 3);
             else
                 se = ones([3 3 3]);
@@ -74,27 +74,27 @@ dim = size(img);
 n = max(img(:));
 
 gl = zeros(n, 1);
-for i=1:n
+for i = 1:n
     im = img==i;
     
     % initialize a random germ inside particle
     im0 = zeros(size(im));
-    if ndims(img)==2
-        [y x] = ind2sub(dim, find(im, 1, 'first'));
+    if ndims(img) == 2 %#ok<ISMAT>
+        [y, x] = ind2sub(dim, find(im, 1, 'first'));
         im0(y, x) = 1;
     else
-        [y x z] = ind2sub(dim, find(im, 1, 'first'));
+        [y, x, z] = ind2sub(dim, find(im, 1, 'first'));
         im0(y, x, z) = 1;
     end    
     imd = im0;
     
     % iterate as long as we can dilate under the mask
-    d=1;
-    while sum(imd(:))>0
-        imd = imdilate(im0>0, se) & im & ~im0;
+    d = 1;
+    while sum(imd(:)) > 0
+        imd = imdilate(im0 > 0, se) & im & ~im0;
         
-        d = d+1;
-        im0(imd)=d;
+        d = d + 1;
+        im0(imd) = d;
     end
     
 %     % find furthest point
@@ -107,12 +107,12 @@ for i=1:n
     
     % initialize a random germ inside particle
     maxd = max(im0(:));
-    if ndims(img)==2
-        [y x] = ind2sub(dim, find(im0==maxd, 1, 'first'));
+    if ndims(img)==2 %#ok<ISMAT>
+        [y, x] = ind2sub(dim, find(im0==maxd, 1, 'first'));
         im0 = zeros(size(im));
         im0(y, x) = 1;
     else
-        [y x z] = ind2sub(dim, find(im0==maxd, 1, 'first'));
+        [y, x, z] = ind2sub(dim, find(im0==maxd, 1, 'first'));
         im0 = zeros(size(im));
         im0(y, x, z) = 1;
     end    
@@ -120,12 +120,12 @@ for i=1:n
 
     
     % iterate as long as we can dilate under the mask
-    d=1;
-    while sum(imd(:))>0
-        imd = imdilate(im0>0, se) & im & ~im0;
+    d = 1;
+    while sum(imd(:)) > 0
+        imd = imdilate(im0 > 0, se) & im & ~im0;
         
-        d = d+1;
-        im0(imd)=d;
+        d = d + 1;
+        im0(imd) = d;
     end
     
     gl(i) = max(im0(:));

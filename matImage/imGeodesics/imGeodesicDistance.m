@@ -1,4 +1,4 @@
-function [res labels1 labels2] = imGeodesicDistance(mask, marker1, marker2, varargin)
+function [res, labels1, labels2] = imGeodesicDistance(mask, marker1, marker2, varargin)
 %IMGEODESICDISTANCE Compute geodesic distance between 2 markers
 %
 %   RES = imGeodesicDistance(MASK, MARKER1, MARKER2);
@@ -53,7 +53,7 @@ N2 = length(labels2);
 res = zeros(N1, N2);
 
 % iterate on labels of first marker image
-if ndims(mask) == 2
+if ndims(mask) == 2 %#ok<ISMAT>
     for i = 1:N1
         dist = imChamferDistance(mask, marker1==labels1(i), varargin{:});
 

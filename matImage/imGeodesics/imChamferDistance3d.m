@@ -182,7 +182,7 @@ end
 dist(markers) = 0;
 
 % size of image
-[D1 D2 D3] = size(img);
+[D1, D2, D3] = size(img);
 
 
 %% Iterations until no more changes
@@ -230,7 +230,7 @@ while modif
     end % iteration on planes
 
     % check end of iteration
-    if modif == false && nIter ~= 1;
+    if modif == false && nIter ~= 1
         break;
     end
     

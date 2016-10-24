@@ -8,6 +8,7 @@
 %   expand        - expand size of a matrix, repeating each coefficient
 %   concat        - concatenate two arrays, with shift
 %   ll            - equivalent of unix alias ll, or ls -lis
+%   ensureDirExists - Create a directory if it does not exist
 %
 %   Math
 %   dividers      - compute dividers of an integer

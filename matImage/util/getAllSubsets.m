@@ -23,10 +23,10 @@ function subsets = getAllSubsets(elements, varargin)
 %   NOTE:
 %   Current implementation can be time-consuming for large data sets
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@jouy.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2006-04-21
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -39,19 +39,19 @@ n = length(elements);
 orders = 1:n;
 
 % process input arguments
-if length(varargin)>0
+if ~isempty(varargin)
     orders = varargin{1};
 end
 
 % initialize empty arrays, sorted by number of elements
-for i=1:length(orders)
-    subsets{i} = zeros(0, orders(i));
+for i = 1:length(orders)
+    subsets{i} = zeros(0, orders(i)); %#ok<AGROW>
 end
 
 nbSets = 0;
 
 % loop over all possible inclusion/exclusions of all elements.
-for i=0:power(2, n)-1
+for i = 0:power(2, n)-1
     % work on a binary representation with n digits
     bin = dec2bin(i, n);
     bin = bin(n:-1:1);
@@ -68,26 +68,26 @@ for i=0:power(2, n)-1
     end      
     
     % add this subset to the list of subsets with p elements
-    sets = subsets{find(orders==p)};
-    sets = [sets; elements(ind)];
-    subsets{find(orders==p)} = sets;
+    sets = subsets{orders==p};
+    sets = [sets; elements(ind)]; %#ok<AGROW>
+    subsets{orders==p} = sets;
     nbSets = nbSets + 1;
 end
 
 
 % process output arguments
-if length(orders)==1
+if length(orders) == 1
     subsets = sortrows(sort(subsets{1}, 2));
 else
     % subsets are stored in a cell array of [NxP] arrays
     % this converts it to a cell array of subsets.
     sets = cell(1, nbSets);
     n = 1;
-    for i=1:length(subsets)
+    for i = 1:length(subsets)
         subset = sortrows(sort(subsets{i}, 2));
-        for j=1:size(subset, 1)
+        for j = 1:size(subset, 1)
             sets{n} = subset(j, :);
-            n = n+1;
+            n = n + 1;
         end
     end
     subsets = sets;

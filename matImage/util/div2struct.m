@@ -1,5 +1,6 @@
 function div = div2struct(data, varargin)
-%DIV2STRUCT  One-line description here, please.
+%DIV2STRUCT Convert a DIV data structure to 
+%
 %   output = div2struct(input)
 %
 %   Example
@@ -7,16 +8,16 @@ function div = div2struct(data, varargin)
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@jouy.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2006-06-08
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
 
-% get input parameters
-if length(varargin)==2
+% get row and column names
+if length(varargin) == 2
     ind = varargin{1};
     var = varargin{2};
 else
@@ -28,31 +29,27 @@ end
 if isnumeric(ind)
     num = ind(:);
     ind = cell(length(num), 1);
-    for i=1:length(num)
+    for i = 1:length(num)
         ind{i} = num2char(ind(i));
     end
 elseif ischar(ind)
-    str = ind;
-    ind = cell(length(num), 1);
-    for i=1:size(str, 1)
-        ind{i} = strtrim(str(i,:));
-    end
+    ind = cellstr(ind);
 end
 
 % ensure 'var' is a cell array of strings
-if isnumeric(ind)
-    num = ind(:);
-    ind = cell(length(num), 1);
+if isnumeric(var)
+    num = var(:);
+    var = cell(length(num), 1);
     for i=1:length(num)
-        ind{i} = num2char(ind(i));
+        var{i} = num2char(var(i));
     end
-elseif ischar(ind)
-    str = ind;
-    ind = cell(length(num), 1);
-    for i=1:size(str, 1)
-        ind{i} = strtrim(str(i,:));
-    end
+elseif ischar(var)
+    var = cellstr(var);
 end
 
+% create final DIV structure
+div.d = data;
+div.i = ind;
+div.v = var;
 
 

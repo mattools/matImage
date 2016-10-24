@@ -12,11 +12,11 @@ function img = readVoxelMatrix(fname, varargin)
 %     Slicer(IMG);
 %
 %   See also
-%
-%
+%     readMetaImage
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2012-03-16,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -47,7 +47,7 @@ version = 0;
 if sum(dim) <= 0
     disp('reading new voxel matrix format');
     
-    version = fread(f, 1, 'int32'); %#ok<NASGU>
+    version = fread(f, 1, 'int32');
     typeIndex = fread(f, 1, 'int32');
     switch typeIndex
         case 1

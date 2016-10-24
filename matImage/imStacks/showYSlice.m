@@ -43,14 +43,14 @@ vz = ((0:dim(3)) + .5);
 params = {'facecolor', 'texturemap', 'edgecolor', 'none'};
 
 % compute position of voxel vertices in 3D space
-[zx_z zx_x] = meshgrid(vz, vx);
+[zx_z, zx_x] = meshgrid(vz, vx);
 zx_y = ones(size(zx_x)) * ly(sliceIndex);
 
 % extract slice in y direction
 slice = stackSlice(img, 'y', sliceIndex);
 
 % eventually converts to uint8, rescaling data between 0 and max value
-if ~strcmp(class(slice), 'uint8')
+if ~isa(slice, 'uint8')
     slice = double(slice);
     slice = uint8(slice * 255 / max(slice(:)));
 end

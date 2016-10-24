@@ -1,4 +1,4 @@
-function [img permInds flipInds] = stackRotate90(img, axis, varargin)
+function [img, permInds, flipInds] = stackRotate90(img, axis, varargin)
 %STACKROTATE90 Rotate a 3D image by 90 degrees around one image axis
 %
 %   RES = stackRotate90(IMG, AXIS);
@@ -31,9 +31,10 @@ function [img permInds flipInds] = stackRotate90(img, axis, varargin)
 %   See also
 %   imStacks, rotateStack90
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-05-18,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2010 INRA - Cepia Software Platform.
@@ -43,7 +44,7 @@ function [img permInds flipInds] = stackRotate90(img, axis, varargin)
 axis = parseAxisIndex(axis);
 
 % get rotation parameters in xyz ordering
-[permInds flipInds] = getStackRotate90Params(axis, varargin{:});
+[permInds, flipInds] = getStackRotate90Params(axis, varargin{:});
 
 % check if image is color
 colorImage = length(size(img)) > 3;
@@ -63,6 +64,6 @@ img = permute(img, permInds2);
 
 % depending on rotation, some dimensions must be fliped
 for i=1:length(flipInds2)
-    img = flipdim(img, flipInds2(i));
+    img = flip(img, flipInds2(i));
 end
 

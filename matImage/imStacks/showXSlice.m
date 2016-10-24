@@ -17,10 +17,10 @@ function varargout = showXSlice(img, sliceIndex)
 %
 %   See also
 %   showYSlice, showZSlice, getSlice
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-06-30,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2010 INRA - Cepia Software Platform.
@@ -41,14 +41,14 @@ vz = ((0:dim(3)) + .5);
 params = {'facecolor', 'texturemap', 'edgecolor', 'none'};
 
 % compute position of voxel vertices in 3D space
-[yz_y yz_z] = meshgrid(vy, vz);
+[yz_y, yz_z] = meshgrid(vy, vz);
 yz_x = ones(size(yz_y)) * lx(sliceIndex);
 
 % extract slice in x direction
 slice = stackSlice(img, 'x', sliceIndex);
 
 % eventually converts to uint8, rescaling data between 0 and max value
-if ~strcmp(class(slice), 'uint8')
+if ~isa(slice, 'uint8')
     slice = double(slice);
     slice = uint8(slice * 255 / max(slice(:)));
 end

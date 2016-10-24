@@ -19,7 +19,7 @@ function res = cropStack(img, box)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2013-07-22,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 
@@ -29,7 +29,7 @@ ly = box(3):box(4);
 lz = box(5):box(6);
 
 % check if image is color
-if length(size(img)) > 3;
+if length(size(img)) > 3
     res = img(ly, lx, :, lz);
 else
     res = img(ly, lx, lz);

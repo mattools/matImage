@@ -62,10 +62,10 @@ function info = metaImageInfo(fileName, varargin)
 %
 %   See also
 %   metaImageRead, readstack, analyze75info
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-01-27,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2010 INRA - Cepia Software Platform.
@@ -110,7 +110,7 @@ end
 %% Initialisations
 
 % extract key and value of current line
-[tag string] = splitLine(fgetl(f));
+[tag, string] = splitLine(fgetl(f));
 
 % check header file contains an image
 if ~strcmp(tag, 'ObjectType') || ~strcmp(string, 'Image')
@@ -142,7 +142,7 @@ while true
     end
 
     % extract key and value of current line
-    [tag string] = splitLine(line);
+    [tag, string] = splitLine(line);
     
     % extract each possible tag
     switch tag
@@ -284,8 +284,8 @@ else
 end
 
 
-function [tag string] = splitLine(line)
-[tag remain] = strtok(line, '=');
+function [tag, string] = splitLine(line)
+[tag, remain] = strtok(line, '=');
 tag = strtrim(tag);
 string = strtrim(strtok(remain, '='));
 

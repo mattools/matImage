@@ -770,7 +770,7 @@ methods
             
             norm = zeros(dim([1 2 4]));
             
-            for i = 1:dim(3);
+            for i = 1:dim(3)
                 norm = norm + squeeze(this.imageData(:,:,i,:)) .^ 2;
             end
             

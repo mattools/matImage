@@ -32,9 +32,10 @@ function hs = slice3d(img, dim, index, varargin)
 %   Largely inspired by file 'slice3i' from Anders Brun, see FEx:
 %   http://www.mathworks.fr/matlabcentral/fileexchange/25923
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-03-02,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -111,7 +112,7 @@ switch dim
         % compute coords of u and v
         vy = ((0:siz(2)) + .5);
         vz = ((0:siz(3)) + .5);
-        [ydata zdata] = meshgrid(vy, vz);
+        [ydata, zdata] = meshgrid(vy, vz);
         
         % coord of slice supporting plane
         lx = 1:siz(1);
@@ -123,7 +124,7 @@ switch dim
         % compute coords of u and v
         vx = ((0:siz(1)) + .5);
         vz = ((0:siz(3)) + .5);
-        [zdata xdata] = meshgrid(vz, vx);
+        [zdata, xdata] = meshgrid(vz, vx);
 
         % coord of slice supporting plane
         ly = 1:siz(2);
@@ -135,7 +136,7 @@ switch dim
         % compute coords of u and v
         vx = ((0:siz(1)) + .5);
         vy = ((0:siz(2)) + .5);
-        [xdata ydata] = meshgrid(vx, vy);
+        [xdata, ydata] = meshgrid(vx, vy);
         
         % coord of slice supporting plane
         lz = 1:siz(3);
@@ -346,7 +347,7 @@ else
             % compute coords of u and v
             vy = ((0:imgSize(1)) + .5);
             vz = ((0:imgSize(3)) + .5);
-            [ydata zdata] = meshgrid(vy, vz);
+            [ydata, zdata] = meshgrid(vy, vz);
 
             lx = 1:imgSize(2);
             xdata = ones(meshSize) * lx(index);
@@ -355,7 +356,7 @@ else
             % compute coords of u and v
             vx = ((0:imgSize(2)) + .5);
             vz = ((0:imgSize(3)) + .5);
-            [zdata xdata] = meshgrid(vz, vx);
+            [zdata, xdata] = meshgrid(vz, vx);
 
             ly = 1:imgSize(1);
             ydata = ones(meshSize) * ly(index);
@@ -364,7 +365,7 @@ else
             % compute coords of u and v
             vx = ((0:imgSize(2)) + .5);
             vy = ((0:imgSize(1)) + .5);
-            [xdata ydata] = meshgrid(vx, vy);
+            [xdata, ydata] = meshgrid(vx, vy);
 
             lz = 1:imgSize(3);
             zdata = ones(meshSize) * lz(index);

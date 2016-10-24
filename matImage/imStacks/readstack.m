@@ -1,4 +1,4 @@
-function [img map] = readstack(fname, varargin)
+function [img, map] = readstack(fname, varargin)
 %READSTACK Read either a list of 2D images (slices), or a 3D image
 %
 %   Syntax
@@ -55,11 +55,10 @@ function [img map] = readstack(fname, varargin)
 %
 
 %   ---------
-%   author: David Legland, david.legland(at)grignon.inra.fr
+%   author: David Legland, david.legland(at)inra.fr
 %   INRA - Cepia Software Platform
 %   created the 10/09/2003.
 %   http://www.pfl-cepia.inra.fr/index.php?page=slicer
-%   Licensed under the terms of the new BSD license, see file license.txt
 
 %   HISTORY 
 %   16/02/2004 adapt to read image with name containing several '00'
@@ -211,14 +210,14 @@ if bundle
 
     if verbose
         msg = sprintf('read %d slices in a stack', length(range)); 
-        disp(msg);
+        disp(msg); %#ok<DSPS>
     end
     
     % read first slice of the 3D image to get width, height, and bit depth
     if nargout < 2
         img = imread(fname, range(1));
     else
-        [img map] = imread(fname, range(1));
+        [img, map] = imread(fname, range(1));
     end
     
     if ndims(img) == 2   %#ok<ISMAT> % read gray scale images -----
@@ -297,7 +296,7 @@ end
 
 if verbose
     msg = sprintf('read slices from %d to %d', range(1), range(end));
-    disp(msg);
+    disp(msg); %#ok<DSPS>
 end
 
 % Read each slice of the image
@@ -314,7 +313,7 @@ end
 if nargout < 2
     img = imread(sprintf(string, range(1)));
 else
-    [img map] = imread(sprintf(string, range(1)));
+    [img, map] = imread(sprintf(string, range(1)));
 end
 
 % read each image one after the other

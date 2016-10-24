@@ -322,8 +322,8 @@ point = point(1, 1:2);
 % convert indices to physical coordinates
 xdata = dataFig.bases{dir1};
 ydata = dataFig.bases{dir2};
-[mini pos(dir1)] = min((xdata - point(1)).^2); %#ok<ASGLU>
-[mini pos(dir2)] = min((ydata - point(2)).^2); %#ok<ASGLU>
+[mini, pos(dir1)] = min((xdata - point(1)).^2); %#ok<ASGLU>
+[mini, pos(dir2)] = min((ydata - point(2)).^2); %#ok<ASGLU>
 
 
 dataFig.pos = pos;
@@ -386,8 +386,8 @@ dir2 = imgData.dir2;
 % convert indices to physical coordinates
 xdata = data.bases{dir1};
 ydata = data.bases{dir2};
-[mini pos(dir1)] = min((xdata - point(1)) .^ 2); %#ok<ASGLU>
-[mini pos(dir2)] = min((ydata - point(2)) .^ 2); %#ok<ASGLU>
+[mini, pos(dir1)] = min((xdata - point(1)) .^ 2); %#ok<ASGLU>
+[mini, pos(dir2)] = min((ydata - point(2)) .^ 2); %#ok<ASGLU>
 
 % update data for current figure
 data.pos = pos;

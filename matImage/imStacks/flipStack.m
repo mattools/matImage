@@ -21,9 +21,10 @@ function img = flipStack(img, axis)
 %   See also
 %   imStacks, rotateStack90
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-05-18,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2010 INRA - Cepia Software Platform.
@@ -39,4 +40,4 @@ colorImage = length(size(img)) > 3;
 flipInd = xyz2ijk(axis, colorImage);
 
 % flip the inner array
-img = flipdim(img, flipInd);
+img = flip(img, flipInd);

@@ -1,4 +1,4 @@
-function [img info] = metaImageRead(info, varargin)
+function [img, info] = metaImageRead(info, varargin)
 %METAIMAGEREAD Read an image in MetaImage format
 %
 %   IMG = metaImageRead(INFO)
@@ -29,10 +29,10 @@ function [img info] = metaImageRead(info, varargin)
 %
 %   See also
 %   metaImageInfo, readstack, analyze75info
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-01-27,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2010 INRA - Cepia Software Platform.
@@ -68,11 +68,11 @@ end
 %% Pre-compute variables
 
 % determines pixel type
-[pixelType isArrayType] = parseMetaType(info.ElementType);
+[pixelType, isArrayType] = parseMetaType(info.ElementType);
 
 % determines number of channels
 nChannels = 1;
-if isfield(info, 'ElementNumberOfChannels');
+if isfield(info, 'ElementNumberOfChannels')
     nChannels = info.ElementNumberOfChannels;
 end
 if nChannels > 1
@@ -153,7 +153,7 @@ else
     error('Unknown type of filename');
 end
 
-function [type isArray] = parseMetaType(string)
+function [type, isArray] = parseMetaType(string)
 
 % % determines if the data type is an array or a scalar
 % isArray = false;

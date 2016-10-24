@@ -129,7 +129,7 @@ methods
         
         % eventually compute grayscale extent
         if ~strcmp(this.imageType, 'color')
-            [mini maxi] = computeGrayScaleExtent(this);
+            [mini, maxi] = computeGrayScaleExtent(this);
             this.displayRange  = [mini maxi];
         end
         
@@ -279,7 +279,7 @@ methods
                 % compute coords of u and v
                 vy = ((0:siz(2)) - .5);
                 vz = ((0:siz(3)) - .5);
-                [ydata zdata] = meshgrid(vy, vz);
+                [ydata, zdata] = meshgrid(vy, vz);
 
                 % coord of slice supporting plane
                 lx = 0:siz(1);
@@ -291,7 +291,7 @@ methods
                 % compute coords of u and v
                 vx = ((0:siz(1)) - .5);
                 vz = ((0:siz(3)) - .5);
-                [zdata xdata] = meshgrid(vz, vx);
+                [zdata, xdata] = meshgrid(vz, vx);
 
                 % coord of slice supporting plane
                 ly = 0:siz(2);
@@ -303,7 +303,7 @@ methods
                 % compute coords of u and v
                 vx = ((0:siz(1)) - .5);
                 vy = ((0:siz(2)) - .5);
-                [xdata ydata] = meshgrid(vx, vy);
+                [xdata, ydata] = meshgrid(vx, vy);
 
                 % coord of slice supporting plane
                 lz = 0:siz(3);
@@ -505,12 +505,12 @@ methods
     end
 
 
-    function alphabeta = computeAlphaBeta(this, a, b, s) %#ok<MANU>
+    function alphabeta = computeAlphaBeta(this, a, b, s)  %#ok<INUSL>
         dab = b - a;
         alphabeta = pinv([s'*s -s'*dab ; dab'*s -dab'*dab]) * [s'*a dab'*a]';
     end
 
-    function pos = posProjRayOnRay(this, ray1, ray2) %#ok<MANU>
+    function pos = posProjRayOnRay(this, ray1, ray2)  %#ok<INUSL>
         % ray1 and ray2 given as 2-by-3 arrays
         
         u = ray1(2,:) - ray1(1,:);
@@ -529,7 +529,7 @@ end
 
 methods
     %% Some methods for image manipulation (should be factorized)
-    function [mini maxi] = computeGrayScaleExtent(this)
+    function [mini, maxi] = computeGrayScaleExtent(this)
         % compute grayscale extent of this inner image
         
         if isempty(this.imageData)
@@ -556,7 +556,7 @@ methods
             
             norm = zeros(dim([1 2 4]));
             
-            for i = 1:dim(3);
+            for i = 1:dim(3)
                 norm = norm + squeeze(this.imageData(:,:,i,:)) .^ 2;
             end
             
@@ -565,11 +565,11 @@ methods
             
         else
             % for float images, display 99 percents of dynamic
-            [mini maxi] = computeGrayscaleAdjustement(this, .01);            
+            [mini, maxi] = computeGrayscaleAdjustement(this, .01);            
         end
     end
     
-    function [mini maxi] = computeGrayscaleAdjustement(this, alpha)
+    function [mini, maxi] = computeGrayscaleAdjustement(this, alpha)
         % compute grayscale range that maximize vizualisation
         
         if isempty(this.imageData)

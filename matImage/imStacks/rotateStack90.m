@@ -1,4 +1,4 @@
-function [img newInds] = rotateStack90(img, axis, varargin)
+function [img, newInds] = rotateStack90(img, axis, varargin)
 %ROTATESTACK90 Rotate a 3D image by 90 degrees around one image axis
 %
 %   RES = rotateStack90(IMG, AXIS);
@@ -97,5 +97,5 @@ img = permute(img, permInds);
 
 % depending on rotation, some dimensions must be fliped
 for i=1:length(flipInds)
-    img = flipdim(img, flipInds(i));
+    img = flip(img, flipInds(i));
 end

@@ -79,7 +79,7 @@ coord = [...
     ];
 
 % compute direction weights (necessary for anisotropic case)
-if any(delta ~= 1);
+if any(delta ~= 1)
     c = computeDirectionWeights2d4(delta)';
 else
     c = [1 1 1 1] / 4;

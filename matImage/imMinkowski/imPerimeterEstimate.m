@@ -114,7 +114,7 @@ elseif nDirs == 4
     n4 = sum(sum(img(1:D1-1, 2:D2  ) ~= img(2:D1, 1:D2-1) )) ;
     
     % compute direction weights (necessary for anisotropic case)
-    if any(delta ~= 1);
+    if any(delta ~= 1)
         c = computeDirectionWeights2d4(delta)';
     else
         c = [1 1 1 1] / 4;

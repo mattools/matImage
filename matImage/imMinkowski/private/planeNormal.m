@@ -1,5 +1,5 @@
 function n = planeNormal(plane)
-%PLANENORMAL compute the normal to a plane
+%PLANENORMAL Compute the normal to a plane
 %
 %   N = planeNormal(PLANE) 
 %   compute the normal of the given plane
@@ -7,7 +7,7 @@ function n = planeNormal(plane)
 %   N : [dx dy dz]
 %   
 %   See also
-%   planes3d, createPlane
+%   geom3d, planes3d, createPlane
 %
 %   ---------
 %   author : David Legland 
@@ -16,7 +16,10 @@ function n = planeNormal(plane)
 %
 
 %   HISTORY
-
+%   15/04/2013 Extended to N-dim planes by Sven Holcombe
 
 % plane normal
-n = cross(plane(:,4:6), plane(:, 7:9), 2);
+outSz = size(plane);
+outSz(2) = 3;
+n = zeros(outSz);
+n(:) = vectorCross3d(plane(:,4:6,:), plane(:, 7:9,:));

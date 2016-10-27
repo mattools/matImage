@@ -1,5 +1,5 @@
 function line = intersectPlanes(plane1, plane2, varargin)
-%INTERSECTPLANES return intersection between 2 planes in space
+%INTERSECTPLANES Return intersection line between 2 planes in space
 %
 %   LINE = intersectPlanes(PLANE1, PLANE2)
 %   Returns the straight line belonging to both planes.
@@ -21,6 +21,7 @@ function line = intersectPlanes(plane1, plane2, varargin)
 %
 
 %   HISTORY
+
 tol = 1e-14;
 if ~isempty(varargin)
     tol = varargin{1};
@@ -46,11 +47,12 @@ dot1 = dot(n1, n1, 2);
 dot2 = dot(n2, n2, 2);
 dot12 = dot(n1, n2, 2);
 
-
+% intermediate computations
 det = dot1*dot2 - dot12*dot12;
 c1  = (d1*dot2 - d2*dot12)./det;
 c2  = (d2*dot1 - d1*dot12)./det;
 
+% compute line origin and direction
 p0  = c1*n1 + c2*n2;
 dp  = cross(n1, n2, 2);
 

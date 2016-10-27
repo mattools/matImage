@@ -1,4 +1,4 @@
-function [boxes labels] = imBoundingBox(img)
+function [boxes, labels] = imBoundingBox(img, varargin)
 %IMBOUNDINGBOX Bounding box of a binary or label image
 %
 %   BOX = imBoundingBox(IMG)
@@ -36,7 +36,7 @@ function [boxes labels] = imBoundingBox(img)
 %
 %   See also
 %   regionprops, drawBox, imOrientedBox, imInertiaEllipse
-%
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
@@ -49,8 +49,16 @@ function [boxes labels] = imBoundingBox(img)
 
 %% Initialisations
 
+% check if labels are specified
+labels = [];
+if ~isempty(varargin) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
+end
+
 % extract the set of labels, without the background
-labels = imFindLabels(img);
+if isempty(labels)
+    labels = imFindLabels(img);
+end
 nLabels = length(labels);
 
 % allocate memory for result
@@ -62,7 +70,7 @@ if nd == 2
     %% Process planar case 
     for i = 1:nLabels
         % extract points of the current particle
-        [y x] = find(img==labels(i));
+        [y, x] = find(img==labels(i));
 
         % compute extreme coordinates, and add the half-width of the pixel
         xmin = min(x) - .5;
@@ -80,7 +88,7 @@ elseif nd == 3
     for i = 1:nLabels
         % extract points of the current particle
         inds = find(img==labels(i));
-        [y x z] = ind2sub(dim, inds);
+        [y, x, z] = ind2sub(dim, inds);
 
         % compute extreme coordinates, and add the half-width of the pixel
         xmin = min(x) - .5;

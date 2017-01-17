@@ -15,6 +15,7 @@
 %   More specialized modules
 %   imMinkowski     - Geometric measures (Surface, Perimeter...) in 2D or 3D
 %   imGeodesics     - Propagation of geodesic distances in images
+%   imGranulometry  - Compute granulometry curves on grayscale images
 %
 %   utilities
 %   util            - General purpose functions
@@ -25,7 +26,7 @@
 %
 % -----
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % created the  07/11/2005.
 % Copyright INRA - Cepia Software Platform.
 % http://github.com/dlegland/matImage

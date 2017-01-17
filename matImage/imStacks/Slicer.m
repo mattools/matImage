@@ -364,8 +364,7 @@ methods
             end
             
             % scrollable panel for image display
-            scrollPanel = uipanel('Parent', rightPanel, ...
-                'resizeFcn', @this.onScrollPanelResized);
+            scrollPanel = uipanel('Parent', rightPanel);
             
             if ~isempty(this.imageData)
                 ax = axes('parent', scrollPanel, ...
@@ -376,6 +375,7 @@ methods
                 % initialize image display with default image.
                 hIm = imshow(zeros([10 10], 'uint8'), 'parent', ax);
                 this.handles.scrollPanel = imscrollpanel(scrollPanel, hIm);
+                set(scrollPanel, 'resizeFcn', @this.onScrollPanelResized);
 
                 % keep widgets handles
                 this.handles.image = hIm;

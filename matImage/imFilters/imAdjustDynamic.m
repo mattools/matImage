@@ -103,7 +103,7 @@ maxi = max(img(isfinite(img)));
 
 % If the difference is too small, use default range check
 if abs(maxi-mini) < 1e-12
-    warning('imael:imAdjustDynamic', ...
+    warning('matImage:imAdjustDynamic', ...
         'could not determine grayscale extent from data');
     mini = 0;
     maxi = 1;

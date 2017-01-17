@@ -4,10 +4,13 @@
 %   using mathematical morphology operations.
 %
 %
-% Files
-%   granuloMeanSize   - Compute geometric mean of granulometric curve
+% Computation of granulometry curves
 %   imGranulo         - Compute granulometry curve of a given image
 %   imGranuloByRegion - Granulometry curve for each region of label image
+%
+% Analysis of granulometry curves
+%   granuloMeanSize   - Compute geometric mean of granulometric curve
+%   imOrientedGranulo - Gray level granulometry mean size for various orientations
 %
 %
 % References

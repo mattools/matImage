@@ -19,11 +19,11 @@ function gm = granuloMeanSize(tab, xi)
 %         7.7274
 %
 %   See also
-%     imGranulo, imGranuloByRegion
+%     imGranulometry, imGranulo, imGranuloByRegion
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nnates.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2014-05-06,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2014 INRA - Cepia Software Platform.
 

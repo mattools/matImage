@@ -23,15 +23,15 @@ function [gr, vols] = imGranulo(img, granuloType, strelShape, strelSizes, vararg
 %     xlabel('Strel diameter (pixel)'); ylabel('Percentage of Variations');
 %
 %   See also
-%     granuloMeanSize, imGranuloByRegion
+%     imGranulometry, granuloMeanSize, imGranuloByRegion
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2014-05-05,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2014 INRA - Cepia Software Platform.
 
-
+% parse input arguments
 verbose = false;
 while length(varargin) > 1
     switch lower(varargin{1})
@@ -42,7 +42,7 @@ while length(varargin) > 1
     varargin(1:2) = [];
 end
     
-
+% number of structuring element sizes
 nSizes = length(strelSizes);
 
 % allocate memory
@@ -76,7 +76,8 @@ for i = 1:nSizes
         case 'linev'
             se = ones(diam, 1);
         otherwise
-            error(['Could not process strel type: ' strelShape]);
+            error(['matImage:' mfilename], ...
+                ['Could not process strel type: ' strelShape]);
     end
     
     % compute morphological operation
@@ -91,7 +92,8 @@ for i = 1:nSizes
             img2 = imerode(img, se);
             
         otherwise
-            error(['Could not process granulometry type: ' granuloType]);
+            error(['matImage:' mfilename], ...
+                ['Could not process granulometry type: ' granuloType]);
     end
     
     % compute local volume

@@ -12,12 +12,12 @@ function [gr, vols] = imGranuloByRegion(img, lbl, granuloType, strelShape, strel
 %
 %
 %   See also
-%     imGranulo, granuloMeanSize
+%     imGranulometry, imGranulo, granuloMeanSize
 %
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2014-05-05,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2014 INRA - Cepia Software Platform.
 

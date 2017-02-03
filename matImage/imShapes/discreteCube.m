@@ -36,12 +36,12 @@ function img = discreteCube(varargin)
 %   img = discreteCube([1 1 100;1 1 100;1 1 100], [50 50 50 30 10]);
 %
 %   See Also
-%   discreteBall, discreteEllipsoid, discreteCylinder
+%   imShapes, discreteBall, discreteEllipsoid, discreteCylinder, drawCube
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@jouy.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2006-02-27
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

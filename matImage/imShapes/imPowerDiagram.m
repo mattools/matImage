@@ -15,7 +15,7 @@ function img = imPowerDiagram(varargin)
 %   model.
 %
 %   See also :
-%   imvoronoi2d, imvoronoi3d, imAWVoronoi
+%     imShapes, imvoronoi2d, imvoronoi3d, imAWVoronoi
 %
 %
 %   Bibliography :

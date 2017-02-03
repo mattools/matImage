@@ -25,12 +25,12 @@ function img = discreteEllipse(varargin)
 %   img = discreteEllipse(1:100, 1:100, [50 50 30 10 30]);
 %
 %   See also
-%   discreteDisc, discteteEllipsoid
+%   imShapes, discreteDisc, discteteEllipsoid, drawEllipse
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2006-05-16
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

@@ -17,12 +17,12 @@ function img = discreteCapsule(varargin)
 %     imshow(img);
 %
 %   See also
-%   discreteDisc, discreteRectangle, discreteCapsule3d
+%   imShapes, discreteDisc, discreteRectangle, discreteCapsule3d
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-07-29
 % Copyright 2011 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

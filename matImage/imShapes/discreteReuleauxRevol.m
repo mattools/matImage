@@ -42,13 +42,13 @@ function img = discreteReuleauxRevol(varargin)
 %     img = discreteReuleauxRevol([1 1 100;1 1 100;1 1 100], reuleaux);
 %
 %   See Also
-%   discreteEllipsoid, discreteTorus, discreteBall
+%   imShapes, discreteEllipsoid, discreteTorus, discreteBall
 %
 
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2006-02-27
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

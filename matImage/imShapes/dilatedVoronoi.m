@@ -17,7 +17,7 @@ function img = dilatedVoronoi(varargin)
 %   imshow(img);
 %
 %   See also
-%   imvoronoi2d
+%   imShapes, imvoronoi2d, imVoronoi3d
 %
 
 %   ---------

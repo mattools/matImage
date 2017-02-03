@@ -42,12 +42,12 @@ function img = discreteParabola(varargin)
 %     drawParabola(para, [-100 100], 'linewidth', 2, 'color', 'g');
 %
 %   See Also
-%   discreteDisc, discreteEllipse, discreteSquare
+%   imShapes, discreteDisc, discreteEllipse, discreteSquare
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2006-05-16
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

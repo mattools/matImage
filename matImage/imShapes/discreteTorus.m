@@ -26,7 +26,7 @@ function img = discreteTorus(varargin)
 %     axis equal;
 %
 %   See also
-%   discreteEllipsoid, discreteBall, discreteCube
+%   imShapes, discreteEllipsoid, discreteBall, discreteCube
 %   drawTorus
 %
 

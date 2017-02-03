@@ -18,7 +18,7 @@ function img = imvoronoi3d(varargin)
 %   returns a 100*100*100 image with 20 random points as germs.
 %
 %   See Also
-%   imVoronoi2d
+%     imShapes, imVoronoi2d
 %
 
 %   ---------

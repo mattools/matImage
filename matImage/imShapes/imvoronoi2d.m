@@ -29,7 +29,7 @@ function img = imvoronoi2d(varargin)
 %   imshow(img);
 %
 %   See also
-%   imVoronoi3d, imPowerDiagram, dilatedVoronoi
+%     imShapes, imVoronoi3d, imPowerDiagram, dilatedVoronoi
 %
 
 %   ---------

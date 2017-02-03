@@ -9,7 +9,7 @@ function img = discreteHalfPlane(varargin)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1]
 %   LINE is a 1x4 array of the form [x0 y0 dx dy], x0 and y0 being
 %   coordinate of a point belonging to the boundary line, and dx and dy
-%   being direction vectors of the boundaryu line of the halfplane.
+%   being direction vectors of the boundary line of the halfplane.
 %
 %   IMG = discreteHalfPlane(DIM, POINT, DIRECTION)
 %   POINT is a point belonging to the boundary line
@@ -23,12 +23,12 @@ function img = discreteHalfPlane(varargin)
 %   img = discreteHalfPlane([1 1 100;1 1 100], [50 50], 30, 10);
 %
 %   See Also
-%   discreteDisc, discreteSquare
+%     imShapes, discreteDisc, discreteSquare
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2006-10-12
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

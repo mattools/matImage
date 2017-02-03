@@ -16,10 +16,12 @@ function img = discreteCurve(varargin)
 %   img = discreteCurve([1 1 50;1 1 50], circle, 3);
 %   imshow(img);
 %
+%   See Also
+%   imShapes, discretePolyline, discretePolygon
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@jouy.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2007-03-19
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

@@ -24,7 +24,7 @@ function img = imAWVoronoi(varargin)
 %
 %
 %   See also
-%   imvoronoi2d, imvoronoi3d
+%     imShapes, imvoronoi2d, imvoronoi3d
 %
 %
 %   Bibliography :

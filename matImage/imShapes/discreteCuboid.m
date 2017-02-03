@@ -24,13 +24,13 @@ function img = discreteCuboid(varargin)
 %
 %
 %   See also:
-%   discreteBall, discreteEllipse, discreteTorus, discreteCube
-%   drawEllipsoid
+%   imShapes, discreteBall, discreteEllipse, discreteTorus, discreteCube
+%   drawCuboid
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-06-29
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

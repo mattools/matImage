@@ -15,7 +15,7 @@ function img = discreteTrefoil(varargin)
 %     imshow(img)
 %
 %   See also
-%   discreteEllipse, discreteStarfish
+%   imShapes, discreteEllipse, discreteStarfish
 %
 
 % ------

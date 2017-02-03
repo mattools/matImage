@@ -25,12 +25,12 @@ function img = discreteCapsule3d(varargin)
 %     l = light; view([120 20]);
 %
 %   See also
-%   discreteBall, discreteCube, discretecylinder
+%   imShapes, discreteCube, discretecylinder
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-07-29
 % Copyright 2011 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

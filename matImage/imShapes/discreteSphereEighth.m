@@ -1,7 +1,7 @@
 function img = discreteSphereEighth(varargin)
 %DISCRETESPHEREEIGHTH discretize a 3D sphere eighth
 %
-%   IMG = discreteSphereEighth(LX, LY, LZ, SPHEGHTH)
+%   IMG = discreteSphereEighth(LX, LY, LZ, SPHEIGHTH)
 %   Creates a 3D image of a eighth of a sphere.
 %
 %   Example
@@ -10,12 +10,12 @@ function img = discreteSphereEighth(varargin)
 %   img = discreteSphereEighth([1 1 100;1 1 100;1 1 100], [50 50 50 30 10]);
 %
 %   See Also
-%   discreteBall, discreteCube
+%   imShapes, discreteBall, discreteCube
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2015-03-31
 % Copyright 2015 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

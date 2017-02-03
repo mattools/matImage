@@ -30,10 +30,12 @@ function img = discreteHalfBall(varargin)
 %   figure;
 %   isosurface(img, .5); axis equal;
 %
-%
+%   See Also
+%   imShapes, discreteBall, discreteHalfPlane
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-10-21
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

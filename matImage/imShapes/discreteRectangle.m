@@ -26,12 +26,12 @@ function img = discreteRectangle(varargin)
 %   img = discreteRectangle([1 1 100;1 1 100], [50 50 30 10 30]);
 %
 %   See Also
-%   discreteSquare, discretePolygon
+%   imShapes, discreteSquare, discretePolygon
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2006-05-16
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 

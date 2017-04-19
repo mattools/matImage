@@ -39,12 +39,12 @@ function [bin, indMax] = imLargestRegion(lbl, varargin)
 %     imshow(imOverlay(img, bin2));
 %
 %   See also
-%    regionprops, imKillBorders, imAreaOpening, imAttributeOpening
+%     regionprops, imKillBorderRegions, imAreaOpening, imAttributeOpening
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2012-07-27,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 

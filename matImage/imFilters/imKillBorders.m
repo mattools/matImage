@@ -1,6 +1,8 @@
 function lbl = imKillBorders(lbl, varargin)
 %IMKILLBORDERS Remove regions on the border of an image
 %
+%   Replaced by 'imKillBorerRegions'
+%
 %   LBL2 = imKillBorders(LBL);
 %   LBL is a labeled image, or a binary image. Image can be 2D or 3D.
 %   In the case of binary image, the image is labeled using 4-adjacency for
@@ -34,6 +36,7 @@ function lbl = imKillBorders(lbl, varargin)
 %   See also:
 %   bwmorph, imreconstruct, imAreaOpening, imLargestRegion
 %
+
 %   ---------
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
@@ -48,6 +51,9 @@ function lbl = imKillBorders(lbl, varargin)
 
 
 %% Process inputs
+
+warning('matImage:imKillBorders:deprecated', ...
+    'function imKillBorders is obsolete, use imKillBorderRegions instead');
 
 % default values
 binImg  = false;

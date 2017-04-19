@@ -63,7 +63,7 @@
 %
 %   Filters for binary/label images:
 %   label2rgb3d              - Convert a 3D label image to a 3D RGB image
-%   imKillBorders            - Remove regions on the border of an image
+%   imKillBorderRegions      - Remove regions on the border of an image
 %   imAreaOpening            - Remove all regions smaller than a given area
 %   imAttributeOpening       - Filter regions on a size or shape criterium
 %   imSeparateParticles      - Separate touching particles using watershed algorithm
@@ -105,7 +105,7 @@
 %
 %
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % http://github.com/dlegland/matImage
 % Copyright 2009 INRA - Cepia Software Platform.
 
@@ -125,6 +125,7 @@ help Contents
 %   imMergeBands             - Merge 3 bands to create a 2D or 3D color image
 %   imSplitBands             - Split the 3 bands of a 2D or 3D image
 %   imGradient               - Compute gradient magnitude of a grayscale image
+%   imKillBorders            - Remove regions on the border of an image
 
 %   Not supported functions
 %   imMergeCells             - merge labeled cell of an image

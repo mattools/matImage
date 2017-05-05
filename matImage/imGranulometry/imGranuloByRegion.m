@@ -1,7 +1,10 @@
-function [gr, vols] = imGranuloByRegion(img, lbl, granuloType, strelShape, strelSizes)
+function [gr, vols] = imGranuloByRegion(img, indList, granuloType, strelShape, strelSizes)
 %IMGRANULOBYREGION Granulometry curve for each region of label image
 %
-%   GRANULO = imGranulo(IMG, ROILIST, GRTYPE, STRELSHAPE, SIZES)
+%   GRANULO = imGranulo(IMG, REGIONS, GRTYPE, STRELSHAPE, SIZES)
+%   Computes the granulometry curves from gray levels image IMG within each
+%   region specified by REGION. REGION can be either a label image, or a
+%   cell array containing the linear indices corresponding to each region.
 %
 %   Example
 %     % Compute granulometric curve by ope,ing on rice image
@@ -22,18 +25,29 @@ function [gr, vols] = imGranuloByRegion(img, lbl, granuloType, strelShape, strel
 % Copyright 2014 INRA - Cepia Software Platform.
 
 
-nSizes = length(strelSizes);
-
-% number of labels in image
-labels = unique(lbl(:));
-labels(labels==0) = [];
-nLabels = length(labels);
-
-% initialize list of indices for each ROI to accelerate computation of
-% granulometry curves
-indList = cell(nLabels, 1);
-for j = 1:nLabels
-    indList{j} = find(lbl == labels(j));
+% if regions are specified as label image, need to convert to list of
+% linear indices for each region
+if isnumeric(indList)
+    lbl = indList;
+    
+    % check inputs have same size
+    if any(size(lbl) ~= size(img))
+        error('matImage:imGranuloByRegion:InputArgumentError', ...
+            'Gray level and label images must have same size');
+    end
+    
+    % number of labels in image
+    labels = unique(lbl(:));
+    labels(labels==0) = [];
+    nLabels = length(labels);
+    
+    % initialize list of indices for each ROI
+    indList = cell(nLabels, 1);
+    for j = 1:nLabels
+        indList{j} = find(lbl == labels(j));
+    end
+else
+    nLabels = length(indList);
 end
 
 % compute reference volume
@@ -43,6 +57,7 @@ for j = 1:nLabels
 end
 
 % allocate memory
+nSizes = length(strelSizes);
 vols = zeros(nLabels, nSizes + 1);
 vols(:, 1) = vols0;
 

@@ -7,7 +7,7 @@ function [gr, vols] = imGranuloByRegion(img, indList, granuloType, strelShape, s
 %   cell array containing the linear indices corresponding to each region.
 %
 %   Example
-%     % Compute granulometric curve by ope,ing on rice image
+%     % Compute granulometric curve by opening on rice image
 %     img = imread('rice.png');
 %     gr = imGranulo(img, 'opening', 'square', 1:20);
 %     % display as a function of strel diameter

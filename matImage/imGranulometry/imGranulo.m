@@ -31,7 +31,19 @@ function [gr, vols] = imGranulo(img, granuloType, strelShape, strelSizes, vararg
 % Created: 2014-05-05,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2014 INRA - Cepia Software Platform.
 
-% parse input arguments
+%% parse input arguments
+
+% check ROI
+roi = true(size(img));
+if ~isempty(varargin) 
+    var1 = varargin{1};
+    if islogical(var1) && all(size(var1) == size(img))
+        roi = var1;
+        varargin(1) = [];
+    end
+end
+
+% check additional input arguments
 verbose = false;
 while length(varargin) > 1
     switch lower(varargin{1})
@@ -41,7 +53,8 @@ while length(varargin) > 1
     end
     varargin(1:2) = [];
 end
-    
+
+
 % number of structuring element sizes
 nSizes = length(strelSizes);
 
@@ -49,7 +62,7 @@ nSizes = length(strelSizes);
 vols = zeros(1, nSizes + 1);
 
 % initialize reference volume
-vol0 = sum(img(:));
+vol0 = sum(img(roi));
 vols(1) = vol0;
 
 for i = 1:nSizes
@@ -97,11 +110,10 @@ for i = 1:nSizes
     end
     
     % compute local volume
-    vols(i+1) = sum(img2(:));
+    vols(i+1) = sum(img2(roi));
 end
 
 % compute granulometry curve
-vol0 = sum(img(:));
 vols2 = (vols - vol0) / (vols(end) - vol0);
 gr = 100 * diff(vols2);
 

@@ -31,6 +31,7 @@
 %   imRotate90               - Rotate a 3D image by 90 degrees around one image axis
 %   imAddBorder              - Add a border around a 2D or 3D image
 %   imTranspose              - Transpose an image (grayscale or RGB)
+%   imCropBox                - Crop an image with a box
 %   subsample                - Subsample an array by applying operation on blocs
 %   subsamplergb             - Return a sub-sampled version of an rgb image.
 %
@@ -54,6 +55,7 @@
 %   imFillHoles              - Fill holes in a binary image
 %   imDistanceMap            - Compute chamfer distance using scanning algorithm
 %   imDistanceClasses        - Converts a distance map to a label image of regions
+%   imThicknessMap           - Compute thickness map of a binary image
 %   imSkeleton               - Homothopic skeleton of a binary image 
 %   imLabelSkeleton          - Label skeleton pixels according to local topology
 %   imChainPixels            - Chain neighbor pixels in an image to form a contour

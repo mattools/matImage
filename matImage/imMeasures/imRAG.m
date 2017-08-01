@@ -25,15 +25,15 @@ function varargout = imRAG(img, varargin)
 %   [3 4]
 %
 %   [NODES, ADJ] = imRAG(IMG);
-%   Return two arrays: the first one is a [N*2] array containing centroids
+%   Return two arrays: the first one is a [N-by-2] array containing centroids
 %   of the N labeled region, and ADJ is the adjacency previously described.
-%   For 3D images, the nodes array is [N*3].
+%   For 3D images, the nodes array is [N-by-3].
 %   
 %   [NODES, ADJ, BNDINDS] = imRAG(IMG);
-%   Also returns for each pair of adjacent regions the linear indices of
-%   the boundary pixels or voxels (located in between the two regions).
-%   BNDINDS is a cell array with as many cells as the number of rows of the
-%   ADJ result.
+%   (only for 2D arrays) Also returns for each pair of adjacent regions the
+%   linear indices of the boundary pixels or voxels (located in between the
+%   two regions). BNDINDS is a cell array with as many cells as the number
+%   of rows of the ADJ result.
 %
 %   
 %   Example  (requires image processing toolbox)
@@ -73,7 +73,7 @@ function varargout = imRAG(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2004-02-20,  
 % Copyright 2007 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
 
@@ -83,6 +83,7 @@ function varargout = imRAG(img, varargin)
 %   2010-03-08 replace calls to regionprops by local centroid computation
 %   2010-07-29 update doc
 %   2012-07-20 remove the use of "diff", using less memory
+%   2017-07-31 return output also when nargin == 0, sort labels in 3D
 
 %% Initialisations
 
@@ -162,7 +163,7 @@ elseif nd == 3
 
     % keep only changes not involving background
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    edges = unique([val1(inds) val2(inds)], 'rows');
+    edges = unique(sort([val1(inds) val2(inds)], 2), 'rows');
 	
     if computeEdgeInds
         % keep array of positions as linear indices
@@ -182,7 +183,7 @@ elseif nd == 3
 
     % keep only changes not involving background
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
+    edges = [edges; unique(sort([val1(inds) val2(inds)], 2), 'rows')];
 
     if computeEdgeInds
         % keep array of positions as linear indices
@@ -201,7 +202,7 @@ elseif nd == 3
     
     % keep only changes not involving background
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
+    edges = [edges; unique(sort([val1(inds) val2(inds)], 2), 'rows')];
     
     if computeEdgeInds
         % keep array of positions as linear indices
@@ -226,10 +227,10 @@ end
 
 %% Output processing
 
-if nargout == 1
+if nargout <= 1
     varargout{1} = edges;
     
-elseif nargout >= 2
+else
     % Also compute region centroids
     N = max(img(:));
     points = zeros(N, nd);

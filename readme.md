@@ -5,7 +5,7 @@ Toolbox (IPT), and provides additional features as well as integration of IPT
 functions into more elaborate functions.
 
 Official homepage for the MatImage project is http://github.com/mattools/matImage.
-A comprenhesive help is provided in the [MatImage wiki](https://github.com/mattools/matImage/wiki "MatImage Wiki homepage")
+A starting help is provided in the [MatImage wiki](https://github.com/mattools/matImage/wiki "MatImage Wiki homepage")
 
 Installation
 ---
@@ -14,7 +14,6 @@ This will add all required directories to the current path variable.
 
 Some functions need the "MatGeom" library, also available on GitHub 
 (http://github.com/mattools/matGeom)
-
 
 Library organization
 ---
@@ -28,6 +27,7 @@ The library is organised into several modules.
 * [imGranulometry](https://github.com/mattools/matImage/wiki/imGranulometry "imGranulometry Wiki page")  - Computation of gray-level granulometry curves with mathematical morphology
 * [imShapes](https://github.com/mattools/matImage/wiki/imShapes "imShapes Wiki page")        - Generation of phantom images representing geometric shapes
 * [util](https://github.com/mattools/matImage/wiki/util "image utilities Wiki page")            - General purpose functions
-A comprehensive help is provided in each module directory.
+A more specific help is provided in each module directory.
+
 
 

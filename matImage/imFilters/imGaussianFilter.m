@@ -49,9 +49,12 @@ function res = imGaussianFilter(img, kernelSize, sigma, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-11-09,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
+
+%   HISTORY
+%   2017.08.02 use replicate option as default
 
 
 %% Dispatch processing in case of color images
@@ -98,6 +101,11 @@ if nargin < 3
 end
 if length(sigma) == 1
     sigma = repmat(sigma, 1, nd);
+end
+
+% default options
+if isempty(varargin)
+    varargin = {'replicate'};
 end
 
 

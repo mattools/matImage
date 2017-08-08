@@ -76,6 +76,12 @@ for i = 1:nSizes
             se = ones(1, diam);
         case 'linev'
             se = ones(diam, 1);
+        case 'lineu' % line in the direction of upper diagonal
+            len = diam * sqrt(2);
+            se = strel('line', len, 45);
+        case 'lined' % line in the direction of down diagonal
+            len = diam * sqrt(2);
+            se = strel('line', len, 135);
         otherwise
             error(['Could not process strel type: ' strelShape]);
     end

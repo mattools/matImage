@@ -1,13 +1,13 @@
 function varargout = imRAG(img, varargin)
-%IMRAG Region adjacency graph of a labeled image
+%IMRAG Region adjacency graph of a label image
 %
 %   Usage:
-%   ADJ = imRAG(IMG);
-%   [NODES, ADJ] = imRAG(IMG);
-%   [NODES, ADJ, BNDINDS] = imRAG(IMG);
+%   ADJ = imRAG(LBLMAP);
+%   [NODES, ADJ] = imRAG(LBLMAP);
+%   [NODES, ADJ, BNDINDS] = imRAG(LBLMAP);
 %
-%   ADJ = imRAG(IMG);
-%   computes region adjacencies graph of labeled 2D or 3D image IMG. 
+%   ADJ = imRAG(LBLMAP);
+%   computes region adjacency graph of the 2D or 3D image LBLMAP. 
 %   The result is a N-by-2 array, containing 2 indices for each couple of
 %   neighbor regions. Two regions are considered as neighbor if they are
 %   separated by a black (i. e. with color 0) pixel in the horizontal or
@@ -24,19 +24,52 @@ function varargout = imRAG(img, varargin)
 %   [2 5]
 %   [3 4]
 %
-%   [NODES, ADJ] = imRAG(IMG);
-%   Return two arrays: the first one is a [N*2] array containing centroids
-%   of the N labeled region, and ADJ is the adjacency previously described.
-%   For 3D images, the nodes array is [N*3].
+%   [NODES, ADJ] = imRAG(LBLMAP);
+%   Return two arrays: the first one is a [N-by-2] array containing
+%   centroids of the N label region, and ADJ is the adjacency list as
+%   previously described. 
+%   For 3D images, the nodes array is [N-by-3].
 %   
-%   [NODES, ADJ, BNDINDS] = imRAG(IMG);
-%   Also returns for each pair of adjacent regions the linear indices of
-%   the boundary pixels or voxels (located in between the two regions).
-%   BNDINDS is a cell array with as many cells as the number of rows of the
-%   ADJ result.
+%   [NODES, ADJ, BNDINDS] = imRAG(LBLMAP);
+%   (only for 2D arrays) Also returns for each pair of adjacent regions the
+%   linear indices of the boundary pixels or voxels (located in between the
+%   two regions). BNDINDS is a cell array with as many cells as the number
+%   of rows of the ADJ result.
 %
+%   ... = imRAG(LBLMAP, GAP);
+%   Specifies the gap to use between regions. Default is 1, corresponding
+%   to regions connected when they are separating by a single 0 pixel or
+%   voxel. 
+%   Using a GAP equal to 0 may be useful when there is no separation
+%   between regions. In this case, the result corresponds to the detection
+%   of 4-adjacent regions.
+%   Using values of GAP larger than 1 allows for detecting adjacent regions
+%   when they are separated by more space. However, some adjacencies may be
+%   missed in case of thin structures (See algorithm below). 
 %   
-%   Example  (requires image processing toolbox)
+%   Example  
+%     % Simple example on 2D array
+%     img = zeros([7 7]);
+%     img(2:3, 2:3) = 1; img(5:6, 2:3) = 2;
+%     img(2:3, 5:6) = 3; img(5:6, 5:6) = 4;
+%     img
+%     img =
+%          0     0     0     0     0     0     0
+%          0     1     1     0     3     3     0
+%          0     1     1     0     3     3     0
+%          0     0     0     0     0     0     0
+%          0     2     2     0     4     4     0
+%          0     2     2     0     4     4     0
+%          0     0     0     0     0     0     0
+%     imRAG(img)
+%     ans =
+%          1     2
+%          1     3
+%          2     4
+%          3     4
+%
+%     % Compute the Skeleton of Influence Zone of disjoint regions
+%     % (requires image processing toolbox)
 %     % read and display an image with several objects
 %     img = imread('coins.png');
 %     figure(1); clf;
@@ -70,10 +103,38 @@ function varargout = imRAG(img, varargin)
 %     figure; drawGraph(n, e);
 %     view(3);
 %
+%
+%   Algorithms
+%   The adjacencies are computed by computing the pairs of pixels or voxels
+%   with different values and separated by a given distance in each main
+%   direction of the image. When values are different, they areassumed to
+%   correspond to the labels of two adjacent regions.
+%   Adjacencies are detected in the X and Y directions for 3D images, and
+%   in the X, Y and Z directions for 3D images. There is no detection of
+%   adjacency in diagonal directions.
+%
+%   An alternative algorithm would be to compute the result of dilation for
+%   each region, and detect which labels intersect the dilated region. 
+%   The number of image processing operations may be very large, ususally
+%   resulting in much slower processing time. The following code computes
+%   RAG using a 5-by-5 square for detecting adjacent regions:
+%     inds = unique(img)
+%     inds(inds == 0) = [];
+%     adjList = zeros(0, 2);
+%     for i = 1:length(inds)
+%         mask = imdilate(img == inds(i), ones(5, 5));
+%         neighs = unique(img(mask));
+%         neighs = neighs(~ismember(neighs, [0 i]));
+%         adjList = [adjList; repmat(i, length(neighs), 1) neighs];
+%     end
+%     adjList = unique(sort(adjList, 2), 'rows');
+%   Note that more adjacencies may be detected compared to with the imRAG
+%   function.
+%
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2004-02-20,  
 % Copyright 2007 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
 
@@ -83,6 +144,7 @@ function varargout = imRAG(img, varargin)
 %   2010-03-08 replace calls to regionprops by local centroid computation
 %   2010-07-29 update doc
 %   2012-07-20 remove the use of "diff", using less memory
+%   2017-07-31 return output also when nargin == 0, sort labels in 3D
 
 %% Initialisations
 
@@ -162,7 +224,7 @@ elseif nd == 3
 
     % keep only changes not involving background
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    edges = unique([val1(inds) val2(inds)], 'rows');
+    edges = unique(sort([val1(inds) val2(inds)], 2), 'rows');
 	
     if computeEdgeInds
         % keep array of positions as linear indices
@@ -182,7 +244,7 @@ elseif nd == 3
 
     % keep only changes not involving background
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
+    edges = [edges; unique(sort([val1(inds) val2(inds)], 2), 'rows')];
 
     if computeEdgeInds
         % keep array of positions as linear indices
@@ -201,7 +263,7 @@ elseif nd == 3
     
     % keep only changes not involving background
     inds = val1 ~= 0 & val2 ~= 0 & val1 ~= val2;
-    edges = [edges; unique([val1(inds) val2(inds)], 'rows')];
+    edges = [edges; unique(sort([val1(inds) val2(inds)], 2), 'rows')];
     
     if computeEdgeInds
         % keep array of positions as linear indices
@@ -226,10 +288,10 @@ end
 
 %% Output processing
 
-if nargout == 1
+if nargout <= 1
     varargout{1} = edges;
     
-elseif nargout >= 2
+else
     % Also compute region centroids
     N = max(img(:));
     points = zeros(N, nd);
@@ -259,6 +321,7 @@ elseif nargout >= 2
     varargout{1} = points;
     varargout{2} = edges;
     
+    % eventually returns the position of edges as third output argument
     if nargout > 2
         varargout{3} = edgeInds;
     end

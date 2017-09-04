@@ -10,6 +10,10 @@
 %
 % Analysis of granulometry curves
 %   granuloMeanSize   - Compute geometric mean of granulometric curve
+%   granuloMean       - Compute arithmetic mean of granulometric curve(s)
+%   granuloStd        - Compute standard deviation of granulometric curve(s)
+%
+% Variations of granulometry analysis
 %   imOrientedGranulo - Gray level granulometry mean size for various orientations
 %
 %
@@ -23,7 +27,8 @@
 %
 % -----
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Copyright INRA - Cepia Software Platform.
 % http://github.com/dlegland/matImage
 % http://www.pfl-cepia.inra.fr/index.php?page=imael
+

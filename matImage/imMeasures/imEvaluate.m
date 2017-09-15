@@ -73,7 +73,7 @@ if isColorImage(img)
 end
 
 % allocate memory for result
-val = zeros(nv, nc);
+val = zeros(nv, nc, class(img));
 
 
 

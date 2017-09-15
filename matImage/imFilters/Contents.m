@@ -65,6 +65,7 @@
 %
 %   Filters for binary/label images:
 %   label2rgb3d              - Convert a 3D label image to a 3D RGB image
+%   imLabelToValue           - Convert label image to parametric map
 %   imKillBorderRegions      - Remove regions on the border of an image
 %   imAreaOpening            - Remove all regions smaller than a given area
 %   imAttributeOpening       - Filter regions on a size or shape criterium

@@ -1,17 +1,17 @@
 function varargout = imGradient(img, varargin)
 %IMGRADIENT Compute gradient magnitude of a grayscale image
 %
-%   [DX DY] = imGradient(IMG);
-%   [DX DY DZ] = imGradient(IMG);
+%   [GX, GY] = imGradient(IMG);
+%   [GX, GY, GZ] = imGradient(IMG);
 %   Compute the components of the gradient vector of a 2D or a 3D image.
 %   The gradient is computed in each orthogonal direction by using
 %   normalised Sobel filters. 
 %   For a 2D image, gradient magnitude and angle can be computed from:
-%   MAG = hypot(DX, DY);
-%   ANGLE = atan2(DY, DX);
+%   GMAG = hypot(GX, GY);
+%   GANGLE = atan2(GY, GX);
 %
 %   GRAD = imGradient(IMG);
-%   Compute the gradient magnitude. Magnitude is computed as:
+%   Compute an image of gradient magnitude. Magnitude is computed as:
 %   - hypot(dx, dy) for 2D images
 %   - hypot(hypot(dx, dy), dz) for 3D images
 %

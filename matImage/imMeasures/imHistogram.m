@@ -197,7 +197,9 @@ if nargout == 0
     end
     
     % setup histogram bounds
-    xlim([minimg maximg]);
+    if maximg > minimg
+        xlim([minimg maximg]);
+    end
     
 elseif nargout == 1
     % return histogram

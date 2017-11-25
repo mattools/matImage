@@ -1,7 +1,17 @@
 function [V, B, S] = imVesselness2d(img, varargin)
 %IMVESSELNESS2D Vesselness of cuvilinear structures from Frangi paper
 %
-%   VESSELNESS = imVesselness2d(IMG)
+%   V = imVesselness2d(IMG)
+%   Apply vesselness filter to grayscale or intensity image IMG. 
+%
+%   [V, B, S] = imVesselness2d(IMG)
+%   Also return the "Blobness" and "Structureness" arrays, as defined by
+%   Frangi.
+%
+%   ... = imVesselness2d(IMG, SIGMA)
+%   Specifies the scale of the curvilinear structures to enhance. If SIMGA
+%   is an array, returns an array of images with dimensions M-by-N-by-P,
+%   where M and N are size of image, and P is size of SIGMA array.
 %
 %   Example
 %     img = imread('coins.png');
@@ -17,7 +27,7 @@ function [V, B, S] = imVesselness2d(img, varargin)
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2014-08-18,    using Matlab 8.3.0.532 (R2014a)
 % Copyright 2014 INRA - Cepia Software Platform.
 
@@ -37,6 +47,21 @@ if ~isempty(varargin)
 end
 if ~isempty(varargin)
     c = varargin{1};    
+end
+
+% process multi-scale version of the filter
+if length(sigma) > 1
+    nSigmas = length(sigma);
+    dim = size(img);
+    V = zeros([dim nSigmas]);
+    B = zeros([dim nSigmas]);
+    S = zeros([dim nSigmas]);
+    
+    for i = 1:nSigmas
+        [V(:,:,i), B(:,:,i), S(:,:,i)] = imVesselness2d(img, sigma(i), beta, c);
+    end
+    
+    return;
 end
 
 % compute second derivatives

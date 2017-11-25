@@ -7,14 +7,8 @@ function [rect, labels] = imOrientedBox(img, varargin)
 %   array, containing the center, the length, the width, and the
 %   orientation of the bounding box of each particle in image.
 %
-%   The orientation is given in degrees, in the direction of the greatest
+%   The orientation is given in degrees, in the direction of the largest
 %   box axis.
-%
-%   OBB = imOrientedBox(IMG, NDIRS);
-%   OBB = imOrientedBox(IMG, DIRSET);
-%   Specifies either the number of directions to use for computing boxes
-%   (default is 180 corresponding to one direction by degree), or the set
-%   of directions (in degrees). 
 %
 %   OBB = imOrientedBox(..., SPACING);
 %   OBB = imOrientedBox(..., SPACING, ORIGIN);
@@ -30,7 +24,6 @@ function [rect, labels] = imOrientedBox(img, varargin)
 %   are:
 %   * 'spacing' the spacing bewteen pixels
 %   * 'origin'  the position of the first pixel
-%   * 'angles'  the array of angles used for computation
 %   * 'labels'  restrict the computation to the set of specified labels,
 %           given as a N-by-1 array
 %
@@ -48,7 +41,7 @@ function [rect, labels] = imOrientedBox(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-02-07,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -57,22 +50,22 @@ function [rect, labels] = imOrientedBox(img, varargin)
 %   2014-06-17 add psb to specify labels
 
 
-%% Extract number of orientations
-
-theta = 180;
-if ~isempty(varargin) && ~ischar(varargin{1})
-    var1 = varargin{1};
-    if isscalar(var1)
-        % Number of directions given as scalar
-        theta = var1;
-        varargin(1) = [];
-        
-    elseif ndims(var1) == 2 && sum(size(var1) ~= [1 2]) ~= 0 %#ok<ISMAT>
-        % direction set given as vector
-        theta = var1;
-        varargin(1) = [];
-    end
-end
+% %% Extract number of orientations
+% 
+% theta = 180;
+% if ~isempty(varargin) && ~ischar(varargin{1})
+%     var1 = varargin{1};
+%     if isscalar(var1)
+%         % Number of directions given as scalar
+%         theta = var1;
+%         varargin(1) = [];
+%         
+%     elseif ndims(var1) == 2 && sum(size(var1) ~= [1 2]) ~= 0 %#ok<ISMAT>
+%         % direction set given as vector
+%         theta = var1;
+%         varargin(1) = [];
+%     end
+% end
 
 
 %% Extract spatial calibration
@@ -99,8 +92,8 @@ labels  = [];
 while length(varargin) > 1 && ischar(varargin{1})
     paramName = varargin{1};
     switch lower(paramName)
-        case 'angles'
-            theta = varargin{2};
+%         case 'angles'
+%             theta = varargin{2};
         case 'spacing'
             spacing = varargin{2};
         case 'origin'
@@ -117,12 +110,12 @@ end
 
 %% Initialisations
 
-% if theta is scalar, create an array of directions (in degrees)
-if isscalar(theta)
-    theta = linspace(0, 180, theta+1);
-    theta = theta(1:end-1);
-end
-nTheta = length(theta);
+% % if theta is scalar, create an array of directions (in degrees)
+% if isscalar(theta)
+%     theta = linspace(0, 180, theta+1);
+%     theta = theta(1:end-1);
+% end
+% nTheta = length(theta);
 
 % extract the set of labels is necessary, without the background
 if isempty(labels)
@@ -149,92 +142,54 @@ for i = 1:nLabels
         y = (y-1) * spacing(2) + origin(2);
     end
     
-    % keep only points of the convex hull
+    % special case of particles composed of only one pixel
+    if length(x) == 1
+        rect(i,:) = [x y 1 1 0];
+        continue;
+    end
+    
+%     % keep only points of the convex hull
+%     try
+%         inds = convhull(x, y);
+%         x = x(inds);
+%         y = y(inds);
+%     catch ME %#ok<NASGU>
+%         % an exception can occur if points are colinear.
+%         % in this case we transform all points
+%         disp(sprintf('can not compute convex hull of label: %d', labels(i))); %#ok<DSPS>
+%     end
+
+    % compute bounding box of particle pixel centers
     try
-        inds = convhull(x, y);
-        x = x(inds);
-        y = y(inds);
+        obox = orientedBox([x y]);
     catch ME %#ok<NASGU>
-        % an exception can occur if points are colinear.
-        % in this case we transform all points
+        % if points are aligned, convex hull computation fails.
+        % Perform manual computation of box.
+        xc = mean(x);
+        yc = mean(y);
+        x = x - xc;
+        y = y - yc;
+        
+        theta = mean(mod(atan2(y, x), pi));
+        [x2, y2] = transformPoint(x, y, createRotation(-theta)); %#ok<ASGLU>
+        dmin = min(x2);
+        dmax = max(x2);
+        center = [(dmin + dmax)/2 0];
+        center = transformPoint(center, createRotation(theta)) + [xc yc];
+        obox  = [center (dmax-dmin) 0 rad2deg(theta)];
     end
-
-    % compute convex hull centroid, that corresponds to approximate
-    % location of rectangle center
-    xc = mean(x);
-    yc = mean(y);
     
-    % recenter points (should be better for numerical accuracy)
-    x = x - xc;
-    y = y - yc;
-
-    % allocate memory for result of Feret Diameter computation
-    fd = zeros(1, nTheta);
-
-    % iterate over orientations
-    for t = 1:nTheta
-        % convert angle to radians, and change sign (to make transformed
-        % points aligned along x-axis)
-        theta2 = -theta(t) * pi / 180;
-
-        % compute only transformed x-coordinate
-        x2  = x * cos(theta2) - y * sin(theta2);
-
-        % compute diameter for extreme coordinates
-        xmin    = min(x2);
-        xmax    = max(x2);
-
-        % store result (add 1 pixel to consider pixel width)
-        dl      = spacing(1) * abs(cos(theta2)) + spacing(2) * abs(sin(theta2));
-        fd(t)   = xmax - xmin + dl;
-    end
-
-    % compute area of enclosing rectangles with various orientations
-    feretArea = fd(:, 1:end/2) .* fd(:, end/2+1:end);
-    
-    % find the orientation that produces to minimum area rectangle
-    [minArea, indMinArea] = min(feretArea, [], 2); %#ok<ASGLU>
-
-    % convert index to angle (still in degrees)
-    indMin90 = indMinArea + nTheta/2;
-    if fd(indMinArea) < fd(indMin90)
-        thetaMax = theta(indMin90);
-    else
-        thetaMax = theta(indMinArea);
-    end
-
     % pre-compute trigonometric functions
+    thetaMax = obox(5);
     cot = cosd(thetaMax);
     sit = sind(thetaMax);
-    
-    % elongation in direction of rectangle length
-    x2  =   x * cot + y * sit;
-    y2  = - x * sit + y * cot;
 
-    % compute extension along main directions
-    xmin = min(x2);    xmax = max(x2);
-    ymin = min(y2);    ymax = max(y2);
-
-    % position of the center with respect to the centroid compute before
-    dl = (xmax + xmin) / 2;
-    dw = (ymax + ymin) / 2;
-
-    % change  coordinate from rectangle to user-space
-    dx  = dl * cot - dw * sit;
-    dy  = dl * sit + dw * cot;
-
-    % coordinates of rectangle center
-    xc2 = xc + dx;
-    yc2 = yc + dy;
-    
+    % add a thickness of one pixel in both directions
     dsx = spacing(1) * abs(cot) + spacing(2) * abs(sit);
     dsy = spacing(1) * abs(sit) + spacing(2) * abs(cot);
-        
-    % size of the rectangle
-    rectLength  = xmax - xmin + dsx;
-    rectWidth   = ymax - ymin + dsy;
+    obox(3:4) = obox(3:4) + [dsx dsy];
 
     % concatenate rectangle data
-    rect(i,:) = [xc2 yc2 rectLength rectWidth thetaMax];
+    rect(i,:) = obox;
 end
 

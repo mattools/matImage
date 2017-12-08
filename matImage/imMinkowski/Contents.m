@@ -117,13 +117,14 @@
 % 
 % Following reference can also be of interest:
 %   "Statistical Analysis of Microstructures in Material Sciences"
-%   Joachim Ohser and Frank Muecklich (2000)
-%   John Wiley and Sons
-% 
+%   Joachim Ohser and Frank Muecklich (2000),  John Wiley and Sons
+%
+%   "On the analysis of spatial binary images"
+%   Lang, C.; Ohser, J. and Hilfer, R. Journal of Microscopy, 2001, 203, 303-313
 %
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
-% http://github.com/dlegland/matImage
+% e-mail: david.legland@inra.fr
+% http://github.com/mattools/matImage
 % Copyright 2011 INRA - Cepia Software Platform.
 
 

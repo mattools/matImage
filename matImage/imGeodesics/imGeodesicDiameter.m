@@ -1,26 +1,26 @@
-function gl = imGeodesicDiameter(img, varargin)
+function gd = imGeodesicDiameter(img, varargin)
 %IMGEODESICDIAMETER Compute geodesic diameter of particles
 %
-%   GL = imGeodesicDiameter(IMG)
-%   where IMG is a labeled image, returns the geodesic diameter of each
-%   particle.
-%   If IMG is a binary image, a labelling is performed first.
-%   GL is a column vector containing the geodesic diameter of each particle.
+%   GD = imGeodesicDiameter(IMG)
+%   where IMG is a label image, returns the geodesic diameter of each
+%   particle in the image. If IMG is a binary image, a connected-components
+%   labelling is performed first. 
+%   GD is a column vector containing the geodesic diameter of each particle.
 %
-%   A definition for the geodesic length can be found in the book from
+%   A definition for the geodesic diameter can be found in the book from
 %   Coster & Chermant: "Precis d'analyse d'images", Ed. CNRS 1989.
 %
 %   
-%   GL = imGeodesicDiameter(IMG, WS)
+%   GD = imGeodesicDiameter(IMG, WS)
 %   Specifies the weights associated to neighbor pixels. WS(1) is the
 %   distance to orthogonal pixels, and WS(2) is the distance to diagonal
 %   pixels. An optional WS(3) weight may be specified, corresponding to
 %   chess-knight moves. Default is [5 7 11], recommended for 5-by-5 masks.
 %   The final length is normalized by weight for orthogonal pixels. For
-%   thin structures (skeletonization result), the [3 4] weights recommended
-%   by Boregors may be better appropriate.
+%   thin structures (skeletonization result), or for very close particles,
+%   the [3 4] weights recommended by Borgeors may be more appropriate.
 %   
-%   GL = imGeodesicDiameter(..., 'verbose', true);
+%   GD = imGeodesicDiameter(..., 'verbose', true);
 %   Display some informations about the computation procedure, that may
 %   take some time for large and/or complicated images.
 %
@@ -49,8 +49,8 @@ function gl = imGeodesicDiameter(img, varargin)
 %     img2 = img - imopen(img, ones(30, 30));
 %     bin = imopen(img2 > 50, ones(3, 3));
 %     lbl = bwlabel(bin);
-%     lg = imGeodesicDiameter(lbl);
-%     plot(lg, '+');
+%     gd = imGeodesicDiameter(lbl);
+%     plot(gd, '+');
 %
 %
 %   See Also
@@ -118,7 +118,7 @@ nLabels = max(img(:));
 %% Detection of center point (furthest point from boundary)
 
 if verbose
-    disp(sprintf('Computing geodesic length of %d particle(s).', nLabels)); %#ok<*DSPS>
+    disp(sprintf('Computing geodesic diameters of %d particle(s).', nLabels)); %#ok<*DSPS>
 end
 
 % create markers image at the boundary of the labels
@@ -199,19 +199,19 @@ dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 %% Final computation of geodesic distances
 
 if verbose
-    disp('Compute geodesic distances'); 
+    disp('Compute geodesic diameters'); 
 end
 
 % keep max geodesic distance inside each label
-gl = -ones(nLabels, 1);
+gd = -ones(nLabels, 1);
 for i = 1:numel(img)
     label = img(i);
     if label > 0
-        if dist(i) > gl(label)
-            gl(label) = dist(i);
+        if dist(i) > gd(label)
+            gd(label) = dist(i);
         end
     end
 end
 
 % add 1 for taking into account pixel thickness
-gl = gl + 1;
+gd = gd + 1;

@@ -29,11 +29,10 @@
 %
 % -----
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % created the  07/11/2005.
 % Copyright INRA - Cepia Software Platform.
-% http://github.com/dlegland/matImage
-% Licensed under the terms of the BSD License, see the file license.txt
+% http://github.com/mattools/matImage
 
 help Contents
 

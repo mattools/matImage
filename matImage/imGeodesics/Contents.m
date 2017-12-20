@@ -57,8 +57,8 @@
 %
 % ----
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
-% http://github.com/dlegland/matImage
+% e-mail: david.legland@inra.fr
+% http://github.com/mattools/matImage
 % http://www.pfl-cepia.inra.fr/index.php?page=imGeodesics
 % Copyright INRA - Cepia Software Platform.
 

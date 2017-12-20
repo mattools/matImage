@@ -45,8 +45,8 @@
 %
 %
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
-% http://github.com/dlegland/matImage
+% e-mail: david.legland@inra.fr
+% http://github.com/mattools/matImage
 % Copyright 2009 INRA - Cepia Software Platform.
 
 help('imShapes');

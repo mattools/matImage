@@ -75,9 +75,9 @@
 %
 %
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Copyright INRA - Cepia Software Platform.
-% http://github.com/dlegland/matImage
+% http://github.com/mattools/matImage
 % http://www.pfl-cepia.inra.fr/index.php?page=imael
  
 % display help if executed

@@ -60,7 +60,7 @@ function gl = imGeodesicDiameter(img, varargin)
 
 %   ---------
 %   author : David Legland 
-%   mail: david.legland@nantes.inra.fr
+%   mail: david.legland@inra.fr
 %   INRA - TPV URPOI - BIA IMASTE
 %   created the 06/07/2005.
 %
@@ -112,40 +112,52 @@ if islogical(img)
 end
 
 % number of structures in image
-n = max(img(:));
+nLabels = max(img(:));
 
 
 %% Detection of center point (furthest point from boundary)
 
 if verbose
-    disp(sprintf('Computing geodesic length of %d particle(s).', n)); %#ok<*DSPS>
+    disp(sprintf('Computing geodesic length of %d particle(s).', nLabels)); %#ok<*DSPS>
 end
 
-% create markers image
-markers = ~img;
+% create markers image at the boundary of the labels
+markers = img == 0;
 
 if verbose
-    disp('Computing empirical centers.'); 
+    disp('Computing initial centers...'); 
 end
 
 % computation of geodesic length from empirical markers
 dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 
 
-
 %% Second pass: find a geodesic extremity
+
+if verbose
+    disp('Create marker image of initial centers'); 
+end
+
+% find the pixel with largest distance in current label
+maxVals = -ones(nLabels, 1);
+maxValInds = zeros(nLabels, 1);
+
+for i = 1:numel(img)
+    label = img(i);
+    if label > 0
+        if dist(i) > maxVals(label)
+            maxVals(label) = dist(i);
+            maxValInds(label) = i;
+        end
+    end
+end
 
 % compute new seed point in each label, and use it as new marker
 markers = false(size(img));
-for i = 1:n
-    % find the pixel with largest distance in current label
-    [y, x] = find(img==i);
-    [maxVal, ind] = max(dist(img==i)); %#ok<ASGLU>
-    markers(y(ind), x(ind)) = true;
-end
+markers(maxValInds) = 1;
 
 if verbose
-    disp('Second step markers computations done.'); 
+    disp('Propagate distance from initial centers'); 
 end
 
 % recomputes geodesic distance from new markers
@@ -154,17 +166,30 @@ dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 
 %% third pass: find second geodesic extremity
 
-% compute new seed point in each label, and use it as new marker
-markers = false(size(img));
-for i = 1:n
-    % find the pixel with largest distance in current label
-    [y, x] = find(img==i);
-    [maxVal, ind] = max(dist(img==i)); %#ok<ASGLU>
-    markers(y(ind), x(ind)) = true;
+if verbose
+    disp('Create marker image of first geodesic extremity'); 
 end
 
+% find the pixel with largest distance in current label
+maxVals = -ones(nLabels, 1);
+maxValInds = zeros(nLabels, 1);
+
+for i = 1:numel(img)
+    label = img(i);
+    if label > 0
+        if dist(i) > maxVals(label)
+            maxVals(label) = dist(i);
+            maxValInds(label) = i;
+        end
+    end
+end
+
+% compute new seed point in each label, and use it as new marker
+markers = false(size(img));
+markers(maxValInds) = 1;
+
 if verbose
-    disp('Third step markers computations done.'); 
+    disp('Propagate distance from first geodesic extremity'); 
 end
 
 % recomputes geodesic distance from new markers
@@ -173,10 +198,20 @@ dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 
 %% Final computation of geodesic distances
 
-% keep max geodesic distance inside each label
-gl = zeros(n, 1);
-for i = 1:n
-    % find the pixel with greatest distance in current label, 
-    % and add 1 to take into account pixel thickness
-    gl(i) = max(dist(img==i)) + 1;
+if verbose
+    disp('Compute geodesic distances'); 
 end
+
+% keep max geodesic distance inside each label
+gl = -ones(nLabels, 1);
+for i = 1:numel(img)
+    label = img(i);
+    if label > 0
+        if dist(i) > gl(label)
+            gl(label) = dist(i);
+        end
+    end
+end
+
+% add 1 for taking into account pixel thickness
+gl = gl + 1;

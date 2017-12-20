@@ -30,9 +30,10 @@ function path = imMaxGeodesicPath(img, varargin)
 %   See also
 %   imGeodesics, imGeodesicPath, imChamferDistance, imGeodesicDiameter
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-02-22,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -62,7 +63,7 @@ while ~isempty(varargin)
     if strcmpi(paramName, 'verbose')
         verbose = varargin{2};
     else
-        error(['Unkown option in imGeodesicLength: ' paramName]);
+        error(['Unkown option in imMaxGeodesicPath: ' paramName]);
     end
     varargin(1:2) = [];
 end
@@ -77,7 +78,7 @@ img = img > 0;
 [y, x] = find(img);
 
 % compute distance map from particle boundary
-dist    = imChamferDistance(img, ws);
+dist = imChamferDistance(img, ws);
 
 % index of "central" pixel, i.e. the furthest pixel from boundary
 [maxVal, ind] = max(dist(img)); %#ok<ASGLU>
@@ -150,5 +151,5 @@ while true
     path = [path; x y]; %#ok<AGROW>
 end
 
-% subtract 1, because of border
+% subtract 1, because of a 1-pixel thick border was added around image
 path = path - 1;

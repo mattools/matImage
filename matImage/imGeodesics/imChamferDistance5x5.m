@@ -170,9 +170,10 @@ fwdShifts = [...
     -1  0 w1; ...
     -1 +1 w2; ...
     -1 +2 w3; ...
-     0 -1 w2];
+     0 -1 w1];
  
- bckShifts = [...
+% the list of shifts for backward scans (shift in y, shift in x, weight)
+bckShifts = [...
      +2 +1 w3; ...
      +2 -1 w3; ...
      +1 +2 w3; ...
@@ -180,14 +181,7 @@ fwdShifts = [...
      +1  0 w1; ...
      +1 -1 w2; ...
      +1 -2 w3; ...
-      0 -1 w1];
-
-% % shifts in directions i and j for (1) forward and (2) backward iterations
-% di1 = [-1 -1 -1 0];
-% dj1 = [-1 0 1 -1];
-% di2 = [+1 +1 +1 0];
-% dj2 = [-1 0 1 +1];
-% ws =  [w2 w1 w2 w1];
+      0 +1 w1];
 
 % binarisation of mask image
 mask = img > 0;
@@ -251,7 +245,7 @@ while modif
             end
             
             % if distance was changed, update result, and toggle flag
-            if newVal ~= dist(i,j)
+            if newVal < dist(i,j)
                 modif = true;
                 dist(i,j) = newVal;
             end
@@ -301,7 +295,7 @@ while modif
             end
                
             % if distance was changed, update result, and toggle flag
-            if newVal ~= dist(i,j)
+            if newVal < dist(i,j)
                 modif = true;
                 dist(i,j) = newVal;
             end

@@ -70,6 +70,10 @@ nv = size(point, 1);
 nc = 1;
 if isColorImage(img)
     nc = size(img, 3);
+    
+    if isscalar(fillValue)
+        fillValue = repmat(fillValue, 3, 1);
+    end
 end
 
 % allocate memory for result
@@ -92,7 +96,7 @@ if nd == 2
         % planar color
         for i = 1:nc
             val(:, i) = interp2(x, y, double(img(:, :, i)), ...
-                point(:, 1), point(:, 2), method, fillValue);
+                point(:, 1), point(:, 2), method, fillValue(i));
         end
     end
     
@@ -111,7 +115,7 @@ elseif nd == 3
         z = 1:size(img, 4);
         for i = 1:nc
             val(:, i) = interp2(x, y, z, double(squeeze(img(:,:,i,:))), ...
-                point(:, 1), point(:, 2), point(:, 3), method, fillValue);
+                point(:, 1), point(:, 2), point(:, 3), method, fillValue(i));
         end
     end
     

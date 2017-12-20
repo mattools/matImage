@@ -176,6 +176,7 @@ dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
 % keep max geodesic distance inside each label
 gl = zeros(n, 1);
 for i = 1:n
-    % find the pixel with greatest distance in current label
-    gl(i) = max(dist(img==i));
+    % find the pixel with greatest distance in current label, 
+    % and add 1 to take into account pixel thickness
+    gl(i) = max(dist(img==i)) + 1;
 end

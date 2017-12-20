@@ -51,7 +51,6 @@ dist34 = imChamferDistance(img, marker, int16([3 4]));
 
 % convert to double and normalize
 dist34d = double(dist34);
-dist34d = dist34d / 3;
 dist34d(~img) = inf;
 
 % convert to RGB
@@ -64,4 +63,23 @@ imshow(rgb34);
 
 % decorate
 title('Borgefors 3-4 weights');
- 
+
+%% The same, using Chess-knight weights
+
+% compute distance using integer weights
+distCK = imChamferDistance(img, marker, int16([5 7 11]));
+
+% convert to double and normalize
+distCK = double(distCK);
+distCK(~img) = inf;
+
+% convert to RGB
+bounds = [0 210];
+rgbCK = double2rgb(distCK, jet, bounds, [1 1 1]);
+
+% display rgb
+figure;
+imshow(rgbCK);
+
+% decorate
+title('ChessKnight 5-7-11 weights');

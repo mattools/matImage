@@ -24,40 +24,34 @@ function [value, segImg] = imOtsuThreshold(img, varargin)
 %     thresh = imOtsuThreshold(img);
 %     figure; imshow(img >= thresh);
 %
-%   Note
-%   Only implemented for grayscale image coded on uint8.
-%
 %
 %   See also
-%   imHistogram, imMaxEntropyThreshold, imContours, watershed
+%   imHistogram, imMaxEntropyThreshold, imContours, watershed, graythresh
 %
 
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2012-01-13,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
-% number of gray levels
-L = 256;
-
-% vector of gray levels for variance computation
-levels = 0:L-1;
-
 % compute normalized histogram
-h = imHistogram(img, varargin{:})';
-h = h / sum(h);
+[h, levels] = imHistogram(img, varargin{:});
+h = h' / sum(h);
+
+% number of gray levels
+nLevels = length(levels);
 
 % average value within whole image
 mu = sum(h .* levels);
 
 % vector of thresholds to consider (size is number of graylevels minus one)
-threshInds = 2:L;
+threshInds = 2:nLevels;
 
 % allocate memory
-sigmab = zeros(1, L - 1);
-sigmaw = zeros(1, L - 1);
+sigmab = zeros(1, nLevels - 1);
+sigmaw = zeros(1, nLevels - 1);
 
 for i = 1:length(threshInds)
     % index of current threshold in histogram values, from 2 to L
@@ -65,7 +59,7 @@ for i = 1:length(threshInds)
     
     % linear indices for each class
     ind0 = 1:(t-1); % background
-    ind1 = t:L;     % foreground, including threshold
+    ind1 = t:nLevels;     % foreground, including threshold
     
     % probabilities associated with each class
     p0 = sum(h(ind0));

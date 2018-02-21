@@ -7,11 +7,12 @@ classdef LabelIsosurfacesOptionsDialog < handle
 %   LabelIsosurfacesOptionsDialog
 %
 %   See also
+%     IsosurfaceOptionsDialog
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2013-04-19,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 

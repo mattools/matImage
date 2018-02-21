@@ -21,7 +21,7 @@ function [perim, labels] = imPerimeterEstimate(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-01-21,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
@@ -97,8 +97,14 @@ D2 = dim(2);
 %% Compute intersections
 
 % first compute number of intersections in the 2 main directions
-n1 = sum(sum(img(1:D1-1,:) ~= img(2:D1,:)));
-n2 = sum(sum(img(:,1:D2-1) ~= img(:,2:D2)));
+% i: lines arrives inside the structure
+% o: lines goes outside of the structure
+n1i = sum(sum(img(1:D1-2, 2:D2-1) == 0 & img(2:D1-1, 2:D2-1) ~= 0));
+n1o = sum(sum(img(2:D1-1, 2:D2-1) ~= 0 & img(3:D1,   2:D2-1) == 0));
+n1 = n1i + n1o;
+n2i = sum(sum(img(2:D1-1, 1:D2-2) == 0 & img(2:D1-1, 2:D2-1) ~= 0));
+n2o = sum(sum(img(2:D1-1, 2:D2-1) ~= 0 & img(2:D1-1, 3:D2) == 0));
+n2 = n2i + n2o;
 
 if nDirs == 2
     % compute for 2 directions: horizontal and vertical

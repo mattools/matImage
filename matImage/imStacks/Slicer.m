@@ -81,11 +81,12 @@ classdef Slicer < handle
 %     imStacks, imscrollpanel
 %
 %   Requires
-%       GUI Layout Toolbox version 1.17
+%       GUI Layout Toolbox version 2.0, or 1.17 (try to switch depending on
+%       Matlab version)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-04-12,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2011 INRA - Cepia Software Platform.
@@ -1766,14 +1767,34 @@ methods
         OrthoSlicer3dOptionsDialog(this);
     end
 
+    function onShowIsosurface(this, varargin)
+        % Choose an isosurface value, then computes the corresponding
+        % surface mesh
+        
+        % check validity of input image
+        if isempty(this.imageData)
+            return;
+        end
+        if ~ismember(this.imageType, {'grayscale', 'intensity'})
+            return;
+        end
+        
+        % open options dialog for isosurface
+        IsosurfaceOptionsDialog(this);
+    end
+    
     function onShowLabelIsosurfaces(this, varargin)
         % Open a dialog to choose options, then display label isosurfaces
+        
+        % check validity of input image
         if isempty(this.imageData)
             return;
         end
         if ~ismember(this.imageType, {'label', 'binary'})
             return;
         end
+        
+        % open options dialog for isosurface of label images
         LabelIsosurfacesOptionsDialog(this);
     end
     
@@ -2186,6 +2207,11 @@ methods
         else
             scalarFlag = 'off';
         end
+        if ismember(this.imageType, {'grayscale', 'intensity'})
+            intensityFlag = 'on';
+        else
+            intensityFlag = 'off';
+        end
         
         % files
         menuFiles = uimenu(hf, 'Label', '&Files');
@@ -2447,7 +2473,11 @@ methods
             'Enable', imageFlag, ...
             'Callback', @this.onShowOrthoSlices3d);
         uimenu(menuView, ...
-            'Label', 'Surface rendering', ...
+            'Label', 'Isosurface Rendering', ...
+            'Enable', intensityFlag, ...
+            'Callback', @this.onShowIsosurface);
+        uimenu(menuView, ...
+            'Label', 'Binary/Labels Surface Rendering', ...
             'Enable', labelFlag, ...
             'Callback', @this.onShowLabelIsosurfaces);
         

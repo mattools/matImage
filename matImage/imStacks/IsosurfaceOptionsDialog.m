@@ -91,6 +91,12 @@ methods
                 'Value', 1, ...
                 'HorizontalAlignment', 'Left');
             
+            this.handles.reverseZAxis = uicontrol(...
+                'Style', 'checkbox', 'Parent', optionsPanel, ...
+                'String', 'Reverse Z-axis', ...
+                'Value', 1, ...
+                'HorizontalAlignment', 'Left');
+
             this.handles.rotateOx = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Rotate around X-axis', ...
@@ -159,10 +165,11 @@ methods
         
         % extract options from widgets
         str = get(this.handles.isosurfaceValue, 'String');
-        [value, flag] = str2num(str);
+        [value, flag] = str2num(str); %#ok<ST2NM>
         if ~flag
             error(['Could not parse isosurface value from: ' str]);
         end
+        reverseZAxis = get(this.handles.reverseZAxis, 'Value');
         rotateXAxis = get(this.handles.rotateOx, 'Value');
         smooth = get(this.handles.smooth, 'Value');
         showAxesLabel = get(this.handles.showAxisLabel, 'Value');
@@ -194,10 +201,7 @@ methods
         if rotateXAxis
             ly = ly(end:-1:1);
         end
-        
-%         % number of different labels
-%         nLabels = double(max(imgData(:)));
-% 
+
         % determine the color map to use (default is empty)
         cmap = [];
         if ~isColorStack(imgData) && ~isempty(this.parent.colorMap)
@@ -206,42 +210,26 @@ methods
         if isempty(cmap)
             cmap = jet(256);
         end
-%         
-%         % if colormap has 256 entries, we need only a subset
-%         % otherwise, we assume colormap has as many rows as the number
-%         % of labels.
-%         if size(cmap, 1) == 256
-%             inds = round(linspace(2, 256, nLabels));
-%             cmap = cmap(inds, :);
-%         end
-%         
-%         % for binary images, colormap has two entries, so we need to keep
-%         % the last one
-%         if strcmp(this.parent.imageType, 'binary') && size(cmap, 1) > 1
-%             cmap = cmap(2,:);
-%         end
         
         % create figure 
         hf = figure(); hold on;
         set(hf, 'renderer', 'opengl');
         
-        % compute an isosurface for each label
-%         for i = 1:nLabels
-            im = imgData >= value;
-            if ~any(im)
-                return;
-            end
-            
-            if smooth
-                im = imGaussianFilter(double(im), [5 5 5], 2);
-            end
-            
-            % display isosurface
-            p = patch(isosurface(lx, ly, lz, im, .5));
-            
-            % set face color
-            set(p, 'FaceColor', cmap(end,:), 'EdgeColor', 'none');
-%         end
+        % compute isosurface
+        im = imgData >= value;
+        if ~any(im)
+            return;
+        end
+        
+        if smooth
+            im = imGaussianFilter(double(im), [5 5 5], 2);
+        end
+        
+        % display isosurface
+        p = patch(isosurface(lx, ly, lz, im, .5));
+        
+        % set face color
+        set(p, 'FaceColor', cmap(end,:), 'EdgeColor', 'none');
         
         % compute display extent (add a 0.5 limit around each voxel)
         extent = stackExtent(imgSize, spacing, origin);
@@ -254,7 +242,7 @@ methods
         
         light;
          
-        if rotateXAxis
+        if rotateXAxis || reverseZAxis
             set(gca, 'zdir', 'reverse');
         end
         

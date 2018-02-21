@@ -74,6 +74,12 @@ methods
                     'Spacing', 5, 'Padding', 5);
             end
             
+            this.handles.reverseZAxis = uicontrol(...
+                'Style', 'checkbox', 'Parent', optionsPanel, ...
+                'String', 'Reverse Z-axis', ...
+                'Value', 1, ...
+                'HorizontalAlignment', 'Left');
+
             this.handles.rotateOx = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Rotate around X-axis', ...
@@ -141,6 +147,7 @@ methods
             'Isosurface computing');
         
         % extract options from widgets
+        reverseZAxis = get(this.handles.reverseZAxis, 'Value');
         rotateXAxis = get(this.handles.rotateOx, 'Value');
         smooth = get(this.handles.smooth, 'Value');
         showAxesLabel = get(this.handles.showAxisLabel, 'Value');
@@ -232,7 +239,7 @@ methods
         
         light;
          
-        if rotateXAxis
+        if rotateXAxis || reverseZAxis
             set(gca, 'zdir', 'reverse');
         end
         

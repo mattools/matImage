@@ -73,7 +73,7 @@ function dist = imDistanceMap(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2012-08-20,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -93,9 +93,10 @@ if ~isempty(varargin)
     varargin(1) = [];
     w1 = var(1);
     w2 = var(2);
+    
     % small check up to avoid degenerate cases
-    if w2 == 0
-        w2 = 2*w1;
+    if w2 < w1
+        w2 = 2 * w1;
     end
 end
 

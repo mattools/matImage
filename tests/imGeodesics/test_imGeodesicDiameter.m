@@ -78,7 +78,7 @@ assertElementsAlmostEqual(exp, imGeodesicDiameter(img));
 assertElementsAlmostEqual(exp, imGeodesicDiameter(img, [1 1]));
 assertElementsAlmostEqual(exp, imGeodesicDiameter(img, [1 2]));
 assertElementsAlmostEqual(exp, imGeodesicDiameter(img, [3 4]));
-assertElementsAlmostEqual(exp, imGeodesicDiameter(img, uint16([3 4])));
+assertEqual(uint16(exp), imGeodesicDiameter(img, uint16([3 4])));
 
 function test_SeveralParticles
 
@@ -96,16 +96,23 @@ exp34 = [8/3 11/3 11/3 12/3]' + 1;
 assertElementsAlmostEqual(exp11, imGeodesicDiameter(img, [1 1]));
 assertElementsAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
 assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
-% assertElementsEqual(uint16(exp34), imGeodesicDiameter(img, uint16([3 4])));
-% TODO: add specific test case for uint16
 
+function test_SeveralParticles_UInt16
 
-% test on binary image that will be labeled
-% TODO: add specific test case
-assertElementsAlmostEqual(exp11, imGeodesicDiameter(img>0, [1 1]));
-assertElementsAlmostEqual(exp12, imGeodesicDiameter(img>0, [1 2]));
-assertElementsAlmostEqual(exp34, imGeodesicDiameter(img>0, [3 4]));
-% assertElementsAlmostEqual(uint16(exp34), imGeodesicDiameter(img>0, uint16([3 4])));
+img = zeros(10, 10);
+img(2:4, 2:4) = 1; 
+img(6:9, 2:4) = 2; 
+img(2:4, 6:9) = 3; 
+img(6:9, 6:9) = 4; 
+
+exp11 = uint16([2 3 3 3]' + 1);
+exp12 = uint16([4 5 5 6]' + 1);
+exp34 = uint16([8/3 11/3 11/3 12/3]' + 1);
+
+% test on label image
+assertEqual(exp11, imGeodesicDiameter(img, uint16([1 1])));
+assertEqual(exp12, imGeodesicDiameter(img, uint16([1 2])));
+assertEqual(exp34, imGeodesicDiameter(img, uint16([3 4])));
 
 
 
@@ -141,7 +148,6 @@ assertElementsAlmostEqual(exp12, res12);
 evalc('res34 = imGeodesicDiameter(img, [3 4], ''verbose'', true)');
 exp34 = (no*3 + nd*4)/3 + 1;
 assertElementsAlmostEqual(exp34, res34);
-% assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, uint16([3 4]), 'verbose', true));
 
 
 function test_Verbosity_With_Labeling

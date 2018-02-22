@@ -203,7 +203,8 @@ if verbose
 end
 
 % keep max geodesic distance inside each label
-gd = -ones(nLabels, 1);
+gd = -ones(nLabels, 1, class(ws));
+
 for i = 1:numel(img)
     label = img(i);
     if label > 0

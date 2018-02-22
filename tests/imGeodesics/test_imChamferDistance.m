@@ -1,4 +1,4 @@
-function test_suite = test_imChamferDistance(varargin) %#ok<STOUT>
+function testSuite = test_imChamferDistance(varargin)
 %TESTIMCHAMFERDIST  One-line description here, please.
 %
 %   output = test_imChamferDistance(input)
@@ -15,12 +15,10 @@ function test_suite = test_imChamferDistance(varargin) %#ok<STOUT>
 % Created: 2010-07-09,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
 
 
 %% Tests for Grayscale image 2D
-
 
 function test_MarkerAtUpperLeftCorner_10x12 %#ok<*DEFNU>
 % use blank image, marker at the upper left corner.

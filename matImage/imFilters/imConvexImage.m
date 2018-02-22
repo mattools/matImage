@@ -207,12 +207,12 @@ corners = [corners;x-.5 y-.5 z+.5;x-.5 y+.5 z+.5;x+.5 y+.5 z+.5;x+.5 y-.5 z+.5];
 corners = unique(corners, 'rows');
 
 % add points in the corners of image, if a pixel is present
-if img(1,1,1),       corners = [corners; .5 .5 .5];          end;
-if img(1,1,D3),      corners = [corners; .5 .5 D3+.5];       end;
-if img(1,D2,1),      corners = [corners; .5 D2+.5 .5];       end;
-if img(1,D2,D3),     corners = [corners; .5 D2+.5 D3+.5];    end;
-if img(D1,1,1),      corners = [corners; D1+.5 .5 .5];       end;
-if img(D1,1,D3),     corners = [corners; D1+.5 .5 D3+.5];    end;
-if img(D1,D2,1),     corners = [corners; D1+.5 D2+.5 .5];    end;
-if img(D1,D2,D3),    corners = [corners; D1+.5 D2+.5 D3+.5]; end;
+if img(1,1,1),       corners = [corners; .5 .5 .5];          end
+if img(1,1,D3),      corners = [corners; .5 .5 D3+.5];       end
+if img(1,D2,1),      corners = [corners; .5 D2+.5 .5];       end
+if img(1,D2,D3),     corners = [corners; .5 D2+.5 D3+.5];    end
+if img(D1,1,1),      corners = [corners; D1+.5 .5 .5];       end
+if img(D1,1,D3),     corners = [corners; D1+.5 .5 D3+.5];    end
+if img(D1,D2,1),     corners = [corners; D1+.5 D2+.5 .5];    end
+if img(D1,D2,D3),    corners = [corners; D1+.5 D2+.5 D3+.5]; end
 

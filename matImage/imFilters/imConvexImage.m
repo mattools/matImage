@@ -107,7 +107,7 @@ elseif ndims(img) == 3
 	hull = minConvexHull(corners, 1e-12);
     
     % compute normal vector of each face
-    normal = faceNormal(corners, hull);
+    normal = meshFaceNormals(corners, hull);
         
 	% get dimensions of image
 	N1 = size(bimg, 1);

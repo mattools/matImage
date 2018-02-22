@@ -1,4 +1,4 @@
-function test_suite = test_imOverlay(varargin)
+function testSuite = test_imOverlay(varargin)
 %TEST_IMOVERLAY  One-line description here, please.
 %
 %   output = test_imOverlay(input)
@@ -15,7 +15,7 @@ function test_suite = test_imOverlay(varargin)
 % Created: 2010-07-19,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
 
 
 %% Tests for Grayscale image 2D

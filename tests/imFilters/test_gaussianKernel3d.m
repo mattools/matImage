@@ -1,4 +1,4 @@
-function test_suite = test_gaussianKernel3d(varargin) %#ok<STOUT>
+function testSuite = test_gaussianKernel3d(varargin)
 %TEST_GAUSSIANKERNEL3D  One-line description here, please.
 %
 %   output = test_gaussianKernel3d(input)
@@ -8,15 +8,14 @@ function test_suite = test_gaussianKernel3d(varargin) %#ok<STOUT>
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-10-11,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
 
 function test_scalarSize %#ok<*DEFNU>
 

@@ -1,4 +1,4 @@
-function test_suite = test_imConvexImage(varargin) %#ok<STOUT>
+function testSuite = test_imConvexImage(varargin) 
 %TEST_IMCONVEXIMAGE One-line description here, please.
 %
 %   output = test_imConvexImage(input)
@@ -15,7 +15,7 @@ function test_suite = test_imConvexImage(varargin) %#ok<STOUT>
 % Created: 2011-07-07,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
 
 function test_2d %#ok<*DEFNU>
 

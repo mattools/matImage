@@ -1,4 +1,4 @@
-function test_suite = test_imAddBorder(varargin) %#ok<STOUT>
+function testSuite = test_imAddBorder(varargin) 
 %TEST_IMADDBORDER  Test case for the file imAddBorder
 %
 %   Test case for the file imAddBorder
@@ -15,7 +15,8 @@ function test_suite = test_imAddBorder(varargin) %#ok<STOUT>
 % Created: 2012-08-03,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
+
 
 function test_Rice10 %#ok<*DEFNU>
 
@@ -49,7 +50,7 @@ assertEqual([404 532 3], dim2);
 
 function test_Head_RGB
 
-load mri;
+load mri; %#ok<LOAD>
 img = cat(3, D, D, D);
 img2 = imAddBorder(img, 10);
 dim2 = size(img2);

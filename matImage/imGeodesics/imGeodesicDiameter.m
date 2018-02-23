@@ -121,15 +121,16 @@ if verbose
     disp(sprintf('Computing geodesic diameters of %d particle(s).', nLabels)); %#ok<*DSPS>
 end
 
-% create markers image at the boundary of the labels
-markers = img == 0;
+% % create markers image at the boundary of the labels
+% markers = img == 0;
 
 if verbose
     disp('Computing initial centers...'); 
 end
 
-% computation of geodesic length from empirical markers
-dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
+% computation of distance map from empirical markers
+% dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
+dist = imDistanceMap(img, ws, 'normalize', false, 'verbose', verbose);
 
 
 %% Second pass: find a geodesic extremity
@@ -161,7 +162,8 @@ if verbose
 end
 
 % recomputes geodesic distance from new markers
-dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
+% dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
+dist = imGeodesicDistanceMap(img, markers, ws, 'normalize', false, 'verbose', verbose);
 
 
 %% third pass: find second geodesic extremity
@@ -193,7 +195,8 @@ if verbose
 end
 
 % recomputes geodesic distance from new markers
-dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
+% dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
+dist = imGeodesicDistanceMap(img, markers, ws, 'normalize', false, 'verbose', verbose);
 
 
 %% Final computation of geodesic distances
@@ -203,7 +206,11 @@ if verbose
 end
 
 % keep max geodesic distance inside each label
-gd = -ones(nLabels, 1, class(ws));
+if isinteger(ws)
+    gd = zeros(nLabels, 1, class(ws));
+else
+    gd = -ones(nLabels, 1, class(ws));
+end
 
 for i = 1:numel(img)
     label = img(i);
@@ -214,5 +221,6 @@ for i = 1:numel(img)
     end
 end
 
-% add 1 for taking into account pixel thickness
-gd = gd + 1;
+% normalize by first weight, and add 1 for taking into account pixel
+% thickness 
+gd = gd / ws(1) + 1;

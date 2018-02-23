@@ -36,7 +36,7 @@ expDist = 10+12-2;
 assertEqual(expDist, maxDist);
 
 function test_MarkerAtBottomRightCorner_10x12
-% use blank image, marker at the upper left corner.
+% use blank image, marker at the bottom left corner.
 
 img = true(10, 12);
 marker = false(size(img));

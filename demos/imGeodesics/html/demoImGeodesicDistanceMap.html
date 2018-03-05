@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>demoImChamferDistance</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-12-20"><meta name="DC.source" content="demoImChamferDistance.m"><style type="text/css">
+      --><title>demoImGeodesicDistanceMap</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-03-05"><meta name="DC.source" content="demoImGeodesicDistanceMap.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,23 +66,22 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#3">Read image a create marker</a></li><li><a href="#4">compute using quasi-enclidean weights</a></li><li><a href="#5">compute using integer weights, giving integer results</a></li><li><a href="#6">The same, using Chess-knight weights</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> demoImChamferDistance(varargin)
-</pre><pre class="codeinput"><span class="comment">%DEMOIMCHAMFERDISTANCE computes distance function inside a complex particle</span>
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Read image a create marker</a></li><li><a href="#3">compute using quasi-enclidean weights</a></li><li><a href="#4">compute using integer weights, giving integer results</a></li><li><a href="#5">The same, using Chess-knight weights</a></li></ul></div><pre class="codeinput"><span class="comment">%Computes geodesic distance map inside a complex particle</span>
 <span class="comment">%</span>
-<span class="comment">%   output = demoImChamferDistance(input)</span>
+<span class="comment">%   output = demoGeodesicDistanceMap(input)</span>
 <span class="comment">%</span>
 <span class="comment">%   Example</span>
-<span class="comment">%   demoImChamferDistance</span>
+<span class="comment">%   demoGeodesicDistanceMap</span>
 <span class="comment">%</span>
 <span class="comment">%   See also</span>
 <span class="comment">%</span>
 <span class="comment">%</span>
 <span class="comment">% ------</span>
 <span class="comment">% Author: David Legland</span>
-<span class="comment">% e-mail: david.legland@grignon.inra.fr</span>
+<span class="comment">% e-mail: david.legland@inra.fr</span>
 <span class="comment">% Created: 2010-08-02,    using Matlab 7.9.0.529 (R2009b)</span>
 <span class="comment">% Copyright 2010 INRA - Cepia Software Platform.</span>
-</pre><h2 id="3">Read image a create marker</h2><pre class="codeinput"><span class="comment">% read image</span>
+</pre><h2 id="2">Read image a create marker</h2><pre class="codeinput"><span class="comment">% read image</span>
 img = imread(<span class="string">'circles.png'</span>);
 
 <span class="comment">% create marker</span>
@@ -91,11 +90,11 @@ marker(80, 80) = 1;
 
 <span class="comment">% show image</span>
 imshow(imOverlay(img, imdilate(marker, ones(3, 3))));
-</pre><img vspace="5" hspace="5" src="demoImChamferDistance_01.png" alt=""> <h2 id="4">compute using quasi-enclidean weights</h2><pre class="codeinput"><span class="comment">% compute distance map</span>
-dist = imChamferDistance(img, marker);
+</pre><img vspace="5" hspace="5" src="demoImGeodesicDistanceMap_01.png" alt=""> <h2 id="3">compute using quasi-enclidean weights</h2><pre class="codeinput"><span class="comment">% compute distance map</span>
+dist = imGeodesicDistanceMap(img, marker, [1 sqrt(2)]);
 
 <span class="comment">% convert to rgb (use function in 'imFilters')</span>
-rgb = double2rgb(dist, jet, [], [1 1 1]);
+rgb = double2rgb(dist, prism, [], [1 1 1]);
 
 <span class="comment">% display result</span>
 figure;
@@ -103,8 +102,8 @@ imshow(rgb);
 
 <span class="comment">% decorate</span>
 title(<span class="string">'Quasi-euclidean distance'</span>);
-</pre><img vspace="5" hspace="5" src="demoImChamferDistance_02.png" alt=""> <h2 id="5">compute using integer weights, giving integer results</h2><pre class="codeinput"><span class="comment">% compute distance using integer weights</span>
-dist34 = imChamferDistance(img, marker, int16([3 4]));
+</pre><img vspace="5" hspace="5" src="demoImGeodesicDistanceMap_02.png" alt=""> <h2 id="4">compute using integer weights, giving integer results</h2><pre class="codeinput"><span class="comment">% compute distance using integer weights</span>
+dist34 = imGeodesicDistanceMap(img, marker, int16([3 4]));
 
 <span class="comment">% convert to double and normalize</span>
 dist34d = double(dist34);
@@ -112,7 +111,7 @@ dist34d(~img) = inf;
 
 <span class="comment">% convert to RGB</span>
 bounds = [0 210];
-rgb34 = double2rgb(dist34d, jet, bounds, [1 1 1]);
+rgb34 = double2rgb(dist34d, prism, bounds, [1 1 1]);
 
 <span class="comment">% display rgb</span>
 figure;
@@ -120,8 +119,8 @@ imshow(rgb34);
 
 <span class="comment">% decorate</span>
 title(<span class="string">'Borgefors 3-4 weights'</span>);
-</pre><img vspace="5" hspace="5" src="demoImChamferDistance_03.png" alt=""> <h2 id="6">The same, using Chess-knight weights</h2><pre class="codeinput"><span class="comment">% compute distance using integer weights</span>
-distCK = imChamferDistance(img, marker, int16([5 7 11]));
+</pre><img vspace="5" hspace="5" src="demoImGeodesicDistanceMap_03.png" alt=""> <h2 id="5">The same, using Chess-knight weights</h2><pre class="codeinput"><span class="comment">% compute distance using integer weights</span>
+distCK = imGeodesicDistanceMap(img, marker, int16([5 7 11]));
 
 <span class="comment">% convert to double and normalize</span>
 distCK = double(distCK);
@@ -129,7 +128,7 @@ distCK(~img) = inf;
 
 <span class="comment">% convert to RGB</span>
 bounds = [0 210];
-rgbCK = double2rgb(distCK, jet, bounds, [1 1 1]);
+rgbCK = double2rgb(distCK, prism, bounds, [1 1 1]);
 
 <span class="comment">% display rgb</span>
 figure;
@@ -137,22 +136,21 @@ imshow(rgbCK);
 
 <span class="comment">% decorate</span>
 title(<span class="string">'ChessKnight 5-7-11 weights'</span>);
-</pre><img vspace="5" hspace="5" src="demoImChamferDistance_04.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+</pre><img vspace="5" hspace="5" src="demoImGeodesicDistanceMap_04.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
-function demoImChamferDistance(varargin)
-%DEMOIMCHAMFERDISTANCE computes distance function inside a complex particle
+%Computes geodesic distance map inside a complex particle
 %
-%   output = demoImChamferDistance(input)
+%   output = demoGeodesicDistanceMap(input)
 %
 %   Example
-%   demoImChamferDistance
+%   demoGeodesicDistanceMap
 %
 %   See also
 %
 %
 % REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-08-02,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
@@ -172,10 +170,10 @@ imshow(imOverlay(img, imdilate(marker, ones(3, 3))));
 %% compute using quasi-enclidean weights
 
 % compute distance map
-dist = imChamferDistance(img, marker);
+dist = imGeodesicDistanceMap(img, marker, [1 sqrt(2)]);
 
 % convert to rgb (use function in 'imFilters')
-rgb = double2rgb(dist, jet, [], [1 1 1]);
+rgb = double2rgb(dist, prism, [], [1 1 1]);
 
 % display result
 figure; 
@@ -188,7 +186,7 @@ title('Quasi-euclidean distance');
 %% compute using integer weights, giving integer results
 
 % compute distance using integer weights
-dist34 = imChamferDistance(img, marker, int16([3 4]));
+dist34 = imGeodesicDistanceMap(img, marker, int16([3 4]));
 
 % convert to double and normalize
 dist34d = double(dist34);
@@ -196,7 +194,7 @@ dist34d(~img) = inf;
 
 % convert to RGB
 bounds = [0 210];
-rgb34 = double2rgb(dist34d, jet, bounds, [1 1 1]);
+rgb34 = double2rgb(dist34d, prism, bounds, [1 1 1]);
 
 % display rgb
 figure;
@@ -205,10 +203,11 @@ imshow(rgb34);
 % decorate
 title('Borgefors 3-4 weights');
 
+
 %% The same, using Chess-knight weights
 
 % compute distance using integer weights
-distCK = imChamferDistance(img, marker, int16([5 7 11]));
+distCK = imGeodesicDistanceMap(img, marker, int16([5 7 11]));
 
 % convert to double and normalize
 distCK = double(distCK);
@@ -216,7 +215,7 @@ distCK(~img) = inf;
 
 % convert to RGB
 bounds = [0 210];
-rgbCK = double2rgb(distCK, jet, bounds, [1 1 1]);
+rgbCK = double2rgb(distCK, prism, bounds, [1 1 1]);
 
 % display rgb
 figure;

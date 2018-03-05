@@ -204,7 +204,7 @@ else
         +1 -1; ...
         +1 -2; ...
          0 +1];
-    ws = [w3 w3 w3 w2 w1 w2 w1 w3];
+    ws = [w3 w3 w3 w2 w1 w2 w3 w1];
 end
 
 % determines type of output from type of weights

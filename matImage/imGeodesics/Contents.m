@@ -7,7 +7,7 @@
 %   The base function is 'imGeodesicDistanceMap'. It propagates distances
 %   from a set of markers, using a mask to constrain the propagation.
 %   Chamfer distances are used as approximation of Euclidean distances.
-%   The function 'imChamferDistance3d' is its extension for 3D images.
+%   The function 'imGeodesicDistanceMap3d' is its extension for 3D images.
 %
 %   Using Chamfer distance propagation, it is possible to compute geodesic
 %   distances and geodesic path between two markers in a particle.
@@ -23,22 +23,22 @@
 %
 %
 % Distance propagation
-%   imGeodesicDistanceMap - Geodesic distance transform for binary or label images
-%   imChamferDistance3d   - Compute chamfer distance in 3D images
-%   imGeodesicPath        - Compute a geodesic path between two markers in an image
-%   imMaxGeodesicPath     - Find a path in a region with maximal geodesic length
-%   imGeodesicDistance    - Compute geodesic distance between 2 markers
+%   imGeodesicDistanceMap   - Geodesic distance transform for binary or label images
+%   imGeodesicDistanceMap3d - Geodesic distance transform for 3D binary or label images
+%   imGeodesicPath          - Compute a geodesic path between two markers in an image
+%   imMaxGeodesicPath       - Find a path in a region with maximal geodesic length
+%   imGeodesicDistance      - Compute geodesic distance between 2 markers
 %
 % Geodesic parameters
-%   imGeodesicDiameter    - Compute geodesic diameter of particles
-%   imGeodesicDiameter3d  - Compute geodesic diameter of 3D particles
-%   imGeodesicCenter      - Compute geodesic center of a binary particle
-%   imGeodesicExtremities - Compute geodesic extremities of a binary particle
-%   imGeodesicRadius      - Compute the geodesic radius of a binary particle
-%   imGeodesicPropagation - Compute geodesic propagation for each foreground pixel
+%   imGeodesicDiameter      - Compute geodesic diameter of particles
+%   imGeodesicDiameter3d    - Compute geodesic diameter of 3D particles
+%   imGeodesicCenter        - Compute geodesic center of a binary particle
+%   imGeodesicExtremities   - Compute geodesic extremities of a binary particle
+%   imGeodesicRadius        - Compute the geodesic radius of a binary particle
+%   imGeodesicPropagation   - Compute geodesic propagation for each foreground pixel
 %
 % Validation
-%   chamferDistanceError  - Compute relative error of chamfer distance with euclidean
+%   chamferDistanceError    - Compute relative error of chamfer distance with euclidean
 %
 %
 % References
@@ -62,7 +62,8 @@
 % Copyright INRA - Cepia Software Platform.
 
 % deprecated
-%   geodesicLength        - Compute geodesic length of particles
-%   imChamferDistance     - Chamfer distance transform using scanning algorithm
-%   imChamferDistance5x5  - Chamfer distance transform for 5x5 masks
+%   geodesicLength          - Compute geodesic length of particles
+%   imChamferDistance       - Chamfer distance transform using scanning algorithm
+%   imChamferDistance5x5    - Chamfer distance transform for 5x5 masks
+%   imChamferDistance3d     - Compute chamfer distance in 3D images
 

@@ -57,10 +57,9 @@ function gl = imGeodesicDiameter3d(img, varargin)
 %         243
 %
 %   See Also
-%   imGeodesics, imChamferDistance3d, imGeodesicExtremities
+%   imGeodesics, imGeodesicDistanceMap3d, imGeodesicExtremities
 %   imGeodesicRadius, imGeodesicCenter, imMaxGeodesicPath
-%
-%
+
 %   ---------
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
@@ -126,7 +125,7 @@ if verbose
 end
 
 % computation of geodesic length from empirical markers
-dist = imChamferDistance3d(img, markers, ws, 'verbose', verbose);
+dist = imGeodesicDistanceMap3d(img, markers, ws, 'verbose', verbose);
 
 
 
@@ -147,7 +146,7 @@ if verbose
 end
 
 % recomputes geodesic distance from new markers
-dist = imChamferDistance3d(img, markers, ws, 'verbose', verbose);
+dist = imGeodesicDistanceMap3d(img, markers, ws, 'verbose', verbose);
 
 
 %% third pass: find second geodesic extremity
@@ -167,7 +166,7 @@ if verbose
 end
 
 % recomputes geodesic distance from new markers
-dist = imChamferDistance3d(img, markers, ws, 'verbose', verbose);
+dist = imGeodesicDistanceMap3d(img, markers, ws, 'verbose', verbose);
 
 
 %% Final computation of geodesic distances

@@ -83,7 +83,8 @@ function dist = imGeodesicDistanceMap(img, varargin)
 %
 %   
 %   See also
-%   imGeodesics,imGeodesicDistance, imGeodesicDiameter, bwdist, bwdistgeodesic
+%   imGeodesics, imGeodesicDistanceMap3d, imGeodesicDistance, imGeodesicDiameter
+%   bwdist, bwdistgeodesic
 
 % ------
 % Author: David Legland

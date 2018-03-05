@@ -1,6 +1,9 @@
 function dist = imChamferDistance3d(img, varargin)
 %IMCHAMFERDISTANCE3D Compute chamfer distance in 3D images
 %
+%   WARNING: function imChamferDistance3d is obsolete, please use
+%   imGeodesicDistanceMap3d instead.
+%
 %   RES = imChamferDistance3d(IMG, MARKERS);
 %   where IMG and MARKERS are binary images, computes for each foreground
 %   voxel the minimum distance to the marker, using a path that is
@@ -91,9 +94,10 @@ function dist = imChamferDistance3d(img, varargin)
 
 %   HISTORY
 
+warning('MatImage:imGeodesics:deprecated', ...
+    'function imChamferDistance3d is obsolete, use imGeodesicDistanceMap3d instead');
 
 %% Process input arguments
-
 
 % extract markers if they are given as parameter
 markers = [];

@@ -63,7 +63,7 @@ if ndims(mask) == 2 %#ok<ISMAT>
     end
 else
     for i = 1:N1
-        dist = imChamferDistance3d(mask, marker1==labels1(i), varargin{:});
+        dist = imGeodesicDistanceMap3d(mask, marker1==labels1(i), varargin{:});
 
         for j = 1:N2
             res(i, j) = min(dist(marker2 == labels2(j)));

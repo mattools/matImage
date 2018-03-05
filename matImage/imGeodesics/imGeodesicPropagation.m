@@ -37,11 +37,10 @@ function res = imGeodesicPropagation(img, varargin)
 %
 %   See also
 %   imGeodesics, imGeodesicDistanceMap, imGeodesicRadius, imGeodesicExtremities
-%
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2009-05-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
@@ -59,7 +58,7 @@ if length(dim) == 2
             marker = false(size(img));
             marker(i, j) = true;
             
-            dist = imChamferDistance(img, marker, varargin{:});
+            dist = imGeodesicDistanceMap(img, marker, varargin{:});
             res(i, j) = max(dist(img));
         end
     end
@@ -75,7 +74,7 @@ elseif length(dim) == 3
                 marker = false(size(img));
                 marker(i, j, k) = true;
                 
-                dist = imChamferDistance3d(img, marker, varargin{:});
+                dist = imGeodesicDistanceMap3d(img, marker, varargin{:});
                 res(i, j, k) = max(dist(img));
             end
         end

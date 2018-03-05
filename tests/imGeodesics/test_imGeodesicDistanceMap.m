@@ -27,7 +27,7 @@ img = true(10, 12);
 marker = false(size(img));
 marker(1, 1) = 1;
 
-dist = imChamferDistance(img, marker, [1 0]);
+dist = imGeodesicDistanceMap(img, marker, [1 0]);
 maxDist = max(dist(img(:)));
 
 assertTrue(isfinite(maxDist));
@@ -42,7 +42,7 @@ img = true(10, 12);
 marker = false(size(img));
 marker(end, end) = 1;
 
-dist = imChamferDistance(img, marker, [1 0]);
+dist = imGeodesicDistanceMap(img, marker, [1 0]);
 maxDist = max(dist(img(:)));
 
 assertTrue(isfinite(maxDist));
@@ -58,7 +58,7 @@ img = true(10, 30);
 marker = false(size(img));
 marker(1, 1) = 1;
 
-dist = imChamferDistance(img, marker, [1 1]);
+dist = imGeodesicDistanceMap(img, marker, [1 1]);
 maxDist = max(dist(img(:)));
 
 assertTrue(isfinite(maxDist));
@@ -73,7 +73,7 @@ img = true(10, 30);
 marker = false(size(img));
 marker(end, end) = 1;
 
-dist = imChamferDistance(img, marker, [1 1]);
+dist = imGeodesicDistanceMap(img, marker, [1 1]);
 maxDist = max(dist(img(:)));
 
 assertTrue(isfinite(maxDist));
@@ -99,7 +99,7 @@ img = [...
 marker = false(size(img));
 marker(2, 2) = 1;
 
-dist = imChamferDistance(img, marker);
+dist = imGeodesicDistanceMap(img, marker);
 maxDist = max(dist(isfinite(dist)));
 
 assertTrue(isfinite(maxDist));

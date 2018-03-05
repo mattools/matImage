@@ -1,5 +1,5 @@
 function dist = imGeodesicDistanceMap(img, varargin)
-%IMGEODESICDISTANCEMAP Chamfer distance transform for 5x5 masks
+%IMGEODESICDISTANCEMAP Geodesic distance transform for binary or label images
 %
 %   RES = imGeodesicDistanceMap(IMG, MARKERS);
 %   where IMG and MARKERS are binary images, computes for each foreground
@@ -46,7 +46,7 @@ function dist = imGeodesicDistanceMap(img, varargin)
 %       tradeoff, the maximal distance with [3 4] weights is around 11000
 %       pixels.
 %
-%   RES = imChamferDistance(..., 'verbose', true);
+%   RES = imGeodesicDistanceMap(..., 'verbose', true);
 %   Displays info on iterations.
 %
 %   Example
@@ -55,11 +55,11 @@ function dist = imGeodesicDistanceMap(img, varargin)
 %     marker = false(size(img));
 %     marker(80, 80) = 1;
 %     % compute using quasi-enclidean weights
-%     dist = imChamferDistance(img, marker);
+%     dist = imGeodesicDistanceMap(img, marker);
 %     figure; imshow(dist, []);
 %     colormap(jet); title('Quasi-euclidean distance');
 %     % compute using integer weights, giving integer results
-%     dist34 = imChamferDistance(img, marker, int16([3 4]));
+%     dist34 = imGeodesicDistanceMap(img, marker, int16([3 4]));
 %     figure; imshow(double(dist34)/3, [0 max(dist34(img))/3]);
 %     colormap(jet); title('Borgefors 3-4 weights');
 %
@@ -67,10 +67,10 @@ function dist = imGeodesicDistanceMap(img, varargin)
 %   % uses the examples from bwdist with different distances
 %     img = ones(255, 255);
 %     img(126, 126) = 0;
-%     res1 = imChamferDistance(img);
-%     res2 = imChamferDistance(img, [1 inf]);
-%     res3 = imChamferDistance(img, [1 1]);
-%     res4 = imChamferDistance(img, [1 1.5]);
+%     res1 = imGeodesicDistanceMap(img);
+%     res2 = imGeodesicDistanceMap(img, [1 inf]);
+%     res3 = imGeodesicDistanceMap(img, [1 1]);
+%     res4 = imGeodesicDistanceMap(img, [1 1.5]);
 %     figure;
 %     subplot(221); subimage(mat2gray(res1));
 %     hold on; imcontour(res1); title('quasi-euclidean');
@@ -83,12 +83,11 @@ function dist = imGeodesicDistanceMap(img, varargin)
 %
 %   
 %   See also
-%   imGeodesics,imGeodesicDistance, imGeodesicDiameter, imChamferDistance
-%   bwdist, bwdistgeodesic
+%   imGeodesics,imGeodesicDistance, imGeodesicDiameter, bwdist, bwdistgeodesic
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2016-01-14,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 

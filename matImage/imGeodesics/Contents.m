@@ -4,9 +4,9 @@
 %   Some functions for computing distance function in images, and computing
 %   geodesic parameters.
 %
-%   The base function is 'imChamferDistance'. It propagates distances from
-%   a set of markers, using a mask to constrain the propagation. Chamfer
-%   distances are used as approximation of euclidean distances.
+%   The base function is 'imGeodesicDistanceMap'. It propagates distances
+%   from a set of markers, using a mask to constrain the propagation.
+%   Chamfer distances are used as approximation of Euclidean distances.
 %   The function 'imChamferDistance3d' is its extension for 3D images.
 %
 %   Using Chamfer distance propagation, it is possible to compute geodesic
@@ -23,8 +23,7 @@
 %
 %
 % Distance propagation
-%   imChamferDistance     - Chamfer distance transform using scanning algorithm
-%   imChamferDistance5x5  - Chamfer distance transform for 5x5 masks
+%   imGeodesicDistanceMap - Geodesic distance transform for binary or label images
 %   imChamferDistance3d   - Compute chamfer distance in 3D images
 %   imGeodesicPath        - Compute a geodesic path between two markers in an image
 %   imMaxGeodesicPath     - Find a path in a region with maximal geodesic length
@@ -64,3 +63,6 @@
 
 % deprecated
 %   geodesicLength        - Compute geodesic length of particles
+%   imChamferDistance     - Chamfer distance transform using scanning algorithm
+%   imChamferDistance5x5  - Chamfer distance transform for 5x5 masks
+

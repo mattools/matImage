@@ -1,6 +1,9 @@
 function dist = imChamferDistance5x5(img, varargin)
 %IMCHAMFERDISTANCE5X5  Chamfer distance transform for 5x5 masks
 %
+%   WARNING: function imChamferDistance5x5 is obsolete, please use
+%   imGeodesicDistanceMap instead.
+%
 %   RES = imChamferDistance5x5(IMG, MARKERS);
 %   where IMG and MARKERS are binary images, computes for each foreground
 %   pixel the minimum distance to the marker, using a path that is
@@ -83,8 +86,7 @@ function dist = imChamferDistance5x5(img, varargin)
 %
 %   
 %   See also
-%   imGeodesics, bwdist, imGeodesicDistance, imGeodesicDiameter
-%   imChamferDistance
+%   imGeodesics, imGeodesicDistanceMap
 
 % ------
 % Author: David Legland
@@ -95,9 +97,10 @@ function dist = imChamferDistance5x5(img, varargin)
 %   HISTORY
 %   2010.08.25 fix memory allocation for large images, add verbosity option
 
+warning('MatImage:imGeodesics:deprecated', ...
+    'function imChamferDistance5x5 is obsolete, use imGeodesicDistanceMap instead');
 
 %% Process input arguments
-
 
 % extract markers if they are given as parameter
 markers = [];

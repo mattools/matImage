@@ -28,8 +28,7 @@ function path = imMaxGeodesicPath(img, varargin)
 %     end
 %
 %   See also
-%   imGeodesics, imGeodesicPath, imChamferDistance, imGeodesicDiameter
-%
+%   imGeodesics, imGeodesicPath, imGeodesicDistanceMap, imGeodesicDiameter
 
 % ------
 % Author: David Legland
@@ -78,7 +77,7 @@ img = img > 0;
 [y, x] = find(img);
 
 % compute distance map from particle boundary
-dist = imChamferDistance(img, ws);
+dist = imGeodesicDistanceMap(img, ws);
 
 % index of "central" pixel, i.e. the furthest pixel from boundary
 [maxVal, ind] = max(dist(img)); %#ok<ASGLU>
@@ -92,7 +91,7 @@ markers = false(size(img));
 markers(y(ind), x(ind)) = true;
 
 % compute distance map from marker
-dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
+dist = imGeodesicDistanceMap(img, markers, ws, 'verbose', verbose);
 
 % find index of furthest point
 [maxVal, ind] = max(dist(img)); %#ok<ASGLU>
@@ -106,7 +105,7 @@ markers = false(size(img));
 markers(y(ind), x(ind)) = true;
 
 % compute distance map from marker
-dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
+dist = imGeodesicDistanceMap(img, markers, ws, 'verbose', verbose);
 
 % find index of furthest point
 [maxVal, ind] = max(dist(img)); %#ok<ASGLU>

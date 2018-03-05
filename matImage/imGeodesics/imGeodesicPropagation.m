@@ -36,8 +36,9 @@ function res = imGeodesicPropagation(img, varargin)
 %     colormap([1 1 1 ; jet]);
 %
 %   See also
-%   imGeodesics, imChamferDistance, imGeodesicRadius, imGeodesicExtremities
+%   imGeodesics, imGeodesicDistanceMap, imGeodesicRadius, imGeodesicExtremities
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr

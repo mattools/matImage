@@ -33,11 +33,11 @@ function path = imGeodesicPath(img, source, target, varargin)
 %     plot(path(:,1), path(:,2), 'color', 'm', 'linewidth', 2);
 %
 %   See also
-%   imGeodesics, imChamferDistance, imMaxGeodesicPath
-%
+%   imGeodesics, imGeodesicDistanceMap, imMaxGeodesicPath
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-04-04,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -92,7 +92,7 @@ else
 end
 
 % compute distance map from marker
-dist = imChamferDistance(img, markers, ws, 'verbose', verbose);
+dist = imGeodesicDistanceMap(img, markers, ws, 'verbose', verbose);
 
 
 %% Find position of first source point 

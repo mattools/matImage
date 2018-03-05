@@ -28,11 +28,11 @@ function [res, labels1, labels2] = imGeodesicDistance(mask, marker1, marker2, va
 %       10
 %
 %   See also
-%   imGeodesics, imChamferDistance, imChamferDistance3d
-%
+%   imGeodesics, imGeodesicDistanceMap, imChamferDistance3d
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2009-12-07,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
@@ -55,7 +55,7 @@ res = zeros(N1, N2);
 % iterate on labels of first marker image
 if ndims(mask) == 2 %#ok<ISMAT>
     for i = 1:N1
-        dist = imChamferDistance(mask, marker1==labels1(i), varargin{:});
+        dist = imGeodesicDistanceMap(mask, marker1==labels1(i), varargin{:});
 
         for j = 1:N2
             res(i, j) = min(dist(marker2 == labels2(j)));

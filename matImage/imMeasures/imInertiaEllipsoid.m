@@ -46,7 +46,7 @@ function [ellipsoid, labels] = imInertiaEllipsoid(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-12-01,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -57,51 +57,122 @@ function [ellipsoid, labels] = imInertiaEllipsoid(img, varargin)
 % size of image
 dim = size(img);
 
-% extract spatial calibration
+% extract spatial calibration, if present
 scales = [1 1 1];
-if ~isempty(varargin)
+if ~isempty(varargin) && ~ischar(varargin{1})
     scales = varargin{1};
+    varargin(1) = [];
 end
 
-% extract the set of labels, without the background
-labels = imFindLabels(img);
-nLabels = length(labels);
+isIntensity = false;
+labels = [];
 
-% allocate memory for result
-ellipsoid = zeros(nLabels, 9);
-
-for i = 1:nLabels
-    % extract points of the current particle
-    inds = find(img==labels(i));
-    [y, x, z] = ind2sub(dim, inds);
+while ~isempty(varargin)
+    var1 = varargin{1};
+ 
+    % swithc option recognition depending on type
+    if ischar(var1)
+        % process options specified as strings
+        if strcmpi(var1, 'intensity')
+            isIntensity = true;
+        else
+            error(['Unknown option: ' var1]);
+        end
+        
+    elseif isnumeric(var1)
+        % if another numerical option is specified, we assume it
+        % corresponds to the labels
+        labels = var1;
+    end
     
-%     % number of points
-%     n = length(inds);
+    varargin(1) = [];
+end
+
+if ~isIntensity
+    if isempty(labels)
+        % extract the set of labels, without the background
+        labels = imFindLabels(img);
+    end
+    
+    % allocate memory for result
+    nLabels = length(labels);
+    ellipsoid = zeros(nLabels, 9);
+    
+    for i = 1:nLabels
+        % extract points of the current particle
+        inds = find(img==labels(i));
+        [y, x, z] = ind2sub(dim, inds);
+        
+        % compute approximate location of ellipsoid center
+        xc = mean(x);
+        yc = mean(y);
+        zc = mean(z);
+        
+        center = [xc yc zc] .* scales;
+        
+        % recenter points (should be better for numerical accuracy)
+        x = (x - xc) * scales(1);
+        y = (y - yc) * scales(2);
+        z = (z - zc) * scales(3);
+        
+        points = [x y z];
+        
+        % compute the covariance matrix
+        covPts = cov(points, 1) + diag(1/12 * ones(1, 3));
+        
+        % perform a principal component analysis with 3 variables,
+        % to extract inertia axes
+        [U, S] = svd(covPts);
+        
+        % extract length of each semi axis
+        radii = sqrt(5) * sqrt(diag(S))';
+        
+        % sort axes from greater to lower
+        [radii, ind] = sort(radii, 'descend');
+        
+        % format U to ensure first axis points to positive x direction
+        U = U(ind, :);
+        if U(1,1) < 0
+            U = -U;
+            % keep matrix determinant positive
+            U(:,3) = -U(:,3);
+        end
+        
+        % convert axes rotation matrix to Euler angles
+        angles = rotation3dToEulerAngles(U);
+        
+        % concatenate result to form an ellipsoid object
+        ellipsoid(i, :) = [center radii angles];
+    end
+    
+else
+    % Computes inertia ellipsoid of the whole image with weights
+    % corresponding to image intensity
+    
+    % first computes a discrete grid
+    lx = 1:dim(2) * scales(1);
+    ly = 1:dim(1) * scales(2);
+    lz = 1:dim(3) * scales(3);
+    [x, y, z] = meshgrid(lx, ly, lz);
+
+    % weight the coordinates by image intensity
+    x = x .* img;
+    y = y .* img;
+    z = z .* img;
 
     % compute approximate location of ellipsoid center
-    xc = mean(x);
-    yc = mean(y);
-    zc = mean(z);
-
-    center = [xc yc zc] .* scales;
+    xc = mean(x(:));
+    yc = mean(y(:));
+    zc = mean(z(:));
+    center = [xc yc zc];
     
-    % recenter points (should be better for numerical accuracy)
-    x = (x - xc) * scales(1);
-    y = (y - yc) * scales(2);
-    z = (z - zc) * scales(3);
-
-    points = [x y z];
+    covPts = cov([x(:)-xc y(:)-yc z(:)-zc]) + diag(1/12 * ones(1, 3));
     
-    % compute the covariance matrix
-%     covPts = cov(points) / n;
-    covPts = cov(points) + diag(1/12 * ones(1, 3));
-      
     % perform a principal component analysis with 3 variables,
     % to extract inertia axes
     [U, S] = svd(covPts);
     
     % extract length of each semi axis
-%     radii = 2 * sqrt(diag(S)*n)';
     radii = sqrt(5) * sqrt(diag(S))';
     
     % sort axes from greater to lower
@@ -119,9 +190,8 @@ for i = 1:nLabels
     angles = rotation3dToEulerAngles(U);
     
     % concatenate result to form an ellipsoid object
-    ellipsoid(i, :) = [center radii angles];
+    ellipsoid = [center radii angles];
 end
-
 
 function varargout = rotation3dToEulerAngles(mat)
 %ROTATION3DTOEULERANGLES Extract Euler angles from a rotation matrix

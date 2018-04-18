@@ -10,15 +10,13 @@ function mu = imCMoment(img, p, q, varargin)
 %   imCMoment
 %
 %   See also
-%
-%
+%     imInertiaEllipse
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2008-10-08,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2008 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
-
 
 
 % get the centroid, either by argument, or by computation
@@ -49,7 +47,7 @@ Iy = repmat((1:Dy)', [1 Dx])-cy;
 
 % compute moment
 mu = zeros(size(p));
-for i=1:length(p(:))
+for i = 1:length(p(:))
     mu(i) = sum(Ix(:).^p(i) .* Iy(:).^q(i) .* img(:));
 end
 

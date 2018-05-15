@@ -1,4 +1,4 @@
-function gd = imGeodesicDiameter(img, varargin)
+function [gd, labels] = imGeodesicDiameter(img, varargin)
 %IMGEODESICDIAMETER Compute geodesic diameter of particles
 %
 %   GD = imGeodesicDiameter(IMG)
@@ -7,10 +7,6 @@ function gd = imGeodesicDiameter(img, varargin)
 %   labelling is performed first. 
 %   GD is a column vector containing the geodesic diameter of each particle.
 %
-%   A definition for the geodesic diameter can be found in the book from
-%   Coster & Chermant: "Precis d'analyse d'images", Ed. CNRS 1989.
-%
-%   
 %   GD = imGeodesicDiameter(IMG, WS)
 %   Specifies the weights associated to neighbor pixels. WS(1) is the
 %   distance to orthogonal pixels, and WS(2) is the distance to diagonal
@@ -24,6 +20,11 @@ function gd = imGeodesicDiameter(img, varargin)
 %   Display some informations about the computation procedure, that may
 %   take some time for large and/or complicated images.
 %
+%   [GD, LABELS] = imGeodesicDiameter(...);
+%   Also returns the list of labels for which the geodesic diameter was
+%   computed.
+%
+%
 %   These algorithm uses 3 steps:
 %   * first propagate distance from particles boundary to find a pixel
 %       approximately in the center of the particle(s)
@@ -33,8 +34,8 @@ function gd = imGeodesicDiameter(img, varargin)
 %       distance.
 %   This algorithm is less time-consuming than the direct approach that
 %   consists in computing geodesic propagation and keeping the max value.
-%   However, for some cases in can happen that the two methods give
-%   different results.
+%   However, for some cases (e.g. particles with holes) in can happen that
+%   the two methods give different results.
 %
 %
 %   Notes: 
@@ -51,6 +52,12 @@ function gd = imGeodesicDiameter(img, varargin)
 %     lbl = bwlabel(bin);
 %     gd = imGeodesicDiameter(lbl);
 %     plot(gd, '+');
+%
+%   References
+%   * Lantuejoul, C. and Beucher, S. (1981): "On the use of geodesic metric
+%       in image analysis", J. Microsc., 121(1), pp. 39-49.
+%       http://dx.doi.org/10.1111/j.1365-2818.1981.tb01197.x
+%   * Coster & Chermant: "Precis d'analyse d'images", Ed. CNRS 1989.
 %
 %
 %   See Also
@@ -112,8 +119,10 @@ if islogical(img)
 end
 
 % number of structures in image
-nLabels = max(img(:));
-
+labels = unique(img);
+labels(labels==0) = [];
+nLabels = length(labels);
+  
 
 %% Detection of center point (furthest point from boundary)
 
@@ -139,16 +148,20 @@ if verbose
     disp('Create marker image of initial centers'); 
 end
 
-% find the pixel with largest distance in current label
+% Create arrays to find the pixel with largest distance in each label
 maxVals = -ones(nLabels, 1);
 maxValInds = zeros(nLabels, 1);
 
+% iterate over pixels, and compare current distance with max distance
+% stored for corresponding label
 for i = 1:numel(img)
     label = img(i);
+
     if label > 0
-        if dist(i) > maxVals(label)
-            maxVals(label) = dist(i);
-            maxValInds(label) = i;
+        ind = find(labels == label);
+        if dist(i) > maxVals(ind)
+            maxVals(ind) = dist(i);
+            maxValInds(ind) = i;
         end
     end
 end
@@ -172,16 +185,18 @@ if verbose
     disp('Create marker image of first geodesic extremity'); 
 end
 
-% find the pixel with largest distance in current label
+% reset arrays to find the pixel with largest distance in each label
 maxVals = -ones(nLabels, 1);
 maxValInds = zeros(nLabels, 1);
 
+% iterate over pixels to identify second geodesic extremities
 for i = 1:numel(img)
     label = img(i);
     if label > 0
-        if dist(i) > maxVals(label)
-            maxVals(label) = dist(i);
-            maxValInds(label) = i;
+        ind = find(labels == label);
+        if dist(i) > maxVals(ind)
+            maxVals(ind) = dist(i);
+            maxValInds(ind) = i;
         end
     end
 end
@@ -215,8 +230,9 @@ end
 for i = 1:numel(img)
     label = img(i);
     if label > 0
-        if dist(i) > gd(label)
-            gd(label) = dist(i);
+        ind = find(labels == label);
+        if dist(i) > gd(ind)
+            gd(ind) = dist(i);
         end
     end
 end

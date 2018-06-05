@@ -28,14 +28,13 @@ function res = stackSlice(img, dir, slice)
 %     end
 %
 %   See also
-%
-%
+%     imStacks, imMiddleSlice
+
 %   ------
-%   author: David Legland, david.legland(at)grignon.inra.fr
+%   author: David Legland, david.legland@inra.fr
 %   INRA - Cepia Software Platform
 %   Created: 2007-08-14,    using Matlab 7.4.0.287 (R2007a)
 %   http://www.pfl-cepia.inra.fr/index.php?page=slicer
-%   Licensed under the terms of the new BSD license, see file license.txt
 
 %   HISTORY
 %   2010-12-02 code cleanup, fix dimension order of output slices

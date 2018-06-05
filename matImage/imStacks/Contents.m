@@ -16,12 +16,13 @@
 % Read/Write 3D images
 %   readstack      - Read either a list of 2D images (slices), or a 3D image
 %   savebinstack   - Save an binary stack to a file, as RGB Image.
-%   savestack      - Save an image stack to a file or a serie of files
+%   savestack      - Save an image stack to a file or a series of files
 %
 % Read/Write images in MetaImage format (used by ITK)
 %   metaImageInfo  - Read information header of meta image data
 %   metaImageRead  - Read an image in MetaImage format
 %   metaImageWrite - Write header and data files of an image in MetaImage format
+%   readVoxelMatrix  - Read a 3D image in VoxelMatrix (.vm) format
 %
 % Get information on 3D images
 %   stackSize      - Compute the size of a 3D stack in [x y z] form
@@ -34,6 +35,8 @@
 %   stackRotate90  - Rotate a 3D image by 90 degrees around one image axis
 %   rotateStack90  - Rotate a 3D image by 90 degrees around one image axis
 %   flipStack      - Flip a 3D image along specified X, Y, or Z dimension
+%   cropStack      - Crop a 3D image with the specified box limits
+%   imMiddleSlice  - Extract the middle slice of a 3D stack
 %
 %
 % Author: David Legland

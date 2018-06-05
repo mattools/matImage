@@ -18,7 +18,7 @@ function varargout = imHistogram(img, varargin)
 %   Specifies the number of histogram bins. N must be a scalar>0.
 %
 %   H = imHistogram(..., [GMIN GMAX]);
-%   Specifies the gray level extents. This can e especially useful for
+%   Specifies the gray level extents. This can be especially useful for
 %   images stored in float, or for images with more than 256 gray levels.
 %
 %   H = imHistogram(..., []);
@@ -33,7 +33,7 @@ function varargout = imHistogram(img, varargin)
 %   histogram only for pixels/voxels located inside of the specified region
 %   of interest.
 %
-%   [H X] = imHistogram(...);
+%   [H, X] = imHistogram(...);
 %   Returns the center of bins used for histogram computation.
 %
 %   imHistogram(IMG);
@@ -61,7 +61,7 @@ function varargout = imHistogram(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-01-27,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

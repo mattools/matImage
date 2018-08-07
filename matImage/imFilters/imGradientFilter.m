@@ -56,7 +56,7 @@ function varargout = imGradientFilter(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2009-08-19,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
@@ -88,8 +88,20 @@ if ~isempty(varargin)
     end
 end
 
+% parse verbosity option
+verbose = false;
+ind = find(strcmp(varargin, 'verbose'));
+if ~isempty(ind) 
+    if ind ~= length(varargin)
+       verbose = varargin{ind+1};
+       varargin(ind:ind+1) = [];
+    end
+end
 
 % default filter for gradient: normalised sobel
+if verbose
+    disp('init kernels');
+end
 if nd <= 2
     if sigma == 0
         % Default 2D case: normalised sobel matrix
@@ -145,15 +157,30 @@ varargin = [{'replicate'}, {'conv'}, varargin];
 % compute gradients in each main direction
 if nd == 2
     % Process 2D Image
+    if verbose
+        disp('compute gradient along x direction');
+    end
     dx = imfilter(double(img), sx, varargin{:});
+    if verbose
+        disp('compute gradient along y direction');
+    end
     dy = imfilter(double(img), sx', varargin{:});
     
 elseif nd == 3
     % Process 3D Image
     sy = permute(sx, [2 3 1]);
     sz = permute(sx, [3 1 2]);
+    if verbose
+        disp('compute gradient along x direction');
+    end
     dx = imfilter(double(img), sx, varargin{:});
+    if verbose
+        disp('compute gradient along y direction');
+    end
     dy = imfilter(double(img), sy, varargin{:});
+    if verbose
+        disp('compute gradient along z direction');
+    end
     dz = imfilter(double(img), sz, varargin{:});
 end
 
@@ -163,6 +190,9 @@ end
 % Depending on number of output arguments, returns either the gradient
 % module, or each component of the gradient vector.
 if nargout == 1
+    if verbose
+        disp('compute gradient norm');
+    end
     % compute gradient module
     if nd == 2
         varargout{1} = hypot(dx, dy);

@@ -22,4 +22,4 @@ function n = planeNormal(plane)
 outSz = size(plane);
 outSz(2) = 3;
 n = zeros(outSz);
-n(:) = vectorCross3d(plane(:,4:6,:), plane(:, 7:9,:));
+n(:) = crossProduct3d(plane(:,4:6,:), plane(:, 7:9,:));

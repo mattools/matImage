@@ -1,4 +1,4 @@
-function test_suite = test_imEuler2dEstimate(varargin) %#ok<STOUT>
+function testSuite = test_imEuler2dEstimate(varargin)
 % Test function for function imEuler2d
 %   output = testImEuler2dEstimate(input)
 %
@@ -7,15 +7,14 @@ function test_suite = test_imEuler2dEstimate(varargin) %#ok<STOUT>
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2009-04-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
 
 function testSquareInFourImages %#ok<*DEFNU>
 
@@ -46,7 +45,7 @@ img(6:8, 2:3) = 5;
 img(3:5, 5:8) = 9;
 img(4, 6) = 0;
 
-[chi labels] = imEuler2dEstimate(img);
+[chi, labels] = imEuler2dEstimate(img);
 
 assertElementsAlmostEqual(chi, [1 1 0]');
 assertElementsAlmostEqual(labels, [3 5 9]');

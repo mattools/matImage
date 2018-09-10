@@ -148,9 +148,9 @@ end
 %% Initialisations
 
 % distances between a pixel and its neighbours.
-d1  = delta(1);
-d2  = delta(2);
-d3  = delta(3);
+d1  = delta(1); % x
+d2  = delta(2); % y
+d3  = delta(3); % z
 
 % volume of a voxel (used for computing line densities)
 vol = d1 * d2 * d3;
@@ -163,9 +163,9 @@ nv = sum(img(:));
 
 % number of connected components along the 3 main directions
 % (Use Graph-based formula: chi = nVertices - nEdges)
-n1 = nv - sum(sum(sum(img(:,1:end-1,:) & img(:,2:end,:))));
-n2 = nv - sum(sum(sum(img(1:end-1,:,:) & img(2:end,:,:))));
-n3 = nv - sum(sum(sum(img(:,:,1:end-1) & img(:,:,2:end))));
+n1 = nv - sum(sum(sum(img(:,1:end-1,:) & img(:,2:end,:)))); % x
+n2 = nv - sum(sum(sum(img(1:end-1,:,:) & img(2:end,:,:)))); % y
+n3 = nv - sum(sum(sum(img(:,:,1:end-1) & img(:,:,2:end)))); % z
 
 if nDirs == 3
     % compute surface area by averaging over the 3 main directions
@@ -178,10 +178,13 @@ end
 
 % Number of connected components along diagonals contained in the three
 % main planes
+% XY planes
 n4 = nv - sum(sum(sum(img(2:end,1:end-1,:)   & img(1:end-1,2:end,:))));
 n5 = nv - sum(sum(sum(img(1:end-1,1:end-1,:) & img(2:end,2:end,:))));
+% XZ planes
 n6 = nv - sum(sum(sum(img(:,2:end,1:end-1)   & img(:,1:end-1,2:end))));
 n7 = nv - sum(sum(sum(img(:,1:end-1,1:end-1) & img(:,2:end,2:end))));
+% YZ planes
 n8 = nv - sum(sum(sum(img(2:end,:,1:end-1)   & img(1:end-1,:,2:end))));
 n9 = nv - sum(sum(sum(img(1:end-1,:,1:end-1) & img(2:end,:,2:end))));
 

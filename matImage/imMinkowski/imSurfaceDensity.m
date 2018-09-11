@@ -67,20 +67,28 @@ end
 % in case of binary image, compute only one label...
 labels = 1;
 
-% check image resolution
-delta = [1 1 1];
-if ~isempty(varargin)
-    var = varargin{end};
-    if length(var)==3
-        delta = varargin{end};
+% Process user input arguments
+while ~isempty(varargin)
+    var = varargin{1};
+    if ~isnumeric(var)
+        error('option should be numeric');
     end
+    
+    % option is either connectivity or resolution
+    if isscalar(var)
+        nDirs = var;
+    else
+        delta = var;
+    end
+    varargin(1) = [];
 end
 
+
 % component area in image
-s = imSurfaceEstimate(img, varargin{:});
+s = imSurfaceEstimate(img, delta, nDirs);
 
 % total volume of image (without edges)
-refVol = prod(size(img)-1)*prod(delta);
+refVol = prod(size(img)-1) * prod(delta);
 
 % compute area density
 sd = s / refVol;

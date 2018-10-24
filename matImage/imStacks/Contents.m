@@ -17,11 +17,10 @@
 %   readstack      - Read either a list of 2D images (slices), or a 3D image
 %   savebinstack   - Save an binary stack to a file, as RGB Image.
 %   savestack      - Save an image stack to a file or a series of files
-%
-% Read/Write images in MetaImage format (used by ITK)
 %   metaImageInfo  - Read information header of meta image data
 %   metaImageRead  - Read an image in MetaImage format
 %   metaImageWrite - Write header and data files of an image in MetaImage format
+%   readVgiStack   - Read a 3D stack stored in VGI format
 %   readVoxelMatrix  - Read a 3D image in VoxelMatrix (.vm) format
 %
 % Get information on 3D images
@@ -46,4 +45,9 @@
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 
 %
-
+% Some GUI Classes used by Slicer
+%   CropStackDialog               - Open a dialog for cropping 3D stacks
+%   IsosurfaceOptionsDialog       - Dialog for 3D isosurfaces of intensity images
+%   LabelIsosurfacesOptionsDialog - Open a dialog for 3D label isosurfaces
+%   OrthoSlicer3dOptionsDialog    - Open a dialog for 3D orthoslices display
+%   SlicerHistogramDialog         - Open a dialog to setup image histogram display options

@@ -21,6 +21,7 @@
 %   metaImageRead  - Read an image in MetaImage format
 %   metaImageWrite - Write header and data files of an image in MetaImage format
 %   readVgiStack   - Read a 3D stack stored in VGI format
+%   vgiStackInfo   - Read information necessary to load a 3D stack in VGI format
 %   readVoxelMatrix  - Read a 3D image in VoxelMatrix (.vm) format
 %
 % Get information on 3D images
@@ -51,3 +52,6 @@
 %   LabelIsosurfacesOptionsDialog - Open a dialog for 3D label isosurfaces
 %   OrthoSlicer3dOptionsDialog    - Open a dialog for 3D orthoslices display
 %   SlicerHistogramDialog         - Open a dialog to setup image histogram display options
+
+%
+

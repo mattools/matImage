@@ -7,7 +7,7 @@ function [img, info] = readVgiStack(fileName, varargin)
 %   readVgiStack
 %
 %   See also
-%
+%     readMetaImage, vgiStackInfo
  
 % ------
 % Author: David Legland
@@ -16,16 +16,6 @@ function [img, info] = readVgiStack(fileName, varargin)
 % Copyright 2018 INRA - Cepia Software Platform.
 
 %% Initialisations
-
-% Initialize empty stucture 
-info.sizeX = 0;
-info.sizeY = 0;
-info.sizeZ = 0;
-info.bitDepth = 0;
-info.littleEndian = true;
-info.dataFileName = '';
-info.spacing = [];
-info.unit = '';
 
 % parse optional input arguments
 verbose = false;
@@ -40,84 +30,17 @@ end
 
 %% Read File info
 
-f = fopen(fileName, 'rt');
-if f == -1
-    error(['Could not find the file: ' fileName]);
-end
-
-% iterate over text lines
-lineIndex = 0;
-while true
-    % read next line
-    line = fgetl(f);
-    lineIndex = lineIndex + 1;
-    
-    % end of file
-    if line == -1
-        break;
-    end
-    line = strtrim(line);
-    
-    if startsWith(line, '{') && endsWith(line, '}')
-        % start a new volume
-
-    elseif startsWith(line, '[') && endsWith(line, ']')
-        % start a new information block
-        
-    else 
-        % process new key-value pair
-        [key, value] = strtok(line, '=');
-        if isempty(value)
-            error('Token count error at line %d: %s', lineIndex, line);
-        end
-        
-        % extract key and value for the current line
-        key = strtrim(key);
-        value = strtrim(value(2:end));
-        
-        % switch process depending on key
-        if strcmpi(key, 'size')
-            % process volume dimension
-            tokens = strsplit(value, ' ');
-            info.sizeX = str2double(tokens{1});
-            info.sizeY = str2double(tokens{2});
-            info.sizeZ = str2double(tokens{3});
-            
-        elseif strcmpi(key, 'bitsperelement')
-            info.bitDepth = str2double(value);
-            if info.bitDepth ~= 16
-                error('Only 16 bits per element are currently supported, not %d', bitDepth);
-            end
-            
-        elseif strcmp(key, 'Name')
-            info.dataFileName = value;
-            
-        elseif strcmpi(key, 'resolution')
-            tokens = strsplit(value, ' ');
-            if length(tokens) ~= 3
-                error('Could not parse spatial resolution from line: %d', line);
-            end
-            info.spacing(1) = str2num(tokens{1}); %#ok<ST2NM>
-            info.spacing(2) = str2num(tokens{2}); %#ok<ST2NM>
-            info.spacing(3) = str2num(tokens{3}); %#ok<ST2NM>
-            
-        elseif strcmpi(key, 'unit')
-            info.unit = value;
-            
-        end
-    end
-end
-
-% close the file containing information
-fclose(f);
-
-%% Read binary data
+% read raw info
+info = vgiStackInfo(fileName, 'verbose', verbose);
 
 % read file in same directory as information file.
 [baseDir, tmp] = fileparts(fileName); %#ok<ASGLU>
 [tmp, fileName, ext] = fileparts(info.dataFileName); %#ok<ASGLU>
 filePath = fullfile(baseDir, [fileName ext]);
 info.dataFileName = filePath;
+
+
+%% Read binary data
 
 % open for for binary reading
 f = fopen(filePath, 'rb');
@@ -138,9 +61,15 @@ img = zeros(dims, pixelType);
 
 
 if verbose
-    disp('read data');
+    fprintf('read data...');
 end
+tic;
 img(:) = fread(f, prod(dims), ['*' pixelType], byteOrder);
+t = toc;
+if verbose
+    fprintf(' (%7.3f s)\n', t);
+end
+
 
 % close file
 fclose(f);

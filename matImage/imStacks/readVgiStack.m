@@ -66,14 +66,14 @@ while true
         
     else 
         % process new key-value pair
-        tokens = strsplit(line, '=');
-        if length(tokens) ~= 2 
+        [key, value] = strtok(line, '=');
+        if isempty(value)
             error('Token count error at line %d: %s', lineIndex, line);
         end
         
         % extract key and value for the current line
-        key = strtrim(tokens{1});
-        value = strtrim(tokens{2});
+        key = strtrim(key);
+        value = strtrim(value(2:end));
         
         % switch process depending on key
         if strcmpi(key, 'size')

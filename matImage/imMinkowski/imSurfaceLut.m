@@ -84,9 +84,7 @@ while ~isempty(varargin)
     else
         error('option should be numeric');
     end
-    
 end
-
 
 
 %% Initializations
@@ -95,24 +93,24 @@ end
 % di refer to orthogonal neighbours
 % dij refer to neighbours on the same plane
 % dijk refer to the opposite pixel in a tile
-d1  = delta(1);
-d2  = delta(2);
-d3  = delta(3);
-d12 = sqrt(delta(1)^2 + delta(2)^2);
-d13 = sqrt(delta(1)^2 + delta(3)^2);
-d23 = sqrt(delta(2)^2 + delta(3)^2);
-d123= sqrt(delta(1)^2 + delta(2)^2 + delta(3)^2);
-vol = d1*d2*d3;
+dx  = delta(1);
+dy  = delta(2);
+dz  = delta(3);
+dxy = sqrt(dx^2 + dy^2);
+dyz = sqrt(dy^2 + dz^2);
+dxz = sqrt(dx^2 + dz^2);
+dxyz= sqrt(dx^2 + dy^2 + dz^2);
+vol = dx*dy*dz;
 
 % correspondance map between pixel label and pixel coord in config
 coord = [...
     1 1 1; ...
-    1 2 1; ...
     2 1 1; ...
+    1 2 1; ...
     2 2 1; ...
     1 1 2; ...
-    1 2 2; ...
     2 1 2; ...
+    1 2 2; ...
     2 2 2; ...
     ];
 
@@ -130,7 +128,7 @@ c7 = 0.03519563978232 * 2;  % Oxyz
 
 % If resolution is not the same in each direction, recomputes the weights
 % assigned to each direction
-if sum(abs(diff(delta)))~=0
+if sum(abs(diff(delta))) ~= 0
     areas = sphericalCapsAreaC26(delta);
     c1 = areas(1) * 2;
     c2 = areas(2) * 2;
@@ -154,7 +152,7 @@ for i = 1:N
     im = createTile(i);
     
     % compute contribution of configuration
-    for j=1:8
+    for j = 1:8
         % position of pixel in the tile
         p1 = coord(j, 1);
         p2 = coord(j, 2);
@@ -167,26 +165,26 @@ for i = 1:N
         
         % contributions for isothetic directions
         ke1=0; ke2=0; ke3=0;
-        if ~im(3-p1, p2, p3), ke1 = ke1 + vol/d1/2; end
-        if ~im(p1, 3-p2, p3), ke2 = ke2 + vol/d2/2; end
-        if ~im(p1, p2, 3-p3), ke3 = ke3 + vol/d3/2; end
+        if ~im(p1, 3-p2, p3), ke1 = ke1 + vol/dx/2; end
+        if ~im(3-p1, p2, p3), ke2 = ke2 + vol/dy/2; end
+        if ~im(p1, p2, 3-p3), ke3 = ke3 + vol/dz/2; end
         
         if nDirs == 3
             % For 3 directions, the multiplicity is 4, and is canceled by the
             % coefficient 4 in the Crofton formula. We just need to average on
             % directions.
-            lut(i) = lut(i) + (ke1 + ke2 + ke3)/3;
+            lut(i) = lut(i) + (ke2 + ke1 + ke3)/3;
             
         elseif nDirs == 13
             % diagonals of rectangular faces
             ke4 = 0; ke5 = 0; ke6 = 0;
-            if ~im(3-p1, 3-p2, p3), ke4 = ke4 + vol/d12/2; end
-            if ~im(3-p1, p2, 3-p3), ke5 = ke5 + vol/d13/2; end
-            if ~im(p1, 3-p2, 3-p3), ke6 = ke6 + vol/d23/2; end
+            if ~im(3-p1, 3-p2, p3), ke4 = ke4 + vol/dxy/2; end
+            if ~im(p1, 3-p2, 3-p3), ke5 = ke5 + vol/dxz/2; end
+            if ~im(3-p1, p2, 3-p3), ke6 = ke6 + vol/dyz/2; end
             
             % diagonals of cube
             ke7 = 0;
-            if ~im(3-p1, 3-p2, 3-p3), ke7 = ke7 + 1/2*vol/d123; end
+            if ~im(3-p1, 3-p2, 3-p3), ke7 = ke7 + 1/2*vol/dxyz; end
             
             % Decomposition of Crofton formula on 13 directions
             lut(i) = lut(i) + 4*(ke1*c1/4 + ke2*c2/4 + ke3*c3/4 + ...

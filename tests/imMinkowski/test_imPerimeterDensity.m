@@ -1,4 +1,4 @@
-function test_suite = test_imPerimeterDensity(varargin) %#ok<STOUT>
+function testSuite = test_imPerimeterDensity(varargin) 
 %TEST_IMPERIMETERDENSITY  Test case for the file imPerimeterDensity
 %
 %   Test case for the file imPerimeterDensity
@@ -15,7 +15,7 @@ function test_suite = test_imPerimeterDensity(varargin) %#ok<STOUT>
 % Created: 2013-03-29,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
 
 function test_Simple %#ok<*DEFNU>
 % Test call of function without argument

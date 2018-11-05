@@ -1,4 +1,4 @@
-function test_suite = test_imEuler3d(varargin) %#ok<STOUT>
+function testSuite = test_imEuler3d(varargin) 
 %TESTIMEULER3D  One-line description here, please.
 %
 %   output = testImEuler3d(input)
@@ -8,14 +8,14 @@ function test_suite = test_imEuler3d(varargin) %#ok<STOUT>
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
 
 function test_ball %#ok<*DEFNU>
 

@@ -1,4 +1,4 @@
-function test_suite = test_imSurface(varargin) %#ok<STOUT>
+function testSuite = test_imSurface(varargin)
 %TEST_IMSURFACE  One-line description here, please.
 %
 %   output = test_imSurface(input)
@@ -15,7 +15,7 @@ function test_suite = test_imSurface(varargin) %#ok<STOUT>
 % Created: 2010-10-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
 
 function testAddBorderD3 %#ok<*DEFNU>
 

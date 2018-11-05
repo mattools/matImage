@@ -1,21 +1,20 @@
-function test_suite = test_imPerimeter(varargin) %#ok<STOUT>
+function testSuite = test_imPerimeter(varargin)
 % Test function for function testImPerimeter
 %   output = testImPerimeter(input)
 %
 %   Example
-%   testImEuler2d
+%   test_imPerimeter
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2009-04-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
-initTestSuite;
+testSuite = buildFunctionHandleTestSuite(localfunctions);
 
 function testAddBorderD2 %#ok<*DEFNU>
 

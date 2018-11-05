@@ -51,7 +51,7 @@ function [breadth, labels] = imMeanBreadthDensity(img, varargin)
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2015-04-20,    using Matlab 8.4.0.150421 (R2014b)
 % Copyright 2015 INRA - Cepia Software Platform.
 
@@ -64,9 +64,9 @@ end
 if ~islogical(img)
     labels = unique(img);
     labels(labels==0) = [];
-    sd = zeros(length(labels), 1);
+    breadth = zeros(length(labels), 1);
     for i = 1:length(labels)
-        sd(i) = imMeanBreadthDensity(img==labels(i), varargin{:});
+        breadth(i) = imMeanBreadthDensity(img==labels(i), varargin{:});
     end
     return;
 end
@@ -74,17 +74,26 @@ end
 % in case of binary image, compute only one label...
 labels = 1;
 
-% check image resolution
+% Process user input arguments
 delta = [1 1 1];
-if ~isempty(varargin)
-    var = varargin{end};
-    if length(var)==3
-        delta = varargin{end};
+nDirs = 13;
+while ~isempty(varargin)
+    var = varargin{1};
+    if ~isnumeric(var)
+        error('option should be numeric');
     end
+    
+    % option is either connectivity or resolution
+    if isscalar(var)
+        nDirs = var;
+    else
+        delta = var;
+    end
+    varargin(1) = [];
 end
 
 % component area in image
-breadth = imMeanBreadthEstimate(img, varargin{:});
+breadth = imMeanBreadthEstimate(img, delta, nDirs);
 
 % total volume of image (without edges)
 refVol = prod(size(img)-1) * prod(delta);

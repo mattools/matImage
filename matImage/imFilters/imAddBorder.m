@@ -37,7 +37,7 @@ function res = imAddBorder(img, pad, varargin)
 %     imshow(img2);
 %
 %   See also
-%   padarray (does nearly similar job)
+%     padarray, imCropBorder
 %
 
 % ------

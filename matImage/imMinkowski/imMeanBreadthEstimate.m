@@ -14,9 +14,9 @@ function [breadth, labels] = imMeanBreadthEstimate(img, varargin)
 %   either 3 or 13 (the default).
 %
 %   Example
-%   imMeanBreadthEstimate
 %
 %   See also
+%   imMeanBreadthEstimate, imSurfaceEstimate
 %
  
 % ------
@@ -69,7 +69,7 @@ end
 labels = 1;
 
 % default number of directions
-nDirs = 3;
+nDirs = 13;
 
 % default image resolution
 delta = [1 1 1];

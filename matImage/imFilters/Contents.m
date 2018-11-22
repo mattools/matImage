@@ -6,6 +6,7 @@
 %   imMeanFilter             - Compute mean value in the neighboorhood of each pixel
 %   imMedianFilter           - Compute median value in the neighboorhood of each pixel
 %   imGaussianFilter         - Apply gaussian filter to an image, using separability
+%   imBoxFilter              - Box filter on 2D/3D iamge
 %   imDirectionalFilter      - Apply and combine several directional filters
 %   imNormalizeBackground    - Normalize image by removing background estimate
 %

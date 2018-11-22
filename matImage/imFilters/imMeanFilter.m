@@ -15,7 +15,7 @@ function res = imMeanFilter(img, se, varargin)
 %   Default is 'replicate'.
 %
 %   See Also: 
-%   imMedianFilter, imDirectionalFilter, imfilter
+%     imBoxFilter, imMedianFilter, imDirectionalFilter, imfilter
 %
 
 %   ---------

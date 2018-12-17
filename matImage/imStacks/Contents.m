@@ -23,6 +23,7 @@
 %   readVgiStack   - Read a 3D stack stored in VGI format
 %   vgiStackInfo   - Read information necessary to load a 3D stack in VGI format
 %   readVoxelMatrix  - Read a 3D image in VoxelMatrix (.vm) format
+%   imFileInfo     - Generalizes the imfinfo function
 %
 % Get information on 3D images
 %   stackSize      - Compute the size of a 3D stack in [x y z] form

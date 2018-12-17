@@ -50,7 +50,7 @@ function [ellipse, labels] = imInertiaEllipse(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-03-30,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -104,8 +104,7 @@ for i = 1:nLabels
         y = (y-1) * spacing(2) + origin(2);
     end
     
-    % compute convex hull centroid, that corresponds to approximate
-    % location of rectangle center
+    % compute centroid, used as center of inertia ellipse
     xc = mean(x);
     yc = mean(y);
     

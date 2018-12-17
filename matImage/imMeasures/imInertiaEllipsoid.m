@@ -118,7 +118,7 @@ if ~isIntensity
         points = [x y z];
         
         % compute the covariance matrix
-        covPts = cov(points, 1) + diag(1/12 * ones(1, 3));
+        covPts = cov(points, 1) + diag(spacing / 12);
         
         % perform a principal component analysis with 3 variables,
         % to extract inertia axes
@@ -166,7 +166,7 @@ else
     zc = mean(z(:));
     center = [xc yc zc];
     
-    covPts = cov([x(:)-xc y(:)-yc z(:)-zc]) + diag(1/12 * ones(1, 3));
+    covPts = cov([x(:)-xc y(:)-yc z(:)-zc]) + diag(spacing / 12);
     
     % perform a principal component analysis with 3 variables,
     % to extract inertia axes
@@ -220,7 +220,7 @@ function varargout = rotation3dToEulerAngles(mat)
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2010-08-11,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

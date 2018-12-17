@@ -34,6 +34,7 @@
 %   imCropBorder             - Crop the border around a 2D or 3D image
 %   imTranspose              - Transpose an image (grayscale or RGB)
 %   imCropBox                - Crop an image with a box
+%   imPrincipalAxesAlign     - Aligns image along principal axes of inertia matrix
 %   subsample                - Subsample an array by applying operation on blocs
 %   subsamplergb             - Return a sub-sampled version of an rgb image.
 %

@@ -22,7 +22,7 @@ function val = imEvaluate(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2012-05-22,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -45,7 +45,7 @@ end
 [point, dim, varargin] = mergeCoordinates(varargin{:});
 
 % parse interpolation method
-if ~isempty(varargin)
+if ~isempty(varargin) && ischar(varargin{1})
     method = varargin{1};
     varargin(1) = [];
 end

@@ -2,7 +2,8 @@ function img = discreteRectangle(varargin)
 %DISCRETERECTANGLE Discretize a planar rectangle
 %
 %   IMG = discreteRectangle(DIM, CENTER, SIDE)
-%   DIM is the size of image, with the format [x0 dx x1;y0 dy y1]
+%   DIM is the size of image, with the format [x0 dx x1;y0 dy y1], or 
+%   [DIMX DIMY];
 %   CENTER is the center of the rectangle, with format [xc yc]
 %   SIDE is the size of the rectangle, with format [L1 L2]
 %
@@ -26,7 +27,7 @@ function img = discreteRectangle(varargin)
 %   img = discreteRectangle([1 1 100;1 1 100], [50 50 30 10 30]);
 %
 %   See Also
-%   imShapes, discreteSquare, discretePolygon
+%     imShapes, discreteSquare, discretePolygon
 %
 
 % ------

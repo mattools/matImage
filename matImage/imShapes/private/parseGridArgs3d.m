@@ -1,31 +1,30 @@
-function [lx ly lz varargin] = parseGridArgs3d(varargin)
+function [lx, ly, lz, varargin] = parseGridArgs3d(varargin)
 %PARSEGRIDARGS3D  Extract or compute position vectors for meshgrid
 %
-%   [LX LY] = parseGridArgs3d(LX, LY)
+%   [LX, LY] = parseGridArgs3d(LX, LY)
 %   simply returns LX and LY.
 %
-%   [LX LY] = parseGridArgs3d([NX NY])
+%   [LX, LY] = parseGridArgs3d([NX NY])
 %   assumes LX = 1:NX and LY = 1:NY
 %
-%   [LX LY] = parseGridArgs3d([NX NY])
+%   [LX, LY] = parseGridArgs3d([NX NY])
 %   assumes LX = 1:NX and LY = 1:NY
 %
 %
 %   Example
-%   [lx ly lz] = parseGridArgs3d([100 100 100]);
-%   [lx ly lz] = parseGridArgs3d(1:2:50, 1:4:100, 1:25);
-%   [lx ly lz varargin] = parseGridArgs3d(varargin{:});
+%   [lx, ly, lz] = parseGridArgs3d([100 100 100]);
+%   [lx, ly, lz] = parseGridArgs3d(1:2:50, 1:4:100, 1:25);
+%   [lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
 %   for usage within another function.
 %
 %   See also
-%
-%
+%     parseGridArgs
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2009-05-29,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 
 % If empty arguments, return default values
@@ -40,7 +39,7 @@ var = varargin{1};
 
 % case of a 2x3 matrix with starting position, increment, end position for
 % each coordinate
-if size(var, 1)>2 && size(var, 2)>2
+if all(size(var) > [2 2])
     lx = var(1,1):var(1,2):var(1,3);
     ly = var(2,1):var(2,2):var(2,3);
     lz = var(3,1):var(3,2):var(3,3);
@@ -49,7 +48,7 @@ if size(var, 1)>2 && size(var, 2)>2
 end
 
 % first argument contains maximal position for each coordinate
-if size(var, 1)==1 && size(var, 2)==3
+if all(size(var) == [1 3])
     lx = 1:var(1);
     ly = 1:var(2);
     lz = 1:var(3);
@@ -59,7 +58,7 @@ end
 
 % first and second arguments contain vector for each coordinate
 % respectively
-if length(varargin)>2
+if length(varargin) > 2
     lx = varargin{1};
     ly = varargin{2};
     lz = varargin{3};

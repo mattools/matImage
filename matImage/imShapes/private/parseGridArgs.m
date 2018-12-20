@@ -18,14 +18,13 @@ function [lx ly varargin] = parseGridArgs(varargin)
 %   for usage within another function.
 %
 %   See also
-%
-%
+%     parseGridArgs3d
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2009-05-29,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 
 % If empty arguments, return default values
@@ -39,7 +38,7 @@ var = varargin{1};
 
 % case of a 2x3 matrix with starting position, increment, end position for
 % each coordinate
-if size(var, 1)>1 && size(var, 2)>2
+if all(size(var) > [1 2])
     lx = var(1,1):var(1,2):var(1,3);
     ly = var(2,1):var(2,2):var(2,3);
     varargin(1) = [];
@@ -47,7 +46,7 @@ if size(var, 1)>1 && size(var, 2)>2
 end
 
 % first argument contains maximal position for each coordinate
-if size(var, 1)==1 && size(var, 2)==2
+if all(size(var) == [1 2])
     lx = 1:var(1);
     ly = 1:var(2);
     varargin(1) = [];
@@ -56,7 +55,7 @@ end
 
 % first and second arguments contain vector for each coordinate
 % respectively
-if length(varargin)>1
+if length(varargin) > 1
     lx = varargin{1};
     ly = varargin{2};
     varargin(1:2) = [];

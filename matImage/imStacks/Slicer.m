@@ -128,8 +128,8 @@ properties
     % can be empty, in this case gray colormap is assumed 
     colorMap = [];
 
-    % background color for label to RGB conversion. Given as RGB triplet
-    % value bewteen 0 and 1. Default is white.
+    % background color for label to RGB conversion. Given as RGB triplet of
+    % values bewteen 0 and 1. Default is white = (1,1,1).
     bgColor = [1 1 1];
 
     % calibration information for image
@@ -145,9 +145,21 @@ properties
     % keep last path for opening new images
     lastPath = pwd;
     
-    % list of handles to the widgets
+    % list of handles to the widgets.
+    % Structure with following fields:
+    % * figure:     the main figure
+    % * subFigures: a list of figures that can be closed when the main
+    %           figure is closed
+    % * image:      the image display
+    % * imageAxis:  the axis containing the image
+    % * zSlider:    the slider used to change the slice index
+    % * zEdit:      the edit uicontrol used to change slice index
+    % * zProfileFigure used to display the profile along z 
+    % * zProfileAxis used to display the profile along z 
     handles;
     
+    % the last position of mouse click, in user coordinates.
+    lastClickedPoint = []; 
 end 
 
 
@@ -226,6 +238,7 @@ methods
         updateTitle(this);
         
         % setup listeners associated to the figure
+        set(fig, 'WindowButtonDownFcn', @this.mouseButtonPressed);
         set(fig, 'WindowButtonMotionFcn', @this.mouseDragged);
         set(fig, 'WindowScrollWheelFcn', @this.mouseWheelScrolled);
         set(fig, 'NextPlot', 'new');
@@ -1089,8 +1102,72 @@ methods
 end
 
 
-%% Callbacks for menu Image
+%% Callbacks for Image menu
 methods
+    function onDisplayImageInfo(this, varargin)
+        % hObject    handle to itemDisplayImageInfo (see GCBO)
+        % eventdata  reserved - to be defined in a future version of MATLAB
+        % handles    structure with handles and user data (see GUIDATA)
+        
+        if isempty(this.imageData)
+            errordlg('No image loaded', 'Image Error', 'modal');
+            return;
+        end
+        
+        info = this.imageInfo;
+        if isempty(info)
+            errordlg('No meta-information defined for this image', ...
+                'Image Error', 'modal');
+            return;
+        end
+        
+        % extract field names
+        fields = fieldnames(info);
+        nFields = length(fields);
+        
+        % create data table as a cell array of strings
+        data = cell(nFields, 2);
+        for i = 1:nFields
+            data{i, 1} = fields{i};
+            dat = info.(fields{i});
+            if ischar(dat)
+                data{i,2} = dat;
+            elseif isnumeric(dat)
+                data{i,2} = num2str(dat);
+            else
+                data{i,2} = '...';
+            end
+        end
+        
+        % create name for figure
+        if isempty(this.imageName)
+            name = 'Image Metadata';
+        else
+            name = sprintf('MetaData for image <%s>', this.imageName);
+        end
+        
+        % creates and setup new figure
+        f = figure('MenuBar', 'none', 'Name', name);
+        set(f, 'units', 'pixels');
+        pos = get(f, 'position');
+        width = pos(3);
+        % sum of width is not equal to 1 to avoid rounding errors.
+        columnWidth = {round(width * .30), round(width * .69)};
+        
+        % display the data table
+        uitable(...
+            'Parent', f, ...
+            'Units','normalized',...
+            'Position', [0 0 1 1], ...
+            'Data', data, ...
+            'RowName', [], ...
+            'ColumnName', {'Name', 'Value'}, ...
+            'ColumnWidth', columnWidth, ...
+            'ColumnFormat', {'char', 'char'}, ...
+            'ColumnEditable', [false, false]);
+        
+    end
+ 
     function onChangeResolution(this, varargin)
         
         if isempty(this.imageData)
@@ -1357,179 +1434,8 @@ methods
         createNewSlicer(this, squeeze(this.imageData(:,:,3,:)), ...
             [this.imageName '-blue']);
     end
-    
-    
-    function onFlipImage(this, hObject, eventdata)
-        
-        if isempty(this.imageData)
-            return;
-        end
-        
-        dim = get(hObject, 'UserData');
-        if verLessThan('matlab', '8.1')
-            this.imageData = flipdim(this.imageData, dim); %#ok<DFLIPDIM>
-        else
-            this.imageData = flip(this.imageData, dim);
-        end
-        this.updateSlice;
-        this.displayNewImage;
-    end
-        
-    function onRotateImage(this, hObject, eventdata)
-        % Rotate an image by 90 degrees along x, y or z axis.
-        % Axis ID and number of 90 degrees rotations are given by user data
-        % of the calling menu
-        
-        if isempty(this.imageData)
-            return;
-        end
-                
-        data = get(hObject, 'UserData');
-        this.rotateImage(data(1), data(2));
-    end
+end
 
-    function onCropImage(this, hObject, eventdata)
-        % Crop the 3D image.
-        % Opens a dialog, that choose options, then create new slicer
-        % object with cropped image.
-
-        if isempty(this.imageData)
-            return;
-        end
-         
-        CropStackDialog(this);
-    end
-    
-    function onCropLabel(this, hObject, eventdata)
-        % Crop the 3D image portion corresponding to a label.
-        % Opens a dialog, that choose options, then create new slicer
-        % object with cropped image.
-
-        % basic input check
-        if isempty(this.imageData)
-            return;
-        end
-        if ~strcmp(this.imageType, 'label')
-            return;
-        end
-        
-        % open a dialog to choose a label
-        maxLabel = max(this.imageData(:));
-        prompt = sprintf('Input Label Index (max=%d)', maxLabel);
-        answer = inputdlg(...
-            prompt,...
-            'Crop Label Dialog', ...
-            1, ...
-            {'1'});
-        
-        % parse answer
-        if isempty(answer)
-            return;
-        end
-        index = str2double(answer{1});
-        if isnan(index)
-            return;
-        end
-        
-        % apply crop label operation
-        img2 = imCropLabel(this.imageData, index);
-
-        % compute colormap of new slicer object
-        cmap = this.colorMap;
-        if isempty(cmap)
-            cmap = jet(maxLabel);
-        end
-        cmap = [this.bgColor ; cmap(index, :)];
-
-        % create new Slicer object with the crop result
-        Slicer(img2, 'imageType', 'binary', ...
-            'colorMap', cmap, 'backgroundColor', this.bgColor);
-    end
-    
-    
-    function onDisplayImageInfo(this, varargin)
-        % hObject    handle to itemDisplayImageInfo (see GCBO)
-        % eventdata  reserved - to be defined in a future version of MATLAB
-        % handles    structure with handles and user data (see GUIDATA)
-        
-        if isempty(this.imageData)
-            errordlg('No image loaded', 'Image Error', 'modal');
-            return;
-        end
-        
-        info = this.imageInfo;
-        if isempty(info)
-            errordlg('No meta-information defined for this image', ...
-                'Image Error', 'modal');
-            return;
-        end
-        
-        % extract field names
-        fields = fieldnames(info);
-        nFields = length(fields);
-        
-        % create data table as a cell array of strings
-        data = cell(nFields, 2);
-        for i = 1:nFields
-            data{i, 1} = fields{i};
-            dat = info.(fields{i});
-            if ischar(dat)
-                data{i,2} = dat;
-            elseif isnumeric(dat)
-                data{i,2} = num2str(dat);
-            else
-                data{i,2} = '...';
-            end
-        end
-        
-        % create name for figure
-        if isempty(this.imageName)
-            name = 'Image Metadata';
-        else
-            name = sprintf('MetaData for image <%s>', this.imageName);
-        end
-        
-        % creates and setup new figure
-        f = figure('MenuBar', 'none', 'Name', name);
-        set(f, 'units', 'pixels');
-        pos = get(f, 'position');
-        width = pos(3);
-        % sum of width is not equal to 1 to avoid rounding errors.
-        columnWidth = {round(width * .30), round(width * .69)};
-        
-        % display the data table
-        uitable(...
-            'Parent', f, ...
-            'Units','normalized',...
-            'Position', [0 0 1 1], ...
-            'Data', data, ...
-            'RowName', [], ...
-            'ColumnName', {'Name', 'Value'}, ...
-            'ColumnWidth', columnWidth, ...
-            'ColumnFormat', {'char', 'char'}, ...
-            'ColumnEditable', [false, false]);
-        
-    end
-    
-    function onDisplayHistogram(this, varargin)
-
-        if isempty(this.imageData)
-            return;
-        end
-        
-        % in the case of vector image, compute histogram of image norm
-        img = this.imageData;
-        if strcmp(this.imageType, 'vector')
-            img = sqrt(sum(double(img) .^ 2, 3));
-        end
-        
-        useBackground = ~strcmp(this.imageType, 'label');
-        hd = SlicerHistogramDialog(img, 'useBackground', useBackground);
-            
-        this.handles.subFigures = [this.handles.subFigures, hd.handles.histoFigure];
-    end
-    
-end    
 
 %% Callbacks for View menu
 methods
@@ -1557,6 +1463,10 @@ methods
         % set up range
         this.displayRange = [minValue maxValue];
         set(this.handles.imageAxis, 'CLim', this.displayRange);
+        
+        if ~isempty(this.handles.zProfileFigure)
+            updateZProfileDisplay(this);
+        end
     end
     
     function onSetDatatypeDisplayExtent(this, hObject, eventdata)
@@ -1579,6 +1489,10 @@ methods
 
         this.displayRange = [mini maxi];
         set(this.handles.imageAxis, 'CLim', this.displayRange);
+        
+        if ~isempty(this.handles.zProfileFigure)
+            updateZProfileDisplay(this);
+        end
     end
     
     function onSetManualDisplayExtent(this, hObject, eventdata)
@@ -1631,6 +1545,9 @@ methods
         % setup appropriate grayscale for image
         set(this.handles.imageAxis, 'CLim', [mini maxi]);
         
+        if ~isempty(this.handles.zProfileFigure)
+            updateZProfileDisplay(this);
+        end
     end
     
     function onSelectLUT(this, hObject, eventdata)
@@ -1716,7 +1633,6 @@ methods
         end
         
         colormap(this.handles.imageAxis, cmap);
-        
     end
     
     function onSelectBackgroundColor(this, varargin)
@@ -1735,7 +1651,6 @@ methods
         this.bgColor = colors(ind, :);
         updateColorMap(this);
     end
-    
     
     function onShowOrthoPlanes(this, varargin)
         
@@ -1843,7 +1758,6 @@ methods
         else
             rgb = repmat(permute(data, [1 2 4 3]), [1 1 3 1]);
         end
-
     end
     
     function onZoomIn(this, varargin)
@@ -1906,8 +1820,165 @@ methods
         api = iptgetapi(this.handles.scrollPanel);
         api.setMagnification(mag);
         this.updateTitle();
+    end 
+end
+
+%% Callbacks for Process menu
+methods
+    function onFlipImage(this, hObject, eventdata)
+        
+        if isempty(this.imageData)
+            return;
+        end
+        
+        dim = get(hObject, 'UserData');
+        if verLessThan('matlab', '8.1')
+            this.imageData = flipdim(this.imageData, dim); %#ok<DFLIPDIM>
+        else
+            this.imageData = flip(this.imageData, dim);
+        end
+        this.updateSlice;
+        this.displayNewImage;
     end
     
+    function onRotateImage(this, hObject, eventdata)
+        % Rotate an image by 90 degrees along x, y or z axis.
+        % Axis ID and number of 90 degrees rotations are given by user data
+        % of the calling menu
+        
+        if isempty(this.imageData)
+            return;
+        end
+        
+        data = get(hObject, 'UserData');
+        this.rotateImage(data(1), data(2));
+    end
+    
+    function onCropImage(this, hObject, eventdata)
+        % Crop the 3D image.
+        % Opens a dialog, that choose options, then create new slicer
+        % object with cropped image.
+        
+        if isempty(this.imageData)
+            return;
+        end
+        
+        CropStackDialog(this);
+    end
+    
+    function onCropLabel(this, hObject, eventdata)
+        % Crop the 3D image portion corresponding to a label.
+        % Opens a dialog, that choose options, then create new slicer
+        % object with cropped image.
+        
+        % basic input check
+        if isempty(this.imageData)
+            return;
+        end
+        if ~strcmp(this.imageType, 'label')
+            return;
+        end
+        
+        % open a dialog to choose a label
+        maxLabel = max(this.imageData(:));
+        prompt = sprintf('Input Label Index (max=%d)', maxLabel);
+        answer = inputdlg(...
+            prompt,...
+            'Crop Label Dialog', ...
+            1, ...
+            {'1'});
+        
+        % parse answer
+        if isempty(answer)
+            return;
+        end
+        index = str2double(answer{1});
+        if isnan(index)
+            return;
+        end
+        
+        % apply crop label operation
+        img2 = imCropLabel(this.imageData, index);
+        
+        % compute colormap of new slicer object
+        cmap = this.colorMap;
+        if isempty(cmap)
+            cmap = jet(maxLabel);
+        end
+        cmap = [this.bgColor ; cmap(index, :)];
+        
+        % create new Slicer object with the crop result
+        Slicer(img2, 'imageType', 'binary', ...
+            'colorMap', cmap, 'backgroundColor', this.bgColor);
+    end
+    
+    function onToggleZProfileDisplay(this, varargin)
+        
+        if isfield(this.handles, 'zProfileFigure')
+            % close figure
+            hFig = this.handles.zProfileFigure;
+            if ishandle(hFig)
+                close(hFig);
+            end
+            
+            % remove from sub-figure list
+            this.handles.subFigures(this.handles.subFigures == hFig) = [];
+            
+            % and clear field
+            this.handles = rmfield(this.handles, 'zProfileFigure');
+            return;
+        end
+
+        % creates a new figure, display profile
+        this.handles.zProfileFigure = figure;
+        set(this.handles.zProfileFigure, 'Name', 'Z-Profile');
+        
+        % add to list of sub-figures
+        this.handles.subFigures = [this.handles.subFigures, this.handles.zProfileFigure];
+        
+        % configure axis
+        ax = gca;
+        hold(ax, 'on');
+        set(ax, 'xlim', [1 this.imageSize(3)]);
+        set(ax, 'ylim', this.displayRange);
+        titleStr = 'Z-profile';
+        if ~isempty(this.imageName)
+            titleStr = [titleStr ' of ' this.imageName];
+        end
+        title(ax, titleStr);
+        xlabel(ax, 'Slice index');
+        ylabel(ax, 'Image intensity');
+        
+        % plot line marker for current slice
+        hZLine = plot(ax, [this.sliceIndex this.sliceIndex], this.displayRange, 'k');
+        
+        % store settings
+        userdata = struct('profiles', [], 'profileHandles', [], 'zLineHandle', hZLine);
+        set(gca, 'userdata', userdata);
+        this.handles.zProfileAxis = ax;
+        
+%         if ~isempty(this.lastClickedPoint)
+%             updateZProfiles(this);
+%         end
+    end
+    
+    function onDisplayHistogram(this, varargin)
+        
+        if isempty(this.imageData)
+            return;
+        end
+        
+        % in the case of vector image, compute histogram of image norm
+        img = this.imageData;
+        if strcmp(this.imageType, 'vector')
+            img = sqrt(sum(double(img) .^ 2, 3));
+        end
+        
+        useBackground = ~strcmp(this.imageType, 'label');
+        hd = SlicerHistogramDialog(img, 'useBackground', useBackground);
+        
+        this.handles.subFigures = [this.handles.subFigures, hd.handles.histoFigure];
+    end 
 end
 
 %% Callbacks for Help menu
@@ -1919,9 +1990,9 @@ methods
             '       3D Slicer for Matlab', ...
             ['         v ' datestr(info.datenum, 1)], ...
             '', ...
-            '     Author: David Legland', ...
-            ' david.legland@nantes.inra.fr ', ...
-            '         (c) INRA - Cepia', ...
+            '      Author: David Legland', ...
+            '      david.legland@inra.fr ', ...
+            '       (c) INRA - Cepia', ...
             '', ...
             };
         msgbox(message, title);
@@ -1976,7 +2047,11 @@ methods
         % update gui information for slider and textbox
         set(this.handles.zSlider, 'Value', newIndex);
         set(this.handles.zEdit, 'String', num2str(newIndex));
-
+        
+        % Eventually updates display of z-profile
+        if isfield(this.handles, 'zProfileFigure')
+            updateZProfileDisplay(this);
+        end
     end
     
     function updateSlice(this)
@@ -1993,13 +2068,10 @@ methods
                 this.slice = this.slice + this.imageData(:,:,i,index) .^ 2;
             end
             this.slice = sqrt(this.slice);
-            
         else
             % graycale or color image
             this.slice = stackSlice(this.imageData, 3, index);
-            
         end
-        
     end
     
     function updateTitle(this)
@@ -2055,7 +2127,14 @@ methods
         end
         
         point = get(this.handles.imageAxis, 'CurrentPoint');
+        
+        this.lastClickedPoint = point(1,:);
         displayPixelCoords(this, point);
+        
+        % Eventually process display of z-profile
+        if isfield(this.handles, 'zProfileFigure')
+            updateZProfiles(this);
+        end
     end
     
     function mouseDragged(this, hObject, eventdata)
@@ -2065,6 +2144,7 @@ methods
         
         % update display of mouse cursor coordinates
         point = get(this.handles.imageAxis, 'CurrentPoint');
+        this.lastClickedPoint = point(1,:);
         displayPixelCoords(this, point);
     end
     
@@ -2133,6 +2213,54 @@ methods
         set(this.handles.infoPanel, 'string', [locString '  ' valueString]);
     end
 
+    function updateZProfiles(this)
+        % add or replace z-profiles using last clicked point
+        
+        % convert mouse coordinates to pixel coords
+        if isempty(this.lastClickedPoint)
+            return;
+        end
+        coord = round(pointToIndex(this, this.lastClickedPoint(1, 1:2)));
+        
+        % control on bounds of image
+        if sum(coord < 1) > 0 || sum(coord > this.imageSize(1:2)) > 0
+            return;
+        end
+
+        % extract profile
+        profile = permute(this.imageData(coord(2), coord(1), :, :), [4 3 1 2]);
+        
+        % add profile to axis user data
+        userdata = get(this.handles.zProfileAxis, 'userdata');
+        if strcmp(get(this.handles.figure, 'SelectionType'), 'normal')
+            % replace profile list with current profile
+            userdata.profiles = profile;
+            delete(userdata.profileHandles);
+            h = plot(this.handles.zProfileAxis, profile, 'b');
+            userdata.profileHandles = h;
+        else
+            % add the current profile to profile list
+            userdata.profiles = [userdata.profiles profile];
+            h = plot(this.handles.zProfileAxis, profile, 'b');
+            userdata.profileHandles = [userdata.profileHandles h];
+        end
+        
+        set(this.handles.zProfileAxis, 'userdata', userdata);
+    end
+    
+    function updateZProfileDisplay(this)
+        % update display of Z-profiles
+
+        % update axis settings
+        set(this.handles.zProfileAxis, 'ylim', this.displayRange);
+        
+        % update position of Z line marker
+        userdata = get(this.handles.zProfileAxis, 'userdata');
+        hZLine = userdata.zLineHandle;
+        set(hZLine, 'XData', [this.sliceIndex this.sliceIndex]);
+        set(hZLine, 'YData', this.displayRange);
+    end
+    
     function index = pointToIndex(this, point)
         % Converts coordinates of a point in physical dimension to image index
         % First element is column index, second element is row index, both are
@@ -2582,6 +2710,9 @@ methods
             'Label', 'Crop Label', ...
             'Enable', labelFlag, ...
             'Callback', @this.onCropLabel);
+        uimenu(menuProcess, ...
+            'Label', 'Display Z-Profile', ...
+            'Callback', @this.onToggleZProfileDisplay);
 
         uimenu(menuProcess, ...
             'Label', 'View &Histogram', ...

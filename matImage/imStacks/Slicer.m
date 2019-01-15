@@ -1464,7 +1464,7 @@ methods
         this.displayRange = [minValue maxValue];
         set(this.handles.imageAxis, 'CLim', this.displayRange);
         
-        if ~isempty(this.handles.zProfileFigure)
+        if isfield(this.handles, 'zProfileFigure')
             updateZProfileDisplay(this);
         end
     end
@@ -1490,7 +1490,7 @@ methods
         this.displayRange = [mini maxi];
         set(this.handles.imageAxis, 'CLim', this.displayRange);
         
-        if ~isempty(this.handles.zProfileFigure)
+        if isfield(this.handles, 'zProfileFigure')
             updateZProfileDisplay(this);
         end
     end
@@ -1545,7 +1545,7 @@ methods
         % setup appropriate grayscale for image
         set(this.handles.imageAxis, 'CLim', [mini maxi]);
         
-        if ~isempty(this.handles.zProfileFigure)
+        if isfield(this.handles, 'zProfileFigure')
             updateZProfileDisplay(this);
         end
     end

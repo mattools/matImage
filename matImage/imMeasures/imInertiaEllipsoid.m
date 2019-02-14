@@ -12,7 +12,7 @@ function [ellipsoid, labels] = imInertiaEllipsoid(img, varargin)
 %   result is NL-by-9 array, with NL being the number of unique labels in
 %   input image.
 %
-%   ELLI = imInertiaEllipsoid(..., SCALE)
+%   ELLI = imInertiaEllipsoid(..., SPACING)
 %   Specifies a spatial calibration for ech of the x, y and z axes. SCALE
 %   is a 1-by-3 row vector containing size of elementary voxel in each
 %   direction.
@@ -58,9 +58,9 @@ function [ellipsoid, labels] = imInertiaEllipsoid(img, varargin)
 dim = size(img);
 
 % extract spatial calibration, if present
-scales = [1 1 1];
+spacing = [1 1 1];
 if ~isempty(varargin) && ~ischar(varargin{1})
-    scales = varargin{1};
+    spacing = varargin{1};
     varargin(1) = [];
 end
 
@@ -108,12 +108,12 @@ if ~isIntensity
         yc = mean(y);
         zc = mean(z);
         
-        center = [xc yc zc] .* scales;
+        center = [xc yc zc] .* spacing;
         
         % recenter points (should be better for numerical accuracy)
-        x = (x - xc) * scales(1);
-        y = (y - yc) * scales(2);
-        z = (z - zc) * scales(3);
+        x = (x - xc) * spacing(1);
+        y = (y - yc) * spacing(2);
+        z = (z - zc) * spacing(3);
         
         points = [x y z];
         
@@ -150,9 +150,9 @@ else
     % corresponding to image intensity
     
     % first computes a discrete grid
-    lx = 1:dim(2) * scales(1);
-    ly = 1:dim(1) * scales(2);
-    lz = 1:dim(3) * scales(3);
+    lx = 1:dim(2) * spacing(1);
+    ly = 1:dim(1) * spacing(2);
+    lz = 1:dim(3) * spacing(3);
     [x, y, z] = meshgrid(lx, ly, lz);
 
     % weight the coordinates by image intensity

@@ -308,7 +308,7 @@ methods
         function setupLayout(hf)
             % Creates the widgets that constitute the Slicer main frame
             
-            if verLessThan('matlab', 'R2014b')
+            if verLessThan('matlab', '8.4')
                 % horizontal layout
                 mainPanel = uiextras.HBox('Parent', hf, ...
                     'Units', 'normalized', ...
@@ -346,7 +346,7 @@ methods
                 
                 % code for dragging the slider thumb
                 % @see http://undocumentedmatlab.com/blog/continuous-slider-callback
-                if verLessThan('matlab', 'R2014b')
+                if verLessThan('matlab', '8.4')
                     hListener = handle.listener(this.handles.zSlider, ...
                         'ActionEvent', @this.onSliceSliderChanged);
                     setappdata(this.handles.zSlider, 'sliderListeners', hListener);
@@ -362,7 +362,7 @@ methods
                     'Callback', @this.onSliceEditTextChanged, ...
                     'BackgroundColor', [1 1 1]);
                 
-                if verLessThan('matlab', 'R2014b')
+                if verLessThan('matlab', '8.4')
                     leftPanel.Sizes = [-1 20];
                 else
                     leftPanel.Heights = [-1 20];
@@ -371,7 +371,7 @@ methods
             
             
             % panel for image display + info panel
-            if verLessThan('matlab', 'R2014b')
+            if verLessThan('matlab', '8.4')
                 rightPanel = uiextras.VBox('Parent', mainPanel);
             else
                 rightPanel = uix.VBox('Parent', mainPanel);
@@ -403,7 +403,7 @@ methods
                 'HorizontalAlignment', 'left');
             
             % set up relative sizes of layouts
-            if verLessThan('matlab', 'R2014b')
+            if verLessThan('matlab', '8.4')
                 rightPanel.Sizes = [-1 20];
                 mainPanel.Sizes = [30 -1];
             else

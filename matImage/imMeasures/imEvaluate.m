@@ -3,8 +3,22 @@ function val = imEvaluate(img, varargin)
 %
 %   VAL = imEvaluate(IMG, X, Y)
 %   VAL = imEvaluate(IMG, X, Y, Z)
+%   Evaluates the value within the image grayscale or a color IMG at the
+%   position(s) given by X, Y, and eventually Z. 
+%   IMG is an array containing the image
+%
 %   VAL = imEvaluate(IMG, POS)
-%   VAL = imEvaluate(..., 'method')
+%   Specifies the position as a N-by-2 or N-by-3 array of coordinates. The
+%   result VAL is a N-by-1 array of values in the case of a grayscale image
+%   or a N-by-3 array in the case of a color image.
+%
+%   VAL = imEvaluate(..., METHOD)
+%   Specifies the interpolation method to use. The same options as for the
+%   'interp2' or 'interp3' functions are available: 'nearest', {'linear'},
+%   'spline', 'cubic', or 'makima'. Default is 'linear'.
+%
+%   VAL = imEvaluate(..., METHOD, EXTRAPVAL)
+%   Also specifies the value for pixels outside of the image domain.
 %
 %   Example
 %     % plot profile of a grayscale image

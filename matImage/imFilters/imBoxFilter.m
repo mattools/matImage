@@ -1,15 +1,17 @@
 function res = imBoxFilter(img, dims, varargin)
-%IMBOXFILTER Box filter on 2D/3D iamge
+%IMBOXFILTER Box filter on 2D/3D image
 %
-%   RES = imBoxFilter(IMG, BOXSIZE)
+%   RES = imBoxFilter(IMG, SIZE)
 %   Returns an array with the same size as the input array IMG, using a
-%   flat kernel of size given by DIMS (as a 1-by-ND array).
+%   flat kernel of size given by SIZE (as a 1-by-ND array).
 %
 %   Example
-%   imBoxFilter
+%     img = imread('rice.png');
+%     imgF = imBoxFilter(img, [10 10]);
+%     figure; imshow(imgF);
 %
 %   See also
-%     imMeanFilter, imfilter
+%     imMeanFilter, imGaussianFilter, imfilter
  
 % ------
 % Author: David Legland

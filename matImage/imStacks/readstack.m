@@ -4,10 +4,10 @@ function [img, map] = readstack(fname, varargin)
 %   Syntax
 %   IMG = readstack(FNAME)
 %   IMG = readstack(FNAME, INDICES)
-%   IMG = readstack(FNAME, TYPE, DIM)
+%   IMG = readstack(FNAME, DIM, TYPE)
 %   IMG = readstack(..., 'verbose')
 %   IMG = readstack(..., 'quiet')
-%   [X MAP] = readstack(...)
+%   [X, MAP] = readstack(...)
 %
 %   Description
 %
@@ -25,7 +25,7 @@ function [img, map] = readstack(fname, varargin)
 %   FNAME: base filename of images, without end number (string)
 %   INDICES: indices of images to put for result. Ex:  [0:39]
 %
-%   [X MAP] = readstack(...)
+%   [X, MAP] = readstack(...)
 %   Returns a 3D array of indices, and the associated colormap. Colormap is
 %   returned as an array of doubles normalized between 0 and 1.
 %
@@ -51,7 +51,7 @@ function [img, map] = readstack(fname, varargin)
 %   IMG = readstack('rawData.raw', [256 256 50], 'uint8');
 %
 %   See also:
-%   savestack, imread
+%   savestack, imread,  metaImageRead, readVgiStack 
 %
 
 %   ---------

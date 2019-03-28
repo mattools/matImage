@@ -15,6 +15,7 @@
 %
 % Read/Write 3D images
 %   readstack      - Read either a list of 2D images (slices), or a 3D image
+%   imReadRegion3d - Read a specific 3D region of a 3D image
 %   savebinstack   - Save an binary stack to a file, as RGB Image.
 %   savestack      - Save an image stack to a file or a series of files
 %   metaImageInfo  - Read information header of meta image data
@@ -23,7 +24,7 @@
 %   readVgiStack   - Read a 3D stack stored in VGI format
 %   vgiStackInfo   - Read information necessary to load a 3D stack in VGI format
 %   readVoxelMatrix  - Read a 3D image in VoxelMatrix (.vm) format
-%   imFileInfo     - Generalizes the imfinfo function
+%   imFileInfo     - Generalization of the imfinfo function
 %
 % Get information on 3D images
 %   stackSize      - Compute the size of a 3D stack in [x y z] form
@@ -55,4 +56,3 @@
 %   SlicerHistogramDialog         - Open a dialog to setup image histogram display options
 
 %
-

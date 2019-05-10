@@ -1,5 +1,5 @@
 function img = discreteCapsule(varargin)
-%DISCRETECAPSULE Create binary image of a planar capsule
+%DISCRETECAPSULE Discretize a planar capsule
 %
 %   IMG = discreteCapsule(LX, LY, capsule)
 %   LX and LY are row vectors specifying position of vertex centers along
@@ -88,3 +88,4 @@ img((abs(y) < 1) & (x >= 0) & (x <= rho2)) = true;
 % add a disc at each extremity
 img((x.*x + y.*y) < 1) = true;
 img(((x-rho2).^2 + y.*y) < 1) = true;
+

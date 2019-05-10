@@ -1,5 +1,5 @@
 function img = discreteSphereEighth(varargin)
-%DISCRETESPHEREEIGHTH discretize a 3D sphere eighth
+%DISCRETESPHEREEIGHTH Discretize a 3D sphere eighth
 %
 %   IMG = discreteSphereEighth(LX, LY, LZ, SPHEIGHTH)
 %   Creates a 3D image of a eighth of a sphere.
@@ -78,3 +78,4 @@ trans = composeTransforms3d(...
 
 % create image: simple threshold over 3 dimensions, and over radius
 img = sqrt(x.^2 + y.^2 + z.^2) <= 1 & x >= 0 & x <= 1 & y >=0 & y <= 1 & z >= 0 & z <= 1;
+

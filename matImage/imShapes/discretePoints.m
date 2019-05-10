@@ -1,5 +1,5 @@
 function img = discretePoints(dim, points)
-%DISCRETEPOINTS discretize a set of points
+%DISCRETEPOINTS Discretize a set of points
 %
 %   IMG = discretePoints(DIM, PTS)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1]
@@ -41,3 +41,4 @@ for i=1:size(points, 1)
     iy = max(min(round((points(i,2)-y0)/dy), ny), 1);
     img(iy, ix) = 1;
 end
+

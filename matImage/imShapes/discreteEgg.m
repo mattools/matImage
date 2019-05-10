@@ -1,5 +1,5 @@
 function img = discreteEgg(varargin)
-%DISCRETEEGG Create a discrete image of egg
+%DISCRETEEGG Discretize a planar egg
 %
 %   IMG = discreteEgg(LX, LY, EGG)
 %   EGG has format: [XC YC R THETA].
@@ -49,4 +49,5 @@ img(x.^2 + (y-R).^2 < (2*R)^2 & x >= 0 & x <= h & y <= 0) = 1;
 % small disk at egg apex
 rc = R * (2 - sqrt(2));
 img((x-R).^2 + y.^2 < rc^2) = 1;
+
 

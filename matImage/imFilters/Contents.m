@@ -6,7 +6,7 @@
 %   imMeanFilter             - Compute mean value in the neighboorhood of each pixel
 %   imMedianFilter           - Compute median value in the neighboorhood of each pixel
 %   imGaussianFilter         - Apply gaussian filter to an image, using separability
-%   imBoxFilter              - Box filter on 2D/3D iamge
+%   imBoxFilter              - Box filter on 2D/3D image
 %   imDirectionalFilter      - Apply and combine several directional filters
 %   imNormalizeBackground    - Normalize image by removing background estimate
 %
@@ -34,8 +34,8 @@
 %   imCropBorder             - Crop the border around a 2D or 3D image
 %   imTranspose              - Transpose an image (grayscale or RGB)
 %   imCropBox                - Crop an image with a box
+%   imDownSample             - Apply down-sampling on an image by applying operation on blocs
 %   imPrincipalAxesAlign     - Aligns image along principal axes of inertia matrix
-%   subsample                - Subsample an array by applying operation on blocs
 %   subsamplergb             - Return a sub-sampled version of an rgb image.
 %
 %   Segmentation:
@@ -132,8 +132,10 @@ help Contents
 %   imSplitBands             - Split the 3 bands of a 2D or 3D image
 %   imGradient               - Compute gradient magnitude of a grayscale image
 %   imKillBorders            - Remove regions on the border of an image
+%   subsample                - Subsample an array by applying operation on blocs
 
 %   Not supported functions
 %   imMergeCells             - merge labeled cell of an image
 
 %   Other functions
+

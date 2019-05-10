@@ -1,6 +1,8 @@
 function res = subsample(src, scale, varargin)
 %SUBSAMPLE Subsample an array by applying operation on blocs
 %
+%   Note: deprecated, replaced by imDownSample
+%
 %   subsample(TAB, K);
 %   Returns a matrix of dimension size(TAB)/K. Each pixel of the output
 %   array is computed from a K*K frame in the original array, by taking the
@@ -42,6 +44,9 @@ function res = subsample(src, scale, varargin)
 %   25/08/2006 result has now the same class as the input
 %   28/05/2009 add doc
 %   23/07/2009 update doc
+
+warning('imFilters:deprecated', ...
+    'subsample is deprecated, use imDownSample instead');
 
 % get initial size of image
 dim = size(src);

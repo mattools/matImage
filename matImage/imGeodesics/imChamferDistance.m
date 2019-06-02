@@ -2,7 +2,7 @@ function dist = imChamferDistance(img, varargin)
 %IMCHAMFERDISTANCE Chamfer distance transform using scanning algorithm
 %
 %   WARNING: function imChamferDistance is obsolete, please use
-%   imGeodesicDistanceMap instead.
+%   imDistanceMap instead.
 %
 %   RES = imChamferDistance(IMG, MARKERS);
 %   where IMG and MARKERS are binary images, computes for each foreground
@@ -86,7 +86,7 @@ function dist = imChamferDistance(img, varargin)
 %
 %   
 %   See also
-%   imGeodesics, imGeodesicDistanceMap
+%   imGeodesics, imDistanceMap
 
 % ------
 % Author: David Legland
@@ -105,7 +105,7 @@ function dist = imChamferDistance(img, varargin)
 % However, this induces an increase in code complexity.
 
 warning('MatImage:imGeodesics:deprecated', ...
-    'function imChamferDistance is obsolete, use imGeodesicDistanceMap instead');
+    'function imChamferDistance is obsolete, use imDistanceMap instead');
 
 %% Process input arguments
 

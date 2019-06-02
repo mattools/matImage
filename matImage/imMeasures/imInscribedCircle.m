@@ -31,7 +31,7 @@ function [circle, labels] = imInscribedCircle(lbl, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2012-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -52,7 +52,7 @@ circle = zeros(nLabels, 3);
 
 for iLabel = 1:nLabels
     % compute distance map
-    distMap = imChamferDistance(lbl==iLabel);
+    distMap = imDistanceMap(lbl==iLabel);
     
     % find value and position of the maximum
     maxi = max(distMap(:));    

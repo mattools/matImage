@@ -34,9 +34,10 @@
 %   imCropBorder             - Crop the border around a 2D or 3D image
 %   imTranspose              - Transpose an image (grayscale or RGB)
 %   imCropBox                - Crop an image with a box
+%   imResize                 - Resize 2D or 3D image.
 %   imDownSample             - Apply down-sampling on an image by applying operation on blocs
-%   imPrincipalAxesAlign     - Aligns image along principal axes of inertia matrix
 %   subsamplergb             - Return a sub-sampled version of an rgb image.
+%   imPrincipalAxesAlign     - Aligns image along principal axes of inertia matrix
 %
 %   Segmentation:
 %   imOtsuThreshold          - Threshold an image using Otsu method

@@ -29,7 +29,7 @@ function res = imRescale(img, varargin)
 %   21/08/2009 extends to manage double images
 %   05/11/2011 deprecated and replace by imAdjustDynamic
 
-warning('imael:deprecatedFunction', ...
+warning('matImage:deprecatedFunction', ...
     'function "imRescale" has been deprecated and replaced by "imAdjustDynamic"');
 
 % process input arguments

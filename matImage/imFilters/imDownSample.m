@@ -33,7 +33,7 @@ function res = imDownSample(img, scale, varargin)
 %     subplot(122); imshow(imgMax); title('downsample with max');
 % 
 %   See also:
-%      imRescale, imReadDownSampled3d, blkproc
+%      imResize, imReadDownSampled3d, blkproc
 %
 
 %   ---------

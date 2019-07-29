@@ -33,7 +33,7 @@ function res = imDownSample(img, scale, varargin)
 %     subplot(122); imshow(imgMax); title('downsample with max');
 % 
 %   See also:
-%      imRescale, blkproc
+%      imRescale, imReadDownSampled3d, blkproc
 %
 
 %   ---------
@@ -55,6 +55,10 @@ dim = size(img);
 % if scale is given as single value, convert to 1*NDIMS array
 if isscalar(scale)
     scale = ones(size(dim)) * scale;
+end
+
+if ndims(img) > 2 && size(img, 3) == 3 %#ok<ISMAT>
+    scale(3) = 1;
 end
 
 % get type of sampling (max, min, mean, median ...)

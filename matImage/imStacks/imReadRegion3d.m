@@ -15,7 +15,7 @@ function img = imReadRegion3d(fileName, rect)
 %         50    60    27
 %
 %   See also
-%     readstack, imSize
+%     readstack, imSize, imReadDownSampled3d
  
 % ------
 % Author: David Legland

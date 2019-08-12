@@ -1,5 +1,4 @@
-function demoImInertiaEllipse(varargin)
-%DEMOIMINERTIAELLIPSE Demo file for using function imOrientedBox
+% Demo file for using function imEquivalentEllipse
 %
 %   Syntax
 %   demoImInertiaEllipse
@@ -10,10 +9,10 @@ function demoImInertiaEllipse(varargin)
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2011-05-09,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -53,9 +52,9 @@ imshow(rgb);
 %% Compute enclosing oriented boxes
 
 % call the function
-ellipses = imInertiaEllipse(lbl);
+ellipses = imEquivalentEllipse(lbl);
 
 % display result
 hold on;
-drawEllipse(ellipses, 'linewidth', 2);
+drawEllipse(ellipses, 'linewidth', 2, 'color', 'b');
 

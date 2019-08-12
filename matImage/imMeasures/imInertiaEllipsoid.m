@@ -1,6 +1,8 @@
 function [ellipsoid, labels] = imInertiaEllipsoid(img, varargin)
 %IMINERTIAELLIPSOID Inertia ellipsoid of a 3D binary image
 %
+%   Deprecated, use 'imEquivalentEllipsoid' instead.
+%
 %   ELLI = imInertiaEllipsoid(IMG)
 %   IMG is a binary image of a single particle or region.
 %   ELLI = [XC YC ZC A B C PHI THETA PSI] is an ellipsoid defined by its
@@ -42,7 +44,7 @@ function [ellipsoid, labels] = imInertiaEllipsoid(img, varargin)
 %     drawEllipsoid(elli)
 %     
 %   See also
-%     inertiaEllipse, drawEllipsoid
+%     imEquivalentEllipsoid
 
 % ------
 % Author: David Legland
@@ -53,6 +55,9 @@ function [ellipsoid, labels] = imInertiaEllipsoid(img, varargin)
 %   HISTORY
 %   2014-02-28 fix bug for labels with only one voxel
 %   2014-03-07 change constant to fit ellipsoids
+
+warning('MatImage:deprecated', ...
+    'function imInertiaEllipsoid is obsolete, use imEquivalentEllipsoid instead');
 
 % size of image
 dim = size(img);

@@ -1,5 +1,6 @@
 function m = imMoment(img, p, q)
 %IMMOMENT  Compute simple moment(s) of an image
+%
 %   M_PQ = imMoment(IMG, P, Q)
 %   P is order for x coord, Q is order for y coord.
 %
@@ -15,15 +16,14 @@ function m = imMoment(img, p, q)
 %   
 %
 %   See also
+%     imEquivalentEllipse, imPrincipalAxes
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2008-10-08,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2008 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
-
 
 % image dimension
 dim = size(img);

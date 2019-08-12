@@ -20,11 +20,12 @@
 %   imJointEntropy             - Joint entropy between two images
 %   imMutualInformation        - Mutual information between two images
 %
-% Regions / particle analysis
+% Regions / particles analysis
 %   imCentroid                 - Centroid of regions in a label image
 %   imBoundingBox              - Bounding box of a binary or label image
-%   imInertiaEllipse           - Inertia ellipse of a binary or label image
-%   imInertiaEllipsoid         - Inertia ellipsoid of a 3D binary image
+%   imEquivalentEllipse        - Equivalent ellipse of a binary or label image.
+%   imEquivalentEllipsoid      - Equivalent ellipsoid of a 3D binary image.
+%   imPrincipalAxes            - Computes principal axes of a 2D/3D binary image.
 %   imInscribedCircle          - Maximal circle inscribed in a particle
 %   imInscribedBall            - Maximal ball inscribed in a 3D particle
 %   imEnclosingCircle          - Minimal enclosing circle of a particle
@@ -69,7 +70,7 @@
 %
 % Extract geometric primitives
 %   imFind                     - Return coordinates of non-zero pixels in an image
-%   imRAG                      - Region adjacency graph of a labeled image
+%   imRAG                      - Region adjacency graph of a label image.
 %   imContours                 - Extract polygonal contours of a binary image
 %   imBinaryToGraph            - Transform a binary image into a graph structure
 %
@@ -85,3 +86,7 @@ help Contents
 
 %   Deprecated:
 %   specificIMCDetails         - Ohser's Integral of Mean Curvature
+%   imInertiaEllipse           - Inertia ellipse of a binary or label image
+%   imInertiaEllipsoid         - Inertia ellipsoid of a 3D binary image
+
+%   Others:

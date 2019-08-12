@@ -1,6 +1,8 @@
 function [ellipse, labels] = imInertiaEllipse(img, varargin)
 %IMINERTIAELLIPSE Inertia ellipse of a binary or label image
 %
+%   Deprecated, use 'imEquivalentEllipse' instead.
+%
 %   ELLI = imInertiaEllipse(IMG)
 %   Compute the inertia ellipses of the particles in labeled image IMG. If
 %   the image is binary, one ellipse, corresponding to the foreground (i.e.
@@ -45,7 +47,7 @@ function [ellipse, labels] = imInertiaEllipse(img, varargin)
 %     drawEllipse(ellipses, 'linewidth', 2, 'color', 'g');
 %
 %   See also
-%     regionprops, drawEllipse, imOrientedBox, imInertiaEllipsoid
+%     imEquivalentEllipse
 %
 
 % ------
@@ -53,6 +55,9 @@ function [ellipse, labels] = imInertiaEllipse(img, varargin)
 % e-mail: david.legland@inra.fr
 % Created: 2011-03-30,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
+
+warning('MatImage:deprecated', ...
+    'function imInertiaEllipse is obsolete, use imEquivalentEllipse instead');
 
 %% extract spatial calibration
 

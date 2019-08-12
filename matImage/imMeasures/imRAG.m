@@ -1,5 +1,5 @@
 function varargout = imRAG(img, varargin)
-%IMRAG Region adjacency graph of a label image
+%IMRAG Region adjacency graph of a label image.
 %
 %   Usage:
 %   ADJ = imRAG(LBLMAP);

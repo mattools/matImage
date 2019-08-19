@@ -19,20 +19,20 @@ classdef LabelIsosurfacesOptionsDialog < handle
 
 %% Properties
 properties
-    parent;
+    Parent;
     
-    handles;
+    Handles;
 end % end properties
 
 
 %% Constructor
 methods
-    function this = LabelIsosurfacesOptionsDialog(parent, varargin)
+    function obj = LabelIsosurfacesOptionsDialog(parent, varargin)
     % Constructor for LabelIsosurfacesOptionsDialog class
         
          % call parent constructor to initialize members
-        this = this@handle();
-        this.parent = parent;
+        obj = obj@handle();
+        obj.Parent = parent;
 
         % create default figure
         fig = figure(...
@@ -40,8 +40,8 @@ methods
             'NumberTitle', 'off', ...
             'HandleVisibility', 'On', ...
             'Name', 'Label Isosurfaces Options', ...
-            'CloseRequestFcn', @this.close);
-        this.handles.figure = fig;
+            'CloseRequestFcn', @obj.close);
+        obj.Handles.Figure = fig;
             
         setupLayout(fig);
         
@@ -74,25 +74,25 @@ methods
                     'Spacing', 5, 'Padding', 5);
             end
             
-            this.handles.reverseZAxis = uicontrol(...
+            obj.Handles.ReverseZAxis = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Reverse Z-axis', ...
                 'Value', 1, ...
                 'HorizontalAlignment', 'Left');
 
-            this.handles.rotateOx = uicontrol(...
+            obj.Handles.RotateOx = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Rotate around X-axis', ...
                 'Value', 1, ...
                 'HorizontalAlignment', 'Left');
 
-            this.handles.smooth = uicontrol(...
+            obj.Handles.Smooth = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Smooth', ...
                 'Value', 1, ...
                 'HorizontalAlignment', 'Left');
             
-            this.handles.showAxisLabel = uicontrol(...
+            obj.Handles.ShowAxisLabel = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Show axes label', ...
                 'Value', 0, ...
@@ -115,15 +115,15 @@ methods
                     'Position', [0 0 1 1]);
             end
             
-            this.handles.applyButton = uicontrol('Style', 'PushButton', ...
+            obj.Handles.ApplyButton = uicontrol('Style', 'PushButton', ...
                 'Parent', buttonsPanel, ...
                 'String', 'Compute', ...
                 'Enable', 'on', ...
-                'Callback', @this.onApplyButtonClicked);
-            this.handles.closeButton = uicontrol('Style', 'PushButton', ...
+                'Callback', @obj.onApplyButtonClicked);
+            obj.Handles.CloseButton = uicontrol('Style', 'PushButton', ...
                 'Parent', buttonsPanel, ...
                 'String', 'Close', ...
-                'Callback', @this.close);
+                'Callback', @obj.close);
             
             if verLessThan('matlab', 'R2014b')
                 mainPanel.Sizes = [-1 40];
@@ -139,22 +139,22 @@ end % end constructors
 
 %% Methods
 methods
-    function onApplyButtonClicked(this, hObject, eventdata) %#ok<INUSD>
+    function onApplyButtonClicked(obj, hObject, eventdata) %#ok<INUSD>
         
         % first, disable "compute" button to avoid multiple calls
-        set(this.handles.applyButton, 'enable', 'off');
+        set(obj.Handles.ApplyButton, 'enable', 'off');
         hDlg = msgbox({'Computing isosurfaces,', 'Please wait...'}, ...
             'Isosurface computing');
         
         % extract options from widgets
-        reverseZAxis = get(this.handles.reverseZAxis, 'Value');
-        rotateXAxis = get(this.handles.rotateOx, 'Value');
-        smooth = get(this.handles.smooth, 'Value');
-        showAxesLabel = get(this.handles.showAxisLabel, 'Value');
+        reverseZAxis = get(obj.Handles.ReverseZAxis, 'Value');
+        rotateXAxis = get(obj.Handles.RotateOx, 'Value');
+        smooth = get(obj.Handles.Smooth, 'Value');
+        showAxesLabel = get(obj.Handles.ShowAxisLabel, 'Value');
         
         % get image data stored in parent Slicer
-        imgData = this.parent.imageData;
-        imgSize = this.parent.imageSize;
+        imgData = obj.Parent.ImageData;
+        imgSize = obj.Parent.ImageSize;
         
         % avoid the case of empty image
         if isempty(imgData)
@@ -168,8 +168,8 @@ methods
         end
         
         % compute display settings
-        spacing = this.parent.voxelSize;
-        origin  = this.parent.voxelOrigin;
+        spacing = obj.Parent.VoxelSize;
+        origin  = obj.Parent.VoxelOrigin;
         
         % compute grid positions
         lx = (0:imgSize(1)-1) * spacing(1) + origin(1);
@@ -185,8 +185,8 @@ methods
 
         % determine the color map to use (default is empty)
         cmap = [];
-        if ~isColorStack(imgData) && ~isempty(this.parent.colorMap)
-            cmap = this.parent.colorMap;
+        if ~isColorStack(imgData) && ~isempty(obj.Parent.ColorMap)
+            cmap = obj.Parent.ColorMap;
         end
         if isempty(cmap)
             cmap = jet(256);
@@ -202,7 +202,7 @@ methods
         
         % for binary images, colormap has two entries, so we need to keep
         % the last one
-        if strcmp(this.parent.imageType, 'binary') && size(cmap, 1) > 1
+        if strcmp(obj.Parent.ImageType, 'binary') && size(cmap, 1) > 1
             cmap = cmap(2,:);
         end
         
@@ -255,7 +255,7 @@ methods
         end
         
         % re-enable "apply" button
-        set(this.handles.applyButton, 'enable', 'on');
+        set(obj.Handles.ApplyButton, 'enable', 'on');
         if ishandle(hDlg)
             close(hDlg);
         end
@@ -266,8 +266,8 @@ end % end methods
 
 %% Figure management
 methods
-    function close(this, varargin)
-        delete(this.handles.figure);
+    function close(obj, varargin)
+        delete(obj.Handles.Figure);
     end
     
 end

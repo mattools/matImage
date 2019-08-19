@@ -1,5 +1,5 @@
 classdef CropStackDialog < handle
-%CROPSTACKDIALOG Open a dialog for cropping 3D stacks
+%CROPSTACKDIALOG Open a dialog for cropping 3D stacks.
 %
 %   Class CropStackDialog
 %
@@ -8,30 +8,30 @@ classdef CropStackDialog < handle
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2013-07-22,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
 
 %% Properties
 properties
-    parent;
+    Parent;
     
-    handles;
+    Handles;
 end % end properties
 
 
 %% Constructor
 methods
-    function this = CropStackDialog(parent, varargin)
+    function obj = CropStackDialog(parent, varargin)
     % Constructor for CropStackDialog class
         
          % call parent constructor to initialize members
-        this = this@handle();
-        this.parent = parent;
+        obj = obj@handle();
+        obj.Parent = parent;
 
         % create default figure
         fig = figure(...
@@ -39,8 +39,8 @@ methods
             'NumberTitle', 'off', ...
             'HandleVisibility', 'On', ...
             'Name', 'Crop 3D Stack', ...
-            'CloseRequestFcn', @this.close);
-        this.handles.figure = fig;
+            'CloseRequestFcn', @obj.close);
+        obj.Handles.Figure = fig;
             
         setupLayout(fig);
         
@@ -61,7 +61,7 @@ methods
             
             mainPanel = uix.VBox('Parent', hf);
 
-            dim = this.parent.imageSize;
+            dim = obj.Parent.ImageSize;
             
             % Add two text boxes for bounds in X direction
             % First the line container
@@ -74,12 +74,12 @@ methods
                 'FontWeight', 'Normal', ...
                 'HorizontalAlignment', 'Left');
             % Finally the controls
-            this.handles.xminTextBox = uicontrol(...
+            obj.Handles.XMinTextBox = uicontrol(...
                 'Style', 'Edit', ...
                 'Parent', hLine, ...
                 'String', '1', ...
                 'BackgroundColor', bgColor);
-            this.handles.xmaxTextBox = uicontrol(...
+            obj.Handles.XMaxTextBox = uicontrol(...
                 'Style', 'Edit', ...
                 'Parent', hLine, ...
                 'String', num2str(dim(1)), ...
@@ -99,12 +99,12 @@ methods
                 'FontWeight', 'Normal', ...
                 'HorizontalAlignment', 'Left');
             % Finally the controls
-            this.handles.yminTextBox = uicontrol(...
+            obj.Handles.YMinTextBox = uicontrol(...
                 'Style', 'Edit', ...
                 'Parent', hLine, ...
                 'String', '1', ...
                 'BackgroundColor', bgColor);
-            this.handles.ymaxTextBox = uicontrol(...
+            obj.Handles.YMaxTextBox = uicontrol(...
                 'Style', 'Edit', ...
                 'Parent', hLine, ...
                 'String', num2str(dim(2)), ...
@@ -123,12 +123,12 @@ methods
                 'FontWeight', 'Normal', ...
                 'HorizontalAlignment', 'Left');
             % Finally the controls
-            this.handles.zminTextBox = uicontrol(...
+            obj.Handles.ZMinTextBox = uicontrol(...
                 'Style', 'Edit', ...
                 'Parent', hLine, ...
                 'String', '1', ...
                 'BackgroundColor', bgColor);
-            this.handles.zmaxTextBox = uicontrol(...
+            obj.Handles.ZMaxTextBox = uicontrol(...
                 'Style', 'Edit', ...
                 'Parent', hLine, ...
                 'String', num2str(dim(3)), ...
@@ -143,14 +143,14 @@ methods
                 'Spacing', 5, 'Padding', 5, ...
                 'Units', 'normalized', ...
                 'Position', [0 0 1 1]);
-            this.handles.applyButton = uicontrol('Style', 'PushButton', ...
+            obj.Handles.applyButton = uicontrol('Style', 'PushButton', ...
                 'Parent', controlPanel, ...
                 'String', 'OK', ...
-                'Callback', @this.onApplyButtonClicked);
-            this.handles.closeButton = uicontrol('Style', 'PushButton', ...
+                'Callback', @obj.onApplyButtonClicked);
+            obj.Handles.closeButton = uicontrol('Style', 'PushButton', ...
                 'Parent', controlPanel, ...
                 'String', 'Close', ...
-                'Callback', @this.onCloseButtonClicked);
+                'Callback', @obj.onCloseButtonClicked);
 
             set(mainPanel, 'Heights', [40 40 40 -1]);
         end
@@ -161,22 +161,22 @@ end % end constructors
 
 %% Methods
 methods
-    function onApplyButtonClicked(this, hObject, eventdata) %#ok<INUSD>
+    function onApplyButtonClicked(obj, hObject, eventdata) %#ok<INUSD>
      
         % first check that parent application is still alive
-        if ~ishandle(this.parent.handles.figure)
+        if ~ishandle(obj.Parent.Handles.Figure)
             errordlg('Slicer figure was closed', 'Crop Stack error', 'modal');
-            close(this);
+            close(obj);
             return;
         end
         
         % extract the crop values
-        xmin = str2double(get(this.handles.xminTextBox, 'String'));
-        xmax = str2double(get(this.handles.xmaxTextBox, 'String'));
-        ymin = str2double(get(this.handles.yminTextBox, 'String'));
-        ymax = str2double(get(this.handles.ymaxTextBox, 'String'));
-        zmin = str2double(get(this.handles.zminTextBox, 'String'));
-        zmax = str2double(get(this.handles.zmaxTextBox, 'String'));
+        xmin = str2double(get(obj.Handles.XMinTextBox, 'String'));
+        xmax = str2double(get(obj.Handles.XMaxTextBox, 'String'));
+        ymin = str2double(get(obj.Handles.YMinTextBox, 'String'));
+        ymax = str2double(get(obj.Handles.YMaxTextBox, 'String'));
+        zmin = str2double(get(obj.Handles.ZMinTextBox, 'String'));
+        zmax = str2double(get(obj.Handles.ZMaxTextBox, 'String'));
         
         % check values are valid numbers, otherwise retry
         if isnan(xmin) || isnan(xmax) || isnan(ymin) || isnan(ymax) || isnan(zmin) || isnan(zmax)
@@ -185,7 +185,7 @@ methods
         end
 
         % ensure bounds are within image range
-        dim = this.parent.imageSize;
+        dim = obj.Parent.ImageSize;
         xmin = max(xmin, 1);
         xmax = min(xmax, dim(1));
         ymin = max(ymin, 1);
@@ -195,31 +195,31 @@ methods
         
         % crop the image
         box = [xmin xmax ymin ymax zmin zmax];
-        img2 = cropStack(this.parent.imageData, box);
+        img2 = cropStack(obj.Parent.ImageData, box);
         
         % create new Slicer instance with the new image);
-        if ~isempty(this.parent.imageName)
-            name = [this.parent.imageName '-crop'];
+        if ~isempty(obj.Parent.ImageName)
+            name = [obj.Parent.ImageName '-crop'];
         else
             name = 'cropped';
         end
         Slicer(img2, ...
-            'parent', this.parent, ...
+            'parent', obj.Parent, ...
             'name', name);
         
-        close(this);
+        close(obj);
         return;
     end
     
-    function onCloseButtonClicked(this, hObject, eventdata) %#ok<INUSD>
-        close(this.handles.figure);
+    function onCloseButtonClicked(obj, hObject, eventdata) %#ok<INUSD>
+        close(obj.Handles.Figure);
     end
 end % end methods
 
 %% Figure management
 methods
-    function close(this, varargin)
-        delete(this.handles.figure);
+    function close(obj, varargin)
+        delete(obj.Handles.Figure);
     end
     
 end

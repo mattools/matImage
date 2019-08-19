@@ -1,5 +1,5 @@
 classdef Slicer < handle
-%SLICER GUI for exploration of 3D images, using Object Oriented Programming
+%GUI for exploration of 3D images, using Object Oriented Programming.
 %
 %   SLICER is an graphical interface to explore slices of a 3D image.
 %   Index of the current slice is given under the slider, mouse position as
@@ -34,36 +34,36 @@ classdef Slicer < handle
 %   Specifies one or more display options as name-value parameter pairs.
 %   Available parameter names are:
 %
-%   * 'slice'       the display uses slice given by VALUE as current slice
+%   * 'Slice'       the display uses slice given by VALUE as current slice
 %
-%   * 'name'        gives a name to the image (for display in title bar)
+%   * 'Name'        gives a name to the image (for display in title bar)
 %
-%   * 'spacing'     specifies the size of voxel elements. VALUE is a 1-by-3
+%   * 'Spacing'     specifies the size of voxel elements. VALUE is a 1-by-3
 %         row vector containing spacing in x, y and z direction.
 %
-%   * 'origin'      specifies coordinate of first voxel in user space
+%   * 'Origin'      specifies coordinate of first voxel in user space
 %
-%   * 'unitName'    the name of the unit used for spatial calibration (can
+%   * 'UnitName'    the name of the unit used for spatial calibration (can
 %         be any string, default is empty).
 %
-%   * 'displayRange' the values of min and max gray values to display. The
+%   * 'DisplayRange' the values of min and max gray values to display. The
 %         default behaviour is to use [0 255] for uint8 images, or to
 %         compute bounds such as 95% of the voxels are converted to visible
 %         gray levels for other image types.
 %
-%   * 'colorMap'    The colormap used for displaying grayscale images
+%   * 'ColorMap'    The colormap used for displaying grayscale images
 %         (default is gray). Should be a N-by-3 array of double, with N=256
 %         for grayscale or intensity images, as N=the number of labels for
 %         label images, and N=2 for binary images.
 %
-%   * 'backgroundColor'    the color used as background for label images.
+%   * 'BackgroundColor'    the color used as background for label images.
 %
-%   * 'imageType'   The type of image, used for adapting display. Can be
+%   * 'ImageType'   The type of image, used for adapting display. Can be
 %           one of 'binary', 'grayscale', 'intensity', 'label', 'color',
 %           'vector', 'none'. Default value is assessed from data type and
 %           size.
 %
-%   * 'parent'  another instance of Slicer, that is used to initialize
+%   * 'Parent'  another instance of Slicer, that is used to initialize
 %           several parameters like spatial resolution, display range, LUT
 %           for display...
 %           
@@ -75,7 +75,7 @@ classdef Slicer < handle
 %     Slicer(I);
 %
 %   % show the 10-th slice, and add some setup
-%     Slicer(I, 'slice', 10, 'spacing', [1 1 2.5], 'name', 'Brain', 'displayRange', [0 90]);
+%     Slicer(I, 'Slice', 10, 'Spacing', [1 1 2.5], 'Name', 'Brain', 'DisplayRange', [0 90]);
 %
 %   See also
 %     imStacks, imscrollpanel
@@ -83,6 +83,7 @@ classdef Slicer < handle
 %   Requires
 %       GUI Layout Toolbox version 2.0, or 1.17 (try to switch depending on
 %       Matlab version)
+%
 
 % ------
 % Author: David Legland
@@ -94,7 +95,7 @@ classdef Slicer < handle
 %% Properties
 properties
     % Image data stored as a 3D or 4D array, in YX(C)Z order.
-    imageData;
+    ImageData;
     
     % type of image. Can be one of:
     % 'binary'
@@ -104,111 +105,111 @@ properties
     % 'color' 
     % 'vector'
     % 'none'
-    imageType;
+    ImageType;
     
     % size of the reference image (1-by-3 row vector, in XYZ order)
-    imageSize;
+    ImageSize;
     
     % extra info for image, such as the result of imfinfo
-    imageInfo;
+    ImageInfo;
     
     % extra info for image, such as the result of imfinfo
-    imageName;
+    ImageName;
 
     % displayed data (2D image)
-    slice;
+    Slice;
     
     % z-index of slice within 3D image
-    sliceIndex;
+    SliceIndex;
     
     % used to adjust constrast of the slice
-    displayRange;
+    DisplayRange;
     
     % Look-up table for display of uint8, label and binary images.
-    % can be empty, in this case gray colormap is assumed 
-    colorMap = [];
+    % can be empty, in obj case gray colormap is assumed 
+    ColorMap = [];
 
     % background color for label to RGB conversion. Given as RGB triplet of
     % values bewteen 0 and 1. Default is white = (1,1,1).
-    bgColor = [1 1 1];
+    BgColor = [1 1 1];
 
     % calibration information for image
-    voxelOrigin;
-    voxelSize;
-    voxelSizeUnit;
+    VoxelOrigin;
+    VoxelSize;
+    VoxelSizeUnit;
     
     % shortcut for avoiding many tests. Should be set to true when either
     % voxelOrigin, voxelsize or voxelSizeUnit is different from its default
     % value.
-    calibrated = false;
+    Calibrated = false;
     
     % keep last path for opening new images
-    lastPath = pwd;
+    LastPath = pwd;
     
     % list of handles to the widgets.
     % Structure with following fields:
-    % * figure:     the main figure
-    % * subFigures: a list of figures that can be closed when the main
+    % * Figure:     the main figure
+    % * SubFigures: a list of figures that can be closed when the main
     %           figure is closed
-    % * image:      the image display
-    % * imageAxis:  the axis containing the image
-    % * zSlider:    the slider used to change the slice index
-    % * zEdit:      the edit uicontrol used to change slice index
-    % * zProfileFigure used to display the profile along z 
-    % * zProfileAxis used to display the profile along z 
-    handles;
+    % * Image:      the image display
+    % * ImageAxis:  the axis containing the image
+    % * ZSlider:    the slider used to change the slice index
+    % * ZEdit:      the edit uicontrol used to change slice index
+    % * ZProfileFigure used to display the profile along z 
+    % * ZProfileAxis used to display the profile along z 
+    Handles;
     
     % the last position of mouse click, in user coordinates.
-    lastClickedPoint = []; 
+    LastClickedPoint = []; 
 end 
 
 
 %% Constructor
 methods
-    function this = Slicer(varargin)
+    function obj = Slicer(varargin)
         
         % call parent constructor
-        this = this@handle();
+        obj = obj@handle();
         
         % initialize structure containing handles
-        this.handles = struct();
+        obj.Handles = struct();
         
         % keep pointer to current path
-        this.lastPath = pwd;
+        obj.LastPath = pwd;
         
         % initialize using image given as argument
         if ~isempty(varargin)
             var = varargin{1};
             if isa(var, 'Image')
-                setupImageFromClass(this, var);
+                setupImageFromClass(obj, var);
             elseif ischar(var)
-                setupImageFromFile(this, var);
+                setupImageFromFile(obj, var);
             else
                 if ndims(var) < 3 %#ok<ISMAT>
                     error('Requires input image with at least 3 dimensions');
                 end
-                setupImageData(this, var, inputname(1));
+                setupImageData(obj, var, inputname(1));
             end
             varargin(1) = [];
             
-            if isempty(this.imageData)
+            if isempty(obj.ImageData)
                 return;
             end
             
         else
-            this.imageData = [];
-            this.imageType = 'none';
+            obj.ImageData = [];
+            obj.ImageType = 'none';
         end
         
         % parses input arguments, given as list of name-value pairs
         parsesInputArguments();
         
         % add checkup on visible image slice
-        if ~isempty(this.imageData)
-            this.sliceIndex = min(this.sliceIndex, this.imageSize(3));
+        if ~isempty(obj.ImageData)
+            obj.SliceIndex = min(obj.SliceIndex, obj.ImageSize(3));
         end
         
-        updateCalibrationFlag(this);
+        updateCalibrationFlag(obj);
 
         % create default figure
         fig = figure();
@@ -216,31 +217,31 @@ methods
         set(fig, 'NumberTitle', 'off');
         set(fig, 'Name', 'Slicer');
         
-        this.handles.figure = fig;
-        this.handles.subFigures = [];
+        obj.Handles.Figure = fig;
+        obj.Handles.SubFigures = [];
         
         % create main figure menu and layout
-        setupMenuBar(this);
+        setupMenuBar(obj);
         setupLayout(fig);
         
         % setup new image display
-        if ismember(this.imageType, {'label', 'binary'})
-            maxi = max(this.imageData(:));
-            this.displayRange  = [0 maxi];
+        if ismember(obj.ImageType, {'label', 'binary'})
+            maxi = max(obj.ImageData(:));
+            obj.DisplayRange  = [0 maxi];
             
-            if isempty(this.colorMap)
-                this.colorMap = jet(double(maxi));
+            if isempty(obj.ColorMap)
+                obj.ColorMap = jet(double(maxi));
             end
-            colormap([this.bgColor ; this.colorMap]);
+            colormap([obj.BgColor ; obj.ColorMap]);
         end
-        updateSlice(this);
-        displayNewImage(this);
-        updateTitle(this);
+        updateSlice(obj);
+        displayNewImage(obj);
+        updateTitle(obj);
         
         % setup listeners associated to the figure
-        set(fig, 'WindowButtonDownFcn', @this.mouseButtonPressed);
-        set(fig, 'WindowButtonMotionFcn', @this.mouseDragged);
-        set(fig, 'WindowScrollWheelFcn', @this.mouseWheelScrolled);
+        set(fig, 'WindowButtonDownFcn', @obj.mouseButtonPressed);
+        set(fig, 'WindowButtonMotionFcn', @obj.mouseDragged);
+        set(fig, 'WindowScrollWheelFcn', @obj.mouseWheelScrolled);
         set(fig, 'NextPlot', 'new');
 
         function parsesInputArguments()
@@ -251,51 +252,50 @@ methods
                     case 'parent'
                         % copy some settings from parent Slicer 
                         parent = varargin{2};
-                        this.sliceIndex     = parent.sliceIndex;
-                        this.voxelSize      = parent.voxelSize;
-                        this.voxelOrigin    = parent.voxelOrigin;
-                        this.voxelSizeUnit  = parent.voxelSizeUnit;
-                        this.calibrated     = parent.calibrated;
-                        this.imageType      = parent.imageType;
-                        this.displayRange   = parent.displayRange;
-                        this.colorMap       = parent.colorMap;
-                        this.bgColor        = parent.bgColor;
-                        this.calibrated     = parent.calibrated;
+                        obj.SliceIndex     = parent.SliceIndex;
+                        obj.VoxelSize      = parent.VoxelSize;
+                        obj.VoxelOrigin    = parent.VoxelOrigin;
+                        obj.VoxelSizeUnit  = parent.VoxelSizeUnit;
+                        obj.Calibrated     = parent.Calibrated;
+                        obj.ImageType      = parent.ImageType;
+                        obj.DisplayRange   = parent.DisplayRange;
+                        obj.ColorMap       = parent.ColorMap;
+                        obj.BgColor        = parent.BgColor;
                         
                     case 'slice'
                         % setup initial slice
                         pos = varargin{2};
-                        this.sliceIndex = pos(1);
+                        obj.SliceIndex = pos(1);
                         
                     % Setup spatial calibration
                     case 'spacing'
-                        this.voxelSize = varargin{2};
-                        if ~this.calibrated
-                            this.voxelOrigin = [0 0 0];
+                        obj.VoxelSize = varargin{2};
+                        if ~obj.Calibrated
+                            obj.VoxelOrigin = [0 0 0];
                         end
-                        this.calibrated = true;
+                        obj.Calibrated = true;
                         
                     case 'origin'
-                        this.voxelOrigin = varargin{2};
-                        this.calibrated = true;
+                        obj.VoxelOrigin = varargin{2};
+                        obj.Calibrated = true;
                         
                     case 'unitname'
-                        this.voxelSizeUnit = varargin{2};
-                        this.calibrated = true;
+                        obj.VoxelSizeUnit = varargin{2};
+                        obj.Calibrated = true;
                        
                     case 'name'
-                        this.imageName = varargin{2};
+                        obj.ImageName = varargin{2};
                         
                     case 'imagetype'
-                        this.imageType = varargin{2};
+                        obj.ImageType = varargin{2};
                         
                     % Setup image display
                     case 'displayrange'
-                        this.displayRange = varargin{2};
+                        obj.DisplayRange = varargin{2};
                     case 'colormap'
-                        this.colorMap = varargin{2};
+                        obj.ColorMap = varargin{2};
                     case 'backgroundcolor'
-                        this.bgColor = varargin{2};
+                        obj.BgColor = varargin{2};
                         
                     otherwise
                         error(['Unknown parameter name: ' param]);
@@ -330,36 +330,36 @@ methods
                     'Position', [0 0 1 1]);
             end
             
-            if ~isempty(this.imageData)
+            if ~isempty(obj.ImageData)
                 % slider for slice
                 zmin = 1;
-                zmax = this.imageSize(3);
+                zmax = obj.ImageSize(3);
                 zstep1 = 1/zmax;
                 zstep2 = min(10/zmax, .5);
-                this.handles.zSlider = uicontrol('Style', 'slider', ...
+                obj.Handles.ZSlider = uicontrol('Style', 'slider', ...
                     'Parent', leftPanel, ...
                     'Min', zmin, 'Max', zmax', ...
                     'SliderStep', [zstep1 zstep2], ...
-                    'Value', this.sliceIndex, ...
-                    'Callback', @this.onSliceSliderChanged, ...
+                    'Value', obj.SliceIndex, ...
+                    'Callback', @obj.onSliceSliderChanged, ...
                     'BackgroundColor', [1 1 1]);
                 
                 % code for dragging the slider thumb
                 % @see http://undocumentedmatlab.com/blog/continuous-slider-callback
                 if verLessThan('matlab', '8.4')
-                    hListener = handle.listener(this.handles.zSlider, ...
-                        'ActionEvent', @this.onSliceSliderChanged);
-                    setappdata(this.handles.zSlider, 'sliderListeners', hListener);
+                    hListener = handle.listener(obj.Handles.ZSlider, ...
+                        'ActionEvent', @obj.onSliceSliderChanged);
+                    setappdata(obj.Handles.ZSlider, 'sliderListeners', hListener);
                 else
-                    addlistener(this.handles.zSlider, ...
-                        'ContinuousValueChange', @this.onSliceSliderChanged);
+                    addlistener(obj.Handles.ZSlider, ...
+                        'ContinuousValueChange', @obj.onSliceSliderChanged);
                 end
                 
                 % edition of slice number
-                this.handles.zEdit = uicontrol('Style', 'edit', ...
+                obj.Handles.ZEdit = uicontrol('Style', 'edit', ...
                     'Parent', leftPanel, ...
-                    'String', num2str(this.sliceIndex), ...
-                    'Callback', @this.onSliceEditTextChanged, ...
+                    'String', num2str(obj.SliceIndex), ...
+                    'Callback', @obj.onSliceEditTextChanged, ...
                     'BackgroundColor', [1 1 1]);
                 
                 if verLessThan('matlab', '8.4')
@@ -380,23 +380,23 @@ methods
             % scrollable panel for image display
             scrollPanel = uipanel('Parent', rightPanel);
             
-            if ~isempty(this.imageData)
+            if ~isempty(obj.ImageData)
                 ax = axes('parent', scrollPanel, ...
                     'units', 'normalized', ...
                     'position', [0 0 1 1]);
-                this.handles.imageAxis = ax;
+                obj.Handles.ImageAxis = ax;
 
                 % initialize image display with default image.
                 hIm = imshow(zeros([10 10], 'uint8'), 'parent', ax);
-                this.handles.scrollPanel = imscrollpanel(scrollPanel, hIm);
-                set(scrollPanel, 'resizeFcn', @this.onScrollPanelResized);
+                obj.Handles.ScrollPanel = imscrollpanel(scrollPanel, hIm);
+                set(scrollPanel, 'resizeFcn', @obj.onScrollPanelResized);
 
                 % keep widgets handles
-                this.handles.image = hIm;
+                obj.Handles.Image = hIm;
             end
             
             % info panel for cursor position and value
-            this.handles.infoPanel = uicontrol(...
+            obj.Handles.InfoPanel = uicontrol(...
                 'Parent', rightPanel, ...
                 'Style', 'text', ...
                 'String', ' x=    y=     I=', ...
@@ -412,8 +412,8 @@ methods
             end
             
             % once each panel has been resized, setup image magnification
-            if ~isempty(this.imageData)
-                api = iptgetapi(this.handles.scrollPanel);
+            if ~isempty(obj.ImageData)
+                api = iptgetapi(obj.Handles.ScrollPanel);
                 mag = api.findFitMag();
                 api.setMagnification(mag);
             end
@@ -425,24 +425,24 @@ end % construction function
 
 %% General use methods
 methods
-    function createNewSlicer(this, imgData, newName, varargin)
+    function createNewSlicer(obj, imgData, newName, varargin)
         % Creates a new Slicer figure with given data, and keeping the
         % settings of the current slicer.
         options = {...
-            'spacing', this.voxelSize, ...
-            'origin', this.voxelOrigin, ...
-            'slice', this.sliceIndex, ...
+            'spacing', obj.VoxelSize, ...
+            'origin', obj.VoxelOrigin, ...
+            'slice', obj.SliceIndex, ...
             'name', newName};
         
         Slicer(imgData, options{:}, varargin{:});
     end
     
-    function setupImageData(this, img, imgName)
+    function setupImageData(obj, img, imgName)
         % replaces all informations about image
         
         % Setup image data and type
-        this.imageData = img;
-        this.imageType = 'grayscale';
+        obj.ImageData = img;
+        obj.ImageType = 'grayscale';
         
         % compute size, and detect RGB
         dim = size(img);
@@ -458,9 +458,9 @@ methods
             
             % determines image nature
             if dim(3) ~= 3 || valMin < 0 || (isfloat(img) && valMax > 1)
-                this.imageType = 'vector';
+                obj.ImageType = 'vector';
             else
-                this.imageType = 'color';
+                obj.ImageType = 'color';
             end
             
             % keep only spatial dimensions
@@ -470,32 +470,32 @@ methods
         end
         
         % convert to use dim(1)=x, dim(2)=y, dim(3)=z
-        this.imageSize = dim([2 1 3]);
+        obj.ImageSize = dim([2 1 3]);
         
         % eventually compute grayscale extent
-        if ~strcmp(this.imageType, 'color')
-            [mini, maxi] = computeGrayScaleExtent(this);
-            this.displayRange  = [mini maxi];
+        if ~strcmp(obj.ImageType, 'color')
+            [mini, maxi] = computeGrayScaleExtent(obj);
+            obj.DisplayRange  = [mini maxi];
         end
         
         % empty colorMap by default
-        this.colorMap = [];
+        obj.ColorMap = [];
         
         % default slice index is in the middle of the stack
-        this.sliceIndex = ceil(dim(3) / 2);
+        obj.SliceIndex = ceil(dim(3) / 2);
         
         % setup default calibration
-        this.voxelOrigin    = [1 1 1];
-        this.voxelSize      = [1 1 1];
-        this.voxelSizeUnit  = '';
+        obj.VoxelOrigin    = [1 1 1];
+        obj.VoxelSize      = [1 1 1];
+        obj.VoxelSizeUnit  = '';
         
         % update image name
-        this.imageName = imgName;
+        obj.ImageName = imgName;
         
-        updateSlice(this);
+        updateSlice(obj);
     end
     
-    function setupImageFromClass(this, img)
+    function setupImageFromClass(obj, img)
         % Initialize gui data from an Image class
         % 
         
@@ -504,35 +504,35 @@ methods
         end
         
         % intialize with image data
-        setupImageData(this, getBuffer(img), img.name);
+        setupImageData(obj, getBuffer(img), img.Name);
         
         % extract spatial calibration
-        this.voxelOrigin     = img.origin;
-        this.voxelSize       = img.spacing;
-        this.voxelSizeUnit   = img.unitName;
+        obj.VoxelOrigin     = img.Origin;
+        obj.VoxelSize       = img.Spacing;
+        obj.VoxelSizeUnit   = img.UnitName;
     end
     
-    function setupImageFromFile(this, fileName)
+    function setupImageFromFile(obj, fileName)
         % replaces all informations about image
         
         [filepath, basename, ext] = fileparts(fileName); %#ok<ASGLU>
         
         switch lower(ext)
             case {'.mhd', '.mha'}
-                importMetaImage(this, fileName);
+                importMetaImage(obj, fileName);
             case '.dcm'
-                importDicomImage(this, fileName);
+                importDicomImage(obj, fileName);
             case '.hdr'
-                importAnalyzeImage(this, fileName);
+                importAnalyzeImage(obj, fileName);
             case '.vm'
-                importVoxelMatrix(this, fileName);
+                importVoxelMatrix(obj, fileName);
             otherwise
-                readImageStack(this, fileName);
+                readImageStack(obj, fileName);
         end
 
     end
     
-    function readImageStack(this, fileName)
+    function readImageStack(obj, fileName)
         % Read image stack, either as single file bundle or as file series
         
         [img, map] = readstack(fileName);
@@ -541,14 +541,14 @@ methods
         [pathName, baseName, ext] = fileparts(fileName);
         imgName = [baseName ext];
         
-        setupImageData(this, img, imgName);
+        setupImageData(obj, img, imgName);
         
         % calibrate colormap if present
         if ~isempty(map)
-            this.colorMap = map;
+            obj.ColorMap = map;
         end
         
-        this.lastPath = pathName;
+        obj.LastPath = pathName;
         
         
         % try to read file info
@@ -563,14 +563,14 @@ methods
                 if isfield(info, 'YResolution')
                     yresol = info.('YResolution');
                 end
-                this.voxelSize = [xresol yresol 1];
+                obj.VoxelSize = [xresol yresol 1];
             end
             
-            this.imageInfo = info;
+            obj.ImageInfo = info;
         end
     end
     
-    function importMetaImage(this, fileName)
+    function importMetaImage(obj, fileName)
         % Load a metaImage file
         
         % determine image name
@@ -580,27 +580,27 @@ methods
         info = metaImageInfo(fileName);
 
         % update display
-        setupImageData(this, metaImageRead(info), imgName);
+        setupImageData(obj, metaImageRead(info), imgName);
 
         % setup spatial calibration
         if isfield(info, 'ElementSize')
-            this.voxelSize = info.('ElementSize');
+            obj.VoxelSize = info.('ElementSize');
         else
             isfield(info, 'ElementSpacing')
-            this.voxelSize = info.('ElementSpacing');
+            obj.VoxelSize = info.('ElementSpacing');
         end
         if isfield(info, 'Offset')
-            this.voxelOrigin = info.('Offset');
+            obj.VoxelOrigin = info.('Offset');
         end
         if isfield(info, 'ElementOrigin')
-            this.voxelOrigin = info.('ElementOrigin');
+            obj.VoxelOrigin = info.('ElementOrigin');
         end
         
-        this.lastPath = pathName;
-        this.imageInfo = info;
+        obj.LastPath = pathName;
+        obj.ImageInfo = info;
     end
     
-    function importDicomImage(this, fileName)
+    function importDicomImage(obj, fileName)
         
         % read image data
         info = dicominfo(fileName);
@@ -622,13 +622,13 @@ methods
         imgName = [baseName ext];
 
         % update display
-        setupImageData(this, img, imgName);
+        setupImageData(obj, img, imgName);
         
-        this.lastPath = pathName;
-        this.imageInfo = info;
+        obj.LastPath = pathName;
+        obj.ImageInfo = info;
     end
     
-    function importAnalyzeImage(this, fileName)
+    function importAnalyzeImage(obj, fileName)
         
         % determine image name
         [pathName, baseName, ext] = fileparts(fileName);
@@ -637,21 +637,21 @@ methods
         info = analyze75info(fileName);
         
         % update display
-        setupImageData(this, analyze75read(info), imgName);
+        setupImageData(obj, analyze75read(info), imgName);
         
         % setup calibration
         if isfield(info, 'PixelDimensions')
-            this.voxelSize = info.('PixelDimensions');
+            obj.VoxelSize = info.('PixelDimensions');
         end
         if isfield(info, 'VoxelUnits')
-            this.voxelSizeUnit = info.('VoxelUnits');
+            obj.VoxelSizeUnit = info.('VoxelUnits');
         end
         
-        this.lastPath = pathName;
-        this.imageInfo = info;
+        obj.LastPath = pathName;
+        obj.ImageInfo = info;
     end
     
-    function importInterfileImage(this, fileName)
+    function importInterfileImage(obj, fileName)
         
         % determine image name
         [pathName, baseName, ext] = fileparts(fileName);
@@ -659,14 +659,14 @@ methods
 
         % update display
         info = interfileinfo(fileName);
-        setupImageData(this, interfileread(info), imgName);
+        setupImageData(obj, interfileread(info), imgName);
 
-        this.lastPath = pathName;
-        this.imageInfo = info;
+        obj.LastPath = pathName;
+        obj.ImageInfo = info;
     end
     
     
-    function importRawDataImage(this, fileName)
+    function importRawDataImage(obj, fileName)
         
         % dialog to choose image dimensions
         answers = inputdlg(...
@@ -717,10 +717,10 @@ methods
         Slicer(img, 'name', imgName);
         
         % setup file infos
-        this.lastPath = pathName;
+        obj.LastPath = pathName;
     end
     
-    function importVoxelMatrix(this, fileName)
+    function importVoxelMatrix(obj, fileName)
         
         types = {'uint8', 'uint16', 'int16', 'single', 'double'};
         [sel, ok] = listdlg(...
@@ -748,63 +748,63 @@ methods
         imgName = [baseName ext];
 
         % update display
-        setupImageData(this, data, imgName);
+        setupImageData(obj, data, imgName);
        
-        this.lastPath = pathName;
+        obj.LastPath = pathName;
 
     end 
 end
     
 %% Some methods for image manipulation
 methods
-    function [mini, maxi] = computeGrayScaleExtent(this)
-        % compute grayscale extent of this inner image
+    function [mini, maxi] = computeGrayScaleExtent(obj)
+        % compute grayscale extent of obj inner image
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             mini = 0; 
             maxi = 1;
             return;
         end
         
         % check image data type
-        if strcmp(this.imageType, 'binary') || islogical(this.imageData)
+        if strcmp(obj.ImageType, 'binary') || islogical(obj.ImageData)
             % for binary images, the grayscale extent is defined by the type
             mini = 0;
             maxi = 1;
             
-        elseif strcmp(this.imageType, 'grayscale') && isa(this.imageData, 'uint8')
+        elseif strcmp(obj.ImageType, 'grayscale') && isa(obj.ImageData, 'uint8')
             % use min-max values depending on image type
             mini = 0;
             maxi = 255;
             
-        elseif strcmp(this.imageType, 'vector')
+        elseif strcmp(obj.ImageType, 'vector')
             % case of vector image: compute max of norm
             
-            dim = size(this.imageData);
+            dim = size(obj.ImageData);
             
             norm = zeros(dim([1 2 4]));
             
             for i = 1:dim(3)
-                norm = norm + squeeze(this.imageData(:,:,i,:)) .^ 2;
+                norm = norm + squeeze(obj.ImageData(:,:,i,:)) .^ 2;
             end
             
             mini = 0;
             maxi = sqrt(max(norm(:)));
             
-        elseif strcmp(this.imageType, 'label')
+        elseif strcmp(obj.ImageType, 'label')
             mini = 0;
-            maxi = max(this.imageData(:));
+            maxi = max(obj.ImageData(:));
             
         else
             % for float images, display 99 percents of dynamic
-            [mini, maxi] = computeGrayscaleAdjustement(this, .01);            
+            [mini, maxi] = computeGrayscaleAdjustement(obj, .01);            
         end
     end
     
-    function [mini, maxi] = computeGrayscaleAdjustement(this, alpha)
+    function [mini, maxi] = computeGrayscaleAdjustement(obj, alpha)
         % compute grayscale range that maximize vizualisation
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             mini = 0; 
             maxi = 1;
             return;
@@ -816,7 +816,7 @@ methods
         end
         
         % sort values that are valid (avoid NaN's and Inf's)
-        values = sort(this.imageData(isfinite(this.imageData)));
+        values = sort(obj.ImageData(isfinite(obj.ImageData)));
         n = length(values);
 
         % compute values that enclose (1-alpha) percents of all values
@@ -838,12 +838,12 @@ methods
         end
     end
     
-    function rotateImage(this, axis, n)
+    function rotateImage(obj, axis, n)
         % Rotate the inner 3D image and the associated meta-information
         % axis is given between 1 and 3, in XYZ convention
         % n is the number of rotations (typically 1, 2, 3 or -1)
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
@@ -852,78 +852,78 @@ methods
         axis = indices(axis);
         
         % performs image rotation, and get axis permutation parameters
-        [this.imageData, inds] = rotateStack90(this.imageData, axis, n);
+        [obj.ImageData, inds] = rotateStack90(obj.ImageData, axis, n);
         
         % permute meta info
-        this.imageSize   = this.imageSize(inds);
-        this.voxelSize   = this.voxelSize(inds);
-        this.voxelOrigin = this.voxelOrigin(inds);
+        obj.ImageSize   = obj.ImageSize(inds);
+        obj.VoxelSize   = obj.VoxelSize(inds);
+        obj.VoxelOrigin = obj.VoxelOrigin(inds);
         
         % for rotation that imply z axis, need to change zslice
         if axis ~= 3
             % update limits of zslider
-            set(this.handles.zSlider, 'min', 1);
-            set(this.handles.zSlider, 'max', this.imageSize(3));
+            set(obj.Handles.ZSlider, 'min', 1);
+            set(obj.Handles.ZSlider, 'max', obj.ImageSize(3));
         
             % setup current slice in the middle of the stack
-            newIndex = ceil(this.imageSize(3) / 2);
-            updateSliceIndex(this, newIndex);
+            newIndex = ceil(obj.ImageSize(3) / 2);
+            updateSliceIndex(obj, newIndex);
         end
         
         % update and display the new slice
-        updateSlice(this);
-        displayNewImage(this);
-        updateTitle(this);
+        updateSlice(obj);
+        displayNewImage(obj);
+        updateTitle(obj);
     end
     
     
-    function displayNewImage(this)
+    function displayNewImage(obj)
         % Refresh image display of the current slice
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
-        api = iptgetapi(this.handles.scrollPanel);
-        api.replaceImage(this.slice);
+        api = iptgetapi(obj.Handles.ScrollPanel);
+        api.replaceImage(obj.Slice);
         
         % extract calibration data
-        spacing = this.voxelSize(1:2);
-        origin  = this.voxelOrigin(1:2);
+        spacing = obj.VoxelSize(1:2);
+        origin  = obj.VoxelOrigin(1:2);
         
         % set up spatial calibration
-        dim     = this.imageSize;
+        dim     = obj.ImageSize;
         xdata   = ([0 dim(1)-1] * spacing(1) + origin(1));
         ydata   = ([0 dim(2)-1] * spacing(2) + origin(2));
         
-        set(this.handles.image, 'XData', xdata);
-        set(this.handles.image, 'YData', ydata);
+        set(obj.Handles.Image, 'XData', xdata);
+        set(obj.Handles.Image, 'YData', ydata);
         
         % compute image extent in physical coordinates
         p0 = ([0 0]    - .5) .* spacing + origin;
         p1 = (dim(1:2) - .5) .* spacing + origin;
         
         % setup axis extent
-        set(this.handles.imageAxis, 'XLim', [p0(1) p1(1)]);
-        set(this.handles.imageAxis, 'YLim', [p0(2) p1(2)]);
+        set(obj.Handles.ImageAxis, 'XLim', [p0(1) p1(1)]);
+        set(obj.Handles.ImageAxis, 'YLim', [p0(2) p1(2)]);
         
         % for grayscale and vector images, adjust display range and LUT
-        if ~strcmp(this.imageType, 'color')
-            set(this.handles.imageAxis, 'CLim', this.displayRange);
+        if ~strcmp(obj.ImageType, 'color')
+            set(obj.Handles.ImageAxis, 'CLim', obj.DisplayRange);
             
             % setup the appropriate color map (stored color map, plus
             % eventullay the background color for label images)
-            cmap = this.colorMap;
+            cmap = obj.ColorMap;
             if  ~isempty(cmap)
-                if strcmp(this.imageType, 'label')
-                    cmap = [this.bgColor ; cmap];
+                if strcmp(obj.ImageType, 'label')
+                    cmap = [obj.BgColor ; cmap];
                 end
-                colormap(this.handles.imageAxis, cmap);
+                colormap(obj.Handles.ImageAxis, cmap);
             end
         end
         
         % adjust zoom to view the full image
-        api = iptgetapi(this.handles.scrollPanel);
+        api = iptgetapi(obj.Handles.ScrollPanel);
         mag = api.findFitMag();
         api.setMagnification(mag);
     end
@@ -934,11 +934,11 @@ end
 
 %% Callbacks for File Menu
 methods
-    function onOpenImage(this, hObject, eventdata)
-        showOpenImageDialog(this);
+    function onOpenImage(obj, hObject, eventdata)
+        showOpenImageDialog(obj);
     end
     
-    function onOpenDemoImage(this, hObject, eventdata)  %#ok<INUSL>
+    function onOpenDemoImage(obj, hObject, eventdata)  %#ok<INUSL>
         
         demoName = get(hObject, 'UserData');
         switch demoName
@@ -946,39 +946,39 @@ methods
                 metadata = analyze75info('brainMRI.hdr');
                 img = analyze75read(metadata);
                 Slicer(img, ...
-                    'spacing', [1 1 2.5], ...
-                    'name', 'Brain', ...
-                    'displayRange', [0 90]);
+                    'Spacing', [1 1 2.5], ...
+                    'Name', 'Brain', ...
+                    'DisplayRange', [0 90]);
                 
             case 'unitBall'
                 lx = linspace(-1, 1, 101);
                 [x, y, z] = meshgrid(lx, lx, lx);
                 dist = sqrt(max(1 - (x.^2 + y.^2 + z.^2), 0));
                 Slicer(dist, ...
-                    'origin', [-1 -1 -1], ...
-                    'spacing', [.02 .02 .02], ...
-                    'name', 'Unit Ball');
+                    'Origin', [-1 -1 -1], ...
+                    'Spacing', [.02 .02 .02], ...
+                    'Name', 'Unit Ball');
                 
             otherwise
                 error(['Unknown demo image: ' demoName]);
         end
     end
     
-    function onImportRawData(this, hObject, eventdata)
+    function onImportRawData(obj, hObject, eventdata)
         [fileName, pathName] = uigetfile( ...
        {'*.raw', 'Raw data file(*.raw)'; ...
         '*.*',   'All Files (*.*)'}, ...
         'Import Raw Data', ...
-        this.lastPath);
+        obj.LastPath);
         
         if isequal(fileName,0) || isequal(pathName,0)
             return;
         end
         
-        importRawDataImage(this, fullfile(pathName, fileName));
+        importRawDataImage(obj, fullfile(pathName, fileName));
     end
     
-    function showOpenImageDialog(this, hObject, eventdata)
+    function showOpenImageDialog(obj, hObject, eventdata)
         % Display the dialog, determines image type, and setup image accordingly
         
         [fileName, pathName] = uigetfile( ...
@@ -993,7 +993,7 @@ methods
             '*.vm',                     'Voxel Matrix data files(*.vm)'; ...
             '*.*',                      'All Files (*.*)'}, ...
             'Choose a stack or the first slice of a series:', ...
-            this.lastPath);
+            obj.LastPath);
         
         if isequal(fileName,0) || isequal(pathName,0)
             return;
@@ -1004,7 +1004,7 @@ methods
         
     end
     
-    function onImportFromWorkspace(this, hObject, eventdata)
+    function onImportFromWorkspace(obj, hObject, eventdata)
         % Import an image from a variable in current workspace
 
         % open dialog to input image name
@@ -1026,15 +1026,15 @@ methods
             return;
         end
         
-        Slicer(data, 'name', answer{1});
+        Slicer(data, 'Name', answer{1});
     end
     
     
-    function onSaveImage(this, hObject, eventdata)
+    function onSaveImage(obj, hObject, eventdata)
         % Display the dialog, determines image type, and save image 
         % accordingly
 
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
@@ -1047,7 +1047,7 @@ methods
             '*.mhd;*.mha',              'MetaImage data files (*.mha, *.mhd)'; ...
             }, ...
             'Save 3D Image', ...
-            this.lastPath);
+            obj.LastPath);
         
         % if user cancel, quit dialog
         if isequal(fileName,0) || isequal(pathName,0)
@@ -1068,20 +1068,20 @@ methods
         [path, baseName, ext] = fileparts(fileName); %#ok<ASGLU>
         switch (ext)
             case {'.mha', '.mhd'}
-                metaImageWrite(this.imageData, fullName);
+                metaImageWrite(obj.ImageData, fullName);
                 
             case {'.tif', '.tiff'}
-                savestack(this.imageData, fullName);
+                savestack(obj.ImageData, fullName);
                 
             case '.dcm'
-                dicomwrite(this.imageData, fullName);
+                dicomwrite(obj.ImageData, fullName);
     
             otherwise
                 error(['Non supported File Format: ' ext]);
         end
     end
 
-    function onExportToWorkspace(this, hObject, eventdata)
+    function onExportToWorkspace(obj, hObject, eventdata)
         % Export current image data to workspace
         
         % open dialog to input image name
@@ -1096,7 +1096,7 @@ methods
             return;
         end
         
-        assignin('base', answer{1}, this.imageData);
+        assignin('base', answer{1}, obj.ImageData);
     end
  
 end
@@ -1104,19 +1104,19 @@ end
 
 %% Callbacks for Image menu
 methods
-    function onDisplayImageInfo(this, varargin)
+    function onDisplayImageInfo(obj, varargin)
         % hObject    handle to itemDisplayImageInfo (see GCBO)
         % eventdata  reserved - to be defined in a future version of MATLAB
         % handles    structure with handles and user data (see GUIDATA)
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             errordlg('No image loaded', 'Image Error', 'modal');
             return;
         end
         
-        info = this.imageInfo;
+        info = obj.ImageInfo;
         if isempty(info)
-            errordlg('No meta-information defined for this image', ...
+            errordlg('No meta-information defined for obj image', ...
                 'Image Error', 'modal');
             return;
         end
@@ -1140,10 +1140,10 @@ methods
         end
         
         % create name for figure
-        if isempty(this.imageName)
+        if isempty(obj.ImageName)
             name = 'Image Metadata';
         else
-            name = sprintf('MetaData for image <%s>', this.imageName);
+            name = sprintf('MetaData for image <%s>', obj.ImageName);
         end
         
         % creates and setup new figure
@@ -1168,21 +1168,21 @@ methods
         
     end
  
-    function onChangeResolution(this, varargin)
+    function onChangeResolution(obj, varargin)
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % configure dialog
-        spacing = this.voxelSize;
+        spacing = obj.VoxelSize;
         prompt = {...
             'Voxel size in X direction:', ...
             'Voxel size in Y direction:', ...
             'Voxel size in Z direction:', ...
             'Unit name:'};
         title = 'Image resolution';
-        defaultValues = [cellstr(num2str(spacing'))' {this.voxelSizeUnit}];
+        defaultValues = [cellstr(num2str(spacing'))' {obj.VoxelSizeUnit}];
         
         % ask for answer
         answer = inputdlg(prompt, title, 1, defaultValues);
@@ -1201,30 +1201,30 @@ methods
         end
         
         % set up the new resolution
-        this.voxelSize = spacing;
-        this.voxelSizeUnit = answer{4};
+        obj.VoxelSize = spacing;
+        obj.VoxelSizeUnit = answer{4};
         
-        updateCalibrationFlag(this);
+        updateCalibrationFlag(obj);
         
         % re-display the image
-        this.displayNewImage();
-        this.updateTitle();
+        displayNewImage(obj);
+        updateTitle(obj);
     end
     
-    function onChangeImageOrigin(this, varargin)
+    function onChangeImageOrigin(obj, varargin)
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % configure dialog
-        origin = this.voxelOrigin;
+        origin = obj.VoxelOrigin;
         prompt = {...
             'Image origin in X direction:', ...
             'Image origin in Y direction:', ...
             'Image origin in Z direction:'};
         title = 'Change Image origin';
-        defaultValues = [cellstr(num2str(origin'))' {this.voxelSizeUnit}];
+        defaultValues = [cellstr(num2str(origin'))' {obj.VoxelSizeUnit}];
         
         % ask for answer
         answer = inputdlg(prompt, title, 1, defaultValues);
@@ -1243,30 +1243,30 @@ methods
         end
         
         % set up the new resolution
-        this.voxelOrigin = origin;
-        updateCalibrationFlag(this);
+        obj.VoxelOrigin = origin;
+        updateCalibrationFlag(obj);
         
         % re-display the image
-        this.displayNewImage();
-        this.updateTitle();
+        displayNewImage(obj);
+        updateTitle(obj);
     end
     
-    function updateCalibrationFlag(this)
-        this.calibrated = ...
-            sum(this.voxelSize ~= 1) > 0 || ...
-            sum(this.voxelOrigin ~= 1) > 0 || ...
-            ~isempty(this.voxelSizeUnit);
+    function updateCalibrationFlag(obj)
+        obj.Calibrated = ...
+            sum(obj.VoxelSize ~= 1) > 0 || ...
+            sum(obj.VoxelOrigin ~= 1) > 0 || ...
+            ~isempty(obj.VoxelSizeUnit);
     end
     
-    function onConvertColorToGray(this, hObject, eventData)
+    function onConvertColorToGray(obj, hObject, eventData)
         % convert RGB image to grayscale
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % check that image is color
-        if ~strcmp(this.imageType, 'color')
+        if ~strcmp(obj.ImageType, 'color')
             return;
         end
         
@@ -1279,73 +1279,73 @@ methods
 
         % convert inner image data
         newData = squeeze(imlincomb(...
-            coefs(1), this.imageData(:,:,1,:), ...
-            coefs(2), this.imageData(:,:,2,:), ...
-            coefs(3), this.imageData(:,:,3,:)));
-        createNewSlicer(this, newData, this.imageName);
+            coefs(1), obj.ImageData(:,:,1,:), ...
+            coefs(2), obj.ImageData(:,:,2,:), ...
+            coefs(3), obj.ImageData(:,:,3,:)));
+        createNewSlicer(obj, newData, obj.ImageName);
     end
     
-    function onConvertIntensityToColor(this, hObject, eventData)
+    function onConvertIntensityToColor(obj, hObject, eventData)
         % convert grayscale to RGB using current colormap
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % check that image is grayscale
-        if ~ismember(this.imageType, {'grayscale', 'intensity'})
+        if ~ismember(obj.ImageType, {'grayscale', 'intensity'})
             return;
         end
         
         % choose the colormap
-        cmap = this.colorMap;
+        cmap = obj.ColorMap;
         if isempty(cmap)
-            cmap = gray(max(this.imageData(:)));
+            cmap = gray(max(obj.ImageData(:)));
         end
         
         % convert inner image data
-        newData = uint8(double2rgb(this.imageData, ...
-            cmap, this.displayRange, this.bgColor) * 255);
-        createNewSlicer(this, newData, this.imageName);
+        newData = uint8(double2rgb(obj.ImageData, ...
+            cmap, obj.DisplayRange, obj.BgColor) * 255);
+        createNewSlicer(obj, newData, obj.ImageName);
     end
     
-    function onConvertLabelsToColor(this, hObject, eventData)
+    function onConvertLabelsToColor(obj, hObject, eventData)
         % convert grayscale to RGB using current colormap
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % check that image is label
-        if ~ismember(this.imageType, {'label', 'binary'})
+        if ~ismember(obj.ImageType, {'label', 'binary'})
             return;
         end
         
         % choose the colormap
-        cmap = this.colorMap;
+        cmap = obj.ColorMap;
         if isempty(cmap)
             cmap = jet(256);
         end
         
         % colormap has 256 entries, we need only a subset
-        nLabels = max(this.imageData(:));
+        nLabels = max(obj.ImageData(:));
         if size(cmap, 1) ~= nLabels
             inds = round(linspace(1, size(cmap,1), nLabels));
             cmap = cmap(inds, :);
         end
         
         % convert inner image data
-        newData = label2rgb3d(this.imageData, cmap, this.bgColor, 'shuffle');
-        createNewSlicer(this, newData, this.imageName);
+        newData = label2rgb3d(obj.ImageData, cmap, obj.BgColor, 'shuffle');
+        createNewSlicer(obj, newData, obj.ImageName);
     end
 
-    function onChangeImageType(this, hObject, eventData)
-        if isempty(this.imageData)
+    function onChangeImageType(obj, hObject, eventData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % check that image is grayscale
-        if ~ismember(this.imageType, {'grayscale', 'binary', 'label', 'intensity'})
+        if ~ismember(obj.ImageType, {'grayscale', 'binary', 'label', 'intensity'})
             return;
         end
 
@@ -1353,43 +1353,43 @@ methods
         newType = get(hObject, 'UserData');
         switch newType
             case 'binary'
-                this.imageData = this.imageData > 0;
+                obj.ImageData = obj.ImageData > 0;
             case 'grayscale'
-                this.imageData = uint8(this.imageData);
+                obj.ImageData = uint8(obj.ImageData);
             case 'intensity'
-                this.imageData = double(this.imageData);
+                obj.ImageData = double(obj.ImageData);
             case 'label'
-                maxValue = max(this.imageData(:));
+                maxValue = max(obj.ImageData(:));
                 if maxValue <= 255
-                    this.imageData = uint8(this.imageData);
+                    obj.ImageData = uint8(obj.ImageData);
                 elseif maxValue < 2^16
-                    this.imageData = uint16(this.imageData);
+                    obj.ImageData = uint16(obj.ImageData);
                 end
         end
         
         % update image type
-        this.imageType = newType;
+        obj.ImageType = newType;
         
         % update display range
-        [mini, maxi] = computeGrayScaleExtent(this);
-        this.displayRange  = [mini maxi];
+        [mini, maxi] = computeGrayScaleExtent(obj);
+        obj.DisplayRange  = [mini maxi];
 
         % update display
-        setupMenuBar(this);
-        updateSlice(this);
-        displayNewImage(this);
-        updateColorMap(this);
-        updateTitle(this);
+        setupMenuBar(obj);
+        updateSlice(obj);
+        displayNewImage(obj);
+        updateColorMap(obj);
+        updateTitle(obj);
     end
 
-    function onChangeDataType(this, hObject, eventData)
+    function onChangeDataType(obj, hObject, eventData)
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % check that image is grayscale
-        if ~strcmp(this.imageType, 'grayscale')
+        if ~strcmp(obj.ImageType, 'grayscale')
             return;
         end
 
@@ -1397,62 +1397,62 @@ methods
         newType = get(hObject, 'UserData');
         switch newType
             case 'binary'
-                this.imageData = this.imageData > 0;
+                obj.ImageData = obj.ImageData > 0;
             case 'gray8'
-                this.imageData = uint8(this.imageData);
+                obj.ImageData = uint8(obj.ImageData);
             case 'gray16'
-                this.imageData = uint16(this.imageData);
+                obj.ImageData = uint16(obj.ImageData);
             case 'double'
-                this.imageData = double(this.imageData);
+                obj.ImageData = double(obj.ImageData);
         end
         
         % update display range
-        [mini, maxi] = computeGrayScaleExtent(this);
-        this.displayRange  = [mini maxi];
+        [mini, maxi] = computeGrayScaleExtent(obj);
+        obj.DisplayRange  = [mini maxi];
 
         % update display
-        updateSlice(this);
-        displayNewImage(this);
-        updateTitle(this);
+        updateSlice(obj);
+        displayNewImage(obj);
+        updateTitle(obj);
     end
     
-    function onSplitRGB(this, hObject, eventdata) 
+    function onSplitRGB(obj, hObject, eventdata) 
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % check that image is grayscale
-        if ~strcmp(this.imageType, 'color')
+        if ~strcmp(obj.ImageType, 'color')
             return;
         end
         
-        createNewSlicer(this, squeeze(this.imageData(:,:,1,:)), ...
-            [this.imageName '-red']);
-        createNewSlicer(this, squeeze(this.imageData(:,:,2,:)), ...
-            [this.imageName '-green']);
-        createNewSlicer(this, squeeze(this.imageData(:,:,3,:)), ...
-            [this.imageName '-blue']);
+        createNewSlicer(obj, squeeze(obj.ImageData(:,:,1,:)), ...
+            [obj.ImageName '-red']);
+        createNewSlicer(obj, squeeze(obj.ImageData(:,:,2,:)), ...
+            [obj.ImageName '-green']);
+        createNewSlicer(obj, squeeze(obj.ImageData(:,:,3,:)), ...
+            [obj.ImageName '-blue']);
     end
 end
 
 
 %% Callbacks for View menu
 methods
-    function onSetImageDisplayExtent(this, hObject, eventdata)
+    function onSetImageDisplayExtent(obj, hObject, eventdata)
         % compute grayscale extent from data in image
 
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
-        if ~ismember(this.imageType, {'grayscale', 'intensity'})
+        if ~ismember(obj.ImageType, {'grayscale', 'intensity'})
             return;
         end
         
         % extreme values in image
-        minValue = min(this.imageData(isfinite(this.imageData)));
-        maxValue = max(this.imageData(isfinite(this.imageData)));
+        minValue = min(obj.ImageData(isfinite(obj.ImageData)));
+        maxValue = max(obj.ImageData(isfinite(obj.ImageData)));
         
         % avoid special degenerate cases
         if abs(maxValue - minValue) < 1e-12
@@ -1461,55 +1461,55 @@ methods
         end
         
         % set up range
-        this.displayRange = [minValue maxValue];
-        set(this.handles.imageAxis, 'CLim', this.displayRange);
+        obj.DisplayRange = [minValue maxValue];
+        set(obj.Handles.ImageAxis, 'CLim', obj.DisplayRange);
         
-        if isfield(this.handles, 'zProfileFigure')
-            updateZProfileDisplay(this);
+        if isfield(obj.Handles, 'zProfileFigure')
+            updateZProfileDisplay(obj);
         end
     end
     
-    function onSetDatatypeDisplayExtent(this, hObject, eventdata)
+    function onSetDatatypeDisplayExtent(obj, hObject, eventdata)
         % compute grayscale extent from image datatype
 
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
-        if ~ismember(this.imageType, {'grayscale', 'intensity'})
+        if ~ismember(obj.ImageType, {'grayscale', 'intensity'})
             return;
         end
         
         mini = 0; maxi = 1;
-        if isinteger(this.imageData)
-            type = class(this.imageData);
+        if isinteger(obj.ImageData)
+            type = class(obj.ImageData);
             mini = intmin(type);
             maxi = intmax(type);
         end
 
-        this.displayRange = [mini maxi];
-        set(this.handles.imageAxis, 'CLim', this.displayRange);
+        obj.DisplayRange = [mini maxi];
+        set(obj.Handles.ImageAxis, 'CLim', obj.DisplayRange);
         
-        if isfield(this.handles, 'zProfileFigure')
-            updateZProfileDisplay(this);
+        if isfield(obj.Handles, 'zProfileFigure')
+            updateZProfileDisplay(obj);
         end
     end
     
-    function onSetManualDisplayExtent(this, hObject, eventdata)
-        if isempty(this.imageData)
+    function onSetManualDisplayExtent(obj, hObject, eventdata)
+        if isempty(obj.ImageData)
             return;
         end
         
-        if ~ismember(this.imageType, {'grayscale', 'intensity'})
+        if ~ismember(obj.ImageType, {'grayscale', 'intensity'})
             return;
         end
         
         % get extreme values for grayscale in image
-        minimg = min(this.imageData(:));
-        maximg = max(this.imageData(:));
+        minimg = min(obj.ImageData(:));
+        maximg = max(obj.ImageData(:));
         
         % get actual value for grayscale range
-        clim = get(this.handles.imageAxis, 'CLim');
+        clim = get(obj.Handles.ImageAxis, 'CLim');
         
         % define dialog options
         if isinteger(minimg)
@@ -1540,21 +1540,21 @@ methods
             return;
         end
         
-        this.displayRange = [mini maxi];
+        obj.DisplayRange = [mini maxi];
         
         % setup appropriate grayscale for image
-        set(this.handles.imageAxis, 'CLim', [mini maxi]);
+        set(obj.Handles.ImageAxis, 'CLim', [mini maxi]);
         
-        if isfield(this.handles, 'zProfileFigure')
-            updateZProfileDisplay(this);
+        if isfield(obj.Handles, 'zProfileFigure')
+            updateZProfileDisplay(obj);
         end
     end
     
-    function onSelectLUT(this, hObject, eventdata)
+    function onSelectLUT(obj, hObject, eventdata)
         % Change the LUT of the grayscale image, and refresh the display
         % colorMap name is specified by 'UserData' field of hObject
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
@@ -1562,80 +1562,80 @@ methods
         disp(['Change LUT to: ' cmapName]);
         
         nGrays = 256;
-        if strcmp(this.imageType, 'label')
-            nGrays = double(max(this.imageData(:)));
+        if strcmp(obj.ImageType, 'label')
+            nGrays = double(max(obj.ImageData(:)));
         end
         
         if strcmp(cmapName, 'gray')
             % for gray-scale, use an empty LUT
-            this.colorMap = [];
-            this.colorMap = gray(nGrays);
+            obj.ColorMap = [];
+            obj.ColorMap = gray(nGrays);
             
         elseif strcmp(cmapName, 'inverted')
             grayMax = nGrays - 1;
-            this.colorMap = repmat((grayMax:-1:0)', 1, 3) / grayMax;
+            obj.ColorMap = repmat((grayMax:-1:0)', 1, 3) / grayMax;
             
         elseif strcmp(cmapName, 'blue-gray-red')
-            this.colorMap = gray(nGrays);
-            this.colorMap(1,:) = [0 0 1];
-            this.colorMap(end,:) = [1 0 0];
+            obj.ColorMap = gray(nGrays);
+            obj.ColorMap(1,:) = [0 0 1];
+            obj.ColorMap(end,:) = [1 0 0];
             
         elseif strcmp(cmapName, 'colorcube')
-            nLabels = round(double(max(this.imageData(:))));
+            nLabels = round(double(max(obj.ImageData(:))));
             map = colorcube(nLabels+2);
             % remove black and white colors
             isValidColor = sum(map==0, 2) ~= 3 & sum(map==1, 2) ~= 3;
-            this.colorMap = [0 0 0; map(isValidColor, :)];
+            obj.ColorMap = [0 0 0; map(isValidColor, :)];
             
         elseif strcmp(cmapName, 'redLUT')
-            this.colorMap = gray(nGrays);
-            this.colorMap(:, 2:3) = 0;
+            obj.ColorMap = gray(nGrays);
+            obj.ColorMap(:, 2:3) = 0;
             
         elseif strcmp(cmapName, 'greenLUT')
-            this.colorMap = gray(nGrays);
-            this.colorMap(:, [1 3]) = 0;
+            obj.ColorMap = gray(nGrays);
+            obj.ColorMap(:, [1 3]) = 0;
             
         elseif strcmp(cmapName, 'blueLUT')
-            this.colorMap = gray(nGrays);
-            this.colorMap(:, 1:2) = 0;
+            obj.ColorMap = gray(nGrays);
+            obj.ColorMap(:, 1:2) = 0;
             
         elseif strcmp(cmapName, 'yellowLUT')
-            this.colorMap = gray(nGrays);
-            this.colorMap(:, 3) = 0;
+            obj.ColorMap = gray(nGrays);
+            obj.ColorMap(:, 3) = 0;
             
         elseif strcmp(cmapName, 'cyanLUT')
-            this.colorMap = gray(nGrays);
-            this.colorMap(:, 1) = 0;
+            obj.ColorMap = gray(nGrays);
+            obj.ColorMap(:, 1) = 0;
             
         elseif strcmp(cmapName, 'magentaLUT')
-            this.colorMap = gray(nGrays);
-            this.colorMap(:, 2) = 0;
+            obj.ColorMap = gray(nGrays);
+            obj.ColorMap(:, 2) = 0;
             
         else
-            this.colorMap = feval(cmapName, nGrays);
+            obj.ColorMap = feval(cmapName, nGrays);
         end
 
-        updateColorMap(this);
+        updateColorMap(obj);
     end
     
-    function updateColorMap(this)
+    function updateColorMap(obj)
         % refresh the color map of current display
         
         % get current color map, or create a new one
-        cmap = this.colorMap;
+        cmap = obj.ColorMap;
         if isempty(cmap)
             cmap = jet(256);
         end
 
         % adapt color map for label
-        if strcmp(this.imageType, 'label')
-            cmap = [this.bgColor; cmap(2:end,:)];
+        if strcmp(obj.ImageType, 'label')
+            cmap = [obj.BgColor; cmap(2:end,:)];
         end
         
-        colormap(this.handles.imageAxis, cmap);
+        colormap(obj.Handles.ImageAxis, cmap);
     end
     
-    function onSelectBackgroundColor(this, varargin)
+    function onSelectBackgroundColor(obj, varargin)
         
         colorNames = {'White', 'Black', 'Red', 'Green', 'Blue', 'Cyan', 'Magenta', 'Yellow'};
         colors = [1 1 1; 0 0 0; 1 0 0; 0 1 0; 0 0 1; 0 1 1; 1 0 1; 1 1 0];
@@ -1648,109 +1648,109 @@ methods
             return;
         end
         
-        this.bgColor = colors(ind, :);
-        updateColorMap(this);
+        obj.BgColor = colors(ind, :);
+        updateColorMap(obj);
     end
     
-    function onShowOrthoPlanes(this, varargin)
+    function onShowOrthoPlanes(obj, varargin)
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % compute display settings
-        pos = ceil(this.imageSize / 2);
-        spacing = this.voxelSize;
+        pos = ceil(obj.ImageSize / 2);
+        spacing = obj.VoxelSize;
         
         % determine the LUT to use (default is empty)
         ortholut = [];
-        if ~isColorStack(this.imageData) && ~isempty(this.colorMap)
-            ortholut = this.colorMap;
+        if ~isColorStack(obj.ImageData) && ~isempty(obj.ColorMap)
+            ortholut = obj.ColorMap;
         end
         
         % create figure with 3 orthogonal slices
         figure();
-        orthoSlices(this.imageData, pos, spacing, ...
-            'displayRange', this.displayRange, 'LUT', ortholut);
+        orthoSlices(obj.ImageData, pos, spacing, ...
+            'displayRange', obj.DisplayRange, 'LUT', ortholut);
     end
     
-    function onShowOrthoSlices3d(this, varargin)
+    function onShowOrthoSlices3d(obj, varargin)
         % Open a dialog to choose options, then display 3D orthoslices
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
-        OrthoSlicer3dOptionsDialog(this);
+        OrthoSlicer3dOptionsDialog(obj);
     end
 
-    function onShowIsosurface(this, varargin)
+    function onShowIsosurface(obj, varargin)
         % Choose an isosurface value, then computes the corresponding
         % surface mesh
         
         % check validity of input image
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
-        if ~ismember(this.imageType, {'grayscale', 'intensity'})
+        if ~ismember(obj.ImageType, {'grayscale', 'intensity'})
             return;
         end
         
         % open options dialog for isosurface
-        IsosurfaceOptionsDialog(this);
+        IsosurfaceOptionsDialog(obj);
     end
     
-    function onShowLabelIsosurfaces(this, varargin)
+    function onShowLabelIsosurfaces(obj, varargin)
         % Open a dialog to choose options, then display label isosurfaces
         
         % check validity of input image
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
-        if ~ismember(this.imageType, {'label', 'binary'})
+        if ~ismember(obj.ImageType, {'label', 'binary'})
             return;
         end
         
         % open options dialog for isosurface of label images
-        LabelIsosurfacesOptionsDialog(this);
+        LabelIsosurfacesOptionsDialog(obj);
     end
     
-    function rgb = createRGBImage(this)
+    function rgb = createRGBImage(obj)
         % compute a RGB stack that can be easily displayed
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
-        if strcmp(this.imageType, 'color')
-            rgb = this.imageData;
+        if strcmp(obj.ImageType, 'color')
+            rgb = obj.ImageData;
             return;
         end
         
-        if ismember(this.imageType, {'grayscale', 'label', 'binary'})
-            data = double(this.imageData);
+        if ismember(obj.ImageType, {'grayscale', 'label', 'binary'})
+            data = double(obj.ImageData);
             
-        elseif strcmp(this.imageType, 'vector')
-            data = zeros(this.imageSize);
-            for i = 1:size(this.imageData, 3)
-                data = data + squeeze(this.imageData(:,:,i,:)) .^ 2;
+        elseif strcmp(obj.ImageType, 'vector')
+            data = zeros(obj.ImageSize);
+            for i = 1:size(obj.ImageData, 3)
+                data = data + squeeze(obj.ImageData(:,:,i,:)) .^ 2;
             end
             data = sqrt(data);
         end
         
         % convert to uint8, using current display range
-        range = this.displayRange;
+        range = obj.DisplayRange;
         data = uint8(255 * (data - range(1)) / (range(2) - range(1)));
         
         % eventually apply a LUT
-        if ~isempty(this.colorMap)
-            lutMax = max(this.colorMap(:));
-            dim = this.imageSize;
+        if ~isempty(obj.ColorMap)
+            lutMax = max(obj.ColorMap(:));
+            dim = obj.ImageSize;
             rgb = zeros([dim(2) dim(1) 3 dim(3)], 'uint8');
             
             % compute each channel
-            for c = 1 : size(this.colorMap, 2)
+            for c = 1 : size(obj.ColorMap, 2)
                 res = zeros(size(data));
-                for i = 0:size(this.colorMap, 1)-1
-                    res(data == i) = this.colorMap(i+1, c);
+                for i = 0:size(obj.ColorMap, 1)-1
+                    res(data == i) = obj.ColorMap(i+1, c);
                 end
                 rgb(:,:,c,:) = uint8(res * 255 / lutMax);
             end
@@ -1760,56 +1760,56 @@ methods
         end
     end
     
-    function onZoomIn(this, varargin)
-        if isempty(this.imageData)
+    function onZoomIn(obj, varargin)
+        if isempty(obj.ImageData)
             return;
         end
         
-        api = iptgetapi(this.handles.scrollPanel);
+        api = iptgetapi(obj.Handles.ScrollPanel);
         mag = api.getMagnification();
         api.setMagnification(mag * 2);
-        this.updateTitle();
+        obj.updateTitle();
     end
     
-    function onZoomOut(this, varargin)
-        if isempty(this.imageData)
+    function onZoomOut(obj, varargin)
+        if isempty(obj.ImageData)
             return;
         end
         
-        api = iptgetapi(this.handles.scrollPanel);
+        api = iptgetapi(obj.Handles.ScrollPanel);
         mag = api.getMagnification();
         api.setMagnification(mag / 2);
-        this.updateTitle();
+        obj.updateTitle();
     end
     
-    function onZoomOne(this, varargin)
-        if isempty(this.imageData)
+    function onZoomOne(obj, varargin)
+        if isempty(obj.ImageData)
             return;
         end
         
-        api = iptgetapi(this.handles.scrollPanel);
+        api = iptgetapi(obj.Handles.ScrollPanel);
         api.setMagnification(1);
-        this.updateTitle();
+        obj.updateTitle();
     end
     
-    function onZoomBest(this, varargin)
-        if isempty(this.imageData)
+    function onZoomBest(obj, varargin)
+        if isempty(obj.ImageData)
             return;
         end
         
-        api = iptgetapi(this.handles.scrollPanel);
+        api = iptgetapi(obj.Handles.ScrollPanel);
         mag = api.findFitMag();
         api.setMagnification(mag);
-        this.updateTitle();
+        obj.updateTitle();
     end
 
-    function onZoomValue(this, hObject, eventData)
+    function onZoomValue(obj, hObject, eventData)
         % zoom to a given scale, stored in user data of calling object.
         % zoom value is given as binary power:
         % v positive ->  zoom = 2^v:1
         % v = 0      ->  zoom =   1:1
         % v negative ->  zoom = 1:2^v
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
 
@@ -1817,70 +1817,70 @@ methods
         mag = get(hObject, 'Userdata');
             
         % setup magnification of current view
-        api = iptgetapi(this.handles.scrollPanel);
+        api = iptgetapi(obj.Handles.ScrollPanel);
         api.setMagnification(mag);
-        this.updateTitle();
+        obj.updateTitle();
     end 
 end
 
 %% Callbacks for Process menu
 methods
-    function onFlipImage(this, hObject, eventdata)
+    function onFlipImage(obj, hObject, eventdata)
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         dim = get(hObject, 'UserData');
         if verLessThan('matlab', '8.1')
-            this.imageData = flipdim(this.imageData, dim); %#ok<DFLIPDIM>
+            obj.ImageData = flipdim(obj.ImageData, dim); %#ok<DFLIPDIM>
         else
-            this.imageData = flip(this.imageData, dim);
+            obj.ImageData = flip(obj.ImageData, dim);
         end
-        this.updateSlice;
-        this.displayNewImage;
+        obj.updateSlice;
+        obj.DisplayNewImage;
     end
     
-    function onRotateImage(this, hObject, eventdata)
+    function onRotateImage(obj, hObject, eventdata)
         % Rotate an image by 90 degrees along x, y or z axis.
         % Axis ID and number of 90 degrees rotations are given by user data
         % of the calling menu
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         data = get(hObject, 'UserData');
-        this.rotateImage(data(1), data(2));
+        obj.rotateImage(data(1), data(2));
     end
     
-    function onCropImage(this, hObject, eventdata)
+    function onCropImage(obj, hObject, eventdata)
         % Crop the 3D image.
         % Opens a dialog, that choose options, then create new slicer
         % object with cropped image.
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
-        CropStackDialog(this);
+        CropStackDialog(obj);
     end
     
-    function onCropLabel(this, hObject, eventdata)
+    function onCropLabel(obj, hObject, eventdata)
         % Crop the 3D image portion corresponding to a label.
         % Opens a dialog, that choose options, then create new slicer
         % object with cropped image.
         
         % basic input check
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
-        if ~strcmp(this.imageType, 'label')
+        if ~strcmp(obj.ImageType, 'label')
             return;
         end
         
         % open a dialog to choose a label
-        maxLabel = max(this.imageData(:));
+        maxLabel = max(obj.ImageData(:));
         prompt = sprintf('Input Label Index (max=%d)', maxLabel);
         answer = inputdlg(...
             prompt,...
@@ -1898,92 +1898,92 @@ methods
         end
         
         % apply crop label operation
-        img2 = imCropLabel(this.imageData, index);
+        img2 = imCropLabel(obj.ImageData, index);
         
         % compute colormap of new slicer object
-        cmap = this.colorMap;
+        cmap = obj.ColorMap;
         if isempty(cmap)
             cmap = jet(maxLabel);
         end
-        cmap = [this.bgColor ; cmap(index, :)];
+        cmap = [obj.BgColor ; cmap(index, :)];
         
         % create new Slicer object with the crop result
         Slicer(img2, 'imageType', 'binary', ...
-            'colorMap', cmap, 'backgroundColor', this.bgColor);
+            'colorMap', cmap, 'backgroundColor', obj.BgColor);
     end
     
-    function onToggleZProfileDisplay(this, varargin)
+    function onToggleZProfileDisplay(obj, varargin)
         
-        if isfield(this.handles, 'zProfileFigure')
+        if isfield(obj.Handles, 'zProfileFigure')
             % close figure
-            hFig = this.handles.zProfileFigure;
+            hFig = obj.Handles.ZProfileFigure;
             if ishandle(hFig)
                 close(hFig);
             end
             
             % remove from sub-figure list
-            this.handles.subFigures(this.handles.subFigures == hFig) = [];
+            obj.Handles.SubFigures(obj.Handles.SubFigures == hFig) = [];
             
             % and clear field
-            this.handles = rmfield(this.handles, 'zProfileFigure');
+            obj.Handles = rmfield(obj.Handles, 'ZProfileFigure');
             return;
         end
 
         % creates a new figure, display profile
-        this.handles.zProfileFigure = figure;
-        set(this.handles.zProfileFigure, 'Name', 'Z-Profile');
+        obj.Handles.ZProfileFigure = figure;
+        set(obj.Handles.ZProfileFigure, 'Name', 'Z-Profile');
         
         % add to list of sub-figures
-        this.handles.subFigures = [this.handles.subFigures, this.handles.zProfileFigure];
+        obj.Handles.SubFigures = [obj.Handles.SubFigures, obj.Handles.ZProfileFigure];
         
         % configure axis
         ax = gca;
         hold(ax, 'on');
-        set(ax, 'xlim', [1 this.imageSize(3)]);
-        set(ax, 'ylim', this.displayRange);
+        set(ax, 'xlim', [1 obj.ImageSize(3)]);
+        set(ax, 'ylim', obj.DisplayRange);
         titleStr = 'Z-profile';
-        if ~isempty(this.imageName)
-            titleStr = [titleStr ' of ' this.imageName];
+        if ~isempty(obj.ImageName)
+            titleStr = [titleStr ' of ' obj.ImageName];
         end
         title(ax, titleStr);
         xlabel(ax, 'Slice index');
         ylabel(ax, 'Image intensity');
         
         % plot line marker for current slice
-        hZLine = plot(ax, [this.sliceIndex this.sliceIndex], this.displayRange, 'k');
+        hZLine = plot(ax, [obj.SliceIndex obj.SliceIndex], obj.DisplayRange, 'k');
         
         % store settings
         userdata = struct('profiles', [], 'profileHandles', [], 'zLineHandle', hZLine);
         set(gca, 'userdata', userdata);
-        this.handles.zProfileAxis = ax;
+        obj.Handles.ZProfileAxis = ax;
         
-%         if ~isempty(this.lastClickedPoint)
-%             updateZProfiles(this);
+%         if ~isempty(obj.LastClickedPoint)
+%             updateZProfiles(obj);
 %         end
     end
     
-    function onDisplayHistogram(this, varargin)
+    function onDisplayHistogram(obj, varargin)
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % in the case of vector image, compute histogram of image norm
-        img = this.imageData;
-        if strcmp(this.imageType, 'vector')
+        img = obj.ImageData;
+        if strcmp(obj.ImageType, 'vector')
             img = sqrt(sum(double(img) .^ 2, 3));
         end
         
-        useBackground = ~strcmp(this.imageType, 'label');
+        useBackground = ~strcmp(obj.ImageType, 'label');
         hd = SlicerHistogramDialog(img, 'useBackground', useBackground);
         
-        this.handles.subFigures = [this.handles.subFigures, hd.handles.histoFigure];
+        obj.Handles.SubFigures = [obj.Handles.SubFigures, hd];
     end 
 end
 
 %% Callbacks for Help menu
 methods
-    function onAbout(this, varargin)
+    function onAbout(obj, varargin)
         title = 'About Slicer';
         info = dir(which('Slicer.m'));
         message = {...
@@ -2003,206 +2003,206 @@ end
 
 %% GUI Items callback
 methods
-    function onSliceSliderChanged(this, hObject, eventdata) %#ok<*INUSD>
-        if isempty(this.imageData)
+    function onSliceSliderChanged(obj, hObject, eventdata) %#ok<*INUSD>
+        if isempty(obj.ImageData)
             return;
         end
         
         zslice = round(get(hObject, 'Value'));
         zslice = max(get(hObject, 'Min'), min(get(hObject, 'Max'), zslice));
 
-        updateSliceIndex(this, zslice);
+        updateSliceIndex(obj, zslice);
     end
         
-    function onSliceEditTextChanged(this, varargin)
+    function onSliceEditTextChanged(obj, varargin)
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
         % get entered value for z-slice
-        zslice = str2double(get(this.handles.zEdit, 'String'));
+        zslice = str2double(get(obj.Handles.ZEdit, 'String'));
         
         % in case of wrong edit, set the string to current value of zslice
         if isnan(zslice)
-            zslice = this.sliceIndex;
+            zslice = obj.SliceIndex;
         end
         
         % compute slice number, inside of image bounds
-        zslice = min(max(1, round(zslice)), this.imageSize(3));
-        updateSliceIndex(this, zslice);
+        zslice = min(max(1, round(zslice)), obj.ImageSize(3));
+        updateSliceIndex(obj, zslice);
     end
     
-    function updateSliceIndex(this, newIndex)
-        if isempty(this.imageData)
+    function updateSliceIndex(obj, newIndex)
+        if isempty(obj.ImageData)
             return;
         end
         
-        this.sliceIndex = newIndex;
+        obj.SliceIndex = newIndex;
         
-        this.updateSlice();
+        updateSlice(obj);
         
-        set(this.handles.image, 'CData', this.slice);
+        set(obj.Handles.Image, 'CData', obj.Slice);
         
         % update gui information for slider and textbox
-        set(this.handles.zSlider, 'Value', newIndex);
-        set(this.handles.zEdit, 'String', num2str(newIndex));
+        set(obj.Handles.ZSlider, 'Value', newIndex);
+        set(obj.Handles.ZEdit, 'String', num2str(newIndex));
         
         % Eventually updates display of z-profile
-        if isfield(this.handles, 'zProfileFigure')
-            updateZProfileDisplay(this);
+        if isfield(obj.Handles, 'ZProfileFigure')
+            updateZProfileDisplay(obj);
         end
     end
     
-    function updateSlice(this)
-        if isempty(this.imageData)
+    function updateSlice(obj)
+        if isempty(obj.ImageData)
             return;
         end
         
-        index = this.sliceIndex;
-        if strcmp(this.imageType, 'vector')
+        index = obj.SliceIndex;
+        if strcmp(obj.ImageType, 'vector')
             % vector image
-            dim = size(this.imageData);
-            this.slice = zeros([dim(1) dim(2)]);
+            dim = size(obj.ImageData);
+            obj.Slice = zeros([dim(1) dim(2)]);
             for i = 1:dim(3)
-                this.slice = this.slice + this.imageData(:,:,i,index) .^ 2;
+                obj.Slice = obj.Slice + obj.ImageData(:,:,i,index) .^ 2;
             end
-            this.slice = sqrt(this.slice);
+            obj.Slice = sqrt(obj.Slice);
         else
             % graycale or color image
-            this.slice = stackSlice(this.imageData, 3, index);
+            obj.Slice = stackSlice(obj.ImageData, 3, index);
         end
     end
     
-    function updateTitle(this)
+    function updateTitle(obj)
         % set up title of the figure, containing name of figure and current zoom
         
         % small checkup, because function can be called before figure was
         % initialised
-        if ~isfield(this.handles, 'figure')
+        if ~isfield(obj.Handles, 'Figure')
             return;
         end
         
-        if isempty(this.imageData)
-            set(this.handles.figure, 'Name', 'Slicer - No image');
+        if isempty(obj.ImageData)
+            set(obj.Handles.Figure, 'Name', 'Slicer - No image');
             return;
         end
         
         % setup name
-        if isempty(this.imageName)
+        if isempty(obj.ImageName)
             imgName = 'Unknown Image';
         else
-            imgName = this.imageName;
+            imgName = obj.ImageName;
         end
         
         % determine the type to display:
         % * data type for intensity / grayscale image
         % * type of image otherwise
-        switch this.imageType
+        switch obj.ImageType
             case 'grayscale'
-                type = class(this.imageData);
+                type = class(obj.ImageData);
             otherwise
-                type = this.imageType;
+                type = obj.ImageType;
         end
         
         % compute image zoom
-        api = iptgetapi(this.handles.scrollPanel);
+        api = iptgetapi(obj.Handles.ScrollPanel);
         zoom = api.getMagnification();
         
         % compute new title string 
         titlePattern = 'Slicer - %s [%d x %d x %d %s] - %g:%g';
         titleString = sprintf(titlePattern, imgName, ...
-            this.imageSize, type, max(1, zoom), max(1, 1/zoom));
+            obj.ImageSize, type, max(1, zoom), max(1, 1/zoom));
 
         % display new title
-        set(this.handles.figure, 'Name', titleString);
+        set(obj.Handles.Figure, 'Name', titleString);
     end
 end
 
 %% Mouse management
 methods
-    function mouseButtonPressed(this, hObject, eventdata)
-        if isempty(this.imageData)
+    function mouseButtonPressed(obj, hObject, eventdata)
+        if isempty(obj.ImageData)
             return;
         end
         
-        point = get(this.handles.imageAxis, 'CurrentPoint');
+        point = get(obj.Handles.ImageAxis, 'CurrentPoint');
         
-        this.lastClickedPoint = point(1,:);
-        displayPixelCoords(this, point);
+        obj.LastClickedPoint = point(1,:);
+        displayPixelCoords(obj, point);
         
         % Eventually process display of z-profile
-        if isfield(this.handles, 'zProfileFigure')
-            updateZProfiles(this);
+        if isfield(obj.Handles, 'zProfileFigure')
+            updateZProfiles(obj);
         end
     end
     
-    function mouseDragged(this, hObject, eventdata)
-        if isempty(this.imageData)
+    function mouseDragged(obj, hObject, eventdata)
+        if isempty(obj.ImageData)
             return;
         end
         
         % update display of mouse cursor coordinates
-        point = get(this.handles.imageAxis, 'CurrentPoint');
-        this.lastClickedPoint = point(1,:);
-        displayPixelCoords(this, point);
+        point = get(obj.Handles.ImageAxis, 'CurrentPoint');
+        obj.LastClickedPoint = point(1,:);
+        displayPixelCoords(obj, point);
     end
     
-    function mouseWheelScrolled(this, hObject, eventdata) %#ok<INUSL>
-        if isempty(this.imageData)
+    function mouseWheelScrolled(obj, hObject, eventdata) %#ok<INUSL>
+        if isempty(obj.ImageData)
             return;
         end
 
         % refresh display of current slice
-        newIndex = this.sliceIndex - eventdata.VerticalScrollCount;
-        newIndex = min(max(newIndex, 1), this.imageSize(3));
-        updateSliceIndex(this, newIndex);
+        newIndex = obj.SliceIndex - eventdata.VerticalScrollCount;
+        newIndex = min(max(newIndex, 1), obj.ImageSize(3));
+        updateSliceIndex(obj, newIndex);
         
         % update display of mouse cursor coordinates
-        point = get(this.handles.imageAxis, 'CurrentPoint');
-        displayPixelCoords(this, point);
+        point = get(obj.Handles.ImageAxis, 'CurrentPoint');
+        displayPixelCoords(obj, point);
     end
     
-    function displayPixelCoords(this, point)
-        if isempty(this.imageData)
+    function displayPixelCoords(obj, point)
+        if isempty(obj.ImageData)
             return;
         end
         
         point = point(1, 1:2);
-        coord = round(pointToIndex(this, point));
+        coord = round(pointToIndex(obj, point));
         
         % control on bounds of image
-        if sum(coord < 1) > 0 || sum(coord > this.imageSize(1:2)) > 0
-            set(this.handles.infoPanel, 'string', '');
+        if sum(coord < 1) > 0 || sum(coord > obj.ImageSize(1:2)) > 0
+            set(obj.Handles.InfoPanel, 'string', '');
             return;
         end
         
         % Display coordinates of clicked point
-        if this.calibrated
+        if obj.Calibrated
             % Display pixel + physical position
             locString = sprintf('(x,y) = (%d,%d) px = (%5.2f,%5.2f) %s', ...
-                coord(1), coord(2), point(1), point(2), this.voxelSizeUnit);
+                coord(1), coord(2), point(1), point(2), obj.VoxelSizeUnit);
         else
             % Display only pixel position
             locString = sprintf('(x,y) = (%d,%d) px', coord(1), coord(2));
         end
         
         % Display value of selected pixel
-        if strcmp(this.imageType, 'color')
+        if strcmp(obj.ImageType, 'color')
             % case of color pixel: values are red, green and blue
-            rgb = this.imageData(coord(2), coord(1), :, this.sliceIndex);
+            rgb = obj.ImageData(coord(2), coord(1), :, obj.SliceIndex);
             valueString = sprintf('  RGB = (%d %d %d)', ...
                 rgb(1), rgb(2), rgb(3));
             
-        elseif strcmp(this.imageType, 'vector')
+        elseif strcmp(obj.ImageType, 'vector')
             % case of vector image: compute norm of the pixel
-            values  = this.imageData(coord(2), coord(1), :, this.sliceIndex);
+            values  = obj.ImageData(coord(2), coord(1), :, obj.SliceIndex);
             norm    = sqrt(sum(double(values(:)) .^ 2));
             valueString = sprintf('  value = %g', norm);
             
         else
             % case of a gray-scale pixel
-            value = this.imageData(coord(2), coord(1), this.sliceIndex);
+            value = obj.ImageData(coord(2), coord(1), obj.SliceIndex);
             if ~isfloat(value)
                 valueString = sprintf('  value = %3d', value);
             else
@@ -2210,63 +2210,63 @@ methods
             end
         end
         
-        set(this.handles.infoPanel, 'string', [locString '  ' valueString]);
+        set(obj.Handles.InfoPanel, 'string', [locString '  ' valueString]);
     end
 
-    function updateZProfiles(this)
+    function updateZProfiles(obj)
         % add or replace z-profiles using last clicked point
         
         % convert mouse coordinates to pixel coords
-        if isempty(this.lastClickedPoint)
+        if isempty(obj.LastClickedPoint)
             return;
         end
-        coord = round(pointToIndex(this, this.lastClickedPoint(1, 1:2)));
+        coord = round(pointToIndex(obj, obj.LastClickedPoint(1, 1:2)));
         
         % control on bounds of image
-        if sum(coord < 1) > 0 || sum(coord > this.imageSize(1:2)) > 0
+        if sum(coord < 1) > 0 || sum(coord > obj.ImageSize(1:2)) > 0
             return;
         end
 
         % extract profile
-        profile = permute(this.imageData(coord(2), coord(1), :, :), [4 3 1 2]);
+        profile = permute(obj.ImageData(coord(2), coord(1), :, :), [4 3 1 2]);
         
         % add profile to axis user data
-        userdata = get(this.handles.zProfileAxis, 'userdata');
-        if strcmp(get(this.handles.figure, 'SelectionType'), 'normal')
+        userdata = get(obj.Handles.ZProfileAxis, 'userdata');
+        if strcmp(get(obj.Handles.Figure, 'SelectionType'), 'normal')
             % replace profile list with current profile
-            userdata.profiles = profile;
-            delete(userdata.profileHandles);
-            h = plot(this.handles.zProfileAxis, profile, 'b');
-            userdata.profileHandles = h;
+            userdata.Profiles = profile;
+            delete(userdata.ProfileHandles);
+            h = plot(obj.Handles.ZProfileAxis, profile, 'b');
+            userdata.ProfileHandles = h;
         else
             % add the current profile to profile list
-            userdata.profiles = [userdata.profiles profile];
-            h = plot(this.handles.zProfileAxis, profile, 'b');
-            userdata.profileHandles = [userdata.profileHandles h];
+            userdata.Profiles = [userdata.Profiles profile];
+            h = plot(obj.Handles.ZProfileAxis, profile, 'b');
+            userdata.ProfileHandles = [userdata.ProfileHandles h];
         end
         
-        set(this.handles.zProfileAxis, 'userdata', userdata);
+        set(obj.Handles.ZProfileAxis, 'userdata', userdata);
     end
     
-    function updateZProfileDisplay(this)
+    function updateZProfileDisplay(obj)
         % update display of Z-profiles
 
         % update axis settings
-        set(this.handles.zProfileAxis, 'ylim', this.displayRange);
+        set(obj.Handles.ZProfileAxis, 'ylim', obj.DisplayRange);
         
         % update position of Z line marker
-        userdata = get(this.handles.zProfileAxis, 'userdata');
-        hZLine = userdata.zLineHandle;
-        set(hZLine, 'XData', [this.sliceIndex this.sliceIndex]);
-        set(hZLine, 'YData', this.displayRange);
+        userdata = get(obj.Handles.ZProfileAxis, 'userdata');
+        hZLine = userdata.ZLineHandle;
+        set(hZLine, 'XData', [obj.SliceIndex obj.SliceIndex]);
+        set(hZLine, 'YData', obj.DisplayRange);
     end
     
-    function index = pointToIndex(this, point)
+    function index = pointToIndex(obj, point)
         % Converts coordinates of a point in physical dimension to image index
         % First element is column index, second element is row index, both are
         % given in floating point and no rounding is performed.
-        spacing = this.voxelSize(1:2);
-        origin  = this.voxelOrigin(1:2);
+        spacing = obj.VoxelSize(1:2);
+        origin  = obj.VoxelOrigin(1:2);
         index   = (point - origin) ./ spacing + 1;
     end
 
@@ -2274,68 +2274,68 @@ end
 
 %% Figure Callbacks
 methods
-    function close(this, hObject, eventdata)
+    function close(obj, hObject, eventdata)
         % close the main figure, and all sub figures
-        close(this.handles.figure);
+        close(obj.Handles.Figure);
     end
             
-    function onScrollPanelResized(this, varargin)
+    function onScrollPanelResized(obj, varargin)
         % function called when the Scroll panel has been resized
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             return;
         end
         
-        scrollPanel = this.handles.scrollPanel;
+        scrollPanel = obj.Handles.ScrollPanel;
         api = iptgetapi(scrollPanel);
         mag = api.findFitMag();
         api.setMagnification(mag);
-        updateTitle(this);
+        updateTitle(obj);
     end
     
 end % general methods
 
 %% GUI Utilities
 methods
-    function setupMenuBar(this)
+    function setupMenuBar(obj)
         % Refresh the menu bar of application main figure.
         % Some menu items may be valid or invalide depending on the current
         % image class or size
         
-        hf = this.handles.figure;
+        hf = obj.Handles.Figure;
         
         % remove menuitems that could already exist
-        % (this is the case when the image type is changed, for example)
+        % (obj is the case when the image type is changed, for example)
         children = get(hf, 'children');
         delete(children(strcmp(get(children, 'Type'), 'uimenu')));
         
         % setup some flags that will able/disable some menu items
-        if ~isempty(this.imageData)
+        if ~isempty(obj.ImageData)
             imageFlag = 'on';
         else
             imageFlag = 'off';
         end
-        if strcmp(this.imageType, 'color')
+        if strcmp(obj.ImageType, 'color')
             colorFlag = 'on';
         else
             colorFlag = 'off';
         end
-        if ismember(this.imageType, {'label', 'binary'})
+        if ismember(obj.ImageType, {'label', 'binary'})
             labelFlag = 'on';
         else
             labelFlag = 'off';
         end
-        if ismember(this.imageType, {'grayscale', 'label', 'binary'})
+        if ismember(obj.ImageType, {'grayscale', 'label', 'binary'})
             grayscaleFlag = 'on';
         else
             grayscaleFlag = 'off';
         end
-        if ismember(this.imageType, {'grayscale', 'label', 'binary', 'intensity'})
+        if ismember(obj.ImageType, {'grayscale', 'label', 'binary', 'intensity'})
             scalarFlag = 'on';
         else
             scalarFlag = 'off';
         end
-        if ismember(this.imageType, {'grayscale', 'intensity'})
+        if ismember(obj.ImageType, {'grayscale', 'intensity'})
             intensityFlag = 'on';
         else
             intensityFlag = 'off';
@@ -2347,39 +2347,39 @@ methods
         uimenu(menuFiles, ...
             'Label', '&Open...', ...
             'Accelerator', 'O', ...
-            'Callback', @this.onOpenImage);
+            'Callback', @obj.onOpenImage);
         uimenu(menuFiles, ...
             'Label', 'Import &Raw Data...', ...
-            'Callback', @this.onImportRawData);
+            'Callback', @obj.onImportRawData);
         uimenu(menuFiles, ...
             'Label', '&Import From Workspace...', ...
-            'Callback', @this.onImportFromWorkspace);
+            'Callback', @obj.onImportFromWorkspace);
         menuDemo = uimenu(menuFiles, ...
             'Label', 'Demo Images');
         uimenu(menuDemo, ...
             'Label', 'Brain MRI', ...
             'UserData', 'brainMRI', ...
-            'Callback', @this.onOpenDemoImage);
+            'Callback', @obj.onOpenDemoImage);
         uimenu(menuDemo, ...
             'Label', 'Unit Ball', ...
             'UserData', 'unitBall', ...
-            'Callback', @this.onOpenDemoImage);
+            'Callback', @obj.onOpenDemoImage);
 
         uimenu(menuFiles, ...
             'Label', '&Save Image...', ...
             'Separator', 'On', ...
             'Enable', imageFlag, ...
             'Accelerator', 'S', ...
-            'Callback', @this.onSaveImage);
+            'Callback', @obj.onSaveImage);
         uimenu(menuFiles, ...
             'Label', '&Export To Workspace...', ...
             'Enable', imageFlag, ...
-            'Callback', @this.onExportToWorkspace);
+            'Callback', @obj.onExportToWorkspace);
         uimenu(menuFiles, ...
             'Label', '&Close', ...
             'Separator', 'On', ...
             'Accelerator', 'W', ...
-            'Callback', @this.close);
+            'Callback', @obj.close);
         
         % Image
         menuImage = uimenu(hf, 'Label', '&Image', ...
@@ -2389,15 +2389,15 @@ methods
             'Label', 'Image &Info...', ...
             'Enable', imageFlag, ...
             'Accelerator', 'I', ...
-            'Callback', @this.onDisplayImageInfo);
+            'Callback', @obj.onDisplayImageInfo);
         uimenu(menuImage, ...
             'Label', 'Spatial &Resolution...', ...
             'Enable', imageFlag, ...
-            'Callback', @this.onChangeResolution);
+            'Callback', @obj.onChangeResolution);
         uimenu(menuImage, ...
             'Label', 'Image &Origin...', ...
             'Enable', imageFlag, ...
-            'Callback', @this.onChangeImageOrigin);
+            'Callback', @obj.onChangeImageOrigin);
         
         menuChangeImageType = uimenu(menuImage, ...
             'Label', 'Change Image Type', ...
@@ -2406,19 +2406,19 @@ methods
         uimenu(menuChangeImageType, ...
             'Label', 'Binary', ...
             'UserData', 'binary', ...
-            'Callback', @this.onChangeImageType);
+            'Callback', @obj.onChangeImageType);
         uimenu(menuChangeImageType, ...
             'Label', 'Gray scale', ...
             'UserData', 'grayscale', ...
-            'Callback', @this.onChangeImageType);
+            'Callback', @obj.onChangeImageType);
         uimenu(menuChangeImageType, ...
             'Label', 'Intensity', ...
             'UserData', 'intensity', ...
-            'Callback', @this.onChangeImageType);
+            'Callback', @obj.onChangeImageType);
         uimenu(menuChangeImageType, ...
             'Label', 'Label', ...
             'UserData', 'label', ...
-            'Callback', @this.onChangeImageType);
+            'Callback', @obj.onChangeImageType);
 
         menuChangeGrayLevels = uimenu(menuImage, ...
             'Label', 'Change Gray levels', ...
@@ -2426,39 +2426,39 @@ methods
         uimenu(menuChangeGrayLevels, ...
             'Label', '2 levels (Binary)', ...
             'UserData', 'binary', ...
-            'Callback', @this.onChangeDataType);
+            'Callback', @obj.onChangeDataType);
         uimenu(menuChangeGrayLevels, ...
             'Label', '8 levels (uint8)', ...
             'UserData', 'gray8', ...
-            'Callback', @this.onChangeDataType);
+            'Callback', @obj.onChangeDataType);
         uimenu(menuChangeGrayLevels, ...
             'Label', '16 levels (uint16)', ...
             'UserData', 'gray16', ...
-            'Callback', @this.onChangeDataType);
+            'Callback', @obj.onChangeDataType);
         uimenu(menuChangeGrayLevels, ...
             'Label', 'intensity (double)', ...
             'UserData', 'double', ...
-            'Callback', @this.onChangeDataType);
+            'Callback', @obj.onChangeDataType);
         
         uimenu(menuImage, ...
             'Label', 'Convert Intensity to Color', ...
             'Enable', grayscaleFlag, ...
-            'Callback', @this.onConvertIntensityToColor);
+            'Callback', @obj.onConvertIntensityToColor);
         
         uimenu(menuImage, ...
             'Label', 'Convert Labels to Color', ...
             'Enable', labelFlag, ...
-            'Callback', @this.onConvertLabelsToColor);
+            'Callback', @obj.onConvertLabelsToColor);
         
         uimenu(menuImage, ...
             'Label', 'RGB to Gray', ...
             'Enable', colorFlag, ...
-            'Callback', @this.onConvertColorToGray);
+            'Callback', @obj.onConvertColorToGray);
         
         uimenu(menuImage, ...
             'Label', 'Split RGB', ...
             'Enable', colorFlag, ...
-            'Callback', @this.onSplitRGB);
+            'Callback', @obj.onSplitRGB);
         
         
         % View
@@ -2471,13 +2471,13 @@ methods
             'Enable', grayscaleFlag);
         uimenu(displayRangeMenu, ...
             'Label', '&Image', ...
-            'Callback', @this.onSetImageDisplayExtent);
+            'Callback', @obj.onSetImageDisplayExtent);
         uimenu(displayRangeMenu, ...
             'Label', '&Data Type', ...
-            'Callback', @this.onSetDatatypeDisplayExtent);
+            'Callback', @obj.onSetDatatypeDisplayExtent);
         uimenu(displayRangeMenu, ...
             'Label', '&Manual', ...
-            'Callback', @this.onSetManualDisplayExtent);
+            'Callback', @obj.onSetManualDisplayExtent);
         
         % LUTs menu
         menuLut = uimenu(menuView, ...
@@ -2486,32 +2486,32 @@ methods
         uimenu(menuLut, ...
             'Label', 'Gray', ...
             'UserData', 'gray', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(menuLut, ...
             'Label', 'Inverted', ...
             'UserData', 'inverted', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(menuLut, ...
             'Label', 'Gray with Blue and Red', ...
             'UserData', 'blue-gray-red', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(menuLut, ...
             'Label', 'Jet', ...
             'UserData', 'jet', ...
             'Separator', 'On', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(menuLut, ...
             'Label', 'HSV', ...
             'UserData', 'hsv', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(menuLut, ...
             'Label', 'Color Cube', ...
             'UserData', 'colorcube', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(menuLut, ...
             'Label', 'Prism', ...
             'UserData', 'prism', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         
         % Matlab LUT's
         matlabLutsMenu = uimenu(menuLut, ...
@@ -2520,140 +2520,140 @@ methods
         uimenu(matlabLutsMenu, ...
             'Label', 'Hot', ...
             'UserData', 'hot', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(matlabLutsMenu, ...
             'Label', 'Cool', ...
             'UserData', 'cool', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(matlabLutsMenu, ...
             'Label', 'Spring', ...
             'UserData', 'spring', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(matlabLutsMenu, ...
             'Label', 'Summer', ...
             'UserData', 'summer', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(matlabLutsMenu, ...
             'Label', 'Autumn', ...
             'UserData', 'autumn', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(matlabLutsMenu, ...
             'Label', 'Winter', ...
             'UserData', 'winter', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(matlabLutsMenu, ...
             'Label', 'Bone', ...
             'UserData', 'bone', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(matlabLutsMenu, ...
             'Label', 'Copper', ...
             'UserData', 'copper', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(matlabLutsMenu, ...
             'Label', 'Pink', ...
             'UserData', 'pink', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(matlabLutsMenu, ...
             'Label', 'Lines', ...
             'UserData', 'lines', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         
         colorLutsMenu = uimenu(menuLut, ...
             'Label', 'Simple Colors');
         uimenu(colorLutsMenu, ...
             'Label', 'Red', ...
             'UserData', 'redLUT', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(colorLutsMenu, ...
             'Label', 'Green', ...
             'UserData', 'greenLUT', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(colorLutsMenu, ...
             'Label', 'Blue', ...
             'UserData', 'blueLUT', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(colorLutsMenu, ...
             'Label', 'Yellow', ...
             'UserData', 'yellowLUT', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(colorLutsMenu, ...
             'Label', 'Cyan', ...
             'UserData', 'cyanLUT', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         uimenu(colorLutsMenu, ...
             'Label', 'Magenta', ...
             'UserData', 'magentaLUT', ...
-            'Callback', @this.onSelectLUT);
+            'Callback', @obj.onSelectLUT);
         
         uimenu(menuLut, ...
             'Label', 'Background Color...', ...
             'Separator', 'On', ...
-            'Callback', @this.onSelectBackgroundColor);
+            'Callback', @obj.onSelectBackgroundColor);
 
         
         uimenu(menuView, ...
             'Label', 'Show Ortho Slices', ...
             'Separator', 'On', ...
             'Enable', imageFlag, ...
-            'Callback', @this.onShowOrthoPlanes);
+            'Callback', @obj.onShowOrthoPlanes);
         uimenu(menuView, ...
             'Label', 'Show 3D Ortho Slices', ...
             'Enable', imageFlag, ...
-            'Callback', @this.onShowOrthoSlices3d);
+            'Callback', @obj.onShowOrthoSlices3d);
         uimenu(menuView, ...
             'Label', 'Isosurface Rendering', ...
             'Enable', intensityFlag, ...
-            'Callback', @this.onShowIsosurface);
+            'Callback', @obj.onShowIsosurface);
         uimenu(menuView, ...
             'Label', 'Binary/Labels Surface Rendering', ...
             'Enable', labelFlag, ...
-            'Callback', @this.onShowLabelIsosurfaces);
+            'Callback', @obj.onShowLabelIsosurfaces);
         
         % Zoom menu items
         uimenu(menuView, ...
             'Label', 'Zoom &In', ...
             'Separator', 'On', ...
-            'Callback', @this.onZoomIn);
+            'Callback', @obj.onZoomIn);
         uimenu(menuView, ...
             'Label', 'Zoom &Out', ...
-            'Callback', @this.onZoomOut);
+            'Callback', @obj.onZoomOut);
         uimenu(menuView, ...
             'Label', 'Zoom 1:1', ...
-            'Callback', @this.onZoomOne);
+            'Callback', @obj.onZoomOne);
         menuZoom = uimenu(menuView, ...
             'Label', 'Choose value');
         uimenu(menuView, ...
             'Label', 'Zoom &Best', ...
             'Accelerator', 'B', ...
-            'Callback', @this.onZoomBest);
+            'Callback', @obj.onZoomBest);
         uimenu(menuZoom, ...
             'Label', '10:1', ...
             'UserData', 10, ...
-            'Callback', @this.onZoomValue);
+            'Callback', @obj.onZoomValue);
         uimenu(menuZoom, ...
             'Label', '4:1', ...
             'UserData', 4, ...
-            'Callback', @this.onZoomValue);
+            'Callback', @obj.onZoomValue);
         uimenu(menuZoom, ...
             'Label', '2:1', ...
             'UserData', 2, ...
-            'Callback', @this.onZoomValue);
+            'Callback', @obj.onZoomValue);
         uimenu(menuZoom, ...
             'Label', '1:1', ...
             'UserData', 1, ...
-            'Callback', @this.onZoomValue);
+            'Callback', @obj.onZoomValue);
         uimenu(menuZoom, ...
             'Label', '1:2', ...
             'UserData', 1/2, ...
-            'Callback', @this.onZoomValue);
+            'Callback', @obj.onZoomValue);
         uimenu(menuZoom, ...
             'Label', '1:4', ...
             'UserData', 1/4, ...
-            'Callback', @this.onZoomValue);
+            'Callback', @obj.onZoomValue);
         uimenu(menuZoom, ...
             'Label', '1:10', ...
             'UserData', 1/10, ...
-            'Callback', @this.onZoomValue);
+            'Callback', @obj.onZoomValue);
         
         
         % Process menu
@@ -2666,59 +2666,59 @@ methods
         uimenu(menuTransform, ...
             'Label', '&Horizontal Flip', ...
             'UserData', 2, ...
-            'Callback', @this.onFlipImage);
+            'Callback', @obj.onFlipImage);
         uimenu(menuTransform, ...
             'Label', '&Vertical Flip', ...
             'UserData', 1, ...
-            'Callback', @this.onFlipImage);
+            'Callback', @obj.onFlipImage);
         uimenu(menuTransform, ...
             'Label', 'Flip &Z', ...
             'UserData', 3, ...
-            'Callback', @this.onFlipImage);
+            'Callback', @obj.onFlipImage);
         uimenu(menuTransform, ...
             'Label', 'Rotate &Left', ...
             'Separator', 'On', ...
             'UserData', [3 -1], ...
             'Accelerator', 'L', ...
-            'Callback', @this.onRotateImage);
+            'Callback', @obj.onRotateImage);
         uimenu(menuTransform, ...
             'Label', 'Rotate &Right', ...
             'UserData', [3 1], ...
-            'Callback', @this.onRotateImage);
+            'Callback', @obj.onRotateImage);
         uimenu(menuTransform, ...
             'Label', 'Rotate X Up', ...
             'UserData', [1 -1], ...
             'Accelerator', 'R', ...
-            'Callback', @this.onRotateImage);
+            'Callback', @obj.onRotateImage);
         uimenu(menuTransform, ...
             'Label', 'Rotate X Down', ...
             'UserData', [1 1], ...
-            'Callback', @this.onRotateImage);
+            'Callback', @obj.onRotateImage);
         uimenu(menuTransform, ...
             'Label', 'Rotate Y Left', ...
             'UserData', [2 1], ...
-            'Callback', @this.onRotateImage);
+            'Callback', @obj.onRotateImage);
         uimenu(menuTransform, ...
             'Label', 'Rotate Y Right', ...
             'UserData', [2 -1], ...
-            'Callback', @this.onRotateImage);
+            'Callback', @obj.onRotateImage);
         
         uimenu(menuProcess, ...
             'Label', 'Crop Image', ...
-            'Callback', @this.onCropImage);
+            'Callback', @obj.onCropImage);
         uimenu(menuProcess, ...
             'Label', 'Crop Label', ...
             'Enable', labelFlag, ...
-            'Callback', @this.onCropLabel);
+            'Callback', @obj.onCropLabel);
         uimenu(menuProcess, ...
             'Label', 'Display Z-Profile', ...
-            'Callback', @this.onToggleZProfileDisplay);
+            'Callback', @obj.onToggleZProfileDisplay);
 
         uimenu(menuProcess, ...
             'Label', 'View &Histogram', ...
             'Separator', 'On', ...
             'Accelerator', 'H', ...
-            'Callback', @this.onDisplayHistogram);
+            'Callback', @obj.onDisplayHistogram);
         
         
         % Help
@@ -2726,29 +2726,29 @@ methods
         uimenu(menuHelp, ...
             'Label', '&About...', ...
             'Accelerator', 'A', ...
-            'Callback', @this.onAbout);
+            'Callback', @obj.onAbout);
     end
     
 end
 
 %% Methods for text display
 methods
-    function disp(this)
+    function disp(obj)
         % display a resume of the slicer structure
                         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             fprintf('Slicer object, with no image.\n')
         else
             fprintf('Slicer object, containing a %d x %d x %d %s image.\n', ...
-                this.imageSize, this.imageType);
+                obj.ImageSize, obj.ImageType);
         end
         
         % calibration information for image
-        if this.calibrated
+        if obj.Calibrated
             fprintf('  Voxel spacing = [ %g %g %g ] %s\n', ...
-                this.voxelSize, this.voxelSizeUnit');
+                obj.VoxelSize, obj.VoxelSizeUnit');
             fprintf('  Image origin  = [ %g %g %g ] %s\n', ...
-                this.voxelOrigin, this.voxelSizeUnit');
+                obj.VoxelOrigin, obj.VoxelSizeUnit');
         end
 
         % determines whether empty lines should be printed or not

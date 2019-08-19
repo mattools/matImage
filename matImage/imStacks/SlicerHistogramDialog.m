@@ -13,75 +13,76 @@ classdef SlicerHistogramDialog < handle
 %   See also
 %     imHistogram, imhist
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2012-12-18,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
 
 %% Properties
 properties
-    image;
+    Image;
     
     % a 1-by-2 row vector 
-    dataExtent = [0 255];
+    DataExtent = [0 255];
     
     % flag for automatically computing bin numbers
-    autoBinNumber = true;
+    AutoBinNumber = true;
 
     % number of bins to use with histogram
-    binNumber = 256;
+    BinNumber = 256;
     
     % position of histogram bins
-    histoBins = [];
+    HistoBins = [];
     
     % the value of histogram for each bin. Either a N-by-1 or N-by-3 array.
-    histoValues = [];
+    HistoValues = [];
     
-    useBackground = true;
+    UseBackground = true;
     
-    logHistogram = false;
+    LogHistogram = false;
     
-    displayType = 'bars';
-    displayTypeList = {'bars', 'stems', 'stairs'};
+    DisplayType = 'bars';
+    DisplayTypeList = {'bars', 'stems', 'stairs'};
     
-    autoUpdate = true;
+    AutoUpdate = true;
     
     % a structure containing handles to graphical objects
     % List of items:
-    % * histoFigure
-    % * histoAxis
-    % * boundsTypeCombo
-    % * minBoundTextBox
-    % * maxBoundTextBox
-    % * autoBinNumberCheckBox
-    % * binNumberTextBox
-    % * displayTypeCombo
-    % * countBackgroundCheckBox
-    % * autoUpdateCheckBox
-    % * applyButton
-    % * closeButton
-    handles;
+    % * HistoFigure
+    % * HistoAxis
+    % * BoundsTypeCombo
+    % * MinBoundTextBox
+    % * MaxBoundTextBox
+    % * AutoBinNumberCheckBox
+    % * BinNumberTextBox
+    % * DisplayTypeCombo
+    % * CountBackgroundCheckBox
+    % * AutoUpdateCheckBox
+    % * ApplyButton
+    % * CloseButton
+    Handles;
     
 end % end properties
 
 
 %% Constructor
 methods
-    function this = SlicerHistogramDialog(img, varargin)
+    function obj = SlicerHistogramDialog(img, varargin)
     % Constructor for SlicerHistogramDialog class
         
         % initialize inner variables
-        this.image = img;
+        obj.Image = img;
         if isa(img, 'Image')
-            this.image = permute(img.data, [2 1 4 3]);
+            obj.Image = permute(img.Data, [2 1 4 3]);
         end
 
-        if isfloat(this.image)
-            this.dataExtent(1, 1) = min(this.image(:));
-            this.dataExtent(1, 2) = max(this.image(:));
-            this.binNumber = 100;
+        if isfloat(obj.Image)
+            obj.DataExtent(1, 1) = min(obj.Image(:));
+            obj.DataExtent(1, 2) = max(obj.Image(:));
+            obj.BinNumber = 100;
         end
         
         % parse input arguments
@@ -93,7 +94,7 @@ methods
             
             switch lower(varargin{1})
                 case 'usebackground'
-                    this.useBackground = varargin{2} > 0;
+                    obj.UseBackground = varargin{2} > 0;
                 otherwise
                     error(['Unknown parameter name: ' varargin{1}]);
             end
@@ -101,17 +102,17 @@ methods
             varargin(1:2) = [];
         end
         
-        if ~this.useBackground && isinteger(this.image)
-            this.dataExtent(1, 1) = 1;
-            this.binNumber = this.dataExtent(1, 2) - this.dataExtent(1, 1) + 1;
+        if ~obj.UseBackground && isinteger(obj.Image)
+            obj.DataExtent(1, 1) = 1;
+            obj.BinNumber = obj.DataExtent(1, 2) - obj.DataExtent(1, 1) + 1;
         end
         
         % setup histogram figure
         hFig = figure(...
             'Name', 'Image Histogram', ...
             'NumberTitle', 'off');
-        this.handles.histoFigure = hFig;
-        this.handles.histoAxis = gca;
+        obj.Handles.HistoFigure = hFig;
+        obj.Handles.HistoAxis = gca;
 
         % setup option dialog
         hDlg = figure(...
@@ -120,14 +121,14 @@ methods
             'NumberTitle', 'off', ...
             'MenuBar', 'none', ...
             'ToolBar', 'none');
-        this.handles.optionsDialog = hDlg;
+        obj.Handles.OptionsDialog = hDlg;
         pos = get(hDlg, 'Position');
         pos(3:4) = [250 260];
         set(hDlg, 'Position', pos);
         setupDialogLayout(hDlg);
 
         % refresh current histogram display
-        updateHistogram(this);
+        updateHistogram(obj);
         
         % put option dialog as current figure
         figure(hDlg);
@@ -175,13 +176,13 @@ methods
                 'FontWeight', 'Normal', ...
                 'HorizontalAlignment', 'left');
             % Finally the control
-            this.handles.boundsTypeCombo = uicontrol(...
+            obj.Handles.boundsTypeCombo = uicontrol(...
                 'Style', 'popupmenu', ...
                 'Parent', hLine, ...
                 'String', {'Auto', 'Image bounds', 'Manual'}, ...
                 'Value', 1, ...
                 'BackgroundColor', bgColor, ...
-                'Callback',@this.onBoundsTypeChanged);
+                'Callback',@obj.onBoundsTypeChanged);
             
             % setup sizes in horizontal direction
             if verLessThan('matlab', 'R2014b')
@@ -206,20 +207,20 @@ methods
                 'FontWeight', 'Normal', ...
                 'HorizontalAlignment', 'left');
             % Finally the controls
-            this.handles.minBoundTextBox = uicontrol(...
+            obj.Handles.MinBoundTextBox = uicontrol(...
                 'Style', 'Edit', ...
                 'Parent', hLine, ...
-                'String', num2str(this.dataExtent(1,1)), ...
+                'String', num2str(obj.DataExtent(1,1)), ...
                 'BackgroundColor', bgColor, ...
                 'Enable', 'off', ...
-                'Callback',@this.onMinBoundChanged);
-            this.handles.maxBoundTextBox = uicontrol(...
+                'Callback',@obj.onMinBoundChanged);
+            obj.Handles.MaxBoundTextBox = uicontrol(...
                 'Style', 'Edit', ...
                 'Parent', hLine, ...
-                'String', num2str(this.dataExtent(1,2)), ...
+                'String', num2str(obj.DataExtent(1,2)), ...
                 'BackgroundColor', bgColor, ...
                 'Enable', 'off', ...
-                'Callback',@this.onMaxBoundChanged);
+                'Callback',@obj.onMaxBoundChanged);
             % setup sizes in horizontal direction
             if verLessThan('matlab', 'R2014b')
                 set(hLine, 'Sizes', [-1 50 50]);
@@ -228,11 +229,11 @@ methods
             end
         
             % Add a check box for automatically computing the number of bins
-            this.handles.autoBinNumberCheckBox = uicontrol('Style', 'CheckBox', ...
+            obj.Handles.AutoBinNumberCheckBox = uicontrol('Style', 'CheckBox', ...
                 'Parent', mainPanel, ...
                 'String', 'Auto Bin Number', ...
                 'Value', true, ...
-                'Callback', @this.onAutoBinNumberChanged);
+                'Callback', @obj.onAutoBinNumberChanged);
             
 
             % Add a text box for the number of histogram bins
@@ -249,13 +250,13 @@ methods
                 'FontWeight', 'Normal', ...
                 'HorizontalAlignment', 'left');
             % Finally the control
-            this.handles.binNumberTextBox = uicontrol(...
+            obj.Handles.BinNumberTextBox = uicontrol(...
                 'Style', 'Edit', ...
                 'Parent', hLine, ...
-                'String', num2str(this.binNumber), ...
+                'String', num2str(obj.BinNumber), ...
                 'BackgroundColor', bgColor, ...
                 'Enable', 'off', ...
-                'Callback',@this.onBinNumberChanged);
+                'Callback',@obj.onBinNumberChanged);
             % setup sizes in horizontal direction
             if verLessThan('matlab', 'R2014b')
                 set(hLine, 'Sizes', [-1 40]);
@@ -277,13 +278,13 @@ methods
                 'FontWeight', 'Normal', ...
                 'HorizontalAlignment', 'left');
             % Finally the control
-            this.handles.displayTypeCombo = uicontrol(...
+            obj.Handles.DisplayTypeCombo = uicontrol(...
                 'Style', 'popupmenu', ...
                 'Parent', hLine, ...
-                'String', this.displayTypeList, ...
+                'String', obj.DisplayTypeList, ...
                 'Value', 1, ...
                 'BackgroundColor', bgColor, ...
-                'Callback',@this.onDisplayTypeChanged);
+                'Callback',@obj.onDisplayTypeChanged);
             % setup sizes in horizontal direction
             if verLessThan('matlab', 'R2014b')
                 set(hLine, 'Sizes', [-1 60]);
@@ -293,26 +294,26 @@ methods
         
         
             % Add a check box for taking into account or not the background
-            this.handles.countBackgroundCheckBox = uicontrol('Style', 'CheckBox', ...
+            obj.Handles.countBackgroundCheckBox = uicontrol('Style', 'CheckBox', ...
                 'Parent', mainPanel, ...
                 'String', 'Count Background', ...
-                'Value', this.useBackground, ...
-                'Callback',@this.onCountBackgroundChanged);
+                'Value', obj.UseBackground, ...
+                'Callback',@obj.onCountBackgroundChanged);
             
             % Add a check box for log representation of histogram
-            this.handles.logHistogramCheckBox = uicontrol('Style', 'CheckBox', ...
+            obj.Handles.LogHistogramCheckBox = uicontrol('Style', 'CheckBox', ...
                 'Parent', mainPanel, ...
                 'String', 'Log Histogram', ...
-                'Value', this.logHistogram, ...
-                'Callback',@this.onLogHistogramChanged);
+                'Value', obj.LogHistogram, ...
+                'Callback',@obj.onLogHistogramChanged);
             
             
             % Add an "auto update" check box
-            this.handles.autoUpdateCheckBox = uicontrol('Style', 'CheckBox', ...
+            obj.Handles.AutoUpdateCheckBox = uicontrol('Style', 'CheckBox', ...
                 'Parent', mainPanel, ...
                 'String', 'Auto update', ...
                 'Value', true, ...
-                'Callback',@this.onAutoUpdateChanged);
+                'Callback',@obj.onAutoUpdateChanged);
 
             % add control panel with "Apply" and "Close" buttons
             if verLessThan('matlab', 'R2014b')
@@ -326,16 +327,16 @@ methods
                     'VerticalAlignment', 'bottom', ...
                     'Spacing', 5, 'Padding', 5);
             end
-            this.handles.applyButton = uicontrol('Style', 'PushButton', ...
+            obj.Handles.ApplyButton = uicontrol('Style', 'PushButton', ...
                 'Parent', controlPanel, ...
                 'String', 'Apply', ...
                 'Enable', 'off', ...
-                'Callback', @this.onApplyButtonClicked);
+                'Callback', @obj.onApplyButtonClicked);
 
-            this.handles.closeButton = uicontrol('Style', 'PushButton', ...
+            obj.Handles.CloseButton = uicontrol('Style', 'PushButton', ...
                 'Parent', controlPanel, ...
                 'String', 'Close', ...
-                'Callback', @this.onCloseButtonClicked);
+                'Callback', @obj.onCloseButtonClicked);
 
         end % end of setup layout function
         
@@ -347,240 +348,240 @@ end % end constructors
 %% Controller methods
 methods
     
-    function onBoundsTypeChanged(this, hObject, eventdata) %#ok<INUSD>
+    function onBoundsTypeChanged(obj, hObject, eventdata) %#ok<INUSD>
         index = get(hObject, 'Value');
         switch index
             case 1
                 % automatic bounds
-                if isa(this.image, 'uint8')
-                    if this.useBackground
+                if isa(obj.Image, 'uint8')
+                    if obj.UseBackground
                         vmin = 0;
                     else
                         vmin = 1;
                     end
                     vmax = 255;
                 else
-                    vmin = min(this.image(:));
-                    vmax = max(this.image(:));
+                    vmin = min(obj.Image(:));
+                    vmax = max(obj.Image(:));
                 end
-                this.dataExtent(1, 1) = vmin;
-                this.dataExtent(1, 2) = vmax;
-                set(this.handles.minBoundTextBox, 'String', num2str(vmin));
-                set(this.handles.maxBoundTextBox, 'String', num2str(vmax));
-                set(this.handles.minBoundTextBox, 'Enable', 'off');
-                set(this.handles.maxBoundTextBox, 'Enable', 'off');
+                obj.DataExtent(1, 1) = vmin;
+                obj.DataExtent(1, 2) = vmax;
+                set(obj.Handles.MinBoundTextBox, 'String', num2str(vmin));
+                set(obj.Handles.MaxBoundTextBox, 'String', num2str(vmax));
+                set(obj.Handles.MinBoundTextBox, 'Enable', 'off');
+                set(obj.Handles.MaxBoundTextBox, 'Enable', 'off');
                 
             case 2
                 % image bounds
-                vmin = min(this.image(:));
-                vmax = max(this.image(:));
-                this.dataExtent(1, 1) = vmin;
-                this.dataExtent(1, 2) = vmax;
-                set(this.handles.minBoundTextBox, 'String', num2str(vmin));
-                set(this.handles.maxBoundTextBox, 'String', num2str(vmax));
-                set(this.handles.minBoundTextBox, 'Enable', 'off');
-                set(this.handles.maxBoundTextBox, 'Enable', 'off');
+                vmin = min(obj.Image(:));
+                vmax = max(obj.Image(:));
+                obj.DataExtent(1, 1) = vmin;
+                obj.DataExtent(1, 2) = vmax;
+                set(obj.Handles.MinBoundTextBox, 'String', num2str(vmin));
+                set(obj.Handles.MaxBoundTextBox, 'String', num2str(vmax));
+                set(obj.Handles.MinBoundTextBox, 'Enable', 'off');
+                set(obj.Handles.MaxBoundTextBox, 'Enable', 'off');
                 
             case 3
                 % manual bounds
-                vmin = str2double(get(this.handles.minBoundTextBox, 'String'));
-                vmax = str2double(get(this.handles.maxBoundTextBox, 'String'));
+                vmin = str2double(get(obj.Handles.MinBoundTextBox, 'String'));
+                vmax = str2double(get(obj.Handles.MaxBoundTextBox, 'String'));
                 if isnan(vmin) || isnan(vmax)
                     return;
                 end
                 
-                this.dataExtent(1, 1) = vmin;
-                this.dataExtent(1, 2) = vmax;
-                set(this.handles.minBoundTextBox, 'Enable', 'on');
-                set(this.handles.maxBoundTextBox, 'Enable', 'on');
+                obj.DataExtent(1, 1) = vmin;
+                obj.DataExtent(1, 2) = vmax;
+                set(obj.Handles.MinBoundTextBox, 'Enable', 'on');
+                set(obj.Handles.MaxBoundTextBox, 'Enable', 'on');
                 
             otherwise
         end
         
-        if this.autoBinNumber
-            recomputeBinNumber(this);
+        if obj.AutoBinNumber
+            recomputeBinNumber(obj);
         end
         
-        if this.autoUpdate
-            updateHistogram(this);
+        if obj.AutoUpdate
+            updateHistogram(obj);
         end
     end
     
-    function onMinBoundChanged(this, hObject, eventdata) %#ok<INUSD>
+    function onMinBoundChanged(obj, hObject, eventdata) %#ok<INUSD>
         value = round(str2double(get(hObject, 'String')));
         if isnan(value)
             return;
         end
         
-        this.dataExtent(1, 1) = value;
+        obj.DataExtent(1, 1) = value;
         
-        if this.autoBinNumber
-            recomputeBinNumber(this);
+        if obj.AutoBinNumber
+            recomputeBinNumber(obj);
         end
         
-        if this.autoUpdate
-            updateHistogram(this);
+        if obj.AutoUpdate
+            updateHistogram(obj);
         end
     end
     
-    function onMaxBoundChanged(this, hObject, eventdata) %#ok<INUSD>
+    function onMaxBoundChanged(obj, hObject, eventdata) %#ok<INUSD>
         value = round(str2double(get(hObject, 'String')));
         if isnan(value)
             return;
         end
         
-        this.dataExtent(1, 2) = value;
+        obj.DataExtent(1, 2) = value;
         
-        if this.autoBinNumber
-            recomputeBinNumber(this);
+        if obj.AutoBinNumber
+            recomputeBinNumber(obj);
         end
         
-        if this.autoUpdate
-            updateHistogram(this);
+        if obj.AutoUpdate
+            updateHistogram(obj);
         end
     end
     
-    function onAutoBinNumberChanged(this, hObject, eventdata) %#ok<INUSD>
+    function onAutoBinNumberChanged(obj, hObject, eventdata) %#ok<INUSD>
         
-        this.autoBinNumber = get(this.handles.autoBinNumberCheckBox, 'Value') > 0;
+        obj.AutoBinNumber = get(obj.Handles.AutoBinNumberCheckBox, 'Value') > 0;
         
-        if this.autoBinNumber
-            set(this.handles.binNumberTextBox, 'Enable', 'off');
-            recomputeBinNumber(this);
+        if obj.AutoBinNumber
+            set(obj.Handles.BinNumberTextBox, 'Enable', 'off');
+            recomputeBinNumber(obj);
         else
-            set(this.handles.binNumberTextBox, 'Enable', 'on');
+            set(obj.Handles.BinNumberTextBox, 'Enable', 'on');
         end
         
-        if this.autoUpdate
-            updateHistogram(this);
+        if obj.AutoUpdate
+            updateHistogram(obj);
         end
     end
     
-    function recomputeBinNumber(this)
+    function recomputeBinNumber(obj)
         % recomputes the number of bins and update widgets
-        if isinteger(this.image)
-            nBins = this.dataExtent(1, 2) - this.dataExtent(1, 1) + 1;
+        if isinteger(obj.Image)
+            nBins = obj.DataExtent(1, 2) - obj.DataExtent(1, 1) + 1;
         else
             nBins = 100;
         end
-        this.binNumber = nBins;
-        set(this.handles.binNumberTextBox, 'String', num2str(nBins));
+        obj.BinNumber = nBins;
+        set(obj.Handles.BinNumberTextBox, 'String', num2str(nBins));
     end
     
-    function onBinNumberChanged(this, hObject, eventdata) %#ok<INUSD>
+    function onBinNumberChanged(obj, hObject, eventdata) %#ok<INUSD>
         value = round(str2double(get(hObject, 'String')));
         if isnan(value)
             return;
         end
         
-        this.binNumber = round(value);
+        obj.BinNumber = round(value);
         
-        if this.autoUpdate
-            updateHistogram(this);
+        if obj.AutoUpdate
+            updateHistogram(obj);
         end
     end
     
-    function onDisplayTypeChanged(this, hObject, eventdata) %#ok<INUSD>
+    function onDisplayTypeChanged(obj, hObject, eventdata) %#ok<INUSD>
         index = get(hObject, 'Value');
-        type = this.displayTypeList{index};
-        this.displayType = type;
+        type = obj.DisplayTypeList{index};
+        obj.DisplayType = type;
         
-        refreshHistogramDisplay(this);
+        refreshHistogramDisplay(obj);
     end
     
-    function onCountBackgroundChanged(this, hObject, eventdata) %#ok<INUSD>
-        this.useBackground = get(hObject, 'Value');
-        if this.autoUpdate
-            updateHistogram(this);
+    function onCountBackgroundChanged(obj, hObject, eventdata) %#ok<INUSD>
+        obj.UseBackground = get(hObject, 'Value');
+        if obj.AutoUpdate
+            updateHistogram(obj);
         end
     end
     
-    function onLogHistogramChanged(this, hObject, eventdata) %#ok<INUSD>
-        this.logHistogram = get(hObject, 'Value');
-        if this.autoUpdate
-            updateHistogram(this);
+    function onLogHistogramChanged(obj, hObject, eventdata) %#ok<INUSD>
+        obj.LogHistogram = get(hObject, 'Value');
+        if obj.AutoUpdate
+            updateHistogram(obj);
         end
     end
     
-    function onAutoUpdateChanged(this, hObject, eventdata) %#ok<INUSD>
-        this.autoUpdate = get(hObject, 'Value');
+    function onAutoUpdateChanged(obj, hObject, eventdata) %#ok<INUSD>
+        obj.AutoUpdate = get(hObject, 'Value');
         
-        if this.autoUpdate
-            set(this.handles.applyButton, 'Enable', 'off');
-            updateHistogram(this);
+        if obj.AutoUpdate
+            set(obj.Handles.ApplyButton, 'Enable', 'off');
+            updateHistogram(obj);
         else
-            set(this.handles.applyButton, 'Enable', 'on');
+            set(obj.Handles.ApplyButton, 'Enable', 'on');
         end
     end
 
-    function onApplyButtonClicked(this, hObject, eventdata) %#ok<INUSD>
-        set(this.handles.applyButton, 'Enable', 'off');
-        updateHistogram(this);
-        set(this.handles.applyButton, 'Enable', 'on');
+    function onApplyButtonClicked(obj, hObject, eventdata) %#ok<INUSD>
+        set(obj.Handles.ApplyButton, 'Enable', 'off');
+        updateHistogram(obj);
+        set(obj.Handles.ApplyButton, 'Enable', 'on');
     end
     
-    function onCloseButtonClicked(this, hObject, eventdata) %#ok<INUSD>
-        close(this.handles.optionsDialog);
+    function onCloseButtonClicked(obj, hObject, eventdata) %#ok<INUSD>
+        close(obj.Handles.OptionsDialog);
     end
     
 end
 
 %% Methods
 methods
-    function updateHistogram(this, varargin)
+    function updateHistogram(obj, varargin)
         % Recompute and display the histogram
                 
         % recompute histogram
-        [h, x] = computeHistogram(this);
-        this.histoBins = x;
-        this.histoValues = h;
+        [h, x] = computeHistogram(obj);
+        obj.HistoBins = x;
+        obj.HistoValues = h;
 
         % display histogram
-        refreshHistogramDisplay(this);
+        refreshHistogramDisplay(obj);
     end
 
-    function refreshHistogramDisplay(this, varargin)
+    function refreshHistogramDisplay(obj, varargin)
         % Refresh the figure showing histogram
         
         % check that the figure still exist
-        if ~ishandle(this.handles.histoFigure)
+        if ~ishandle(obj.Handles.HistoFigure)
             % re-create histogram figure
             hFig = figure(...
                 'Name', 'Image Histogram', ...
                 'NumberTitle', 'off');
-            this.handles.histoFigure = hFig;
-            this.handles.histoAxis = gca;
+            obj.Handles.HistoFigure = hFig;
+            obj.Handles.HistoAxis = gca;
         end
         
         % clear figure
-        figure(this.handles.histoFigure);
-        cla(this.handles.histoAxis);
+        figure(obj.Handles.HistoFigure);
+        cla(obj.Handles.HistoAxis);
         
-        if size(this.histoValues, 2) == 1
-            displayGrayscaleHistogram(this);
+        if size(obj.HistoValues, 2) == 1
+            displayGrayscaleHistogram(obj);
         else
-            displayColorHistogram(this);
+            displayColorHistogram(obj);
         end
         
         % update display options
-        xlim(this.dataExtent(1,1:2) + [-.5 +.5]);
+        xlim(obj.DataExtent(1,1:2) + [-.5 +.5]);
         
         % return to dialog
-        figure(this.handles.optionsDialog);
+        figure(obj.Handles.OptionsDialog);
         
     end
 
     
-    function displayGrayscaleHistogram(this)
+    function displayGrayscaleHistogram(obj)
         % Display the given histogram with a style depending on local type
         
         % axis to display in
-        ax = this.handles.histoAxis;
-        x = this.histoBins; 
-        h = this.histoValues;
+        ax = obj.Handles.HistoAxis;
+        x = obj.HistoBins; 
+        h = obj.HistoValues;
 
         % display histogram
-        switch this.displayType
+        switch obj.DisplayType
             case 'bars'
                 bar(ax, x, h, 'hist');
             case 'stems'
@@ -588,22 +589,22 @@ methods
             case 'stairs'
                 stairs(ax, x, h);
             otherwise
-                error(['Could not understand display type: ' this.displayType]);
+                error(['Could not understand display type: ' obj.DisplayType]);
         end
         
         colormap(ax, jet);
     end
     
-    function displayColorHistogram(this)
+    function displayColorHistogram(obj)
         % Display the given histogram with a style depending on local type
         
         % axis to display in
-        ax = this.handles.histoAxis;
-        x = this.histoBins; 
-        h = this.histoValues;
+        ax = obj.Handles.HistoAxis;
+        x = obj.HistoBins; 
+        h = obj.HistoValues;
         
         % display histogram
-        switch this.displayType
+        switch obj.DisplayType
             case 'bars'
                 hh = bar(ax, x, h, 5, 'hist');
                 % setup colors
@@ -626,29 +627,29 @@ methods
                 set(hh(3), 'color', [0 0 1]); % blue
                 
             otherwise
-                error(['Could not understand display type: ' this.displayType]);
+                error(['Could not understand display type: ' obj.DisplayType]);
         end
         
         
     end
     
-    function [h, x] = computeHistogram(this)
+    function [h, x] = computeHistogram(obj)
         
         % compute bin pos
-        extent = this.dataExtent;
-        nBins = this.binNumber;
+        extent = obj.DataExtent;
+        nBins = obj.BinNumber;
         x = linspace(extent(1,1), extent(1,2), nBins);
         
         % default values
-        img = this.image;
+        img = obj.Image;
         colorImage = false;
         
         % check special cases: color and vector
-        if ndims(this.image) > 2 %#ok<ISMAT>
-            if size(this.image, 3) == 3
+        if ndims(obj.Image) > 2 %#ok<ISMAT>
+            if size(obj.Image, 3) == 3
                 colorImage = true;
             else
-                if ndims(this.image) > 3
+                if ndims(obj.Image) > 3
                     % transform vector image into grayscale
                     img = sqrt(sum(double(img) .^ 2, 3));
                 end
@@ -657,7 +658,7 @@ methods
         
         % check ROI
         roi = [];
-        if ~this.useBackground
+        if ~obj.UseBackground
             roi = img ~= 0;
             if colorImage
                 roi = roi(:,:,1,:) | roi(:,:,2,:) | roi(:,:,3,:);
@@ -672,7 +673,7 @@ methods
         else
             % process color image: compute histogram of each channel
             h = zeros(length(x), 3);
-            if ndims(this.image) == 3
+            if ndims(obj.Image) == 3
                 % process 2D color image
                 for i = 1:3
                     h(:, i) = calcHistogram(img(:,:,i), x, roi);
@@ -686,17 +687,24 @@ methods
         end
         
         % eventually converts to log histogram
-        if this.logHistogram
+        if obj.LogHistogram
             h = log(h + 1);
         end
             
         function h = calcHistogram(img, x, roi)
+            
+            % convert bin centers to bin edges
+            dx = x(2) - x(1);
+            binEdges = [x - dx/2, x(end)+dx/2];
+
             if isempty(roi)
                 % histogram of whole image
-                h = hist(double(img(:)), x);
+                h = histcounts(double(img(:)), binEdges);
+%                 h = hist(double(img(:)), x);
             else
                 % histogram constrained to ROI
-                h = hist(double(img(roi)), x);
+                h = histcounts(double(img(roi)), binEdges);
+%                 h = hist(double(img(roi)), x);
             end
         end
     end

@@ -31,74 +31,75 @@ classdef OrthoSlicer3d < handle
 %           'displayRange', [0 90]);
 %
 %   See also
-%   Slicer
+%     Slicer
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2012-03-20,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
 properties
     % reference image
-    imageData;
+    ImageData;
     
     % type of image. Can be one of {'grayscale', 'color', 'vector'}
-    imageType;
+    ImageType;
     
     % physical size of the reference image (1-by-3 row vector, in xyz order) 
-    imageSize;
+    ImageSize;
     
     % extra info for image, such as the result of imfinfo
-    imageInfo;
+    ImageInfo;
 
     % the position of the intersection point of the three slices, as index
     % in xyz ordering
-    position;
+    Position;
     
     % extra info for image, such as the result of imfinfo
-    imageName;
+    ImageName;
 
     % used to adjust constrast of the slice
-    displayRange;
+    DisplayRange;
     
     % Look-up table for display of uint8 images (default is empty)
-    lut             = '';
+    Lut             = '';
     
     % calibraton information for image
-    voxelOrigin     = [0 0 0];
-    voxelSize       = [1 1 1];
-    voxelSizeUnit   = '';
+    VoxelOrigin     = [0 0 0];
+    VoxelSize       = [1 1 1];
+    VoxelSizeUnit   = '';
     
     % shortcut for avoiding many tests. Should be set to true when either
     % voxelOrigin, voxelsize or voxelSizeUnit is different from its default
     % value.
-    calibrated = false;
+    Calibrated = false;
     
     % list of handles to the widgets
-    handles;
+    Handles;
     
     % for managing slice dragging
-    startRay;
-    startIndex;
+    StartRay;
+    StartIndex;
    
-    draggedSlice;
-    sliceIndex;
+    DraggedSlice;
+    SliceIndex;
 end
 
 
 %% Constructors
 methods
-    function this = OrthoSlicer3d(img, varargin)
+    function obj = OrthoSlicer3d(img, varargin)
         
         % call parent constructor
-        this = this@handle();
+        obj = obj@handle();
         
-        this.handles = struct();
+        obj.Handles = struct();
 
         % Setup image data and type
-        this.imageData = img;
-        this.imageType = 'grayscale';
+        obj.ImageData = img;
+        obj.ImageType = 'grayscale';
         
         % compute size, and detect RGB
         dim = size(img);
@@ -114,9 +115,9 @@ methods
             
             % determines image nature
             if dim(3) ~= 3 || valMin < 0 || (isfloat(img) && valMax > 1)
-                this.imageType = 'vector';
+                obj.ImageType = 'vector';
             else
-                this.imageType = 'color';
+                obj.ImageType = 'color';
             end
             
             % keep only spatial dimensions
@@ -125,17 +126,17 @@ methods
         
         % convert to use dim(1)=x, dim(2)=y, dim(3)=z
         dim = dim([2 1 3]);
-        this.imageSize = dim;
+        obj.ImageSize = dim;
         
         % eventually compute grayscale extent
-        if ~strcmp(this.imageType, 'color')
-            [mini, maxi] = computeGrayScaleExtent(this);
-            this.displayRange  = [mini maxi];
+        if ~strcmp(obj.ImageType, 'color')
+            [mini, maxi] = computeGrayScaleExtent(obj);
+            obj.DisplayRange  = [mini maxi];
         end
         
         % default slice index is in the middle of the stack
         pos                 = ceil(dim / 2);
-        this.position       = pos;
+        obj.Position        = pos;
 
         
         parsesInputArguments();
@@ -143,27 +144,27 @@ methods
 
         % handle to current figure;
         hFig = gcf();
-        this.handles.figure = hFig;
+        obj.Handles.Figure = hFig;
         
         % figure settings
         hold on;
 
         % display three orthogonal slices
-        pos = this.position;
-        this.handles.sliceYZ = createSlice3d(this, 1, pos(1));
-        this.handles.sliceXZ = createSlice3d(this, 2, pos(2));
-        this.handles.sliceXY = createSlice3d(this, 3, pos(3));
+        pos = obj.Position;
+        obj.Handles.SliceYZ = createSlice3d(obj, 1, pos(1));
+        obj.Handles.SliceXZ = createSlice3d(obj, 2, pos(2));
+        obj.Handles.SliceXY = createSlice3d(obj, 3, pos(3));
 
         % set up mouse listener
-        set(this.handles.sliceYZ, 'ButtonDownFcn', @this.startDragging);
-        set(this.handles.sliceXZ, 'ButtonDownFcn', @this.startDragging);
-        set(this.handles.sliceXY, 'ButtonDownFcn', @this.startDragging);
+        set(obj.Handles.SliceYZ, 'ButtonDownFcn', @obj.startDragging);
+        set(obj.Handles.SliceXZ, 'ButtonDownFcn', @obj.startDragging);
+        set(obj.Handles.SliceXY, 'ButtonDownFcn', @obj.startDragging);
         
         
         % extract spatial calibration
-        spacing = this.voxelSize;
-        origin = this.voxelOrigin;
-        box = stackExtent(this.imageData, spacing, origin);
+        spacing = obj.VoxelSize;
+        origin = obj.VoxelOrigin;
+        box = stackExtent(obj.ImageData, spacing, origin);
         
         % position of orthoslice center
         xPos = (pos(1) - 1) * spacing(1) + origin(1);
@@ -171,13 +172,13 @@ methods
         zPos = (pos(3) - 1) * spacing(3) + origin(3);
         
         % show orthogonal lines
-        this.handles.lineX = line(...
+        obj.Handles.LineX = line(...
             box(1:2), [yPos yPos], [zPos zPos], ...
             'color', 'r');
-        this.handles.lineY = line(...
+        obj.Handles.LineY = line(...
             [xPos xPos], box(3:4), [zPos zPos], ...
             'color', 'g');
-        this.handles.lineZ = line(...
+        obj.Handles.LineZ = line(...
             [xPos xPos], [yPos yPos], box(5:6), ...
             'color', 'b');
 
@@ -188,17 +189,17 @@ methods
         ymax = box(4);
         zmin = box(5);
         zmax = box(6);
-        this.handles.frameXY = line(...
+        obj.Handles.FrameXY = line(...
             [xmin xmin xmax xmax xmin], ...
             [ymin ymax ymax ymin ymin], ...
             [zPos zPos zPos zPos zPos], ...
             'color', 'k');
-        this.handles.frameXZ = line(...
+        obj.Handles.FrameXZ = line(...
             [xmin xmin xmax xmax xmin], ...
             [yPos yPos yPos yPos yPos], ...
             [zmin zmax zmax zmin zmin], ...
             'color', 'k');
-        this.handles.frameYZ = line(...
+        obj.Handles.FrameYZ = line(...
             [xPos xPos xPos xPos xPos], ...
             [ymin ymin ymax ymax ymin], ...
             [zmin zmax zmax zmin zmin], ...
@@ -216,33 +217,33 @@ methods
                     case 'slice'
                         % setup initial slice
                         pos = varargin{2};
-                        this.sliceIndex = pos(1);
+                        obj.SliceIndex = pos(1);
                         
                     case 'position'
                         % setup position of the intersection point (pixels)
-                        this.position = varargin{2};
+                        obj.Position = varargin{2};
                         
                     % setup of image calibration    
                     case 'spacing'
-                        this.voxelSize = varargin{2};
-                        if ~this.calibrated
-                            this.voxelOrigin = [0 0 0];
+                        obj.VoxelSize = varargin{2};
+                        if ~obj.Calibrated
+                            obj.VoxelOrigin = [0 0 0];
                         end
-                        this.calibrated = true;
+                        obj.Calibrated = true;
                         
                     case 'origin'
-                        this.voxelOrigin = varargin{2};
-                        this.calibrated = true;
+                        obj.VoxelOrigin = varargin{2};
+                        obj.Calibrated = true;
                         
                     case 'unitname'
-                        this.voxelSizeUnit = varargin{2};
-                        this.calibrated = true;
+                        obj.VoxelSizeUnit = varargin{2};
+                        obj.Calibrated = true;
                         
                     % setup display calibration
                     case 'displayrange'
-                        this.displayRange = varargin{2};
+                        obj.DisplayRange = varargin{2};
                     case {'colormap', 'lut'}
-                        this.lut = varargin{2};
+                        obj.Lut = varargin{2};
                         
                     otherwise
                         error(['Unknown parameter name: ' param]);
@@ -258,18 +259,18 @@ end
 %% member functions
 methods
 
-    function hs = createSlice3d(this, dim, index, varargin)
+    function hs = createSlice3d(obj, dim, index, varargin)
         %CREATESLICE3D Show a moving 3D slice of an image
 
 
         % extract the slice
-        slice = stackSlice(this.imageData, dim, this.position(dim));
+        slice = stackSlice(obj.ImageData, dim, obj.Position(dim));
         
         % compute equivalent RGB image
-        slice = computeSliceRGB(slice, this.displayRange, this.lut);
+        slice = computeSliceRGB(slice, obj.DisplayRange, obj.Lut);
 
         % size of the image
-        siz = this.imageSize;
+        siz = obj.ImageSize;
 
         % extract slice coordinates
         switch dim
@@ -314,15 +315,15 @@ methods
         end
         
         % initialize transform matrix from index coords to physical coords
-        dcm = diag([this.voxelSize 1]);
-        %dcm(4, 1:3) = this.voxelOrigin;
+        dcm = diag([obj.VoxelSize 1]);
+        %dcm(4, 1:3) = obj.VoxelOrigin;
         
         % transform coordinates from image reference to spatial reference
         hdata = ones(1, numel(xdata));
         trans = dcm(1:3, :) * [xdata(:)'; ydata(:)'; zdata(:)'; hdata];
-        xdata(:) = trans(1,:) + this.voxelOrigin(1);
-        ydata(:) = trans(2,:) + this.voxelOrigin(2);
-        zdata(:) = trans(3,:) + this.voxelOrigin(3);
+        xdata(:) = trans(1,:) + obj.VoxelOrigin(1);
+        ydata(:) = trans(2,:) + obj.VoxelOrigin(2);
+        zdata(:) = trans(3,:) + obj.VoxelOrigin(3);
 
 
         % global parameters for surface display
@@ -332,78 +333,78 @@ methods
         hs = surface(xdata, ydata, zdata, slice, params{:});
 
         % setup user data of the slice
-        data.dim = dim;
-        data.index = index;
+        data.Dim = dim;
+        data.Index = index;
         set(hs, 'UserData', data);
 
     end
 
-    function updateLinesPosition(this)
+    function updateLinesPosition(obj)
         
-        dim = this.imageSize;
-        spacing = this.voxelSize;
-        origin = this.voxelOrigin;
+        dim = obj.ImageSize;
+        spacing = obj.VoxelSize;
+        origin = obj.VoxelOrigin;
         
         xdata = (0:dim(1)) * spacing(1) + origin(1);
         ydata = (0:dim(2)) * spacing(2) + origin(2);
         zdata = (0:dim(3)) * spacing(3) + origin(3);
         
-        pos = this.position;
+        pos = obj.Position;
         xPos = xdata(pos(1));
         yPos = ydata(pos(2));
         zPos = zdata(pos(3));
         
         % show orthogonal lines
-        set(this.handles.lineX, 'ydata', [yPos yPos]);
-        set(this.handles.lineX, 'zdata', [zPos zPos]);
-        set(this.handles.lineY, 'xdata', [xPos xPos]);
-        set(this.handles.lineY, 'zdata', [zPos zPos]);
-        set(this.handles.lineZ, 'xdata', [xPos xPos]);
-        set(this.handles.lineZ, 'ydata', [yPos yPos]);
+        set(obj.Handles.LineX, 'ydata', [yPos yPos]);
+        set(obj.Handles.LineX, 'zdata', [zPos zPos]);
+        set(obj.Handles.LineY, 'xdata', [xPos xPos]);
+        set(obj.Handles.LineY, 'zdata', [zPos zPos]);
+        set(obj.Handles.LineZ, 'xdata', [xPos xPos]);
+        set(obj.Handles.LineZ, 'ydata', [yPos yPos]);
     end
 
-    function updateFramesPosition(this)
-        dim = this.imageSize;
-        spacing = this.voxelSize;
-        origin = this.voxelOrigin;
+    function updateFramesPosition(obj)
+        dim = obj.ImageSize;
+        spacing = obj.VoxelSize;
+        origin = obj.VoxelOrigin;
         
         xdata = (0:dim(1)) * spacing(1) + origin(1);
         ydata = (0:dim(2)) * spacing(2) + origin(2);
         zdata = (0:dim(3)) * spacing(3) + origin(3);
         
-        pos = this.position;
+        pos = obj.Position;
         xPos = xdata(pos(1));
         yPos = ydata(pos(2));
         zPos = zdata(pos(3));
 
-        set(this.handles.frameXY, 'zdata', repmat(zPos, 1, 5));
-        set(this.handles.frameXZ, 'ydata', repmat(yPos, 1, 5));
-        set(this.handles.frameYZ, 'xdata', repmat(xPos, 1, 5));
+        set(obj.Handles.FrameXY, 'zdata', repmat(zPos, 1, 5));
+        set(obj.Handles.FrameXZ, 'ydata', repmat(yPos, 1, 5));
+        set(obj.Handles.FrameYZ, 'xdata', repmat(xPos, 1, 5));
 
     end
     
-    function startDragging(this, src, event) %#ok<INUSD>
+    function startDragging(obj, src, event) %#ok<INUSD>
         %STARTDRAGGING  One-line description here, please.
         %
     
         
         % store data for creating ray
-        this.startRay   = get(gca, 'CurrentPoint');
+        obj.StartRay   = get(gca, 'CurrentPoint');
         
         % find current index
         data = get(src, 'UserData');
-        dim = data.dim;
-        this.startIndex = this.position(dim);
+        dim = data.Dim;
+        obj.StartIndex = obj.Position(dim);
                 
-        this.draggedSlice = src;
+        obj.DraggedSlice = src;
 
         % set up listeners for figure object
         hFig = gcbf();
-        set(hFig, 'WindowButtonMotionFcn', @this.dragSlice);
-        set(hFig, 'WindowButtonUpFcn', @this.stopDragging);
+        set(hFig, 'WindowButtonMotionFcn', @obj.dragSlice);
+        set(hFig, 'WindowButtonUpFcn', @obj.stopDragging);
     end
 
-    function stopDragging(this, src, event) %#ok<INUSD>
+    function stopDragging(obj, src, event) %#ok<INUSD>
         %STOPDRAGGING  One-line description here, please.
         %
 
@@ -413,60 +414,60 @@ methods
         set(hFig, 'WindowButtonMotionFcn', '');
 
         % reset slice data
-        this.startRay = [];
-        this.draggedSlice = [];
+        obj.StartRay = [];
+        obj.DraggedSlice = [];
         
         % update display
         drawnow;
     end
 
 
-    function dragSlice(this, src, event) %#ok<INUSD>
+    function dragSlice(obj, src, event) %#ok<INUSD>
         %DRAGSLICE  One-line description here, please.
         %
         
         % Extract slice data
-        hs      = this.draggedSlice;
+        hs      = obj.DraggedSlice;
         data    = get(hs, 'UserData');
 
         % basic checkup
-        if isempty(this.startRay)
+        if isempty(obj.StartRay)
             return;
         end
 
         % dimension in xyz
-        dim = data.dim;
+        dim = data.Dim;
 
         
         % initialize transform matrix from index coords to physical coords
-        dcm = diag([this.voxelSize 1]);
+        dcm = diag([obj.VoxelSize 1]);
         
         % compute the ray corresponding to current slice normal
-        center = (this.position .* this.voxelSize) + this.voxelOrigin;
+        center = (obj.Position .* obj.VoxelSize) + obj.VoxelOrigin;
         sliceNormal = [center; center+dcm(1:3, dim)'];
 
         % Project start ray on slice-axis
-        alphastart = posProjRayOnRay(this, this.startRay, sliceNormal);
+        alphastart = posProjRayOnRay(obj, obj.StartRay, sliceNormal);
 
         % Project current ray on slice-axis
         currentRay = get(gca, 'CurrentPoint');
-        alphanow = posProjRayOnRay(this, currentRay, sliceNormal);
+        alphanow = posProjRayOnRay(obj, currentRay, sliceNormal);
 
         % compute difference in positions
         slicediff = alphanow - alphastart;
 
-        index = this.startIndex + round(slicediff);
-        index = min(max(1, index), stackSize(this.imageData, data.dim));
-        this.sliceIndex = index;
+        index = obj.StartIndex + round(slicediff);
+        index = min(max(1, index), stackSize(obj.ImageData, data.Dim));
+        obj.SliceIndex = index;
         
-        this.position(data.dim) = index;
+        obj.Position(data.Dim) = index;
 
 
         % extract slice corresponding to current index
-        slice = stackSlice(this.imageData, data.dim, this.sliceIndex);
+        slice = stackSlice(obj.ImageData, data.Dim, obj.SliceIndex);
 
         % convert to renderable RGB
-        slice = computeSliceRGB(slice, this.displayRange, this.lut);
+        slice = computeSliceRGB(slice, obj.DisplayRange, obj.Lut);
 
         % setup display data
         set(hs, 'CData', slice);
@@ -475,22 +476,22 @@ methods
         % the mesh used to render image has one element more, to enclose all pixels
         meshSize = [size(slice, 1) size(slice, 2)] + 1;
 
-        spacing = this.voxelSize;
-        origin = this.voxelOrigin;
+        spacing = obj.VoxelSize;
+        origin = obj.VoxelOrigin;
 
-        switch data.dim
+        switch data.Dim
             case 1
-                xpos = (this.sliceIndex - 1) * spacing(1) + origin(1);
+                xpos = (obj.SliceIndex - 1) * spacing(1) + origin(1);
                 xdata = ones(meshSize) * xpos;
                 set(hs, 'xdata', xdata);
                 
             case 2
-                ypos = (this.sliceIndex - 1) * spacing(2) + origin(2);
+                ypos = (obj.SliceIndex - 1) * spacing(2) + origin(2);
                 ydata = ones(meshSize) * ypos;
                 set(hs, 'ydata', ydata);
                 
             case 3
-                zpos = (this.sliceIndex - 1) * spacing(3) + origin(3);
+                zpos = (obj.SliceIndex - 1) * spacing(3) + origin(3);
                 zdata = ones(meshSize) * zpos;
                 set(hs, 'zdata', zdata);
                 
@@ -499,18 +500,18 @@ methods
         end
 
         % update display
-        updateLinesPosition(this);
-        updateFramesPosition(this);
+        updateLinesPosition(obj);
+        updateFramesPosition(obj);
         drawnow;
     end
 
 
-    function alphabeta = computeAlphaBeta(this, a, b, s)  %#ok<INUSL>
+    function alphabeta = computeAlphaBeta(obj, a, b, s)  %#ok<INUSL>
         dab = b - a;
         alphabeta = pinv([s'*s -s'*dab ; dab'*s -dab'*dab]) * [s'*a dab'*a]';
     end
 
-    function pos = posProjRayOnRay(this, ray1, ray2)  %#ok<INUSL>
+    function pos = posProjRayOnRay(obj, ray1, ray2)  %#ok<INUSL>
         % ray1 and ray2 given as 2-by-3 arrays
         
         u = ray1(2,:) - ray1(1,:);
@@ -529,35 +530,35 @@ end
 
 methods
     %% Some methods for image manipulation (should be factorized)
-    function [mini, maxi] = computeGrayScaleExtent(this)
-        % compute grayscale extent of this inner image
+    function [mini, maxi] = computeGrayScaleExtent(obj)
+        % compute grayscale extent of obj inner image
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             mini = 0; 
             maxi = 1;
             return;
         end
         
         % check image data type
-        if isa(this.imageData, 'uint8')
+        if isa(obj.ImageData, 'uint8')
             % use min-max values depending on image type
             mini = 0;
             maxi = 255;
             
-        elseif islogical(this.imageData)
+        elseif islogical(obj.ImageData)
             % for binary images, the grayscale extent is defined by the type
             mini = 0;
             maxi = 1;
             
-        elseif strcmp(this.imageType, 'vector')
+        elseif strcmp(obj.ImageType, 'vector')
             % case of vector image: compute max of norm
             
-            dim = size(this.imageData);
+            dim = size(obj.ImageData);
             
             norm = zeros(dim([1 2 4]));
             
             for i = 1:dim(3)
-                norm = norm + squeeze(this.imageData(:,:,i,:)) .^ 2;
+                norm = norm + squeeze(obj.ImageData(:,:,i,:)) .^ 2;
             end
             
             mini = 0;
@@ -565,14 +566,14 @@ methods
             
         else
             % for float images, display 99 percents of dynamic
-            [mini, maxi] = computeGrayscaleAdjustement(this, .01);            
+            [mini, maxi] = computeGrayscaleAdjustement(obj, .01);            
         end
     end
     
-    function [mini, maxi] = computeGrayscaleAdjustement(this, alpha)
+    function [mini, maxi] = computeGrayscaleAdjustement(obj, alpha)
         % compute grayscale range that maximize vizualisation
         
-        if isempty(this.imageData)
+        if isempty(obj.ImageData)
             mini = 0; 
             maxi = 1;
             return;
@@ -584,7 +585,7 @@ methods
         end
         
         % sort values that are valid (avoid NaN's and Inf's)
-        values = sort(this.imageData(isfinite(this.imageData)));
+        values = sort(obj.ImageData(isfinite(obj.ImageData)));
         n = length(values);
 
         % compute values that enclose (1-alpha) percents of all values
@@ -610,8 +611,8 @@ end % end of image methods
 
 %% Methods for text display
 methods
-    function display(this)
-        % display a resume of the slicer structure
+    function disp(obj)
+        % display a resume of the slicer structure.
        
         % determines whether empty lines should be printed or not
         if strcmp(get(0, 'FormatSpacing'), 'loose')
@@ -635,14 +636,14 @@ methods
         fprintf(emptyLine);
         
         fprintf('OrthoSlicer3d object, containing a %d x %d x %d %s image.\n', ...
-            this.imageSize, this.imageType);
+            obj.ImageSize, obj.ImageType);
         
         % calibration information for image
-        if this.calibrated
+        if obj.Calibrated
             fprintf('  Voxel spacing = [ %g %g %g ] %s\n', ...
-                this.voxelSize, this.voxelSizeUnit');
+                obj.VoxelSize, obj.VoxelSizeUnit');
             fprintf('  Image origin  = [ %g %g %g ] %s\n', ...
-                this.voxelOrigin, this.voxelSizeUnit');
+                obj.VoxelOrigin, obj.VoxelSizeUnit');
         end
 
         fprintf(emptyLine);

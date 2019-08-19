@@ -8,30 +8,30 @@ classdef OrthoSlicer3dOptionsDialog < handle
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2013-04-19,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
 
 %% Properties
 properties
-    parent;
+    Parent;
     
-    handles;
+    Handles;
 end % end properties
 
 
 %% Constructor
 methods
-    function this = OrthoSlicer3dOptionsDialog(parent, varargin)
+    function obj = OrthoSlicer3dOptionsDialog(parent, varargin)
     % Constructor for OrthoSlicer3dOptionsDialog class
         
          % call parent constructor to initialize members
-        this = this@handle();
-        this.parent = parent;
+        obj = obj@handle();
+        obj.Parent = parent;
 
         % create default figure
         fig = figure(...
@@ -39,8 +39,8 @@ methods
             'NumberTitle', 'off', ...
             'HandleVisibility', 'On', ...
             'Name', 'OrthoSlicer3D Options', ...
-            'CloseRequestFcn', @this.close);
-        this.handles.figure = fig;
+            'CloseRequestFcn', @obj.close);
+        obj.Handles.Figure = fig;
             
         setupLayout(fig);
         
@@ -74,19 +74,19 @@ methods
                     'Spacing', 5, 'Padding', 5);
             end
             
-            this.handles.rotateOx = uicontrol(...
+            obj.Handles.RotateOx = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Rotate around X-axis', ...
                 'Value', 0, ...
                 'HorizontalAlignment', 'Left');
 
-            this.handles.convertToRGB = uicontrol(...
+            obj.Handles.ConvertToRGB = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Convert to RGB', ...
                 'Value', 0, ...
                 'HorizontalAlignment', 'Left');
             
-            this.handles.showAxisLabel = uicontrol(...
+            obj.Handles.ShowAxisLabel = uicontrol(...
                 'Style', 'checkbox', 'Parent', optionsPanel, ...
                 'String', 'Show axes label', ...
                 'Value', 0, ...
@@ -107,15 +107,15 @@ methods
                     'Units', 'normalized', ...
                     'Position', [0 0 1 1]);
             end
-            this.handles.applyButton = uicontrol('Style', 'PushButton', ...
+            obj.Handles.ApplyButton = uicontrol('Style', 'PushButton', ...
                 'Parent', buttonsPanel, ...
                 'String', 'Compute', ...
                 'Enable', 'on', ...
-                'Callback', @this.onApplyButtonClicked);
-            this.handles.closeButton = uicontrol('Style', 'PushButton', ...
+                'Callback', @obj.onApplyButtonClicked);
+            obj.Handles.CloseButton = uicontrol('Style', 'PushButton', ...
                 'Parent', buttonsPanel, ...
                 'String', 'Close', ...
-                'Callback', @this.close);
+                'Callback', @obj.close);
             
             if verLessThan('matlab', 'R2014b')
                 mainPanel.Sizes = [-1 40];
@@ -131,23 +131,23 @@ end % end constructors
 
 %% Methods
 methods
-    function onApplyButtonClicked(this, hObject, eventdata) %#ok<INUSD>
+    function onApplyButtonClicked(obj, hObject, eventdata) %#ok<INUSD>
         
-        rotateXAxis = get(this.handles.rotateOx, 'Value');
-        convertToRGB = get(this.handles.convertToRGB, 'Value');
-        showAxesLabel = get(this.handles.showAxisLabel, 'Value');
+        rotateXAxis = get(obj.Handles.RotateOx, 'Value');
+        convertToRGB = get(obj.Handles.ConvertToRGB, 'Value');
+        showAxesLabel = get(obj.Handles.ShowAxisLabel, 'Value');
         
         
-        imgData = this.parent.imageData;
+        imgData = obj.Parent.ImageData;
         if isempty(imgData)
             return;
         end
         
-        imgSize = this.parent.imageSize;
+        imgSize = obj.Parent.ImageSize;
         
         if convertToRGB
             % choose the colormap
-            cmap = this.parent.colorMap;
+            cmap = obj.Parent.ColorMap;
             if isempty(cmap)
                 cmap = jet(256);
             end
@@ -162,7 +162,7 @@ methods
             end
             
             % convert inner image data
-            imgData = label2rgb3d(imgData, cmap, this.parent.bgColor, 'shuffle');
+            imgData = label2rgb3d(imgData, cmap, obj.Parent.BgColor, 'shuffle');
 
         end
         
@@ -175,20 +175,20 @@ methods
         
         % compute display settings
         pos = ceil(imgSize / 2);
-        spacing = this.parent.voxelSize;
-        origin  = this.parent.voxelOrigin;
+        spacing = obj.Parent.VoxelSize;
+        origin  = obj.Parent.VoxelOrigin;
         
         % determine the color map to use (default is empty)
         cmap = [];
-        if ~isColorStack(imgData) && ~isempty(this.parent.colorMap)
-            cmap = this.parent.colorMap;
+        if ~isColorStack(imgData) && ~isempty(obj.Parent.ColorMap)
+            cmap = obj.Parent.ColorMap;
         end
         
         % create figure with 3 orthogonal slices in 3D
         figure();
         OrthoSlicer3d(imgData, 'Position', pos, ...
             'Origin', origin, 'Spacing', spacing, ...
-            'DisplayRange', this.parent.displayRange, 'ColorMap', cmap);
+            'DisplayRange', obj.Parent.DisplayRange, 'ColorMap', cmap);
         
         % compute display extent (add a 0.5 limit around each voxel)
         extent = stackExtent(imgSize, spacing, origin);
@@ -218,8 +218,8 @@ end % end methods
 
 %% Figure management
 methods
-    function close(this, varargin)
-        delete(this.handles.figure);
+    function close(obj, varargin)
+        delete(obj.Handles.Figure);
     end
     
 end

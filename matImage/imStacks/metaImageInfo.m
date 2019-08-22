@@ -146,9 +146,9 @@ while true
     
     % extract each possible tag
     switch tag
-        % First, parse required tags
+        % First parse mandatory tags
         case 'NDims'
-            % number of dimensions. Used for initializing data structure
+            % number of dimensions. Used for initializing data structure.
             nd = parseInteger(string);
             info.NDims = nd;
             
@@ -262,7 +262,7 @@ if strcmpi(string, 'list')
         tline = fgetl(f);
     end
     
-elseif ~isempty(strfind(string, ' '))
+elseif contains(string, ' ')
     % If filename contains spaces, it is parsed to extract indices
     C = textscan(string, '%s %d %d %d');
     pattern = C{1}{1};

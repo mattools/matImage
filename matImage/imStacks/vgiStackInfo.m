@@ -95,7 +95,7 @@ while true
         elseif strcmpi(key, 'bitsperelement')
             info.bitDepth = str2double(value);
             if info.bitDepth ~= 16
-                error('Only 16 bits per element are currently supported, not %d', bitDepth);
+                error('Only 16 bits per element are currently supported, not %d', info.bitDepth);
             end
             
         elseif strcmp(key, 'Name')

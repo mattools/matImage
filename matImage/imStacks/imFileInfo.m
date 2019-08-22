@@ -38,4 +38,3 @@ switch ext
         error(['Can not manage file ending by ' ext]);
 end
 
-    

@@ -107,7 +107,7 @@ elseif nd == 4
 end
 
 % determine optional slice indices (default: 0 -> dim(3))
-if ~isempty(varargin) == isnumeric(varargin{1})
+if ~isempty(varargin) && isnumeric(varargin{1})
     disp('use specified slice indices');
     sliceIndices = varargin{1};
     varargin(1) = [];

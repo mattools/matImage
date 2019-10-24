@@ -1,12 +1,13 @@
-function img = imReadRawData(fileName, varargin)
+function img = imReadRawData(fileName, dims, format, varargin)
 %IMREADRAWDATA Read image data from raw data file.
 %
-%   output = imReadRawData(FNMAE, OPTIONS)
+%   output = imReadRawData(FNAME, DIMS, FORMAT, OPTIONS)
 %
 %   Example
 %   imReadRawData
 %
 %   See also
+%     readstack
 %
  
 % ------
@@ -16,22 +17,21 @@ function img = imReadRawData(fileName, varargin)
 % Copyright 2019 INRA - Cepia Software Platform.
 
 % default parameter values
-pixelType = 'uint16';
+pixelType = format;
 byteOrder = 'l'; % assume little endian is default
 offset = 0;
 verbose = false;
+
 
 % parse input options
 while length(varargin) > 1
     name = varargin{1};
     value = varargin{2};
     
-    if strcmp(name, 'pixelType')
-        pixelType = value;
-    elseif strcmp(name, 'dims')
-        dims = value;
-    elseif strcmp(name, 'offset')
+    if strcmp(name, 'offset')
         offset = value;
+    elseif strcmpi(name, 'byteOrder')
+        byteOrder = value;
     elseif strcmp(name, 'verbose')
         verbose = value;
     else
@@ -46,7 +46,7 @@ end
 if verbose
     disp('allocate memory');
 end
-img = zeros(dims, pixelType);
+% img = zeros(dims, pixelType);
 
 
 %% Open
@@ -72,10 +72,10 @@ if verbose
     fprintf('read data...');
 end
 tic;
-img(:) = fread(f, prod(dims), ['*' pixelType], byteOrder);
+img = fread(f, prod(dims), ['*' pixelType], byteOrder);
 t = toc;
 if verbose
-    fprintf(' (%7.3f s)\n', t);
+    fprintf(' elapsed time: %7.3f s\n', t);
 end
 
 %% Cleanup
@@ -87,5 +87,4 @@ fclose(f);
 if verbose
     disp('permute');
 end
-img = permute(img, [2 1 3:length(dims)]);
-
+img = reshape(img, dims);

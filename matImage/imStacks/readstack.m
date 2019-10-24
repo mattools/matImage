@@ -118,6 +118,8 @@ end
 % empty map by default
 map = [];
 
+[~, ~, ext] = fileparts(fname);
+
 
 %% Read data in a raw file
 
@@ -163,7 +165,7 @@ end
 
 %% Read LSM image using tiffread
 
-if strcmp(fname(end-2:end), 'lsm')
+if strcmp(ext, '.lsm')
     if exist('tiffread', 'file') == 0
         errordlg(...
             {'Requires the ''tiffread'' library'; ...
@@ -187,6 +189,44 @@ if strcmp(fname(end-2:end), 'lsm')
     return;
 end
 
+
+%% Read data in a large TIFF as saved by ImageJ
+if isImageJBigTiffFile(fname)
+    infos = imFileInfo(fname);
+    desc = infos.ImageDescription;
+    tokens = strsplit(desc, char(10));
+    tokens(cellfun(@isempty, tokens)) = [];
+
+    % parse ImageJ options
+    options = struct();
+    for iToken = 1:length(tokens)
+        token = tokens{iToken};
+        tokParts = strsplit(token, '=');
+        options.(tokParts{1}) = tokParts{2};
+    end
+
+    dims = [infos.Width infos.Height str2num(options.slices)]; %#ok<ST2NM>
+
+    if infos.BitDepth == 8
+        format = 'uint8';
+    elseif infos.BitDepth == 16
+        format = 'uint16';
+    elseif infos.BitDepth == 32
+        format = 'single';
+    end
+
+    if strcmpi(infos.ByteOrder, 'big-endian')
+        byteOrder = 'ieee-be';
+    else
+        byteOrder = 'ieee-le';
+    end
+
+    offset = infos.StripOffsets;
+
+    img = imReadRawData(fname, dims, format, 'byteOrder', byteOrder, 'offset', offset);
+    img = permute(img, [2 1 3:length(dims)]);
+    return;
+end
 
 
 %% Read Image stored in one bundle file (usually tif)
@@ -336,4 +376,22 @@ else
     end
 end
 
+end
 
+function b = isImageJBigTiffFile(fileName)
+
+b = false;
+
+[~, ~, ext] = fileparts(fileName);
+if ~strncmpi(ext, '.tif', 4)
+    return;
+end
+
+infos = imFileInfo(fileName);
+if length(infos) > 1 || ~isfield(infos(1), 'ImageDescription')
+    return;
+end
+
+b = strncmpi(infos.ImageDescription, 'ImageJ=', 7);
+
+end

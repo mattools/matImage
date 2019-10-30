@@ -9,7 +9,7 @@ function savestack(img, fname, varargin)
 %   to save the stack into a file series.
 %
 %   If file name contains '??', '##' or '%0xd' (x being an integer), then
-%   the image is saved into a series of files, with increasing index.
+%   the image is saved into a series of files, with increasing indices.
 %
 %   savestack(IMG, MAP, FNAME)
 %   Saves a grayscale image together with a colormap. IMG should be a uint8
@@ -54,9 +54,12 @@ function savestack(img, fname, varargin)
 %   01/06/2006 allow wildcard '###', ensure more portability with
 %       windows, add verbosity options
 %   28/11/2008 update doc, remove unused variable 'slice'
+%   30/10/2019 uses TIFF lib to accelerate write time
 
 %% Default values
 
+% default verbosity is true
+verbose = true;
 
 
 %% Process input arguments
@@ -80,8 +83,7 @@ if isnumeric(fname)
     varargin(1) = [];
 end
 
-% check for verbosity options (default is true)
-verbose = true;
+% check for verbosity options 
 if ~isempty(varargin)
     var = varargin{end};
     if ischar(var)
@@ -131,17 +133,87 @@ if npos > 0
     fname = strrep(fname, repmat('#', [1 npos]), ['%0' num2str(npos) 'd']);
 end
 
+% binary flag indicating if the stack shouldbe save as a single file, or as
+% a collection of 2D slices.
+saveAsStack = ~contains(fname, '%0');
+
 
 %% Save image file(s)
 
-pos = strfind(fname, '%0');
-if ~isempty(pos)
+if saveAsStack
+    % save one file containing all slices of image
+    if verbose
+        disp('save a stack');
+    end
+    
+    % setup TIFF tags shared by all images
+    tagStruct.ImageWidth = size(img, 2);
+    tagStruct.ImageLength = size(img, 1);
+    if isa(img, 'uint8')
+        tagStruct.BitsPerSample = 8;
+    elseif isa(img, 'uint16')
+        tagStruct.BitsPerSample = 16;
+    else
+        error(['Can not manage data with class: ' class(img)]);
+    end
+    if isGrayscale
+        tagStruct.SamplesPerPixel = 1;
+        tagStruct.Photometric = Tiff.Photometric.MinIsBlack;
+
+        % eventually update Tag structure to understand color map
+        if ~isempty(map)
+            tagStruct.Photometric = Tiff.Photometric.Palette;
+            tagStruct.ColorMap = map;
+        end
+    else
+        tagStruct.SamplesPerPixel = 3;
+        tagStruct.Photometric = Tiff.Photometric.RGB;
+    end
+    tagStruct.Compression = Tiff.Compression.PackBits;
+    tagStruct.PlanarConfiguration = Tiff.PlanarConfiguration.Chunky;
+    tagStruct.Software = 'MATLAB_MatImage';
+    
+    % create a TIFF file, and setup necessary tags
+    t = Tiff(fname, 'w');
+    setTag(t, tagStruct);
+    
+    if isGrayscale
+        % save a grayscale stack
+
+        % write first slice
+        write(t, img(:,:,1));
+        
+        % append other slices
+        for i = 2:dim(3)
+            writeDirectory(t);
+            setTag(t, tagStruct);
+            write(t, img(:,:,i));
+        end
+        
+    else
+        % save a color stack
+
+        % write first slice
+        write(t, img(:,:,:,1));
+        
+        % append other slices
+        for i = 2:dim(4)
+            writeDirectory(t);
+            setTag(t, tagStruct);
+            write(t, img(:,:,:,i));
+        end
+    end
+    
+    close(t);
+            
+else
     % save a series of file, one file per slice of images
     if verbose
         disp('save slices');
     end
     
-    % keep only the last '%0xd'
+    % indentify the position of output file name that will contain indices
+    pos = strfind(fname, '%0');
     pos = pos(end);
     
     % extract different parts of the file name
@@ -180,51 +252,6 @@ if ~isempty(pos)
             fileName = sprintf(format, basename, index, endname);
             imwrite(img(:,:,:,i), fileName, ...
                 'WriteMode', 'overwrite', varargin{:});
-        end
-    end
-    
-else
-    % save one file containing all slices of image
-    if verbose
-        disp('save a stack');
-    end
-    
-    if isGrayscale
-        if isempty(map)
-            % save grayscale stack without colormap
-            
-            % overwrite existing file
-            imwrite(img(:,:,1), fname, varargin{:}, 'WriteMode', 'overwrite');
-            
-            % append other slices
-            for i = 2:dim(3)
-                imwrite(img(:,:,i), fname, varargin{:}, ...
-                    'WriteMode', 'append');
-            end
-            
-        else
-            % save grayscale stack with colormap
-            
-            % overwrite existing file
-            imwrite(img(:,:,1), map, fname, varargin{:}, 'WriteMode', 'overwrite');
-            
-            % append other slices
-            for i = 2:dim(3)
-                imwrite(img(:,:,i), map, fname, varargin{:}, ...
-                    'WriteMode', 'append');
-            end
-        end
-        
-    else
-        % save color stack
-        
-        % overwrite existing file
-        imwrite(img(:,:,:,1), fname, varargin{:}, 'WriteMode', 'overwrite');
-
-        % append other slices
-        for i = 2:dim(4)
-            imwrite(img(:,:,:,i), fname, varargin{:}, ...
-                'WriteMode', 'append');
         end
     end
 end

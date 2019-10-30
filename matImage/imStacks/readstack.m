@@ -194,7 +194,7 @@ end
 if isImageJBigTiffFile(fname)
     infos = imFileInfo(fname);
     desc = infos.ImageDescription;
-    tokens = strsplit(desc, char(10));
+    tokens = strsplit(desc, newline);
     tokens(cellfun(@isempty, tokens)) = [];
 
     % parse ImageJ options

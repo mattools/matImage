@@ -1838,7 +1838,7 @@ methods
             obj.ImageData = flip(obj.ImageData, dim);
         end
         obj.updateSlice;
-        obj.DisplayNewImage;
+        obj.displayNewImage;
     end
     
     function onRotateImage(obj, hObject, eventdata)

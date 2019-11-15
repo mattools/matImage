@@ -1912,9 +1912,9 @@ methods
             'colorMap', cmap, 'backgroundColor', obj.BgColor);
     end
     
-    function onToggleZProfileDisplay(obj, varargin)
+    function onToggleZProfileDisplay(obj, src, eventData)
         
-        if isfield(obj.Handles, 'zProfileFigure')
+        if isfield(obj.Handles, 'ZProfileFigure')
             % close figure
             hFig = obj.Handles.ZProfileFigure;
             if ishandle(hFig)
@@ -1924,8 +1924,11 @@ methods
             % remove from sub-figure list
             obj.Handles.SubFigures(obj.Handles.SubFigures == hFig) = [];
             
-            % and clear field
+            % clear field
             obj.Handles = rmfield(obj.Handles, 'ZProfileFigure');
+            
+            % set menu entry to false
+            set(src, 'Checked', 'Off');
             return;
         end
 
@@ -1957,6 +1960,9 @@ methods
         set(gca, 'userdata', userdata);
         obj.Handles.ZProfileAxis = ax;
         
+        % set menu entry to true
+        set(src, 'Checked', 'On');
+            
 %         if ~isempty(obj.LastClickedPoint)
 %             updateZProfiles(obj);
 %         end
@@ -2132,7 +2138,7 @@ methods
         displayPixelCoords(obj, point);
         
         % Eventually process display of z-profile
-        if isfield(obj.Handles, 'zProfileFigure')
+        if isfield(obj.Handles, 'ZProfileFigure')
             updateZProfiles(obj);
         end
     end
@@ -2234,15 +2240,15 @@ methods
         userdata = get(obj.Handles.ZProfileAxis, 'userdata');
         if strcmp(get(obj.Handles.Figure, 'SelectionType'), 'normal')
             % replace profile list with current profile
-            userdata.Profiles = profile;
-            delete(userdata.ProfileHandles);
+            userdata.profiles = profile;
+            delete(userdata.profileHandles);
             h = plot(obj.Handles.ZProfileAxis, profile, 'b');
-            userdata.ProfileHandles = h;
+            userdata.profileHandles = h;
         else
             % add the current profile to profile list
-            userdata.Profiles = [userdata.Profiles profile];
+            userdata.profiles = [userdata.profiles profile];
             h = plot(obj.Handles.ZProfileAxis, profile, 'b');
-            userdata.ProfileHandles = [userdata.ProfileHandles h];
+            userdata.profileHandles = [userdata.profileHandles h];
         end
         
         set(obj.Handles.ZProfileAxis, 'userdata', userdata);
@@ -2256,7 +2262,7 @@ methods
         
         % update position of Z line marker
         userdata = get(obj.Handles.ZProfileAxis, 'userdata');
-        hZLine = userdata.ZLineHandle;
+        hZLine = userdata.zLineHandle;
         set(hZLine, 'XData', [obj.SliceIndex obj.SliceIndex]);
         set(hZLine, 'YData', obj.DisplayRange);
     end
@@ -2711,7 +2717,7 @@ methods
             'Enable', labelFlag, ...
             'Callback', @obj.onCropLabel);
         uimenu(menuProcess, ...
-            'Label', 'Display Z-Profile', ...
+            'Label', 'Toggle Z-Profile Display', ...
             'Callback', @obj.onToggleZProfileDisplay);
 
         uimenu(menuProcess, ...

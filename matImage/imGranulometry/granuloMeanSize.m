@@ -20,6 +20,7 @@ function gm = granuloMeanSize(tab, xi)
 %
 %   See also
 %     imGranulometry, imGranulo, imGranuloByRegion
+%
 
 % ------
 % Author: David Legland
@@ -29,17 +30,18 @@ function gm = granuloMeanSize(tab, xi)
 
 % extract data
 data = tab;
-% rowNames = cellstr(num2str((1:size(tab, 1))'));
 
 % in case data are provided as Table, extract numerical data
 if isa(tab, 'Table')
-    data = tab.data;
-%     rowNames = tab.rowNames;
+    data = tab.Data;
+    xi = str2num(char(tab.ColNames'))'; %#ok<ST2NM>
 end
 
 % compute geometric mean
 gm = exp(sum(bsxfun(@times, log(xi), data / 100), 2));
 
-% % create new data table with result
-% res = Table(gm, 'colNames', {'gmean'}, 'rowNames', rowNames);
+% if input is a table, create new data table with result
+if isa(tab, 'Table')
+    gm = Table(gm, {'gmean'}, tab.RowNames);
+end
 

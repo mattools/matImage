@@ -47,7 +47,7 @@ methods
             'HandleVisibility', 'On', ...
             'Name', 'Isosurface Options', ...
             'CloseRequestFcn', @obj.close);
-        obj.Handles.figure = fig;
+        obj.Handles.Figure = fig;
             
         setupLayout(fig);
         
@@ -165,7 +165,7 @@ methods
         
         % extract options from widgets
         str = get(obj.Handles.IsosurfaceValue, 'String');
-        [value, flag] = str2num(str); %#ok<ST2NM>
+        [value, flag] = str2num(str);
         if ~flag
             error(['Could not parse isosurface value from: ' str]);
         end

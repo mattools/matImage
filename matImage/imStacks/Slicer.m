@@ -87,10 +87,10 @@ classdef Slicer < handle
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-04-12,    using Matlab 7.9.0.529 (R2009b)
-% http://www.pfl-cepia.inra.fr/index.php?page=slicer
-% Copyright 2011 INRA - Cepia Software Platform.
+% https://github.com/mattools/matImage
+% Copyright 2011 INRAE - BIA - BIBS
 
 %% Properties
 properties

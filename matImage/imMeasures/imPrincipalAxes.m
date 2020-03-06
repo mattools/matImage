@@ -1,7 +1,7 @@
 function [center, rotMat] = imPrincipalAxes(img, varargin)
-%IMPRINCIPALAXES Computes principal axes of a 2D/3D binary image.
+% Computes principal axes of a 2D/3D binary image.
 %
-%   RES = imPrincipalAxes(IMG)
+%   [CENTER, ROTMAT] = imPrincipalAxes(IMG)
 %
 %   (Note: currently only implemented for binary images)
 %
@@ -20,14 +20,14 @@ function [center, rotMat] = imPrincipalAxes(img, varargin)
 %
 %
 %   See also
-%     imInertiaEllipse, imInertiaEllipsoid, imMoment, principalAxes
+%     imEquivalentEllipse, imEquivalentEllipsoid, imMoment, principalAxes
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2019-08-09,    using Matlab 9.6.0.1072779 (R2019a)
-% Copyright 2019 INRA - Cepia Software Platform.
+% Copyright 2019 INRAE - Cepia Software Platform.
 
 %% Default parameters
 

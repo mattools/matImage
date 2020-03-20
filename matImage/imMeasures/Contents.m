@@ -42,14 +42,6 @@
 %   imCSMoment                 - Compute centered and scaled moment of an image
 %   imHuInvariants             - Compute Hu's invariant for an image
 %
-% Geometrical measures from binary images
-%   perimeter                  - estimate perimeter of a structure
-%   epc                        - compute Euler-Poincare Characteristic (EPC) of a structure.
-%   tpl                        - compute total projection length
-%   specificSurface            - implementation of Ohser's algo for surface comput.
-%   specificIntMeanCurv        - Ohser's Integral of Mean Curvature
-%   specificIntMeanCurvDetails - Ohser's Integral of Mean Curvature with details
-%
 % General information on images
 %   imSize                     - Compute the size of an image in [x y z] order
 %   is3DImage                  - Check if an image is 3D
@@ -86,7 +78,7 @@
 help Contents
 
 %   Deprecated:
-%   specificIMCDetails         - Ohser's Integral of Mean Curvature
+
 %   imInertiaEllipse           - Inertia ellipse of a binary or label image
 %   imInertiaEllipsoid         - Inertia ellipsoid of a 3D binary image
 

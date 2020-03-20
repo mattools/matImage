@@ -18,7 +18,7 @@
 %       structure border.
 %       Such functions should fit most needs.
 %   * im<Param>Estimate: estimation of the parameter by considering image
-%       is a representative window of a larger structure. the Intersection
+%       is a representative window of a larger structure. The intersection
 %       of the structure with image border is not taken into account for
 %       measurements.
 %   * im<Param>Density: same as im<Param>Estimate, but the result is
@@ -107,6 +107,14 @@
 %   imProjectedDiameter   - Projected diameter in a given direction
 %   imProjectedArea       - Total projected area in a given direction
 % 
+%  Obsolete functions
+%   perimeter                  - estimate perimeter of a structure
+%   epc                        - compute Euler-Poincare Characteristic (EPC) of a structure.
+%   tpl                        - compute total projection length
+%   specificSurface            - implementation of Ohser's algo for surface comput.
+%   specificIntMeanCurv        - Ohser's Integral of Mean Curvature
+%   specificIntMeanCurvDetails - Ohser's Integral of Mean Curvature with details
+%
 %
 % References
 % If you use this package, please be kind to cite following reference:
@@ -128,6 +136,9 @@
 % Copyright 2011 INRA - Cepia Software Platform.
 
 
-%% under development
+%% Obsolete
 
+%   specificIMCDetails         - Ohser's Integral of Mean Curvature
+
+%% under development
 

@@ -46,14 +46,14 @@ function [breadth, labels] = imMeanBreadthDensity(img, varargin)
 %         0.0020
 %
 %   See also
-%     imMeanBreadth, imSurfaceDensity, imMeanBreadthLut
+%     imMeanBreadth, imSurfaceAreaDensity, imMeanBreadthLut
 %
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2015-04-20,    using Matlab 8.4.0.150421 (R2014b)
-% Copyright 2015 INRA - Cepia Software Platform.
+% Copyright 2015 INRAE - Cepia Software Platform.
 
 % check image dimension
 if ndims(img) ~= 3

@@ -1,5 +1,5 @@
 function [breadth, labels] = imMeanBreadthEstimate(img, varargin)
-%IMMEANBREADTHESTIMATE Estimate mean breadth of a binary structure
+% Estimate mean breadth of a binary structure.
 %
 %   BREADTH = imMeanBreadthEstimate(IMG)
 %   The aim of this function is to be called by the "imMeanBreadthDensity"
@@ -16,14 +16,14 @@ function [breadth, labels] = imMeanBreadthEstimate(img, varargin)
 %   Example
 %
 %   See also
-%   imMeanBreadthEstimate, imSurfaceEstimate
+%     imMeanBreadthEstimate, imSurfaceAreaEstimate
 %
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2015-04-20,    using Matlab 8.4.0.150421 (R2014b)
-% Copyright 2015 INRA - Cepia Software Platform.
+% Copyright 2015 INRAE - Cepia Software Platform.
 
 %% Basic error checking
 

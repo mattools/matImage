@@ -1,5 +1,5 @@
 function res = imProjectedArea(img, shifts, varargin)
-%IMPROJECTEDAREA  Total projected area in a given direction
+% Total projected area in a given direction.
 %
 %   AREA = imProjectedArea(IMG, SHIFT)
 %   IMG is a 3D binary image, SHIFT is a 1-by3 row vector indicating the
@@ -21,9 +21,9 @@ function res = imProjectedArea(img, shifts, varargin)
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2015-05-27,    using Matlab 8.4.0.150421 (R2014b)
-% Copyright 2015 INRA - Cepia Software Platform.
+% Copyright 2015 INRAE - Cepia Software Platform.
 
 dim = size(img);
 

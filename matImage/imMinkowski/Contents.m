@@ -5,9 +5,9 @@
 %   quantities from 2D or 3D images.
 %   For 2D images, parameters are the area, the perimeter and the (2D)
 %   Euler Number. 
-%   For 3D images, parameters are the volume, the surface area (called
-%   surface), the mean breadth (also known as integral of mean curvature),
-%   and the (3D) Euler Number.
+%   For 3D images, parameters are the volume, the surface area, the mean
+%   breadth (also known as integral of mean curvature), and the (3D) Euler
+%   Number.
 %   For the sake of completeness, parameters for 1D images are also
 %   included: length and number (1D Euler Number).
 %
@@ -78,11 +78,11 @@
 %   imVolumeEstimate      - Estimate volume of a 3D binary structure with edge correction
 %
 %  Surface area in 3D images
-%   imSurface             - Surface area of a 3D binary structure
-%   imSurfaceDensity      - Surface area density of a 3D binary structure
-%   imSurfaceEstimate     - Estimate surface area of a binary 3D structure
-%   imSurfaceLut          - Look-Up Table for computing surface area of a 3D binary image
-%   imJointSurface        - Surface area of the interface between two labels
+%   imSurfaceArea         - Surface area of a 3D binary structure.
+%   imSurfaceAreaEstimate - Estimate surface area of a binary 3D structure.
+%   imSurfaceAreaDensity  - Surface area density of a 3D binary structure.
+%   imSurfaceAreaLut      - Look-Up Table for computing surface area of a 3D binary image.
+%   imJointSurfaceArea    - Surface area of the interface between two labels.
 %
 %  Mean breadth (integral of mean curvature) in 3D images
 %   imMeanBreadth         - Mean breadth of a 3D binary or label image

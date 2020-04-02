@@ -50,13 +50,13 @@ function lut = imMeanBreadthLut(varargin)
 %
 %
 %   See also
-%     imMeanBreadth, imSurfaceLut, imPerimeterLut, imBinaryConfigHisto
+%     imMeanBreadth, imSurfaceAreaLut, imPerimeterLut, imBinaryConfigHisto
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2006-02-23
-% Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
+% Copyright 2006 INRAE - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
 %% Extract input parameters
 

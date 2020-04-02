@@ -1,5 +1,5 @@
 function [vol, labels] = imVolume(img, varargin)
-% Volume measure of a 3D binary structure
+% Volume measure of a 3D binary structure.
 %
 %   V = imVolume(IMG);
 %   Compute volume of the image. IMG is either a binary image, or a label
@@ -12,18 +12,18 @@ function [vol, labels] = imVolume(img, varargin)
 %   voxel size in each direction.
 %   
 %   See Also
-%   imVolumeDensity, imSurface, imMeanBreadth
+%   imVolumeDensity, imSurfaceArea, imMeanBreadth
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-15,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRA - Cepia Software Platform.
+% Copyright 2010 INRAE - Cepia Software Platform.
 
 % check image dimension
-if ndims(img)~=3
-    error('first argument should be a 2D binary or label image');
+if ndims(img) ~= 3
+    error('first argument should be a 3D binary or label image');
 end
 
 % in case of a label image, return a vector with a set of results

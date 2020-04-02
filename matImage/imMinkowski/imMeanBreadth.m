@@ -52,14 +52,14 @@ function [breadth, labels] = imMeanBreadth(img, varargin)
 %          8
 %
 %   See also
-%     imVolume, imSurface
+%     imVolume, imSurfaceArea, imEuler3d
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-10-08,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRA - Cepia Software Platform.
+% Copyright 2010 INRAE - Cepia Software Platform.
 
 % histrory
 % 2013-03-29 accelerate processing of 3D images

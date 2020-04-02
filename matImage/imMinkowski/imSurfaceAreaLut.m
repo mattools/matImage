@@ -1,17 +1,17 @@
-function lut = imSurfaceLut(varargin)
-%IMSURFACELUT Look-Up Table for computing surface area of a 3D binary image
+function lut = imSurfaceAreaLut(varargin)
+% Look-Up Table for computing surface area of a 3D binary image.
 %
-%   LUT = surfaceLut
+%   LUT = imSurfaceAreaLut
 %   return an array of size 256, which can be used with function imLUT to
 %   create map of contribution to the surface. We consider here tiles
 %   located in the interior of image (none of the pixels is located on the
 %   edge).
 %
-%   LUT = surfaceLut(SCALE)
+%   LUT = imSurfaceAreaLut(SCALE)
 %   Also specify size of the elementary tile, in user units (Default is
 %   [1 1 1]).
 %
-%   LUT = surfaceLut(SCALE, NDIR)
+%   LUT = imSurfaceAreaLut(SCALE, NDIR)
 %   Also specify the number of directions for computing intersections,
 %   which can be either 3 (the default), or 13.
 %
@@ -22,7 +22,7 @@ function lut = imSurfaceLut(varargin)
 %     IMG = sqrt( (x-50.12).^2 + (y-50.23).^2 + (z-50.34).^2) < 40;
 %     % compute surface area of the ball
 %     HISTO = imBinaryConfigHisto(IMG);
-%     LUT = imSurfaceLut(13);
+%     LUT = imSurfaceAreaLut(13);
 %     S = sum(HISTO .* LUT)
 %     S =
 %         2.0103e+04
@@ -52,14 +52,14 @@ function lut = imSurfaceLut(varargin)
 %
 %
 %   See also
-%     imSurface, imSurfaceEstimate, imPerimeterLut, imMeanBreadthLut
+%     imSurfaceArea, imSurfaceAreaEstimate, imPerimeterLut, imMeanBreadthLut
 %
 
 %   ------
 %   Author: David Legland
-%   e-mail: david.legland@nantes.inra.fr
+%   e-mail: david.legland@inrae.fr
 %   Created: 2006-02-23
-%   Copyright 2005 INRA - CEPIA Nantes - MIAJ Jouy-en-Josas.
+%   Copyright 2005 INRAE - CEPIA Nantes - MIAJ Jouy-en-Josas.
 
 %% Extract input data
 

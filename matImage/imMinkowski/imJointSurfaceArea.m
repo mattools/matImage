@@ -1,15 +1,15 @@
-function surf = imJointSurface(img, L1, L2, varargin)
-%IMJOINTSURFACE Surface area of the interface between two labels
+function surf = imJointSurfaceArea(img, L1, L2, varargin)
+% Surface area of the interface between two labels.
 %
-%   S = imJointSurface(LBL, L1, L2)
+%   S = imJointSurfaceArea(LBL, L1, L2)
 %   Estimates the joint surface area between the two labels L1 and L2 in
 %   the label image LBL.
 %
-%   S = imJointSurface(LBL, L1, L2, NDIRS)
+%   S = imJointSurfaceArea(LBL, L1, L2, NDIRS)
 %   Specifies the number of directions used for estimating surface area.
 %   NDIRS can be either 3 or 13 (the default).
 %
-%   S = imJointSurface(..., RESOL)
+%   S = imJointSurfaceArea(..., RESOL)
 %   Specifies image resolution. RESOL is a 1-by-3 row vector containing
 %   resolution in the X, Y and Z direction (in that order).
 %
@@ -20,12 +20,12 @@ function surf = imJointSurface(img, L1, L2, varargin)
 %     % convert to image with two different labels
 %     img2 = uint8(img + 1);
 %     % compute joint surface area
-%     imJointSurface(img2, 1, 2)
+%     imJointSurfaceArea(img2, 1, 2)
 %     ans = 
 %         2.0102e+004
 %
 %   See also
-%     imSurface
+%     imSurfaceArea
 
 % ------
 % Author: David Legland

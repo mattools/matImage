@@ -1,5 +1,5 @@
 function histo = imBinaryConfigHisto(img)
-%IMBINARYCONFIGHISTO Histogram of binary configuration from 2D/3D image
+% Histogram of binary configurations from 2D/3D image.
 %
 %   HISTO = imBinaryConfigHisto(IMG)
 %   Computes the histogram of 2-by-2 or 2-by-2 binary configuration in the
@@ -19,7 +19,7 @@ function histo = imBinaryConfigHisto(img)
 %     % compute surface area of the ball
 %     HISTO = imBinaryConfigHisto(img);
 %     
-%     LUT = imSurfaceLut(13);
+%     LUT = imSurfaceAreaLut(13);
 %     S = sum(HISTO .* LUT)
 %     S =
 %         2.0103e+04
@@ -30,14 +30,14 @@ function histo = imBinaryConfigHisto(img)
 %         -0.0167
 %
 %   See also
-%     imSurfaceLut, imPerimeterLut
+%     imSurfaceAreaLut, imPerimeterLut
 %
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2015-04-17,    using Matlab 8.4.0.150421 (R2014b)
-% Copyright 2015 INRA - Cepia Software Platform.
+% Copyright 2015 INRAE - Cepia Software Platform.
 
 dims = size(img);
 

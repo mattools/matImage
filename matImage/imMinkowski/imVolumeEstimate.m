@@ -20,8 +20,8 @@ function vol = imVolumeEstimate(img, varargin)
 %% Input arguments processing
 
 % check image dimension
-if ndims(img)~=2 %#ok<ISMAT>
-    error('first argument should be a 2D binary or label image');
+if ndims(img) ~= 3
+    error('first argument should be a 3D binary or label image');
 end
 
 % in case of a label image, return a vector with a set of results
@@ -29,7 +29,7 @@ if ~islogical(img)
     labels = unique(img);
     labels(labels==0) = [];
     vol = zeros(length(labels), 1);
-    for i=1:length(labels)
+    for i = 1:length(labels)
         vol(i) = imVolumeEstimate(img==labels(i), varargin{:});
     end
     return;
@@ -63,5 +63,5 @@ v = sum(sum(sum(img([1 end], [1 end], [1 end]))));
 % estimate area using edge weighting according to multiplicity
 vol = vol -(f1+f2+f3)/2 + (e1+e2+e3)/4 - v/8;
 
-% multiply by area of a single pixel
-vol = vol*prod(delta);
+% multiply by volume of a single voxel
+vol = vol * prod(delta);

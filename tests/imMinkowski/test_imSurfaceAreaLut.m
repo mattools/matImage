@@ -1,10 +1,10 @@
-function tests = test_imSurfaceLut(varargin)
-%TEST_IMSURFACELUT  Test case for the file imSurfaceLut
+function tests = test_imSurfaceAreaLut(varargin)
+%Test case for the file imSurfaceAreaLut.
 %
-%   Test case for the file imSurfaceLut
-
+%   Test case for the file imSurfaceAreaLut
+%
 %   Example
-%   test_imSurfaceLut
+%   test_imSurfaceAreaLut
 %
 %   See also
 %
@@ -25,11 +25,11 @@ R = 20;
 Sth = 4*pi*R*R;
 
 img = discreteBall(1:50, 1:50, 1:50, [25.12 25.23 25.34 R]);
-S3 = imSurface(img, 3);
+S3 = imSurfaceArea(img, 3);
 
 % compute histogram of configurations
 bch = imBinaryConfigHisto(img);
-lut3 = imSurfaceLut([1 1 1], 3);
+lut3 = imSurfaceAreaLut([1 1 1], 3);
 
 S3byLut = sum(bch .* lut3);
 
@@ -44,11 +44,11 @@ R = 20;
 Sth = 4*pi*R*R;
 
 img = discreteBall(1:50, 1:50, 1:50, [25.12 25.23 25.34 R]);
-S13 = imSurface(img, 13);
+S13 = imSurfaceArea(img, 13);
 
 % compute histogram of configurations
 bch = imBinaryConfigHisto(img);
-lut13 = imSurfaceLut([1 1 1], 13);
+lut13 = imSurfaceAreaLut([1 1 1], 13);
 
 S13byLut = sum(bch .* lut13);
 
@@ -62,11 +62,11 @@ function test_Singleton_S3_resol345(testCase)
 img = false([5 5 5]);
 img(3,3,3) = 1;
 resol = [3 4 5];
-S3 = imSurface(img, resol, 3);
+S3 = imSurfaceArea(img, resol, 3);
 
 % compute histogram of configurations
 bch = imBinaryConfigHisto(img);
-lut3 = imSurfaceLut(resol, 3);
+lut3 = imSurfaceAreaLut(resol, 3);
 
 S3byLut = sum(bch .* lut3);
 
@@ -79,11 +79,11 @@ function test_Cube_S3_resol345(testCase)
 img = false([5 5 5]);
 img(2:4,2:4,2:4) = 1;
 resol = [3 4 5];
-S3 = imSurface(img, resol, 3);
+S3 = imSurfaceArea(img, resol, 3);
 
 % compute histogram of configurations
 bch = imBinaryConfigHisto(img);
-lut3 = imSurfaceLut(resol, 3);
+lut3 = imSurfaceAreaLut(resol, 3);
 
 S3byLut = sum(bch .* lut3);
 
@@ -98,11 +98,11 @@ Sth = 4*pi*R*R;
 
 img = discreteBall(1:3:100, 1:4:100, 1:5:100, [50.12 50.23 50.34 R]);
 resol = [3 4 5];
-S3 = imSurface(img, resol, 3);
+S3 = imSurfaceArea(img, resol, 3);
 
 % compute histogram of configurations
 bch = imBinaryConfigHisto(img);
-lut3 = imSurfaceLut(resol, 3);
+lut3 = imSurfaceAreaLut(resol, 3);
 
 S3byLut = sum(bch .* lut3);
 
@@ -118,11 +118,11 @@ Sth = 4*pi*R*R;
 
 img = discreteBall(1:3:100, 1:4:100, 1:5:100, [50.12 50.23 50.34 R]);
 resol = [3 4 5];
-S13 = imSurface(img, resol, 13);
+S13 = imSurfaceArea(img, resol, 13);
 
 % compute histogram of configurations
 bch = imBinaryConfigHisto(img);
-lut13 = imSurfaceLut(resol, 13);
+lut13 = imSurfaceAreaLut(resol, 13);
 
 S13byLut = sum(bch .* lut13);
 

@@ -1,7 +1,7 @@
-function [sd, labels] = imSurfaceDensity(img, varargin)
-%IMSURFACEDENSITY Surface area density of a 3D binary structure
+function [sd, labels] = imSurfaceAreaDensity(img, varargin)
+% Surface area density of a 3D binary structure.
 %
-%   Sv = imSurfaceDensity(IMG)
+%   Sv = imSurfaceAreaDensity(IMG)
 %   Estimate surface area density (ratio of surface area over volume of the
 %   region of interest) from a binary image IMG.
 %   The intersection of the structure with the bounds of the image is not
@@ -28,7 +28,7 @@ function [sd, labels] = imSurfaceDensity(img, varargin)
 %         img = img | bin;
 %     end
 %     % measured surface area density
-%     imSurfaceDensity(img)
+%     imSurfaceAreaDensity(img)
 %     ans =
 %         0.1033
 %     % compare with theoretical surface area density
@@ -39,14 +39,14 @@ function [sd, labels] = imSurfaceDensity(img, varargin)
 %
 %
 %   See also
-%     imSurface, imSurfaceEstimate, imSurfaceLut
+%     imSurfaceArea, imSurfaceAreaEstimate, imSurfaceAreaLut
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRA - Cepia Software Platform.
+% Copyright 2010 INRAE - Cepia Software Platform.
 
 % check image dimension
 if ndims(img) ~= 3
@@ -58,8 +58,8 @@ if ~islogical(img)
     labels = unique(img);
     labels(labels==0) = [];
     sd = zeros(length(labels), 1);
-    for i=1:length(labels)
-        sd(i) = imSurfaceDensity(img==labels(i), varargin{:});
+    for i = 1:length(labels)
+        sd(i) = imSurfaceAreaDensity(img==labels(i), varargin{:});
     end
     return;
 end
@@ -88,7 +88,7 @@ end
 
 
 % component area in image
-s = imSurfaceEstimate(img, delta, nDirs);
+s = imSurfaceAreaEstimate(img, delta, nDirs);
 
 % total volume of image (without edges)
 refVol = prod(size(img)-1) * prod(delta);

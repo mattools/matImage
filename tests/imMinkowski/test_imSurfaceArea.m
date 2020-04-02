@@ -1,19 +1,19 @@
-function tests = test_imSurface(varargin)
-%TEST_IMSURFACE  One-line description here, please.
+function tests = test_imSurfaceArea(varargin)
+% Test case for the file imSurfaceArea.
 %
-%   output = test_imSurface(input)
+%   output = test_imSurfaceArea(input)
 %
 %   Example
-%   test_imSurface
+%   test_imSurfaceArea
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-10-08,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRA - Cepia Software Platform.
+% Copyright 2010 INRAE - Cepia Software Platform.
 
 tests = functiontests(localfunctions);
 
@@ -24,8 +24,8 @@ img = ones([5 5 5]) > 0;
 imgb = padarray(img, [1 1 1]) > 0;
 
 nDir = 3;
-b = imSurface(img, nDir);
-bb = imSurface(imgb, nDir);
+b = imSurfaceArea(img, nDir);
+bb = imSurfaceArea(imgb, nDir);
 assertEqual(testCase, b, bb);
 
 
@@ -35,8 +35,8 @@ img = ones([5 5 5]) > 0;
 imgb = padarray(img, [1 1 1]) > 0;
 
 nDir = 13;
-b = imSurface(img, nDir);
-bb = imSurface(imgb, nDir);
+b = imSurfaceArea(img, nDir);
+bb = imSurfaceArea(imgb, nDir);
 assertEqual(testCase, b, bb);
 
 
@@ -46,8 +46,8 @@ img = ones([5 5 5]) > 0;
 imgb = padarray(img, [1 1 1]) > 0;
 
 nDir = 3;
-b = imSurface(img, nDir, [1 2 3]);
-bb = imSurface(imgb, nDir, [1 2 3]);
+b = imSurfaceArea(img, nDir, [1 2 3]);
+bb = imSurfaceArea(imgb, nDir, [1 2 3]);
 assertEqual(testCase, b, bb);
 
 
@@ -63,14 +63,14 @@ img(4:5, 1:3, 4:5) = 6;
 img(1:3, 4:5, 4:5) = 7;
 img(4:5, 4:5, 4:5) = 8;
 
-b3 = imSurface(img, 3);
-b13 = imSurface(img, 13);
+b3 = imSurfaceArea(img, 3);
+b13 = imSurfaceArea(img, 13);
 assertEqual(testCase, 8, length(b3));
 assertEqual(testCase, 8, length(b13));
 
 imgb = padarray(img, [1 1 1]);
-bb3 = imSurface(imgb, 3);
-bb13 = imSurface(imgb, 13);
+bb3 = imSurfaceArea(imgb, 3);
+bb13 = imSurfaceArea(imgb, 13);
 
 assertEqual(testCase, b3, bb3);
 assertEqual(testCase, b13, bb13);

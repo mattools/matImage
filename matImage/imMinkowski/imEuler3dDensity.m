@@ -1,5 +1,5 @@
 function chi = imEuler3dDensity(img, varargin)
-%IMEULER3DDENSITY Compute Euler density in a 3D image
+% Compute Euler density in a 3D image.
 %
 %   CHI_V = imEuler3dDensity(IMG)
 %   Compute Euler number estimate in a 3D image, and normalize by the
@@ -15,13 +15,13 @@ function chi = imEuler3dDensity(img, varargin)
 %   imEuler3dDensity
 %
 %   See also
-%   imEuler3d, imEuler3dEstimate, imSurfaceDensity, imMeanBreadthDensity
+%     imEuler3d, imEuler3dEstimate, imSurfaceAreaDensity, imMeanBreadthDensity
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRA - Cepia Software Platform.
+% Copyright 2010 INRAE - Cepia Software Platform.
 
 
 % check image dimension

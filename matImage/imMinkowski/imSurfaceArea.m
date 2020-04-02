@@ -1,20 +1,20 @@
-function [surf, labels] = imSurface(img, varargin)
-%IMSURFACE Surface area of a 3D binary structure
+function [surf, labels] = imSurfaceArea(img, varargin)
+% Surface area of a 3D binary structure.
 %
-%   S = imSurface(IMG)
+%   S = imSurfaceArea(IMG)
 %   Estimates the surface area of the 3D binary structure represented by
 %   IMG.
 %
-%   S = imSurface(IMG, NDIRS)
+%   S = imSurfaceArea(IMG, NDIRS)
 %   Specifies the number of directions used for estimating surface area.
 %   NDIRS can be either 3 or 13, default is 13.
 %
-%   S = imSurface(..., RESOL)
+%   S = imSurfaceArea(..., RESOL)
 %   Specifies image resolution. RESOL is a 1-by-3 row vector containing
 %   resolution in the X, Y and Z direction (in that order).
 %
-%   S = imSurface(LBL)
-%   [S L] = imSurface(LBL)
+%   S = imSurfaceArea(LBL)
+%   [S, L] = imSurface(AreaLBL)
 %   When LBL is a label image, returns the surface area of each label in
 %   the 3D array, and eventually returns the indices of processed labels.
 %
@@ -24,7 +24,7 @@ function [surf, labels] = imSurface(img, varargin)
 %     [x y z] = meshgrid(1:100, 1:100, 1:100);
 %     img = sqrt( (x-50.12).^2 + (y-50.23).^2 + (z-50.34).^2) < 40;
 %     % compute surface area of the ball
-%     S = imSurface(img)
+%     S = imSurfaceArea(img)
 %     S =
 %         2.0103e+04
 %     % compare with theoretical value
@@ -40,7 +40,7 @@ function [surf, labels] = imSurface(img, varargin)
 %     img(5:8, 5:8, 2:3) = 4;
 %     img(2:3, 5:8, 2:3) = 3;
 %     img(5:8, 5:8, 5:8) = 8;
-%     [surfs, labels] = imSurface(img)
+%     [surfs, labels] = imSurfaceArea(img)
 %     surfs =
 %        16.4774
 %        29.1661
@@ -56,14 +56,14 @@ function [surf, labels] = imSurface(img, varargin)
 %
 %
 %   See also
-%     imVolume, imMeanBreadth, imSurfaceDensity, imJointSurface
+%     imVolume, imMeanBreadth, imSurfaceAreaDensity, imJointSurfaceArea
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRA - Cepia Software Platform.
+% Copyright 2010 INRAE - Cepia Software Platform.
 
 
 % check image dimension
@@ -96,7 +96,7 @@ if ~islogical(img)
 
         % crop image of current label
         bin = img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
-        surf(i) = imSurface(bin, varargin{:});
+        surf(i) = imSurfaceArea(bin, varargin{:});
     end
     
     return;

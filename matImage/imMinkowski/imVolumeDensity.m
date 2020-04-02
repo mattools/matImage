@@ -1,5 +1,5 @@
 function ad = imVolumeDensity(img, varargin)
-%Compute volume density of a 3D image
+% Compute volume density of a 3D image.
 %
 %   Vv = imVolumeDensity(IMG)
 %
@@ -7,16 +7,17 @@ function ad = imVolumeDensity(img, varargin)
 %   imVolumeDensity
 %
 %   See also
-%   imVolume, imAreaDensity
+%     imVolume, imSurfaceAreaDensity
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-21,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRA - Cepia Software Platform.
+% Copyright 2010 INRAE - Cepia Software Platform.
 
 % check image dimension
-if ndims(img)~=3
+if ndims(img) ~= 3
     error('first argument should be a 3D image');
 end
 

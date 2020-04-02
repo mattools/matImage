@@ -29,13 +29,13 @@ function [perim, labels] = imPerimeter(img, varargin)
 %     % to be compared to (2 * pi * 40), approximately 251.3274
 %
 %   See also
-%     imArea, imSurface, imMeanBreadth, imPerimeterLut
+%     imArea, imSurfaceArea, imMeanBreadth, imPerimeterLut
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-15,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRA - Cepia Software Platform.
+% Copyright 2010 INRAE - Cepia Software Platform.
 
 
 %% Pre-processing

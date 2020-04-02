@@ -1,5 +1,5 @@
-function testSuite = test_gaussianKernel3d(varargin)
-%TEST_GAUSSIANKERNEL3D  One-line description here, please.
+function tests = test_gaussianKernel3d(varargin)
+% Test suite for function gaussianKernel3d.
 %
 %   output = test_gaussianKernel3d(input)
 %
@@ -15,26 +15,27 @@ function testSuite = test_gaussianKernel3d(varargin)
 % Created: 2010-10-11,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function test_scalarSize %#ok<*DEFNU>
+
+function test_scalarSize(testCase) %#ok<*DEFNU>
 
 k = gaussianKernel3d(3, 2);
 
-assertEqual([3 3 3], size(k));
-assertElementsAlmostEqual(1, sum(k(:)));
+assertEqual(testCase, [3 3 3], size(k));
+assertEqual(testCase, 1, sum(k(:)), 'AbsTol', 1e-10);
 
-function test_vectorSize
+function test_vectorSize(testCase)
 
 k = gaussianKernel3d([7 7 5], 3);
 
-assertEqual([7 7 5], size(k));
-assertElementsAlmostEqual(1, sum(k(:)));
+assertEqual(testCase, [7 7 5], size(k));
+assertEqual(testCase, 1, sum(k(:)), 'AbsTol', 1e-10);
  
-function test_vectorSigma
+function test_vectorSigma(testCase)
 
 k = gaussianKernel3d([7 7 5], [2 2 1]);
 
-assertEqual([7 7 5], size(k));
-assertElementsAlmostEqual(1, sum(k(:)));
+assertEqual(testCase, [7 7 5], size(k));
+assertEqual(testCase, 1, sum(k(:)), 'AbsTol', 1e-10);
  

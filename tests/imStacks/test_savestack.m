@@ -1,4 +1,4 @@
-function test_suite = test_savestack(varargin) %#ok<STOUT>
+function tests = test_savestack(varargin)
 %TEST_SAVESTACK  Test case for the file savestack
 %
 %   Test case for the file savestack
@@ -15,9 +15,10 @@ function test_suite = test_savestack(varargin) %#ok<STOUT>
 % Created: 2011-09-27,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
-initTestSuite;
+tests = functiontests(localfunctions);
 
-function test_SaveGrayStack %#ok<*DEFNU>
+
+function test_SaveGrayStack(testCase)
 % Test call of function without argument
 
 D = load ('mri');
@@ -31,12 +32,12 @@ end
 savestack(D, fName);
 
 info = imfinfo(fName);
-assertEqual(27, length(info));
+assertEqual(testCase, 27, length(info));
 
 delete(fName);
 
 
-function test_SaveGraySlices
+function test_SaveGraySlices(testCase)
 
 D = load ('mri');
 D = squeeze(D.D);
@@ -52,8 +53,7 @@ end
 savestack(D, patternName);
 
 list = dir(genericName);
-assertEqual(27, length(list));
-
+assertEqual(testCase, 27, length(list));
 
 list = dir(genericName);
 for i = 1:length(list)
@@ -61,9 +61,8 @@ for i = 1:length(list)
 end
 
 
-function test_SaveRGBStack
+function test_SaveRGBStack(testCase)
 % Test call of function without argument
-
 
 % create a 3D color image
 mri = load ('mri');
@@ -80,14 +79,13 @@ end
 savestack(ovr, fName);
 
 info = imfinfo(fName);
-assertEqual(27, length(info));
+assertEqual(testCase, 27, length(info));
 
 delete(fName);
 
 
-function test_SaveRGBSlices
+function test_SaveRGBSlices(testCase)
 % Test call of function without argument
-
 
 % create a 3D color image
 mri = load ('mri');
@@ -107,15 +105,14 @@ end
 savestack(ovr, patternName);
 
 list = dir(genericName);
-assertEqual(27, length(list));
-
+assertEqual(testCase, 27, length(list));
 
 list = dir(genericName);
 for i = 1:length(list)
     delete(list(i).name);
 end
 
-function test_SaveGrayStackMap
+function test_SaveGrayStackMap(testCase)
 
 D = load ('mri');
 D = squeeze(D.D);
@@ -129,13 +126,13 @@ map = jet(256);
 savestack(D, map, fName);
 
 info = imfinfo(fName);
-assertEqual(27, length(info));
-assertFalse(isempty(info(1).Colormap));
+assertEqual(testCase, 27, length(info));
+assertFalse(testCase, isempty(info(1).Colormap));
 
 delete(fName);
 
 
-function test_SaveGraySlicesMap
+function test_SaveGraySlicesMap(testCase)
 
 D = load ('mri');
 D = squeeze(D.D);
@@ -152,9 +149,9 @@ end
 savestack(D, map, patternName);
 
 list = dir(genericName);
-assertEqual(27, length(list));
+assertEqual(testCase, 27, length(list));
 info = imfinfo(list(1).name);
-assertFalse(isempty(info.Colormap));
+assertFalse(testCase, isempty(info.Colormap));
 
 
 list = dir(genericName);

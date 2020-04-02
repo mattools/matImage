@@ -1,4 +1,4 @@
-function testSuite = test_imPerimeter(varargin)
+function tests = test_imPerimeter(varargin)
 % Test function for function testImPerimeter
 %   output = testImPerimeter(input)
 %
@@ -14,9 +14,10 @@ function testSuite = test_imPerimeter(varargin)
 % Created: 2009-04-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function testAddBorderD2 %#ok<*DEFNU>
+
+function testAddBorderD2(testCase)
 
 img = ones([5, 5]);
 imgb = padarray(img, [1 1]);
@@ -24,9 +25,11 @@ imgb = padarray(img, [1 1]);
 nd  = 2;
 p   = imPerimeter(img, nd);
 pb  = imPerimeter(imgb, nd);
-assertEqual(p, pb);
 
-function testAddBorderD4
+assertEqual(testCase, p, pb);
+
+
+function testAddBorderD4(testCase)
 
 img = ones([5, 5]);
 imgb = padarray(img, [1 1]);
@@ -34,10 +37,11 @@ imgb = padarray(img, [1 1]);
 nd  = 4;
 p   = imPerimeter(img, nd);
 pb  = imPerimeter(imgb, nd);
-assertEqual(p, pb);
+
+assertEqual(testCase, p, pb);
 
 
-function testAddBorderD4Aniso
+function testAddBorderD4Aniso(testCase)
 
 img = ones([5, 5]);
 imgb = padarray(img, [1 1]);
@@ -45,13 +49,16 @@ imgb = padarray(img, [1 1]);
 nd  = 4;
 p   = imPerimeter(img, nd, [2 3]);
 pb  = imPerimeter(imgb, nd, [2 3]);
-assertEqual(p, pb);
 
-function testLabelImage
+assertEqual(testCase, p, pb);
+
+
+function testLabelImage(testCase)
 
 lbl = bwlabel(imread('coins.png') > 100);
+
 p = imPerimeter(lbl);
 
-assertEqual(10, length(p));
+assertEqual(testCase, 10, length(p));
 assertTrue(min(p) > 150);
 assertTrue(max(p) < 300);

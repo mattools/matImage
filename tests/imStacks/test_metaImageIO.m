@@ -1,4 +1,4 @@
-function test_suite = test_metaImageIO(varargin) %#ok<STOUT>
+function tests = test_metaImageIO(varargin)
 % Test MetaImage import and export
 %   output = test_metaImageIO(input)
 %
@@ -14,9 +14,10 @@ function test_suite = test_metaImageIO(varargin) %#ok<STOUT>
 % Created: 2009-07-01,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
-initTestSuite;
+tests = functiontests(localfunctions);
 
-function testRW_Gray8_2D %#ok<*DEFNU>
+
+function testRW_Gray8_2D(testCase)
 
 img = zeros(10, 10, 'uint8');
 img(3:8, 3:8) = 50;
@@ -30,10 +31,11 @@ info = metaImageInfo('img_10x10_gray8.mhd');
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
-function testRW_Gray8_2D_Directory
+
+function testRW_Gray8_2D_Directory(testCase)
 
 
 img = zeros(10, 10, 'uint8');
@@ -55,11 +57,11 @@ info = metaImageInfo(fileName);
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 
-function testRW_Gray8_2D_NoExtension
+function testRW_Gray8_2D_NoExtension(testCase)
 
 img = zeros(10, 10, 'uint8');
 img(3:8, 3:8) = 50;
@@ -73,11 +75,11 @@ info = metaImageInfo('img_10x10_gray8');
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 
-function testRW_Gray8_2D_Rect
+function testRW_Gray8_2D_Rect(testCase)
 
 Nx = 15;
 Ny = 10;
@@ -93,10 +95,11 @@ info = metaImageInfo('img_10x15_gray8.mhd');
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
-function testRW_RGB8_2D_peppers
+
+function testRW_RGB8_2D_peppers(testCase)
 
 img = imread('peppers.png');
 imgSize = size(img);
@@ -108,34 +111,34 @@ info = metaImageInfo(fileName);
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 
-function testRW_Gray8_3D_initSizeFromSpacing
+function testRW_Gray8_3D_initSizeFromSpacing(testCase)
 
 info = metaImageInfo('img_10x15x20_gray8_Spc123.mhd');
 
-assertEqual([1 2 3], info.ElementSpacing);
-assertEqual([1 2 3], info.ElementSize);
+assertEqual(testCase, [1 2 3], info.ElementSpacing);
+assertEqual(testCase, [1 2 3], info.ElementSize);
 
 
-function testRW_Gray8_3D_initSpacingFromSize
+function testRW_Gray8_3D_initSpacingFromSize(testCase)
 
 info = metaImageInfo('img_10x15x20_gray8_Siz123.mhd');
 
-assertEqual([1 2 3], info.ElementSpacing);
-assertEqual([1 2 3], info.ElementSize);
+assertEqual(testCase, [1 2 3], info.ElementSpacing);
+assertEqual(testCase, [1 2 3], info.ElementSize);
 
-function testRW_Gray8_3D_noSizeInit
+function testRW_Gray8_3D_noSizeInit(testCase)
 
 info = metaImageInfo('img_10x15x20_gray8_noSizeInit.mhd');
 
-assertEqual([1 1 1], info.ElementSpacing);
-assertEqual([1 1 1], info.ElementSize);
+assertEqual(testCase, [1 1 1], info.ElementSpacing);
+assertEqual(testCase, [1 1 1], info.ElementSize);
 
 
-function test_read_Gray8_3D
+function test_read_Gray8_3D(testCase)
 
 img = zeros([10, 10, 10], 'uint8');
 img(2:8, 3:8) = 50;
@@ -149,11 +152,11 @@ info = metaImageInfo('img_10x10x10_gray8.mhd');
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 
-function testRW_Gray8_3D_Rect
+function testRW_Gray8_3D_Rect(testCase)
 
 img = zeros([15, 10, 20], 'uint8');
 img(2:8, 3:8, 5:16) = 50;
@@ -167,11 +170,11 @@ info = metaImageInfo('img_10x15x20_gray8.mhd');
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 
-function testRW_Gray8_3D_Info
+function testRW_Gray8_3D_Info(testCase)
 % add some info to header file, and test they are read correctly
 img = zeros([10, 15, 20], 'uint8');
 img(2:8, 3:8, 5:16) = 50;
@@ -193,12 +196,12 @@ resSize = size(res);
 
 assertTrue(isfield(info, 'ElementSize'));
 resElementSize = info.ElementSize;
-assertEqual(length(resElementSize), length(elementSize));
+assertEqual(testCase, length(resElementSize), length(elementSize));
 assertElementsAlmostEqual(resElementSize, elementSize);
 
 assertTrue(isfield(info, 'HeaderSize'));
 resHeaderSize = info.HeaderSize;
-assertEqual(length(resHeaderSize), length(headerSize));
+assertEqual(testCase, length(resHeaderSize), length(headerSize));
 assertElementsAlmostEqual(resHeaderSize, headerSize);
 
 assertTrue(isfield(info, 'ElementByteOrderMSB'));
@@ -206,12 +209,11 @@ resByteOrder = info.ElementByteOrderMSB;
 assertTrue(resByteOrder);
 
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 
-
-function testRW_Gray16_3D_Rect
+function testRW_Gray16_3D_Rect(testCase)
 
 img = zeros([15, 10, 20], 'uint16');
 img(2:8, 3:8, 5:16) = 50;
@@ -225,15 +227,15 @@ info = metaImageInfo('img_10x15x20_gray16.mhd');
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 imgType = class(img);
 resType = class(res);
-assertEqual(imgType, resType, 'error in image type I/O');
+assertEqual(testCase, imgType, resType, 'error in image type I/O');
 
 
-function testRW_Int16_3D_Rect
+function testRW_Int16_3D_Rect(testCase)
 
 img = zeros([15, 10, 20], 'int16');
 img(2:8, 3:8, 5:16) = 50;
@@ -247,15 +249,15 @@ info = metaImageInfo('img_10x15x20_int16.mhd');
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 imgType = class(img);
 resType = class(res);
-assertEqual(imgType, resType, 'error in image type I/O');
+assertEqual(testCase, imgType, resType, 'error in image type I/O');
 
 
-function testRW_RGB8_3D_headOvr
+function testRW_RGB8_3D_headOvr(testCase)
 
 metadata = analyze75info('brainMRI.hdr');
 I = analyze75read(metadata);
@@ -270,29 +272,29 @@ info = metaImageInfo(fileName);
 res = metaImageRead(info);
 resSize = size(res);
 
-assertEqual(length(imgSize), length(resSize));
+assertEqual(testCase, length(imgSize), length(resSize));
 assertElementsAlmostEqual(imgSize, resSize);
 
 
-function test_read_slices_list
+function test_read_slices_list(testCase)
 
 filename = 'BRNOR39e5p1List.mhd';
 info = metaImageInfo(fullfile('ratBrainMriSlices', filename));
 img = metaImageRead(info);
 
 exp = [96 96 96];
-assertEqual(exp, size(img), 'image does not have the right size');
+assertEqual(testCase, exp, size(img), 'image does not have the right size');
 
 assertTrue(max(img(:))>0);
 
 
-function test_read_slices_pattern
+function test_read_slices_pattern(testCase)
 
 filename = 'BRNOR39e5p1Pattern.mhd';
 info = metaImageInfo(fullfile('ratBrainMriSlices', filename));
 img = metaImageRead(info);
 
 exp = [96 96 96];
-assertEqual(exp, size(img), 'image does not have the right size');
+assertEqual(testCase, exp, size(img), 'image does not have the right size');
 
 assertTrue(max(img(:))>0);

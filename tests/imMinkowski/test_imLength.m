@@ -1,4 +1,4 @@
-function testSuite = test_imLength(varargin)
+function tests = test_imLength(varargin)
 %TEST_IMLENGTH  One-line description here, please.
 %
 %   output = test_imLength(input)
@@ -15,31 +15,34 @@ function testSuite = test_imLength(varargin)
 % Created: 2010-10-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function testBasic %#ok<*DEFNU>
+function testBasic(testCase)
 
 img = [0 0 1 1 1 1 1 0];
 
 len = imLength(img);
 exp = 5;
-assertEqual(exp, len);
+assertEqual(testCase, exp, len);
 
 
-function testAddBorder
+function testAddBorder(testCase)
 
 img = ones(1, 5);
 imgb = padarray(img, [0 1]);
 
 len = imLength(img);
 len2 = imLength(imgb);
-assertEqual(len, len2);
 
-function testCalib
+assertEqual(testCase, len, len2);
+
+
+function testCalib(testCase)
 
 img = [0 0 1 1 1 1 1 0];
 
 len = imLength(img, .4);
+
 exp = 2;
-assertEqual(exp, len);
+assertEqual(testCase, exp, len);
 

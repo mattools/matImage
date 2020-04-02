@@ -1,4 +1,4 @@
-function testSuite = test_imArea(varargin)
+function tests = test_imArea(varargin)
 % Test function for function testImArea
 %   output = testImArea(input)
 %
@@ -14,18 +14,20 @@ function testSuite = test_imArea(varargin)
 % Created: 2009-04-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function testSquare %#ok<*DEFNU>
+
+function testSquare(testCase)
 
 img = false(10, 10);
 img(3:3+4, 4:4+4) = true;
 
 a = imArea(img);
-assertEqual(25, a);
+
+assertEqual(testCase, 25, a);
 
 
-function testDelta
+function testDelta(testCase)
 % Test with a non uniform resolution
 
 img = false(10, 10);
@@ -34,21 +36,27 @@ delta = [3 5];
 expectedArea = 3*delta(1) * 4*delta(2); 
 
 a = imArea(img, delta);
-assertEqual(expectedArea, a);
 
-function testLabel
+assertEqual(testCase, expectedArea, a);
+
+
+function testLabel(testCase)
 
 % create image with 5 different regions
 img = floor(rand(10, 10)*5)+1;
-a = imArea(img);
-assertEqual(length(a), 5);
-assertEqual(numel(img), sum(a));
 
-function testLabelImage
+a = imArea(img);
+
+assertEqual(testCase, length(a), 5);
+assertEqual(testCase, numel(img), sum(a));
+
+
+function testLabelImage(testCase)
 
 lbl = bwlabel(imread('coins.png') > 100);
+
 a = imArea(lbl);
 
-assertEqual(10, length(a));
+assertEqual(testCase, 10, length(a));
 assertTrue(min(a) > 1500);
 assertTrue(max(a) < 3000);

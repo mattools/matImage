@@ -1,4 +1,4 @@
-function testSuite = test_imEuler2d(varargin)
+function tests = test_imEuler2d(varargin)
 % Test function for function imEuler2d
 %   output = testImEuler2d(input)
 %
@@ -14,9 +14,10 @@ function testSuite = test_imEuler2d(varargin)
 % Created: 2009-04-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function testSimplePoints %#ok<*DEFNU>
+
+function testSimplePoints(testCase)
 % Some points in a black image
 
 img = false(10, 10);
@@ -26,10 +27,11 @@ img(1, 2) = true;
 img(10, 2) = true;
 
 epc = imEuler2d(img);
-assertEqual(4, epc);
+
+assertEqual(testCase, 4, epc);
 
 
-function testBorderPoints
+function testBorderPoints(testCase)
 % Some points on the border
 
 img = false(10, 10);
@@ -40,9 +42,11 @@ img(4, 10) = true;
 img(10, 10) = true;
 
 epc = imEuler2d(img);
-assertEqual(5, epc);
 
-function testConn8
+assertEqual(testCase, 5, epc);
+
+
+function testConn8(testCase)
 % test with 3 points touching by corner
 
 img = false(10, 10);
@@ -51,9 +55,11 @@ img(4, 5) = true;
 img(5, 4) = true;
 
 epc = imEuler2d(img);
-assertEqual(3, epc);
 
-function testLabels
+assertEqual(testCase, 3, epc);
+
+
+function testLabels(testCase)
 
 % create a label image with 3 labels
 img = zeros(10, 10);
@@ -68,10 +74,11 @@ assertElementsAlmostEqual(chi, [1 1 0]');
 assertElementsAlmostEqual(labels, [3 5 9]');
 
 
-function testLabelImage
+function testLabelImage(testCase)
 
 lbl = bwlabel(imread('coins.png') > 100);
+
 chi = imEuler2d(lbl);
 
-assertEqual(10, length(chi));
-assertEqual(1, max(chi));
+assertEqual(testCase, 10, length(chi));
+assertEqual(testCase, 1, max(chi));

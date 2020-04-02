@@ -204,28 +204,33 @@ if isImageJBigTiffFile(fname)
         tokParts = strsplit(token, '=');
         options.(tokParts{1}) = tokParts{2};
     end
-
-    dims = [infos.Width infos.Height str2num(options.slices)]; %#ok<ST2NM>
-
-    if infos.BitDepth == 8
-        format = 'uint8';
-    elseif infos.BitDepth == 16
-        format = 'uint16';
-    elseif infos.BitDepth == 32
-        format = 'single';
+    
+    % process only images with several slices.
+    if isfield(options, 'slices')
+        dims = [infos.Width infos.Height str2num(options.slices)]; %#ok<ST2NM>
+        
+        if infos.BitDepth == 8
+            format = 'uint8';
+        elseif infos.BitDepth == 16
+            format = 'uint16';
+        elseif infos.BitDepth == 32
+            format = 'single';
+        end
+        
+        if strcmpi(infos.ByteOrder, 'big-endian')
+            byteOrder = 'ieee-be';
+        else
+            byteOrder = 'ieee-le';
+        end
+        
+        offset = infos.StripOffsets;
+        
+        % read data in XYZCT order
+        img = imReadRawData(fname, dims, format, 'byteOrder', byteOrder, 'offset', offset);
+        % permute X and Y order to comply with Matab convention
+        img = permute(img, [2 1 3:length(dims)]);
+        return;
     end
-
-    if strcmpi(infos.ByteOrder, 'big-endian')
-        byteOrder = 'ieee-be';
-    else
-        byteOrder = 'ieee-le';
-    end
-
-    offset = infos.StripOffsets;
-
-    img = imReadRawData(fname, dims, format, 'byteOrder', byteOrder, 'offset', offset);
-    img = permute(img, [2 1 3:length(dims)]);
-    return;
 end
 
 

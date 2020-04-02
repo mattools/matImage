@@ -1,4 +1,4 @@
-function testSuite = test_imEuler2dEstimate(varargin)
+function tests = test_imEuler2dEstimate(varargin)
 % Test function for function imEuler2d
 %   output = testImEuler2dEstimate(input)
 %
@@ -14,9 +14,10 @@ function testSuite = test_imEuler2dEstimate(varargin)
 % Created: 2009-04-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function testSquareInFourImages %#ok<*DEFNU>
+
+function testSquareInFourImages(testCase)
 
 % create structure that does not touch borders
 img = false(20, 20);
@@ -34,9 +35,10 @@ chi4 = imEuler2dEstimate(img(10:20, 10:20));
 % sum of 4 estimates
 chis = chi1 + chi2 + chi3 + chi4;
 
-assertEqual(chi, chis);
+assertEqual(testCase, chi, chis);
 
-function testLabels
+
+function testLabels(testCase)
 
 % create a label image with 3 labels
 img = zeros(10, 10);

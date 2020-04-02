@@ -1,5 +1,5 @@
-function testSuite = test_imDistanceMap(varargin)
-%TESTIMCHAMFERDIST  One-line description here, please.
+function tests = test_imDistanceMap(varargin)
+% Test suite for function imDistanceMap.
 %
 %   output = test_imDistanceMap(input)
 %
@@ -8,17 +8,17 @@ function testSuite = test_imDistanceMap(varargin)
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@.inra.fr
+% e-mail: david.legland@inra.fr
 % Created: 2018-02-22,    using Matlab 2017b
 % Copyright 2010 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
 
-function test_TouchingParticles
+function test_TouchingParticles(testCase)
 % Aim is to compute distance map within each label, even if some of them
 % touch each other.
 % Uses an image with a completely landlocked label region.
@@ -53,4 +53,4 @@ exp = [...
 
 dist = imDistanceMap(img, [3 4]);
 
-assertEqual(dist, exp);
+assertEqual(testCase, dist, exp);

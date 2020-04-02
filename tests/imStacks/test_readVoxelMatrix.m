@@ -1,4 +1,4 @@
-function test_suite = test_readVoxelMatrix(varargin) %#ok<STOUT>
+function tests = test_readVoxelMatrix(varargin)
 %TEST_READVOXELMATRIX  Test case for the file readVoxelMatrix
 %
 %   Test case for the file readVoxelMatrix
@@ -15,12 +15,13 @@ function test_suite = test_readVoxelMatrix(varargin) %#ok<STOUT>
 % Created: 2012-07-24,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
-initTestSuite;
+tests = functiontests(localfunctions);
 
-function test_Simple %#ok<*DEFNU>
+
+function test_Simple(testCase)
 % Test call of function without argument
 
 fName = fullfile('images', 'densityMap1.vm');
 img = readVoxelMatrix(fName);
 
-assertFalse(isempty(img));
+assertFalse(testCase, isempty(img));

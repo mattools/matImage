@@ -1,8 +1,8 @@
-function testSuite = test_imBoxFilter(varargin)
-%TEST_IMBOXFILTER  Test case for the file imBoxFilter
+function tests = test_imBoxFilter(varargin)
+% Test suite for function imBoxFilter.
 %
 %   Test case for the file imBoxFilter
-
+%
 %   Example
 %   test_imBoxFilter
 %
@@ -15,9 +15,10 @@ function testSuite = test_imBoxFilter(varargin)
 % Created: 2018-11-22,    using Matlab 8.6.0.267246 (R2015b)
 % Copyright 2018 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function test_SquareUInt8_5x5 %#ok<*DEFNU>
+
+function test_SquareUInt8_5x5(testCase) %#ok<*DEFNU>
 % Test call of function without argument
 
 img = zeros([20, 20], 'uint8');
@@ -26,10 +27,11 @@ dims = [5 5];
 
 res = imBoxFilter(img, dims);
 
-assertEqual(size(res), size(img));
-assertEqual(class(res), class(img));
+assertEqual(testCase, size(res), size(img));
+assertEqual(testCase, class(res), class(img));
 
-function test_SquareFloat_5x5 %#ok<*DEFNU>
+
+function test_SquareFloat_5x5(testCase) %#ok<*DEFNU>
 % Test call of function without argument
 
 img = zeros([20, 20], 'uint8');
@@ -39,9 +41,10 @@ dims = [5 5];
 resRef = imBoxFilter(img, dims);
 res = uint8(imBoxFilter(double(img), dims));
 
-assertEqual(res, resRef);
+assertEqual(testCase, res, resRef);
 
-function test_CubeFloat_7x5x3 %#ok<*DEFNU>
+
+function test_CubeFloat_7x5x3(testCase) %#ok<*DEFNU>
 % Test call of function without argument
 
 img = zeros([40 40 40], 'uint8');
@@ -51,4 +54,4 @@ dims = [7 5 3];
 resRef = imBoxFilter(img, dims);
 res = uint8(imBoxFilter(double(img), dims));
 
-assertEqual(res, resRef);
+assertEqual(testCase, res, resRef);

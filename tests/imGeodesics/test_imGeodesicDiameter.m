@@ -1,4 +1,4 @@
-function testSuite = test_imGeodesicDiameter(varargin)
+function tests = test_imGeodesicDiameter(varargin)
 %TEST_IMGEODESICDIAMETER  One-line description here, please.
 %
 %   output = test_imGeodesicDiameter(input)
@@ -15,9 +15,9 @@ function testSuite = test_imGeodesicDiameter(varargin)
 % Created: 2010-07-09,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function test_Square5x5 %#ok<*DEFNU>
+function test_Square5x5(testCase) %#ok<*DEFNU>
 
 img = zeros(8, 8);
 img(2:6, 3:7) = 1;
@@ -28,7 +28,7 @@ assertElementsAlmostEqual(9, imGeodesicDiameter(img, [1 2]));
 assertElementsAlmostEqual(19/3, imGeodesicDiameter(img, [3 4]));
 
 
-function test_SmallSpiral
+function test_SmallSpiral(testCase)
 
 img = [...
     0 0 0 0 0 0 0 0 0 0; ...
@@ -57,7 +57,7 @@ assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
 % assertElementsAlmostEqual(uint16(exp34), imGeodesicDiameter(img, uint16([3 4])));
 
 
-function test_VerticalLozenge
+function test_VerticalLozenge(testCase)
 % vertical lozenge that does not pass test with first version of algo
 
 img = [...
@@ -78,9 +78,9 @@ assertElementsAlmostEqual(exp, imGeodesicDiameter(img));
 assertElementsAlmostEqual(exp, imGeodesicDiameter(img, [1 1]));
 assertElementsAlmostEqual(exp, imGeodesicDiameter(img, [1 2]));
 assertElementsAlmostEqual(exp, imGeodesicDiameter(img, [3 4]));
-assertEqual(uint16(exp), imGeodesicDiameter(img, uint16([3 4])));
+assertEqual(testCase, uint16(exp), imGeodesicDiameter(img, uint16([3 4])));
 
-function test_SeveralParticles
+function test_SeveralParticles(testCase)
 
 img = zeros(10, 10);
 img(2:4, 2:4) = 1; 
@@ -97,7 +97,7 @@ assertElementsAlmostEqual(exp11, imGeodesicDiameter(img, [1 1]));
 assertElementsAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
 assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
 
-function test_SeveralParticles_UInt16
+function test_SeveralParticles_UInt16(testCase)
 
 img = zeros(10, 10);
 img(2:4, 2:4) = 1; 
@@ -110,12 +110,12 @@ exp12 = uint16([4 5 5 6]' + 1);
 exp34 = uint16([8/3 11/3 11/3 12/3]' + 1);
 
 % test on label image
-assertEqual(exp11, imGeodesicDiameter(img, uint16([1 1])));
-assertEqual(exp12, imGeodesicDiameter(img, uint16([1 2])));
-assertEqual(exp34, imGeodesicDiameter(img, uint16([3 4])));
+assertEqual(testCase, exp11, imGeodesicDiameter(img, uint16([1 1])));
+assertEqual(testCase, exp12, imGeodesicDiameter(img, uint16([1 2])));
+assertEqual(testCase, exp34, imGeodesicDiameter(img, uint16([3 4])));
 
 
-function test_TouchingParticles
+function test_TouchingParticles(testCase)
 
 img = [...
     0 0 0 0 0 0 0 0; ...
@@ -138,7 +138,7 @@ assertElementsAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
 assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
 
 
-function test_Verbosity
+function test_Verbosity(testCase)
 % this test to ensure verbosity messages do not cause problems
 
 img = [...
@@ -172,7 +172,7 @@ exp34 = (no*3 + nd*4)/3 + 1;
 assertElementsAlmostEqual(exp34, res34);
 
 
-function test_Verbosity_With_Labeling
+function test_Verbosity_With_Labeling(testCase)
 % check verbosity when labelling
 
 img = [...
@@ -194,7 +194,7 @@ evalc('res34 = imGeodesicDiameter(img, [3 4], ''verbose'', true)');
 exp34 = (no*3 + nd*4)/3 + 1;
 assertElementsAlmostEqual(exp34, res34);
 
-function test_MissingLabels
+function test_MissingLabels(testCase)
 
 img = [...
     0 0 0 0 0 0 0 0 0 0; ...
@@ -218,7 +218,7 @@ assertElementsAlmostEqual(exp11, imGeodesicDiameter(img, [1 1]));
 assertElementsAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
 assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
 
-function test_OutputLabels
+function test_OutputLabels(testCase)
 
 img = [...
     0 0 0 0 0 0 0 0 0 0; ...

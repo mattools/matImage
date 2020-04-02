@@ -1,4 +1,4 @@
-function testSuite = test_imPerimeterDensity(varargin) 
+function tests = test_imPerimeterDensity(varargin) 
 %TEST_IMPERIMETERDENSITY  Test case for the file imPerimeterDensity
 %
 %   Test case for the file imPerimeterDensity
@@ -15,9 +15,9 @@ function testSuite = test_imPerimeterDensity(varargin)
 % Created: 2013-03-29,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function test_Simple %#ok<*DEFNU>
+function test_Simple(testCase)
 % Test call of function without argument
 
 img = [ ...
@@ -30,10 +30,11 @@ img = [ ...
 ] > 0;
 
 pd = imPerimeterDensity(img);
-assertEqual([1 1], size(pd));
+assertEqual(testCase, [1 1], size(pd));
 assertTrue(pd < 1);
 
-function test_Ndirs %#ok<*DEFNU>
+
+function test_Ndirs(testCase)
 % Test call of function without argument
 
 img = [ ...
@@ -46,11 +47,11 @@ img = [ ...
 ] > 0;
 
 pd2 = imPerimeterDensity(img, 2);
-assertEqual([1 1], size(pd2));
+assertEqual(testCase, [1 1], size(pd2));
 assertTrue(pd2 < 1);
 
 pd4 = imPerimeterDensity(img, 4);
-assertEqual([1 1], size(pd4));
+assertEqual(testCase, [1 1], size(pd4));
 assertTrue(pd4 < 1);
 
 

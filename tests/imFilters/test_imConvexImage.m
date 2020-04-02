@@ -1,5 +1,5 @@
-function testSuite = test_imConvexImage(varargin) 
-%TEST_IMCONVEXIMAGE One-line description here, please.
+function tests = test_imConvexImage(varargin) 
+% Test suite for function imConvexImage.
 %
 %   output = test_imConvexImage(input)
 %
@@ -15,9 +15,10 @@ function testSuite = test_imConvexImage(varargin)
 % Created: 2011-07-07,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
-function test_2d %#ok<*DEFNU>
+
+function test_2d(testCase) %#ok<*DEFNU>
 
 % two points in image
 img = false([6 6]);
@@ -29,7 +30,7 @@ exp = false([6 6]);
 exp(2, 2:4) = true;
 
 cvx = imConvexImage(img);
-assertEqual(exp, cvx);
+assertEqual(testCase, exp, cvx);
 
 % we add two points
 img(4, 2) = true;
@@ -40,10 +41,10 @@ exp = false([6 6]);
 exp(2:4, 2:4) = true;
 
 cvx = imConvexImage(img);
-assertEqual(exp, cvx);
+assertEqual(testCase, exp, cvx);
 
 
-function test_3d
+function test_3d(testCase)
 
 % two points in image
 img = false([6 6 6]);
@@ -55,7 +56,7 @@ exp = false([6 6 6]);
 exp(2, 2, 2:4) = true;
 
 cvx = imConvexImage(img);
-assertEqual(exp, cvx);
+assertEqual(testCase, exp, cvx);
 
 
 % we add two points
@@ -67,4 +68,4 @@ exp = false([6 6 6]);
 exp(2, 2:4, 2:4) = true;
 
 cvx = imConvexImage(img);
-assertEqual(exp, cvx);
+assertEqual(testCase, exp, cvx);

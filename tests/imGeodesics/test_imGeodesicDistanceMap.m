@@ -1,4 +1,4 @@
-function testSuite = test_imGeodesicDistanceMap(varargin)
+function tests = test_imGeodesicDistanceMap(varargin)
 %TEST_IMGEODESICDISTANCEMAP  One-line description here, please.
 %
 %   output = test_imGeodesicDistanceMap(input)
@@ -15,12 +15,12 @@ function testSuite = test_imGeodesicDistanceMap(varargin)
 % Created: 2010-07-09,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
-testSuite = buildFunctionHandleTestSuite(localfunctions);
+tests = functiontests(localfunctions);
 
 
 %% Tests for Grayscale image 2D
 
-function test_MarkerAtUpperLeftCorner_10x12 %#ok<*DEFNU>
+function test_MarkerAtUpperLeftCorner_10x12(testCase) %#ok<*DEFNU>
 % use blank image, marker at the upper left corner.
 
 img = true(10, 12);
@@ -33,9 +33,10 @@ maxDist = max(dist(img(:)));
 assertTrue(isfinite(maxDist));
 
 expDist = 10+12-2;
-assertEqual(expDist, maxDist);
+assertEqual(testCase, expDist, maxDist);
 
-function test_MarkerAtBottomRightCorner_10x12
+
+function test_MarkerAtBottomRightCorner_10x12(testCase)
 % use blank image, marker at the bottom left corner.
 
 img = true(10, 12);
@@ -48,10 +49,10 @@ maxDist = max(dist(img(:)));
 assertTrue(isfinite(maxDist));
 
 expDist = 10+12-2;
-assertEqual(expDist, maxDist);
+assertEqual(testCase, expDist, maxDist);
 
 
-function test_MarkerAtUpperLeftCorner_10x30
+function test_MarkerAtUpperLeftCorner_10x30(testCase)
 % use blank image, marker at the upper left corner.
 
 img = true(10, 30);
@@ -64,9 +65,10 @@ maxDist = max(dist(img(:)));
 assertTrue(isfinite(maxDist));
 
 expDist = 29;
-assertEqual(expDist, maxDist);
+assertEqual(testCase, expDist, maxDist);
 
-function test_MarkerAtBottomRightCorner_10x30
+
+function test_MarkerAtBottomRightCorner_10x30(testCase)
 % use blank image, marker at the upper left corner.
 
 img = true(10, 30);
@@ -79,10 +81,10 @@ maxDist = max(dist(img(:)));
 assertTrue(isfinite(maxDist));
 
 expDist = 29;
-assertEqual(expDist, maxDist);
+assertEqual(testCase, expDist, maxDist);
 
 
-function test_FiniteDistWithMarkerOutside
+function test_FiniteDistWithMarkerOutside(testCase)
 
 img = [...
     0 0 0 0 0 0 0 0 0 0; ...

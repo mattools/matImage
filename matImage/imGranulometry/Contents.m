@@ -1,20 +1,21 @@
-% IMGRANULOMETRY
+% IMGRANULOMETRY Gray-level granulometry using mathematical morphology.
+% Version 1.0 02-Apr-2020 .
 %
 %   Provides functions to compute granulometry curves on grayscale images
 %   using mathematical morphology operations.
 %
 %
 % Computation of granulometry curves
-%   imGranulo         - Compute granulometry curve of a given image
-%   imGranuloByRegion - Granulometry curve for each region of label image
+%   imGranulo         - Compute granulometry curve of a given image.
+%   imGranuloByRegion - Granulometry curve for each region of label image.
 %
 % Analysis of granulometry curves
-%   granuloMeanSize   - Compute geometric mean of granulometric curve
-%   granuloMean       - Compute arithmetic mean of granulometric curve(s)
-%   granuloStd        - Compute standard deviation of granulometric curve(s)
+%   granuloMeanSize   - Compute geometric mean of granulometric curve.
+%   granuloMean       - Compute arithmetic mean of granulometric curve(s).
+%   granuloStd        - Compute standard deviation of granulometric curve(s).
 %
 % Variations of granulometry analysis
-%   imOrientedGranulo - Gray level granulometry mean size for various orientations
+%   imOrientedGranulo - Gray level granulometry mean size for various orientations.
 %
 %
 % References
@@ -27,8 +28,8 @@
 %
 % -----
 % Author: David Legland
-% e-mail: david.legland@inra.fr
-% Copyright INRA - Cepia Software Platform.
+% e-mail: david.legland@inrae.fr
+% Copyright INRAE - BIA - Cepia Software Platform.
 % http://github.com/mattools/matImage
-% http://www.pfl-cepia.inra.fr/index.php?page=imael
+% http://www.pfl-cepia.inrae.fr/index.php?page=imael
 

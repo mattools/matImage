@@ -1,7 +1,7 @@
-function res = imOrientedGranulo(img, angleList, granuloType, strelSizes, varargin)
-%IMORIENTEDGRANULO Gray level granulometry mean size for various orientations
+function [res, diams] = imOrientedGranulo(img, angleList, granuloType, strelSizes, varargin)
+% Gray level granulometry mean size for various orientations.
 %
-%   output = imOrientedGranulo(IMG, ANGLES, TYPE, SIZES)
+%   RES = imOrientedGranulo(IMG, ANGLES, TYPE, SIZES)
 %   IMG should be a 2D image (binary, grayscale or color)
 %   ANGLES is the list of angles to consider, in degrees, as a 1-by-N row
 %     vector
@@ -11,17 +11,21 @@ function res = imOrientedGranulo(img, angleList, granuloType, strelSizes, vararg
 %   The result GR is a 1-by-N array with as many columns as the number of
 %     elements provided in ANGLES array.
 %
+%   [RES, DIAMS] = imOrientedGranulo(...)
+%   Also returns the diameters used for each morphological filtering step.
+%
+%
 %   Example
 %   imOrientedGranulo
 %
 %   See also
-%     imGranulometry, imGranulo, imGranuloByRegion
+%     imGranulometry, imGranulo, imGranuloByRegion, granuloMeanSize
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2015-12-02,    using Matlab 8.6.0.267246 (R2015b)
-% Copyright 2015 INRA - Cepia Software Platform.
+% Copyright 2015 INRAE - Cepia Software Platform.
 
 
 % how to interpolate images

@@ -1,10 +1,14 @@
-function [gr, vols] = imGranuloByRegion(img, indList, granuloType, strelShape, strelSizes)
-%IMGRANULOBYREGION Granulometry curve for each region of label image
+function [gr, diams, vols] = imGranuloByRegion(img, indList, granuloType, strelShape, strelSizes)
+% Granulometry curve for each region of label image.
 %
 %   GRANULO = imGranulo(IMG, REGIONS, GRTYPE, STRELSHAPE, SIZES)
 %   Computes the granulometry curves from gray levels image IMG within each
 %   region specified by REGION. REGION can be either a label image, or a
 %   cell array containing the linear indices corresponding to each region.
+%
+%   [GRANULO, DIAMS] = imGranulo(...)
+%   Also returns the diameters of the structuring elements for each step of
+%   the analysis.
 %
 %   Example
 %     % Compute granulometric curve by opening on rice image
@@ -20,9 +24,9 @@ function [gr, vols] = imGranuloByRegion(img, indList, granuloType, strelShape, s
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2014-05-05,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2014 INRA - Cepia Software Platform.
+% Copyright 2014 INRAE - Cepia Software Platform.
 
 
 % if regions are specified as label image, need to convert to list of
@@ -50,6 +54,10 @@ else
     nLabels = length(indList);
 end
 
+% compute diameters
+nSizes = length(strelSizes);
+diams = 2 * strelSizes + 1;
+
 % compute reference volume
 vols0 = zeros(nLabels, 1);
 for j = 1:nLabels
@@ -57,7 +65,6 @@ for j = 1:nLabels
 end
 
 % allocate memory
-nSizes = length(strelSizes);
 vols = zeros(nLabels, nSizes + 1);
 vols(:, 1) = vols0;
 
@@ -70,6 +77,10 @@ for i = 1:nSizes
     switch lower(strelShape)
         case 'square'
             se = strel('square', diam);
+        case 'disk'
+            % do not use simplification, as it is not suitable for
+            % granulometries
+            se = strel('disk', radius, 0);
         case {'octagon', 'diamond', 'ball'}
             se = strel(lower(strelShape), radius);
         case 'lineh'
@@ -103,7 +114,7 @@ for i = 1:nSizes
     end
 end
 
-% compute granulometry curve by finit difference of local volumes
+% compute granulometry curve by finite difference of local volumes
 vols2 = bsxfun(@rdivide, bsxfun(@minus, vols, vols0) , vols(:, end) - vols0);
 gr = 100 * diff(vols2')';
 

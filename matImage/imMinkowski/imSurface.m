@@ -1,6 +1,8 @@
 function [surf, labels] = imSurface(img, varargin)
 %IMSURFACE Surface area of a 3D binary structure
 %
+%   Deprecated, use 'imSurfaceArea' instead.
+%
 %   S = imSurface(IMG)
 %   Estimates the surface area of the 3D binary structure represented by
 %   IMG.
@@ -56,7 +58,7 @@ function [surf, labels] = imSurface(img, varargin)
 %
 %
 %   See also
-%     imVolume, imMeanBreadth, imSurfaceDensity, imJointSurface
+%     imSurfaceArea, imMeanBreadth, imSurfaceAreaDensity, imJointSurfaceArea
 %
 
 % ------
@@ -65,6 +67,8 @@ function [surf, labels] = imSurface(img, varargin)
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
+warning('MatImage:deprecated', ...
+    'function imSurface is obsolete, use imSurfaceArea instead');
 
 % check image dimension
 if ndims(img) ~= 3

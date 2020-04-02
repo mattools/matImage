@@ -73,8 +73,8 @@
 %   imEuler2dEstimate     - Estimate Euler number in a 2D image
 %
 %  Volume in 3D images
-%   imVolume              - Volume measure of a 3D binary structure
-%   imVolumeDensity       - Compute volume density of a 3D image
+%   imVolume              - Volume measure of a 3D binary structure.
+%   imVolumeDensity       - Compute volume density of a 3D image.
 %   imVolumeEstimate      - Estimate volume of a 3D binary structure with edge correction
 %
 %  Surface area in 3D images
@@ -87,12 +87,12 @@
 %  Mean breadth (integral of mean curvature) in 3D images
 %   imMeanBreadth         - Mean breadth of a 3D binary or label image
 %   imMeanBreadthDensity  - Mean breadth density of a 3D binary structure
-%   imMeanBreadthEstimate - Estimate mean breadth of a binary structure
+%   imMeanBreadthEstimate - Estimate mean breadth of a binary structure.
 %   imMeanBreadthLut      - Look-Up Table for computing mean breadth of a 3D image
 %
 %  Euler-Poincare characteristic in 3D images
 %   imEuler3d             - Euler number of a binary 3D image
-%   imEuler3dDensity      - Compute Euler density in a 3D image
+%   imEuler3dDensity      - Compute Euler density in a 3D image.
 %   imEuler3dEstimate     - Estimate Euler number in a 3D image
 %
 %  Euler-Poincare characteristic and length in 1D images
@@ -103,18 +103,10 @@
 %   imLengthEstimate      - Estimate total length  of a binary 1D structure using edge correction
 %
 %  Utility function
-%   imBinaryConfigHisto   - Histogram of binary configuration from 2D/3D image
+%   imBinaryConfigHisto   - Histogram of binary configurations from 2D/3D image.
 %   imProjectedDiameter   - Projected diameter in a given direction
-%   imProjectedArea       - Total projected area in a given direction
+%   imProjectedArea       - Total projected area in a given direction.
 % 
-%  Obsolete functions
-%   perimeter                  - estimate perimeter of a structure
-%   epc                        - compute Euler-Poincare Characteristic (EPC) of a structure.
-%   tpl                        - compute total projection length
-%   specificSurface            - implementation of Ohser's algo for surface comput.
-%   specificIntMeanCurv        - Ohser's Integral of Mean Curvature
-%   specificIntMeanCurvDetails - Ohser's Integral of Mean Curvature with details
-%
 %
 % References
 % If you use this package, please be kind to cite following reference:
@@ -131,14 +123,29 @@
 %   Lang, C.; Ohser, J. and Hilfer, R. Journal of Microscopy, 2001, 203, 303-313
 %
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % http://github.com/mattools/matImage
-% Copyright 2011 INRA - Cepia Software Platform.
+% Copyright 2011 INRAE - Cepia Software Platform.
 
 
-%% Obsolete
+%%  Obsolete functions
 
-%   specificIMCDetails         - Ohser's Integral of Mean Curvature
+%   perimeter                  - estimate perimeter of a structure
+%   epc                        - compute Euler-Poincare Characteristic (EPC) of a structure.
+%   tpl                        - compute total projection length
+%   specificSurface            - implementation of Ohser's algo for surface comput.
+%   specificIntMeanCurv        - Ohser's Integral of Mean Curvature
+%   specificIntMeanCurvDetails - Ohser's Integral of Mean Curvature with details
+%
+
+%% Deprecated functions
+
+%   imSurface             - Surface area of a 3D binary structure
+%   imSurfaceDensity      - Surface area density of a 3D binary structure
+%   imSurfaceEstimate     - Estimate surface area of a binary 3D structure
+%   imSurfaceLut          - Look-Up Table for computing surface area of a 3D binary image
+%   imJointSurface        - Surface area of the interface between two labels
+%   specificIMCDetails    - Ohser's Integral of Mean Curvature
 
 %% under development
 

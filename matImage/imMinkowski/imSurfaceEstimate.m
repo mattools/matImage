@@ -1,6 +1,8 @@
 function [surf, labels] = imSurfaceEstimate(img, varargin)
 % Estimate surface area of a binary 3D structure
 %
+%   Deprecated, use 'imSurfaceAreaEstimate' instead.
+%
 %   Usage
 %   S = imSurfaceEstimate(IMG)
 %   Estimate the surface area of the structure within the image, without
@@ -14,7 +16,7 @@ function [surf, labels] = imSurfaceEstimate(img, varargin)
 %   imSurfaceEstimate
 %
 %   See also
-%   imSurface, imSurfaceDensity
+%   imSurfaceAreaEstimate, imSurfaceDensity
 %
 
 % ------
@@ -25,6 +27,9 @@ function [surf, labels] = imSurfaceEstimate(img, varargin)
 
 
 %% Process input arguments 
+
+warning('MatImage:deprecated', ...
+    'function imSurfaceEstimate is obsolete, use imSurfaceAreaEstimate instead');
 
 % check image dimension
 if ndims(img) ~= 3

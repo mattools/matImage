@@ -1,6 +1,8 @@
 function surf = imJointSurface(img, L1, L2, varargin)
 %IMJOINTSURFACE Surface area of the interface between two labels
 %
+%   Deprecated, use 'imJointSurfaceArea' instead.
+%
 %   S = imJointSurface(LBL, L1, L2)
 %   Estimates the joint surface area between the two labels L1 and L2 in
 %   the label image LBL.
@@ -25,13 +27,16 @@ function surf = imJointSurface(img, L1, L2, varargin)
 %         2.0102e+004
 %
 %   See also
-%     imSurface
+%     imJointSurfaceArea, imSurface
 
 % ------
 % Author: David Legland
 % e-mail: david.legland@inra.fr
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
+
+warning('MatImage:deprecated', ...
+    'function imJointSurface is obsolete, use imJointSurfaceArea instead');
 
 % check image dimension and type
 if ndims(img) ~= 3 || islogical(img)

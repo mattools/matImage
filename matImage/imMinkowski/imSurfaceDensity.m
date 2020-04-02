@@ -1,6 +1,8 @@
 function [sd, labels] = imSurfaceDensity(img, varargin)
 %IMSURFACEDENSITY Surface area density of a 3D binary structure
 %
+%   Deprecated, use 'imSurfaceAreaDensity' instead.
+%
 %   Sv = imSurfaceDensity(IMG)
 %   Estimate surface area density (ratio of surface area over volume of the
 %   region of interest) from a binary image IMG.
@@ -39,7 +41,7 @@ function [sd, labels] = imSurfaceDensity(img, varargin)
 %
 %
 %   See also
-%     imSurface, imSurfaceEstimate, imSurfaceLut
+%     imSurfaceAreaDensity, imSurfaceEstimate, imSurfaceLut
 %
 
 % ------
@@ -47,6 +49,9 @@ function [sd, labels] = imSurfaceDensity(img, varargin)
 % e-mail: david.legland@inra.fr
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
+
+warning('MatImage:deprecated', ...
+    'function imSurfaceDensity is obsolete, use imSurfaceAreaDensity instead');
 
 % check image dimension
 if ndims(img) ~= 3

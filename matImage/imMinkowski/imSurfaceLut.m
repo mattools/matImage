@@ -1,6 +1,8 @@
 function lut = imSurfaceLut(varargin)
 %IMSURFACELUT Look-Up Table for computing surface area of a 3D binary image
 %
+%   Deprecated, use 'imSurfaceLut' instead.
+%
 %   LUT = surfaceLut
 %   return an array of size 256, which can be used with function imLUT to
 %   create map of contribution to the surface. We consider here tiles
@@ -52,7 +54,7 @@ function lut = imSurfaceLut(varargin)
 %
 %
 %   See also
-%     imSurface, imSurfaceEstimate, imPerimeterLut, imMeanBreadthLut
+%     imSurfaceAreaLut, imSurfaceEstimate, imPerimeterLut, imMeanBreadthLut
 %
 
 %   ------
@@ -60,6 +62,9 @@ function lut = imSurfaceLut(varargin)
 %   e-mail: david.legland@nantes.inra.fr
 %   Created: 2006-02-23
 %   Copyright 2005 INRA - CEPIA Nantes - MIAJ Jouy-en-Josas.
+
+warning('MatImage:deprecated', ...
+    'function imSurfaceLut is obsolete, use imSurfaceAreaLut instead');
 
 %% Extract input data
 

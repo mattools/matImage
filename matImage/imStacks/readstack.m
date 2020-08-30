@@ -121,6 +121,19 @@ map = [];
 [~, ~, ext] = fileparts(fname);
 
 
+% check if image stored in one bundle file or as several stacks
+if exist(fname, 'file')
+    bundle = length(imfinfo(fname)) > 1;
+else
+    bundle = sum(ismember('#?', fname)) == 0;
+end
+
+if ~bundle
+    [img, map] = readImageSeries(fname, verbose, varargin{:});
+    return;
+end
+
+
 %% Read data in a raw file
 
 % First argument is image size (Nx-by-Ny-by-Nz-by-Nc), 
@@ -236,13 +249,6 @@ end
 
 %% Read Image stored in one bundle file (usually tif)
 
-% check if image stored in one bundle file or as several stacks
-if exist(fname, 'file')
-    bundle = length(imfinfo(fname)) > 1;
-else
-    bundle = sum(ismember('#?', fname)) == 0;
-end
-
 if bundle
     % If input argument is found, it is used as the number of slices to
     % read. Otherwise, read all the slices.
@@ -287,7 +293,9 @@ if bundle
     return;
 end
 
+end
 
+function [img, map] = readImageSeries(fname, verbose, varargin)
 %% Read images stored in several 2D files
 % -> need to know numbers of slices to read.
 
@@ -382,6 +390,7 @@ else
 end
 
 end
+
 
 function b = isImageJBigTiffFile(fileName)
 

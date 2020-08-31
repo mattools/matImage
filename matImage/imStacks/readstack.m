@@ -1,5 +1,5 @@
 function [img, map] = readstack(fname, varargin)
-%READSTACK Read either a list of 2D images (slices), or a 3D image
+%READSTACK Read either a list of 2D images (slices), or a 3D image.
 %
 %   Syntax
 %   IMG = readstack(FNAME)
@@ -81,6 +81,8 @@ function [img, map] = readstack(fname, varargin)
 %       according to image datatype
 
 
+%% Process input arguments
+
 % check number of input arguments
 if nargin < 1 || nargin > 5
     error('readstack requires at least one argument, and at most 5');
@@ -115,20 +117,40 @@ for i = 1:length(varargin)
     end
 end
 
+
+%% Initializations 
+
 % empty map by default
 map = [];
 
+% determine extension
 [~, ~, ext] = fileparts(fname);
 
-
-% check if image stored in one bundle file or as several stacks
-if exist(fname, 'file')
-    bundle = length(imfinfo(fname)) > 1;
+% check if image is stored in one bundle file (default) or in several files
+multipleFiles = false;
+if any(ismember('#?*', fname))
+    % if wildcard exists in file name, stack is stored in several files
+    multipleFiles = true;
+    
+elseif exist(fname, 'file')
+    % if the file exists, try to determine if it contains several images
+    registry = imformats;
+    if ismember(ext, [registry.ext])
+        if length(imfinfo(fname)) > 1
+            multipleFiles = false;
+        elseif isImageJBigTiffFile(fname)
+            multipleFiles = false;
+        else
+            % also tests if filename contains at least two consecutive '0'
+            multipleFiles = contains(fname, '00');
+        end
+    end
+    
 else
-    bundle = sum(ismember('#?', fname)) == 0;
+    error('File "%s" does not exist.', fname);
 end
 
-if ~bundle
+if multipleFiles
     [img, map] = readImageSeries(fname, verbose, varargin{:});
     return;
 end
@@ -249,55 +271,53 @@ end
 
 %% Read Image stored in one bundle file (usually tif)
 
-if bundle
-    % If input argument is found, it is used as the number of slices to
-    % read. Otherwise, read all the slices.
-    if ~isempty(varargin)
-        range = varargin{1};
-    else
-        info = imfinfo(fname);
-        range = 1:length(info);
-    end
 
-    if verbose
-        msg = sprintf('read %d slices in a stack', length(range)); 
-        disp(msg); %#ok<DSPS>
-    end
-    
-    % read first slice of the 3D image to get width, height, and bit depth
-    if nargout < 2
-        img = imread(fname, range(1));
-    else
-        [img, map] = imread(fname, range(1));
-    end
-    
-    if ndims(img) == 2   %#ok<ISMAT> % read gray scale images -----
-        % pre-allocate memory
-        img(1, 1, length(range)) = 0;
-        
-        % add each slice successively
-        for i = 2:length(range)
-            img(:,:,i) = imread(fname, range(i));
-        end
-        
-    else                            % read color images      -----
-        % pre-allocate memory
-        img(1, 1, 1, length(range)) = 0;
-        
-        % add each slice successively
-        for i = 2:length(range)
-            img(:,:,:,i) = imread(fname, range(i));
-        end
-    end 
-   
-    return;
+% If input argument is found, it is used as the number of slices to
+% read. Otherwise, read all the slices.
+if ~isempty(varargin)
+    range = varargin{1};
+else
+    info = imfinfo(fname);
+    range = 1:length(info);
 end
+
+if verbose
+    msg = sprintf('read %d slices in a stack', length(range));
+    disp(msg); %#ok<DSPS>
+end
+
+% read first slice of the 3D image to get width, height, and bit depth
+if nargout < 2
+    img = imread(fname, range(1));
+else
+    [img, map] = imread(fname, range(1));
+end
+
+if ndims(img) == 2   %#ok<ISMAT> % read gray scale images -----
+    % pre-allocate memory
+    img(1, 1, length(range)) = 0;
+    
+    % add each slice successively
+    for i = 2:length(range)
+        img(:,:,i) = imread(fname, range(i));
+    end
+    
+else                            % read color images      -----
+    % pre-allocate memory
+    img(1, 1, 1, length(range)) = 0;
+    
+    % add each slice successively
+    for i = 2:length(range)
+        img(:,:,:,i) = imread(fname, range(i));
+    end
+end
+
 
 end
 
 function [img, map] = readImageSeries(fname, verbose, varargin)
-%% Read images stored in several 2D files
-% -> need to know numbers of slices to read.
+%% Read images stored in several 2D files.
+% -> need to know the numbers of slices to read.
 
 % Compute the base name of the image, by removing '#', '?' or '0'
 

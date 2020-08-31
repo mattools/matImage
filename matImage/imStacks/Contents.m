@@ -14,7 +14,7 @@
 %   showZSlice          - Show XY slice of a 3D image
 %
 % Read/Write 3D images
-%   readstack           - Read either a list of 2D images (slices), or a 3D image
+%   readstack           - Read either a list of 2D images (slices), or a 3D image.
 %   imReadRegion3d      - Read a specific 3D region of a 3D image
 %   imReadDownSampled3d - Read a down-sampled version of a 3D image
 %   savebinstack        - Save an binary stack to a file, as RGB Image.

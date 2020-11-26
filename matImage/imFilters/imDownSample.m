@@ -1,4 +1,4 @@
-function res = imDownSample(img, scale, varargin)
+function res = imDownSample(img, k, varargin)
 %IMDOWNSAMPLE Apply down-sampling on an image by applying operation on blocs
 %
 %   imDownSample(IMG, K);
@@ -15,7 +15,8 @@ function res = imDownSample(img, scale, varargin)
 %   IMG = imDownSample(TAB, K, OP);
 %   will use different method for computing value corresponding to a given
 %   frame. OP can be one of: 
-%   - {'mean'}  compute the mean value of all pixels in the frame (default)
+%   - {'none'}  return the value of the first pixel in the frame (default)
+%   - 'mean'    compute the mean value of all pixels in the frame (default)
 %   - 'median'  compute the median value of all pixels in the frame
 %   - 'min'     compute the min value of all pixels in the frame
 %   - 'max'     compute the max value of all pixels in the frame
@@ -53,51 +54,64 @@ function res = imDownSample(img, scale, varargin)
 dim = size(img);
 
 % if scale is given as single value, convert to 1*NDIMS array
-if isscalar(scale)
-    scale = ones(size(dim)) * scale;
+if isscalar(k)
+    k = ones(size(dim)) * k;
 end
 
 if ndims(img) > 2 && size(img, 3) == 3 %#ok<ISMAT>
-    scale(3) = 1;
+    k(3) = 1;
 end
 
 % get type of sampling (max, min, mean, median ...)
-type = 'mean';
+type = 'none';
 if ~isempty(varargin)
     type = varargin{1};
 end
 
 % allocate memory for result
-newDims = floor(size(img) ./ scale);
+newDims = floor(size(img) ./ k);
 if islogical(img)
     res = false(newDims);
 else
     res = zeros(newDims, class(img));
 end
 
+% First process to secific case of 'none' type
+if strcmpi(type, 'none')
+    % use sub indexing for resampling (faster)
+    switch ndims(img)
+        case 2, res = img(1:k(1):end, 1:k(2):end);
+        case 3, res = img(1:k(1):end, 1:k(2):end, 1:k(3):end);
+        case 4, res = img(1:k(1):end, 1:k(2):end, 1:k(3):end, 1:k(4):end);
+        case 5, res = img(1:k(1):end, 1:k(2):end, 1:k(3):end, 1:k(4):end, 1:k(5):end);
+    end
+    return;
+end
+
+
 % process case DIM=1
 if isscalar(dim)
     switch type
         case 'max'
             for i = 1:size(res, 1)-1
-                res(i) = max(img(i*scale(1):(i+1)*scale(1)-1));
+                res(i) = max(img(i*k(1):(i+1)*k(1)-1));
             end
-            res(dim(1)) = max(img(size(res,1)*scale(1):dim(1)));
+            res(dim(1)) = max(img(size(res,1)*k(1):dim(1)));
         case 'min'
             for i = 1:size(res, 1)-1
-                res(i) = min(img(i*scale(1):(i+1)*scale(1)-1));
+                res(i) = min(img(i*k(1):(i+1)*k(1)-1));
             end
         case 'mean'
             for i = 1:size(res, 1)-1
-                res(i) = mean( img(i*scale(1):(i+1)*scale(1)-1));
+                res(i) = mean( img(i*k(1):(i+1)*k(1)-1));
             end
         case 'median'
             for i = 1:size(res, 1)-1
-                res(i) = median( img(i*scale(1):(i+1)*scale(1)-1));
+                res(i) = median( img(i*k(1):(i+1)*k(1)-1));
             end
         case 'first'
             for i = 1:size(res, 1)-1
-                res(i) = img(i*scale(1));
+                res(i) = img(i*k(1));
             end
         otherwise
             error(['Unable to process option: ' type]);
@@ -109,19 +123,19 @@ end
 % process case DIM=2
 if length(dim) == 2
     % allocate 3D image with third dimension corresponding to index in block
-    dim2 = floor(dim ./ scale);
-    dim = dim2 .* scale;
+    dim2 = floor(dim ./ k);
+    dim = dim2 .* k;
     if islogical(img)
-        tab = false([dim2(1) dim2(2) scale(1)*scale(2)]);
+        tab = false([dim2(1) dim2(2) k(1)*k(2)]);
     else
-        tab = zeros([dim2(1) dim2(2) scale(1)*scale(2)], class(img));
+        tab = zeros([dim2(1) dim2(2) k(1)*k(2)], class(img));
     end
 
     % fill in the 3D image
-    for i = 1:scale(1)
-        for j = 1:scale(2)
-            tab(1:dim2(1), 1:dim2(2) ,i+(j-1)*scale(1)) = ...
-                img(i:scale(1):dim(1), j:scale(2):dim(2));
+    for i = 1:k(1)
+        for j = 1:k(2)
+            tab(1:dim2(1), 1:dim2(2) ,i+(j-1)*k(1)) = ...
+                img(i:k(1):dim(1), j:k(2):dim(2));
         end
     end
 
@@ -146,12 +160,12 @@ if length(dim) == 3
         for j = 1:size(res, 2)-1
             for k = 1:size(res, 3)-1
                 % crop portion of image to process
-                sub = img(i*scale(1):(i+1)*scale(1)-1, ...
-                          j*scale(2):(j+1)*scale(2)-1, ...
-                          k*scale(3):(k+1)*scale(3)-1  );
+                sub = img(i*k(1):(i+1)*k(1)-1, ...
+                          j*k(2):(j+1)*k(2)-1, ...
+                          k*k(3):(k+1)*k(3)-1  );
                       
                 % apply operation on cropped image 
-                res(i,j,k) = feval(type, sub(:));
+                res(i,j,k) = feval(type, sub(:)); %#ok<FVAL>
             end
         end
     end

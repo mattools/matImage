@@ -24,12 +24,22 @@ function res = imJointHistogram(img1, img2, varargin)
 %   (float) images.
 %
 %   Example
+%     % Joint histogram of a grayscale image with a translated version of
+%     % itself 
 %     img = imread('cameraman.tif');
 %     img2 = img(2:end, 3:end);
 %     img2(256, 256) = 0;
 %     h = imJointHistogram(img, img2);
-%     imshow(h2, []); colormap([0 0 0;jet]);
-%     colormap jet
+%     % use logarithm to emphasize differences
+%     h2 = log(h + 1); 
+%     imshow(h2, []); 
+%     colormap([0 0 0;jet]);
+%     
+%   % Joint histogram of Infra-red and Red channels of a multi-band image
+%     CIR = multibandread('paris.lan', [512, 512, 7], 'uint8=>uint8', ...
+%         128, 'bil', 'ieee-le', {'Band', 'Direct', [4 3 2]});
+%     hIRR = imJointHistogram(CIR(:,:,1), CIR(:,:,2));
+%     figure; imshow(log(hIRR+1), []); colormap([0 0 0;jet]);
 %
 %   See also
 %   imhist, imHistogram, imJointEntropy

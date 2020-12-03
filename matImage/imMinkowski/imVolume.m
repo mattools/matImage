@@ -1,5 +1,5 @@
 function [vol, labels] = imVolume(img, varargin)
-% Volume measure of a 3D binary structure.
+% Volume of regions within a 3D binary or label image.
 %
 %   V = imVolume(IMG);
 %   Compute volume of the image. IMG is either a binary image, or a label
@@ -21,29 +21,67 @@ function [vol, labels] = imVolume(img, varargin)
 % Created: 2010-01-15,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRAE - Cepia Software Platform.
 
+
+%% Parse input arguments
+
 % check image dimension
 if ndims(img) ~= 3
     error('first argument should be a 3D binary or label image');
 end
 
+% the labels to compute
+labels = [];
+
+% default spatial calibration
+delta = [1 1 1];
+
+% parse parameter name-value pairs
+while ~isempty(varargin)
+    var1 = varargin{1};
+    varargin(1) = [];
+    
+    if isnumeric(var1)
+        % option can be number of directions, spatial calibration, or list
+        % of labels
+        if all(size(var1) == [1 3])
+            % spatial calibration
+            delta = var1;
+        elseif ~isscalar(var1) && size(var1, 2) == 1
+            % list of labels to compute
+            labels = var1;
+        else
+            error('Unable to parse input argument');
+        end
+    else
+        error('Expect numeric input only');
+    end
+end
+
+
+%% Process label images
+
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
-    labels = imFindLabels(img);
+    % extract labels if necessary (considers 0 as background)
+    if isempty(labels)
+        labels = imFindLabels(img);
+    end
+    
+    % allocate memory
     vol = zeros(length(labels), 1);
+    
+    % iterate over labels
     for i = 1:length(labels)
-        vol(i) = imVolume(img==labels(i), varargin{:});
+        vol(i) = imVolume(img==labels(i), delta);
     end
     return;
 end
 
+
+%% Process binary images
+
 % in case of binary image, compute only one label...
 labels = 1;
-
-% check image resolution
-delta = [1 1 1];
-if ~isempty(varargin)
-    delta = varargin{1};
-end
 
 % compute area, multiplied by image resolution
 vol = sum(img(:)) * prod(delta);

@@ -26,30 +26,58 @@ function [chi, labels] = imEuler3d(img, varargin)
 % Created: 2010-07-26,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRAE - Cepia Software Platform.
 
+%% Parse input arguments
+
 % check image dimension
 if ndims(img) ~= 3
     error('first argument should be a 3D image');
 end
 
+% default options
+labels = [];
+conn = 6;
+
+% parse input arguments
+while ~isempty(varargin)
+    var1 = varargin{1};
+    varargin(1) = [];
+    
+    if size(var1, 2) == 1
+        % the labels to compute
+        labels = var1;
+    elseif all(size(var1) == [1 1])
+        % connectivity
+        conn = var1;
+    else
+        error('Unable to interpret input argument');
+    end
+end
+
+
+%% Process label images
+
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
-    labels = unique(img);
-    labels(labels==0) = [];
+    % extract labels if necessary (considers 0 as background)
+    if isempty(labels)
+        labels = imFindLabels(img);
+    end
+    
+    % allocate memory
     chi = zeros(length(labels), 1);
-    for i=1:length(labels)
-        chi(i) = imEuler3d(img==labels(i), varargin{:});
+    
+    % iterate over labels
+    for i = 1:length(labels)
+        chi(i) = imEuler3d(img==labels(i), conn);
     end
     return;
 end
 
+
+%% Process binary images
+
 % in case of binary image, compute only one label
 labels = 1;
-
-% check connectivity
-conn = 6;
-if ~isempty(varargin)
-    conn = varargin{1};
-end
 
 % size of image in each direction
 dim = size(img);
@@ -88,7 +116,7 @@ s = sum(sum(sum(...
     img(1:N1-1, 1:N2-1, 2:N3)   & img(1:N1-1, 2:N2, 2:N3) & ...
     img(2:N1, 1:N2-1, 2:N3)     & img(2:N1, 2:N2, 2:N3) )));
 
-if conn==6
+if conn == 6
     % compute euler characteristics from graph counts
     chi = v - (e1+e2+e3) + (f1+f2+f3) - s;
     return;

@@ -51,7 +51,7 @@ bb = imSurfaceArea(imgb, nDir, [1 2 3]);
 assertEqual(testCase, b, bb);
 
 
-function test_Labels(testCase)
+function test_Labels_D3(testCase)
 
 img = zeros([5 5 5]);
 img(1:3, 1:3, 1:3) = 1;
@@ -64,14 +64,67 @@ img(1:3, 4:5, 4:5) = 7;
 img(4:5, 4:5, 4:5) = 8;
 
 b3 = imSurfaceArea(img, 3);
-b13 = imSurfaceArea(img, 13);
 assertEqual(testCase, 8, length(b3));
-assertEqual(testCase, 8, length(b13));
 
 imgb = padarray(img, [1 1 1]);
 bb3 = imSurfaceArea(imgb, 3);
-bb13 = imSurfaceArea(imgb, 13);
 
 assertEqual(testCase, b3, bb3);
+
+
+function test_Labels_D13(testCase)
+
+img = zeros([5 5 5]);
+img(1:3, 1:3, 1:3) = 1;
+img(4:5, 1:3, 1:3) = 2;
+img(1:3, 4:5, 1:3) = 3;
+img(4:5, 4:5, 1:3) = 4;
+img(1:3, 1:3, 4:5) = 5;
+img(4:5, 1:3, 4:5) = 6;
+img(1:3, 4:5, 4:5) = 7;
+img(4:5, 4:5, 4:5) = 8;
+
+b13 = imSurfaceArea(img, 13);
+assertEqual(testCase, 8, length(b13));
+
+imgb = padarray(img, [1 1 1]);
+bb13 = imSurfaceArea(imgb, 13);
 assertEqual(testCase, b13, bb13);
 
+
+function test_Labels2_D3(testCase)
+
+img = zeros([5 5 5]);
+img(1:3, 1:3, 1:3) = 2;
+img(4:5, 1:3, 1:3) = 3;
+img(1:3, 4:5, 1:3) = 5;
+img(4:5, 4:5, 1:3) = 7;
+img(1:3, 1:3, 4:5) = 11;
+img(4:5, 1:3, 4:5) = 13;
+img(1:3, 4:5, 4:5) = 17;
+img(4:5, 4:5, 4:5) = 19;
+
+[b3, labels3] = imSurfaceArea(img, 3);
+
+assertEqual(testCase, 8, length(b3));
+assertEqual(testCase, 8, length(labels3));
+assertEqual(testCase, labels3, [2 3 5 7 11 13 17 19]');
+
+
+function test_Labels2_D13(testCase)
+
+img = zeros([5 5 5]);
+img(1:3, 1:3, 1:3) = 2;
+img(4:5, 1:3, 1:3) = 3;
+img(1:3, 4:5, 1:3) = 5;
+img(4:5, 4:5, 1:3) = 7;
+img(1:3, 1:3, 4:5) = 11;
+img(4:5, 1:3, 4:5) = 13;
+img(1:3, 4:5, 4:5) = 17;
+img(4:5, 4:5, 4:5) = 19;
+
+[b13, labels13] = imSurfaceArea(img, 13);
+
+assertEqual(testCase, 8, length(b13));
+assertEqual(testCase, 8, length(labels13));
+assertEqual(testCase, labels13, [2 3 5 7 11 13 17 19]');

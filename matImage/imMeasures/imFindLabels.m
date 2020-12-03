@@ -1,9 +1,9 @@
 function labels = imFindLabels(img)
-%IMFINDLABELS  Find unique labels in a label image
+% Find unique labels within a label image.
 %
 %   LABELS = imFindLabels(IMG)
 %   Finds the unique labels in the label image IMG. The result can be
-%   obtained using the unique function, but a special processing is added
+%   obtained using the "unique" function, but a special processing is added
 %   to avoid using too much memory.
 %
 %   Example

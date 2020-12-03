@@ -1,8 +1,8 @@
 function res = imProjectedArea(img, shifts, varargin)
-% Total projected area in a given direction.
+% Total projected area of a 3D region in a given direction.
 %
 %   AREA = imProjectedArea(IMG, SHIFT)
-%   IMG is a 3D binary image, SHIFT is a 1-by3 row vector indicating the
+%   IMG is a 3D binary image, SHIFT is a 1-by-3 row vector indicating the
 %   shift between two voxels to test.
 %
 %   Example

@@ -40,6 +40,45 @@ v2 = imVolume(imgb);
 assertEqual(testCase, v0, v2);
 
 
+function test_Labels(testCase)
+
+img = zeros([6 6 6]);
+img(1:3, 1:3, 1:3) = 2;
+img(4:6, 1:3, 1:3) = 3;
+img(1:3, 4:6, 1:3) = 5;
+img(4:6, 4:6, 1:3) = 7;
+img(1:3, 1:3, 4:6) = 11;
+img(4:6, 1:3, 4:6) = 13;
+img(1:3, 4:6, 4:6) = 17;
+img(4:6, 4:6, 4:6) = 19;
+
+[vols, labels] = imVolume(img);
+assertEqual(testCase, vols, repmat(27, 8, 1), .01);
+assertEqual(testCase, labels, [2 3 5 7 11 13 17 19]');
+
+
+function test_Labels2(testCase)
+
+img = zeros([6 6 6]);
+img(1:3, 1:3, 1:3) = 2;
+img(4:6, 1:3, 1:3) = 3;
+img(1:3, 4:6, 1:3) = 5;
+img(4:6, 4:6, 1:3) = 7;
+img(1:3, 1:3, 4:6) = 11;
+img(4:6, 1:3, 4:6) = 13;
+img(1:3, 4:6, 4:6) = 17;
+img(4:6, 4:6, 4:6) = 19;
+labels = [2 3 5 7 11 13 17 19]';
+
+vols = imVolume(img, labels);
+assertEqual(testCase, size(vols), [8 1]);
+assertEqual(testCase, vols, repmat(27, 8, 1), .01);
+
+vols2 = imVolume(img, labels(1:2:end));
+assertEqual(testCase, size(vols2), [4 1]);
+assertEqual(testCase, vols2, repmat(27, 4, 1), .01);
+
+
 function test_Anisotropic(testCase)
 
 img = ones([5 5 5]);

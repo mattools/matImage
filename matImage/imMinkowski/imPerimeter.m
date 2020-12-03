@@ -1,5 +1,5 @@
 function [perim, labels] = imPerimeter(img, varargin)
-%Perimeter of a 2D image using Crofton formula
+% Perimeter of regions within a 2D binary or label image.
 %
 %   P = imPerimeter(IMG);
 %   Return an estimate of the perimeter of the image, computed by
@@ -9,12 +9,13 @@ function [perim, labels] = imPerimeter(img, varargin)
 %   P = imPerimeter(IMG, NDIR);
 %   Specify number of directions to use. Use either 2 or 4 (the default).
 %
-%   P = imPerimeter(IMG, NDIR, SCALE);
-%   Also specify scale of image tile. SCALE is a 1-by-2 array, containing
-%   pixel size in each physical direction. Default is [1 1].
-%   SCALE(1) coresponds to DX, and SCALE(2) coresponds to DY.
+%   P = imPerimeter(..., SPACING);
+%   Also specify the spatial calibration of the image. SPACING is a 1-by-2
+%   row vector, containing the pixel size in each physical direction.
+%   Default is [1 1]. SPACING(1) coresponds to DX, and SPACING(2)
+%   coresponds to DY. 
 %   
-%   [P LABELS] = imPerimeter(LBL, ...)
+%   [P, LABELS] = imPerimeter(LBL, ...)
 %   Process a label image, and return also the labels for which a value was
 %   computed.
 %
@@ -38,46 +39,45 @@ function [perim, labels] = imPerimeter(img, varargin)
 % Copyright 2010 INRAE - Cepia Software Platform.
 
 
-%% Pre-processing
+%% Parse input arguments
 
 % check image dimension
 if ndims(img) ~= 2 %#ok<ISMAT>
     error('First argument should be a 2D image');
 end
 
-
-%% Extract input arguments
-
-% default number of directions
+% default values of parameters
 nDirs = 4;
-
-% default image resolution
 delta = [1 1];
+labels = [];
 
 % parse parameter name-value pairs
 while ~isempty(varargin)
-    var = varargin{1};
+    var1 = varargin{1};
     
-    if isnumeric(var)        
-        % option is either number of directions or resolution
-        if isscalar(var)
-            nDirs = var;
-        else
-            delta = var;
+    if isnumeric(var1)
+        % option can be number of directions, spatial calibration, or list
+        % of labels
+        if isscalar(var1)
+            nDirs = var1;
+        elseif all(size(var1) == [1 2])
+            delta = var1;
+        elseif size(var1, 2) == 1
+            labels = var1;
         end
         varargin(1) = [];
         
-    elseif ischar(var)
+    elseif ischar(var1)
         if length(varargin) < 2
             error('Parameter name must be followed by parameter value');
         end
-    
-        if strcmpi(var, 'ndirs')
+        
+        if strcmpi(var1, 'ndirs')
             nDirs = varargin{2};
-        elseif strcmpi(var, 'resolution')
+        elseif strcmpi(var1, 'resolution')
             delta = varargin{2};
         else
-            error(['Unknown parameter name: ' var]);
+            error(['Unknown parameter name: ' var1]);
         end
         
         varargin(1:2) = [];
@@ -85,31 +85,31 @@ while ~isempty(varargin)
 end
 
 
-% check if labels are specified
-labels = [];
-if ~isempty(varargin) && size(varargin{1}, 2) == 1 && ~isscalar(varargin{1})
-    labels = varargin{1};
-    varargin(1) = []; %#ok<NASGU>
-end
+%% Process label images
 
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
     % extract labels if necessary (considers 0 as background)
     if isempty(labels)
-        labels = unique(img);
-        labels(labels==0) = [];
+        labels = imFindLabels(img);
     end
     
     % allocate result array
     nLabels = length(labels);
     perim = zeros(nLabels, 1);
-
-    props = regionprops(img, 'BoundingBox');
     
-    % compute perimeter of each label considered as binary image
+    % compute bounding box of each region
+    boxes = imBoundingBox(img, labels);
+    
+    % compute perimeter of each region considered as binary image
     for i = 1:nLabels
         label = labels(i);
-        bin = imcrop(img, props(label).BoundingBox) == label;
+        
+        % convert bounding box to image extent, in x and y directions
+        i0 = ceil(boxes(i, [3 1]));
+        i1 = floor(boxes(i, [4 2]));
+        
+        bin = img(i0(1):i1(1), i0(2):i1(2)) == label;
         perim(i) = imPerimeter(bin, nDirs, delta);
     end
     

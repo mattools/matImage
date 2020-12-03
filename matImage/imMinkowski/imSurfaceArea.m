@@ -1,5 +1,5 @@
 function [surf, labels] = imSurfaceArea(img, varargin)
-% Surface area of a 3D binary structure.
+% Surface area of the regions within a 3D binary or label image.
 %
 %   S = imSurfaceArea(IMG)
 %   Estimates the surface area of the 3D binary structure represented by
@@ -9,14 +9,19 @@ function [surf, labels] = imSurfaceArea(img, varargin)
 %   Specifies the number of directions used for estimating surface area.
 %   NDIRS can be either 3 or 13, default is 13.
 %
-%   S = imSurfaceArea(..., RESOL)
-%   Specifies image resolution. RESOL is a 1-by-3 row vector containing
-%   resolution in the X, Y and Z direction (in that order).
+%   S = imSurfaceArea(..., SPACING)
+%   Specifies the spatial calibration of the image. SPACING is a 1-by-3 row
+%   vector containing the voxel size in the X, Y and Z directions, in that
+%   orders. 
 %
 %   S = imSurfaceArea(LBL)
-%   [S, L] = imSurface(AreaLBL)
+%   [S, L] = imSurface(LBL)
 %   When LBL is a label image, returns the surface area of each label in
 %   the 3D array, and eventually returns the indices of processed labels.
+%
+%   S = imSurfaceArea(..., LABELS)
+%   In the case of a label image, specifies the labels of the region to
+%   analyse.
 %
 %
 %   Example
@@ -66,74 +71,46 @@ function [surf, labels] = imSurfaceArea(img, varargin)
 % Copyright 2010 INRAE - Cepia Software Platform.
 
 
+%% Parse input arguments
+
 % check image dimension
 if ndims(img) ~= 3
     error('first argument should be a 3D image');
 end
 
-% in case of a label image, return a vector with a set of results
-if ~islogical(img)
-    % extract labels (considers 0 as background)
-    labels = imFindLabels(img);
-    
-    % allocate result array
-    nLabels = length(labels);
-    surf = zeros(nLabels, 1);
-
-    % compute bounding box of each label
-    boxes = imBoundingBox(img);
-    
-    % Compute surface area of each label considered as binary image
-    % The computation is performed on a subset of the image for reducing
-    % memory footprint.
-    for i = 1:nLabels
-        label = labels(i);
-        
-        % convert bounding box to image extent, in x, y and z directions
-        box = boxes(i,:);
-        i0 = ceil(box([3 1 5]));
-        i1 = floor(box([4 2 6]));
-
-        % crop image of current label
-        bin = img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
-        surf(i) = imSurfaceArea(bin, varargin{:});
-    end
-    
-    return;
-end
-
-
-%% Process input arguments
-
-% in case of binary image, compute only one label...
-labels = 1;
+% the labels to compute
+labels = [];
 
 % default number of directions
 nDirs = 13;
 
-% default image resolution
+% default image calibration
 delta = [1 1 1];
 
 % methods to compute direction weights. Can be {'Voronoi'}, 'isotropic'.
 directionWeights = 'voronoi';
 
+
 % Process user input arguments
 while ~isempty(varargin)
-    var = varargin{1};
-    if isnumeric(var)
+    var1 = varargin{1};
+    
+    if isnumeric(var1)
         % option is either connectivity or resolution
-        if isscalar(var)
-            nDirs = var;
-        else
-            delta = var;
+        if isscalar(var1)
+            nDirs = var1;
+        elseif all(size(var1) == [1 3])
+            delta = var1;
+        elseif size(var1, 2) == 1
+            labels = var1;
         end
         varargin(1) = [];
-
-    elseif ischar(var)
+        
+    elseif ischar(var1)
         if length(varargin) < 2
             error('optional named argument require a second argument as value');
         end
-        if strcmpi(var, 'directionweights')
+        if strcmpi(var1, 'directionweights')
             directionWeights = varargin{2};
         end
         varargin(1:2) = [];
@@ -145,7 +122,47 @@ while ~isempty(varargin)
 end
 
 
-%% Initialisations
+%% Process label image
+
+% in case of a label image, return a vector with a set of results
+if ~islogical(img)
+    % extract labels if necessary (considers 0 as background)
+    if isempty(labels)
+        labels = imFindLabels(img);
+    end
+    
+    % allocate result array
+    nLabels = length(labels);
+    surf = zeros(nLabels, 1);
+
+    % compute bounding box of each region
+    boxes = imBoundingBox(img, labels);
+    
+    % Compute surface area of each region considered as binary image
+    % The computation is performed on a subset of the image for reducing
+    % memory footprint.
+    for i = 1:nLabels
+        label = labels(i);
+        
+        % convert bounding box to image extent, in x, y and z directions
+        box = boxes(i,:);
+        i0 = ceil(box([3 1 5]));
+        i1 = floor(box([4 2 6]));
+        
+        % crop image of current label
+        bin = img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
+        surf(i) = imSurfaceArea(bin, nDirs, delta, 'directionWeights', directionWeights);
+    end
+    
+    return;
+end
+
+
+
+%% Process binary images
+
+% in case of binary image, compute only one label...
+labels = 1;
 
 % distances between a pixel and its neighbours.
 d1  = delta(1); % x

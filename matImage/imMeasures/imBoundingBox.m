@@ -1,5 +1,5 @@
 function [boxes, labels] = imBoundingBox(img, varargin)
-%IMBOUNDINGBOX Bounding box of a binary or label image
+% Bounding box of regions within a 2D or 3D binary or label image.
 %
 %   BOX = imBoundingBox(IMG)
 %   Compute the bounding boxes of the particles in labeled image IMG. If
@@ -18,6 +18,14 @@ function [boxes, labels] = imBoundingBox(img, varargin)
 %   the maximal coordinates in the X, Y and Z directions:
 %   BOX = [XMIN XMAX YMIN YMAX ZMIN ZMAX].
 %
+%   [BOX, LABELS] = imBoundingBox(...)
+%   Also returns the labels of the regions for which a bounding box was
+%   computed. LABELS is a N-by-1 array with as many rows as BOX.
+%
+%   [...] = imBoundingBox(IMG, LABELS)
+%   Specifies the labels of the regions whose bounding box need to be
+%   computed.
+%
 %
 %   Example
 %   % Draw a complex particle together with its bounding box
@@ -35,11 +43,11 @@ function [boxes, labels] = imBoundingBox(img, varargin)
 %     drawBox(boxes, 'linewidth', 2, 'color', 'g');
 %
 %   See also
-%   regionprops, drawBox, imOrientedBox, imInertiaEllipse
+%     regionprops, drawBox, imOrientedBox, imEquivalentEllipse
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-03-30,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 

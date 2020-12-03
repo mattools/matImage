@@ -1,5 +1,5 @@
 function res = imProjectedDiameter(img, shifts)
-%IMPROJECTEDDIAMETER  Projected diameter in a given direction
+% Projected diameter of a 2D region in a given direction.
 %
 %   DIAM = imProjectedDiameter(IMG, SHIFT)
 %   IMG is a 2D binary image, SHIFT is a 1-by-2 row vector indicating the

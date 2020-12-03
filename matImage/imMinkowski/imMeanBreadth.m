@@ -1,5 +1,5 @@
 function [breadth, labels] = imMeanBreadth(img, varargin)
-%IMMEANBREADTH Mean breadth of a 3D binary or label image
+% Mean breadth of regions within a 3D binary or label image.
 %
 %   B = imMeanBreadth(IMG)
 %   Computes the mean breadth of the binary structure in IMG, or of each
@@ -9,9 +9,10 @@ function [breadth, labels] = imMeanBreadth(img, varargin)
 %   Specifies the number of directions used for estimating the mean breadth
 %   from the Crofton formula. Can be either 3 (the default) or 13.
 %
-%   B = imMeanBreadth(..., DELTA)
-%   Specifies the resolution of the image as a 1-by-3 row vector containing
-%   pixel spacing in X, Y and Z directions respectively.
+%   B = imMeanBreadth(..., SPACING)
+%   Specifies the spatial calibration of the image. SPACING is a 1-by-3 row
+%   vector containing the voxel size in the X, Y and Z directions, in that
+%   orders. 
 %
 %   [B LABELS]= imMeanBreadth(LBL, ...)
 %   Also returns the set of labels for which the mean breadth was computed.
@@ -70,20 +71,52 @@ function [breadth, labels] = imMeanBreadth(img, varargin)
 if ndims(img) ~= 3
     error('first argument should be a 3D image');
 end
+% the labels to compute
+labels = [];
+
+% default number of directions
+nDirs = 13;
+
+% default image calibration
+delta = [1 1 1];
+
+% Process user input arguments
+while ~isempty(varargin)
+    var1 = varargin{1};
+    
+    if isnumeric(var1)
+        % option is either connectivity or resolution
+        if isscalar(var1)
+            nDirs = var1;
+        elseif all(size(var1) == [1 3])
+            delta = var1;
+        elseif size(var1, 2) == 1
+            labels = var1;
+        end
+        varargin(1) = [];
+    else
+        error('option should be numeric');
+    end
+end
+
+
+%% Process label images
 
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
-    % identify the labels in image
-    labels = imFindLabels(img);
+    % extract labels if necessary (considers 0 as background)
+    if isempty(labels)
+        labels = imFindLabels(img);
+    end
     
     % allocate result array
     nLabels = length(labels);
     breadth = zeros(nLabels, 1);
     
-    % compute bounding box of each label
-    boxes = imBoundingBox(img);
+    % compute bounding box of each region
+    boxes = imBoundingBox(img, labels);
     
-    % Compute mean breadth of each label considered as binary image
+    % Compute mean breadth of each region considered as binary image
     % The computation is performed on a subset of the image for reducing
     % memory footprint.
     for i = 1:nLabels
@@ -93,51 +126,25 @@ if ~islogical(img)
         box = boxes(i,:);
         i0 = ceil(box([3 1 5]));
         i1 = floor(box([4 2 6]));
-
+        
         % crop image of current label
         bin = img(i0(1):i1(1), i0(2):i1(2), i0(3):i1(3)) == label;
-        breadth(i) = imMeanBreadth(bin, varargin{:});
+        breadth(i) = imMeanBreadth(bin, nDirs, delta);
     end
 
     return;
 end
 
 
-%% Process input arguments
+%% Process binary images
 
-% in case of binary image, compute only one label...
-labels = 1;
-
-% default number of directions
-nDirs = 3;
-
-% default image resolution
-delta = [1 1 1];
-
-% Process user input arguments
-while ~isempty(varargin)
-    var = varargin{1};
-    if ~isnumeric(var)
-        error('option should be numeric');
-    end
-    
-    % option is either connectivity or resolution
-    if isscalar(var)
-        nDirs = var;
-    else
-        delta = var;
-    end
-    varargin(1) = [];
-end
-
-
-%% Initialisations
-
-% distances between a pixel and its neighbours.
+% pre-compute distances between a pixel and its neighbours.
 d1  = delta(1);
 d2  = delta(2);
 d3  = delta(3);
 vol = d1 * d2 * d3;
+
+labels = 1;
 
 
 %% Main processing for 3 directions
@@ -275,7 +282,7 @@ b11 = nv - (ne4 + ne6 + ne9) + nf11;
 b12 = nv - (ne4 + ne7 + ne8) + nf12;
 b13 = nv - (ne5 + ne6 + ne8) + nf13;
 
-if nDirs~=13
+if nDirs ~= 13
     error('Unknown number of directions');
 end
 

@@ -57,35 +57,35 @@
 %
 %
 %  Perimeter in 2D images
-%   imPerimeter           - Perimeter of a 2D image using Crofton formula
+%   imPerimeter           - Perimeter of regions within a 2D binary or label image.
 %   imPerimeterDensity    - Perimeter density of a 2D binary structure, using Crofton formula
 %   imPerimeterEstimate   - Perimeter estimate of a 2D binary structure
 %   imPerimeterLut        - Look-Up Table for measuring perimeter in a binary image
 %
 %  Area in 2D images
-%   imArea                - Compute area of binary 2D image 
+%   imArea                - Area of regions within a 2D binary or label image.
 %   imAreaDensity         - Compute area density in a 2D image
 %   imAreaEstimate        - Estimate area of binary 2D structure with edge correction
 %
 %  Euler-Poincare characteristic in 2D images
-%   imEuler2d             - Euler number of a binary 2D image
+%   imEuler2d             - Euler number of a binary or label 2D image.
 %   imEuler2dDensity      - Euler density in a 2D image
 %   imEuler2dEstimate     - Estimate Euler number in a 2D image
 %
 %  Volume in 3D images
-%   imVolume              - Volume measure of a 3D binary structure.
+%   imVolume              - Volume of regions within a 3D binary or label image.
 %   imVolumeDensity       - Compute volume density of a 3D image.
 %   imVolumeEstimate      - Estimate volume of a 3D binary structure with edge correction
 %
 %  Surface area in 3D images
-%   imSurfaceArea         - Surface area of a 3D binary structure.
+%   imSurfaceArea         - Surface area of the regions within a 3D binary or label image.
 %   imSurfaceAreaEstimate - Estimate surface area of a binary 3D structure.
 %   imSurfaceAreaDensity  - Surface area density of a 3D binary structure.
 %   imSurfaceAreaLut      - Look-Up Table for computing surface area of a 3D binary image.
 %   imJointSurfaceArea    - Surface area of the interface between two labels.
 %
 %  Mean breadth (integral of mean curvature) in 3D images
-%   imMeanBreadth         - Mean breadth of a 3D binary or label image
+%   imMeanBreadth         - Mean breadth of regions within a 3D binary or label image.
 %   imMeanBreadthDensity  - Mean breadth density of a 3D binary structure
 %   imMeanBreadthEstimate - Estimate mean breadth of a binary structure.
 %   imMeanBreadthLut      - Look-Up Table for computing mean breadth of a 3D image
@@ -104,8 +104,8 @@
 %
 %  Utility function
 %   imBinaryConfigHisto   - Histogram of binary configurations from 2D/3D image.
-%   imProjectedDiameter   - Projected diameter in a given direction
-%   imProjectedArea       - Total projected area in a given direction.
+%   imProjectedDiameter   - Projected diameter of a 2D region in a given direction.
+%   imProjectedArea       - Total projected area of a 3D region in a given direction.
 % 
 %
 % References
@@ -130,22 +130,18 @@
 
 %%  Obsolete functions
 
-%   perimeter                  - estimate perimeter of a structure
-%   epc                        - compute Euler-Poincare Characteristic (EPC) of a structure.
-%   tpl                        - compute total projection length
-%   specificSurface            - implementation of Ohser's algo for surface comput.
-%   specificIntMeanCurv        - Ohser's Integral of Mean Curvature
-%   specificIntMeanCurvDetails - Ohser's Integral of Mean Curvature with details
-%
-
-%% Deprecated functions
-
+%   epc                   - compute Euler-Poincare Characteristic (EPC) of a structure.
 %   imSurface             - Surface area of a 3D binary structure
 %   imSurfaceDensity      - Surface area density of a 3D binary structure
 %   imSurfaceEstimate     - Estimate surface area of a binary 3D structure
 %   imSurfaceLut          - Look-Up Table for computing surface area of a 3D binary image
 %   imJointSurface        - Surface area of the interface between two labels
+%   perimeter             - estimate perimeter of a structure
+%   specificSurface       - implementation of Ohser's algo for surface comput.
+%   specificIntMeanCurv   - Ohser's Integral of Mean Curvature
+%   specificIntMeanCurvDetails - Ohser's Integral of Mean Curvature with details
 %   specificIMCDetails    - Ohser's Integral of Mean Curvature
+%   tpl                   - compute total projection length
 
 %% under development
 

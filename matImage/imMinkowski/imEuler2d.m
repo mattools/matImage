@@ -1,5 +1,5 @@
 function [chi, labels] = imEuler2d(img, varargin)
-% Euler number of a binary 2D image
+% Euler number of a binary or label 2D image.
 %
 %   The function computes the Euler number, or Euler-Poincare
 %   characteristic, of a binary 2D image. The result corresponds to the
@@ -13,18 +13,19 @@ function [chi, labels] = imEuler2d(img, varargin)
 %   supported.
 %
 %   Example
-%   img = imread('coins.png');
-%   bin = imopen(img>80, ones(3,3));
-%   imEuler2d(bin)
-%   ans = 
-%       10
+%     img = imread('coins.png');
+%     bin = imopen(img>80, ones(3,3));
+%     imEuler2d(bin)
+%     ans = 
+%         10
 %
 %   See Also:
-%   minkowski, imPerimeter, regionprops
+%     minkowski, imPerimeter, regionprops
 %   
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-15,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
@@ -32,42 +33,70 @@ function [chi, labels] = imEuler2d(img, varargin)
 %   15/01/2010: rewrite using old function epc
 
 
+%% Parse input arguments
+
 % check image dimension
 if ndims(img) ~= 2 %#ok<ISMAT>
     error('first argument should be a 2D image');
 end
 
+% default options
+labels = [];
+conn = 4;
+
+% parse input arguments
+while ~isempty(varargin)
+    var1 = varargin{1};
+    varargin(1) = [];
+    
+    if size(var1, 2) == 1
+        % the labels to compute
+        labels = var1;
+    elseif all(size(var1) == [1 1])
+        % connectivity
+        conn = var1;
+    else
+        error('Unable to interpret input argument');
+    end
+end
+
+
+%% Process label image
+
 % in case of a label image, return a vector with a set of results
 if ~islogical(img)
-    % extract labels (considers 0 as background)
-    labels = unique(img);
-    labels(labels==0) = [];
+    % extract labels if necessary (considers 0 as background)
+    if isempty(labels)
+        labels = imFindLabels(img);
+    end
     
     % allocate result array
     nLabels = length(labels);
     chi = zeros(nLabels, 1);
-
-    props = regionprops(img, 'BoundingBox');
+    
+    % compute bounding box of each region
+    boxes = imBoundingBox(img, labels);
     
     % compute Euler number of each label considered as binary image
     for i = 1:nLabels
         label = labels(i);
-        bin = imcrop(img, props(label).BoundingBox) == label;
-        chi(i) = imEuler2d(bin, varargin{:});
+        
+        % convert bounding box to image extent, in x and y directions
+        i0 = ceil(boxes(i, [3 1]));
+        i1 = floor(boxes(i, [4 2]));
+        
+        bin = img(i0(1):i1(1), i0(2):i1(2)) == label;
+        chi(i) = imEuler2d(bin, conn);
     end
     
     return;
 end
 
 
+%% Process binary image
+
 % in case of binary image, compute only one label
 labels = 1;
-
-% check connectivity
-conn = 4;
-if ~isempty(varargin)
-    conn = varargin{1};
-end
 
 % size of image in each direction
 dim = size(img);

@@ -67,49 +67,25 @@ end
 if isempty(labels)
     labels = imFindLabels(img);
 end
-nLabels = length(labels);
 
-% allocate memory for result
+
 nd = ndims(img);
-boxes = zeros(nLabels, 2 * nd);
-
-
 if nd == 2
     %% Process planar case 
-    for i = 1:nLabels
-        % extract points of the current particle
-        [y, x] = find(img==labels(i));
-
-        % compute extreme coordinates, and add the half-width of the pixel
-        xmin = min(x) - .5;
-        xmax = max(x) + .5;
-        ymin = min(y) - .5;
-        ymax = max(y) + .5;
-
-        % create the resulting bounding box
-        boxes(i,:) = [xmin xmax ymin ymax];
-    end
+    props = regionprops(img, 'BoundingBox');
+    bb = reshape([props.BoundingBox], [4 length(props)])';
+    bb = bb(labels, :);
+    % convert to MatImage convention
+    boxes = [bb(:, 1) bb(:, 1)+bb(:, 3) bb(:, 2) bb(:, 2)+bb(:, 4)];
     
 elseif nd == 3
     %% Process 3D case
-    dim = size(img);
-    for i = 1:nLabels
-        % extract points of the current particle
-        inds = find(img==labels(i));
-        [y, x, z] = ind2sub(dim, inds);
-
-        % compute extreme coordinates, and add the half-width of the pixel
-        xmin = min(x) - .5;
-        xmax = max(x) + .5;
-        ymin = min(y) - .5;
-        ymax = max(y) + .5;
-        zmin = min(z) - .5;
-        zmax = max(z) + .5;
-
-        % create the resulting bounding box
-        boxes(i,:) = [xmin xmax ymin ymax zmin zmax];
-    end
-    
+    stats = regionprops3(img, 'BoundingBox');
+    bb = reshape([stats.BoundingBox], [6 size(stats, 1)])';
+    bb = bb(labels, :);
+    % convert to MatImage convention
+    boxes = [bb(:, 1) bb(:, 1)+bb(:, 4) bb(:, 2) bb(:, 2)+bb(:, 5) bb(:, 3) bb(:, 3)+bb(:, 6)];
+   
 else
     error('Image dimension must be 2 or 3');
 end

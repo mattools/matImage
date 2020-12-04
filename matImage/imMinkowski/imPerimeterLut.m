@@ -1,5 +1,5 @@
 function lut = imPerimeterLut(varargin)
-%IMPERIMETERLUT Look-Up Table for measuring perimeter in a binary image
+% Look-Up Table for measuring perimeter in a binary image.
 %
 %   LUT = imPerimeterLut()
 %   Returns a 16-by-1 column vector computing the perimeter contribution
@@ -29,7 +29,7 @@ function lut = imPerimeterLut(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2015-04-20,    using Matlab 8.4.0.150421 (R2014b)
 % Copyright 2015 INRA - Cepia Software Platform.
 

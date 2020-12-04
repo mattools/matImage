@@ -1,18 +1,19 @@
 function a = imAreaEstimate(img, varargin)
-%Estimate area of binary 2D structure with edge correction
+% Estimate area of binary 2D structure with edge correction.
 %
 %   Aest = imAreaEstimate(IMG)
 %   Aest = imAreaEstimate(IMG, DELTA)
 %
 %   Example
-%   imAreaEstimate
+%     imAreaEstimate
 %
 %   See also
+%     imArea, imAreaDensity
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-21,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

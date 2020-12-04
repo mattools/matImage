@@ -1,5 +1,5 @@
 function [chi, labels] = imEuler3dEstimate(img, varargin)
-%Estimate Euler number in a 3D image
+% Estimate Euler number in a 3D image.
 %
 %   CHIest = imEuler3dEstimate(IMG)
 %   CHIest = imEuler3dEstimate(IMG, CONN)
@@ -9,7 +9,7 @@ function [chi, labels] = imEuler3dEstimate(img, varargin)
 %   an estimate of Euler number density.
 %
 %   Example
-%   imEuler3dEstimate
+%     imEuler3dEstimate
 %
 %   See also
 %     imEuler3dDensity, imEuler3d

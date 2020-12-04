@@ -58,24 +58,24 @@
 %
 %  Perimeter in 2D images
 %   imPerimeter           - Perimeter of regions within a 2D binary or label image.
-%   imPerimeterDensity    - Perimeter density of a 2D binary structure, using Crofton formula
-%   imPerimeterEstimate   - Perimeter estimate of a 2D binary structure
-%   imPerimeterLut        - Look-Up Table for measuring perimeter in a binary image
+%   imPerimeterDensity    - Perimeter density of a 2D binary structure, using Crofton formula.
+%   imPerimeterEstimate   - Perimeter estimate of a 2D binary structure.
+%   imPerimeterLut        - Look-Up Table for measuring perimeter in a binary image.
 %
 %  Area in 2D images
 %   imArea                - Area of regions within a 2D binary or label image.
-%   imAreaDensity         - Compute area density in a 2D image
-%   imAreaEstimate        - Estimate area of binary 2D structure with edge correction
+%   imAreaDensity         - Compute area density in a 2D image.
+%   imAreaEstimate        - Estimate area of binary 2D structure with edge correction.
 %
 %  Euler-Poincare characteristic in 2D images
 %   imEuler2d             - Euler number of a binary or label 2D image.
-%   imEuler2dDensity      - Euler density in a 2D image
-%   imEuler2dEstimate     - Estimate Euler number in a 2D image
+%   imEuler2dDensity      - Euler density in a 2D image.
+%   imEuler2dEstimate     - Estimate Euler number in a 2D image.
 %
 %  Volume in 3D images
 %   imVolume              - Volume of regions within a 3D binary or label image.
 %   imVolumeDensity       - Compute volume density of a 3D image.
-%   imVolumeEstimate      - Estimate volume of a 3D binary structure with edge correction
+%   imVolumeEstimate      - Estimate volume of a 3D binary structure with edge correction.
 %
 %  Surface area in 3D images
 %   imSurfaceArea         - Surface area of the regions within a 3D binary or label image.
@@ -86,21 +86,21 @@
 %
 %  Mean breadth (integral of mean curvature) in 3D images
 %   imMeanBreadth         - Mean breadth of regions within a 3D binary or label image.
-%   imMeanBreadthDensity  - Mean breadth density of a 3D binary structure
+%   imMeanBreadthDensity  - Mean breadth density of a 3D binary structure.
 %   imMeanBreadthEstimate - Estimate mean breadth of a binary structure.
-%   imMeanBreadthLut      - Look-Up Table for computing mean breadth of a 3D image
+%   imMeanBreadthLut      - Look-Up Table for computing mean breadth of a 3D image.
 %
 %  Euler-Poincare characteristic in 3D images
-%   imEuler3d             - Euler number of a binary 3D image
+%   imEuler3d             - Euler number of a binary 3D image.
 %   imEuler3dDensity      - Compute Euler density in a 3D image.
-%   imEuler3dEstimate     - Estimate Euler number in a 3D image
+%   imEuler3dEstimate     - Estimate Euler number in a 3D image.
 %
 %  Euler-Poincare characteristic and length in 1D images
-%   imEuler1d             - Compute Euler number of a binary 1D image
-%   imEuler1dEstimate     - Compute Euler number of a binary 1D image
-%   imLength              - Compute total length of a binary 1D structure
-%   imLengthDensity       - Estimate length density of a binary 1D structure using edge correction
-%   imLengthEstimate      - Estimate total length  of a binary 1D structure using edge correction
+%   imEuler1d             - Compute Euler number of a binary 1D image.
+%   imEuler1dEstimate     - Compute Euler number of a binary 1D image.
+%   imLength              - Compute total length of a binary 1D structure.
+%   imLengthDensity       - Estimate length density of a binary 1D structure using edge correction.
+%   imLengthEstimate      - Estimate total length  of a binary 1D structure using edge correction.
 %
 %  Utility function
 %   imBinaryConfigHisto   - Histogram of binary configurations from 2D/3D image.

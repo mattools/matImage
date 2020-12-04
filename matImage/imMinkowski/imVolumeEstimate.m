@@ -1,5 +1,5 @@
 function vol = imVolumeEstimate(img, varargin)
-%Estimate volume of a 3D binary structure with edge correction
+% Estimate volume of a 3D binary structure with edge correction.
 %
 %   Vest = imVolumeEstimate(IMG);
 %   Vest = imVolumeEstimate(IMG, DELTA);
@@ -8,11 +8,11 @@ function vol = imVolumeEstimate(img, varargin)
 %   imVolumeEstimate
 %
 %   See also
-%   imVolume, imSurfaceEstimate
+%     imVolume, imSurfaceEstimate
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-21,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

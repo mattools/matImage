@@ -1,17 +1,17 @@
 function [epcd, labels] = imEuler2dDensity(img, varargin)
-% Euler density in a 2D image
+% Euler density in a 2D image.
 %   EPCD = imEuler2dDensity(IMG)
 %
 %   Example
 %   imEuler2dDensity
 %
 %   See also
-%   imEuler2d, imEuler2dEstimate
+%     imEuler2d, imEuler2dEstimate
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-21,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

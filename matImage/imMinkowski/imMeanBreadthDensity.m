@@ -1,5 +1,5 @@
 function [breadth, labels] = imMeanBreadthDensity(img, varargin)
-%IMMEANBREADTHDENSITY Mean breadth density of a 3D binary structure
+% Mean breadth density of a 3D binary structure.
 %
 %   MV = imMeanBreadthDensity(IMG)
 %   Estimate mean breadth density (ratio of mean breadth over volume of the

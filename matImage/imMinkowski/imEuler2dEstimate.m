@@ -1,18 +1,18 @@
 function [chi, labels] = imEuler2dEstimate(img, varargin)
-%Estimate Euler number in a 2D image
+% Estimate Euler number in a 2D image.
 %
 %   CHIest = imEuler2dEstimate(IMG)
 %   CHIest = imEuler2dEstimate(IMG, CONN)
 %
 %   Example
-%   imEuler2dEstimate
+%     imEuler2dEstimate
 %
 %   See also
-%   imEuler2d, imEuler2dDensity
+%     imEuler2d, imEuler2dDensity
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-21,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

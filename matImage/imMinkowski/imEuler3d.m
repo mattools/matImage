@@ -1,5 +1,5 @@
 function [chi, labels] = imEuler3d(img, varargin)
-%IMEULER3D Euler number of a binary 3D image
+% Euler number of a binary 3D image.
 %
 %   CHI = imEuler3d(IMG)
 %   Compute Euler-Poincare Characteristic (or Euler Number, or connectivity
@@ -14,10 +14,25 @@ function [chi, labels] = imEuler3d(img, varargin)
 %   labels in image.
 %
 %   Example
-%   imEuler3d
+%     % Compute Euler number of a simply connected region (-> Euler = 1)
+%     img = false([5 5 5]);
+%     img(2:4, 2:4, 2:4) = true;
+%     imEuler3d(img)
+%     ans =
+%          1
+%     % Adds one hole to the region. Euler number becomes 0
+%     img(3, 3, :) = false;
+%     imEuler3d(img)
+%     ans =
+%          0
+%     % Adds two more holes to the region. Euler number becomes -2
+%     img(3, :, 3) = false;
+%     imEuler3d(img)
+%     ans =
+%          -2
 %
 %   See also
-%   imEuler2d, imEuler3dDensity
+%     imEuler2d, imEuler3dDensity
 %
 
 % ------

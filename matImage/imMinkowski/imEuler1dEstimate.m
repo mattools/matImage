@@ -1,5 +1,5 @@
 function [chi, labels] = imEuler1dEstimate(img, varargin)
-% Compute Euler number of a binary 1D image
+% Compute Euler number of a binary 1D image.
 %
 %   The function computes the Euler number, or Euler-Poincare
 %   characteristic, of a binary 2D image. The result corresponds to the
@@ -17,7 +17,7 @@ function [chi, labels] = imEuler1dEstimate(img, varargin)
    
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-15,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

@@ -1,5 +1,5 @@
 function lut = imMeanBreadthLut(varargin)
-%IMMEANBREADTHLUT Look-Up Table for computing mean breadth of a 3D image
+%IMMEANBREADTHLUT Look-Up Table for computing mean breadth of a 3D image.
 %
 %   LUT = imMeanBreadthLut
 %   Returns an array of size 256, which can be used with function imLUT to
@@ -346,3 +346,4 @@ elseif n == 1
     contrib = 1/6;
 end
     
+

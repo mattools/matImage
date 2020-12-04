@@ -1,19 +1,19 @@
 function [len, labels] = imLengthDensity(img, varargin)
-%Estimate length density of a binary 1D structure using edge correction
+% Estimate length density of a binary 1D structure using edge correction.
 %
 %   LEN = imLengthDensity(IMG);
 %   When IMG is a binary image, returns the total length of the structure,
 %   equal to the number of pixels.
 %   This function is intended to be used for debugging purpose.
 %   
-%   [LEN LABELS] = imLengthDensity(LBL, ...);
+%   [LEN, LABELS] = imLengthDensity(LBL, ...);
 %   When LBL is a label image, returns the total length of each label
 %   different from 0. Returns also the set of unique values in LBL.
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-10-18,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

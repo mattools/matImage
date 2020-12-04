@@ -1,5 +1,5 @@
 function [perim, labels] = imPerimeterEstimate(img, varargin)
-% Perimeter estimate of a 2D binary structure
+% Perimeter estimate of a 2D binary structure.
 %
 %   P = imPerimeter(IMG);
 %   Return an estimate of the perimeter of the image, computed by
@@ -13,7 +13,7 @@ function [perim, labels] = imPerimeterEstimate(img, varargin)
 %   Also specify scale of image tile. SCALE si a 2x1 array, containing
 %   pixel size in each direction. Default is [1 1].
 %   
-%   [P LABEL] = imPerimeter(IMG, ...);
+%   [P, LABEL] = imPerimeter(IMG, ...);
 %   When IMG is a label image, the perimeter of each label is computed and
 %   returned in column array P. The output LABEL returns the LABEL of each
 %   computed phase.
@@ -21,7 +21,7 @@ function [perim, labels] = imPerimeterEstimate(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-21,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

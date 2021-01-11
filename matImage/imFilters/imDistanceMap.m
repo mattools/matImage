@@ -1,14 +1,23 @@
 function dist = imDistanceMap(img, varargin)
 %IMDISTANCEMAP Compute chamfer distance using scanning algorithm
 %
-%   RES = imDistanceMap(IMG);
-%   where IMG is a binary images, computes for each foreground pixel the
+%   Usage:
+%   RES = imDistanceMap(BIN);
+%   where BIN is a binary images, computes for each foreground pixel the
 %   minimum distance to the background.
 %   The function propagates distances to orthogonal and diagonal pixels,
 %   using weights equal to 1 for orthogonal pixels, and sqrt(2) for
 %   diagonal markers. The result RES is given in a double array the same
-%   size as IMG.
+%   size as BIN.
 %
+%   RES = imDistanceMap(LBL);
+%   The function can be applied to a label image LBL, where the values of
+%   LBL correspond to region indices. In that case, the result RES
+%   corresponds to the superposition of the results on computed on each
+%   label.
+%
+%
+%   Methods:
 %   The function uses scanning algorithm, by applying one forward and one
 %   backward scan. 
 %
@@ -47,7 +56,7 @@ function dist = imDistanceMap(img, varargin)
 %   RES = imDistanceMap(..., 'verbose', true);
 %   Displays info on iterations.
 %
-%   Example
+%   Examples:
 %   % Computes distance map on closed circles, with Borgefors Metric
 %     img = imread('circles.png');
 %     se = strel('disk', 6);
@@ -73,13 +82,13 @@ function dist = imDistanceMap(img, varargin)
 %     hold on; imcontour(res4); title('approx euclidean');
 %
 %   
-%   See also
-%   imChamferDistance, bwdist, imSeparateParticles
+%   See also:
+%     bwdist, imGeodesicDistanceMap, imSeparateParticles
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2012-08-20,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -219,7 +228,7 @@ if verbose
 end
 
 for i = D1:-1:1
-    for j = D2:-1:2
+    for j = D2:-1:1
         % computes only for foreground pixels
         if img(i, j) == 0
             continue;

@@ -1,43 +1,17 @@
 function gray = grayFilter(img, varargin)
-%GRAYFILTER linear gray-filtering of an image
+%GRAYFILTER Compute configuration map of a binary image
 %
 %   GRAY = grayFilter(IMG);
-%   Apply a linear gray filtering to the binary image IMG. The function
-%   computes the configuration number associated with each tile of the
-%   image. The result image has dimension size(IMG)-1, and has values
-%   between 0 and 15 (for 2D images) or between 0 and 256 (for 3D images).
+%   Returns a gray-scale image, with size dim(IMG)-1, containing values of
+%   the 2x2 configuration of the original binary image.
 %
-%   The correspondance between GRAY value and associated tiles is as
-%   follow:
-%   GRAY     TILE
-%     0      [0 0;0 0];
-%     1      [1 0;0 0];
-%     2      [0 1;0 0];
-%     3      [1 1;0 0];
-%     4      [1 1;0 0];
-%    ...        ....
-%    14      [0 1;1 1];
-%    15      [1 1;1 1];
-%
-%
-%   GRAY = grayFilter(IMG, NU);
-%   Where NU equals 1 or 2 specifies the size of tile to consider. NU=1
-%   corrsponds to 2x2 tiles, NU=2 corresponds to 3x3 tiles. In this case,
-%   GRAY has values between 0 and 511. Works only for 2D images.
-%
-%
-%   See also imLUT
-%
-%   Example
-%   img = zeros(6, 6);
-%   img(3:5, 3:4)=1;
+%   Example:
+%   img = [0 0 0 0 0;0 1 1 0 0;0 1 1 1 0;0 0 0 0 0];
 %   grayFilter(img)
-% ans =
-%      0     0     0     0     0
-%      0     8    12     4     0
-%      0    10    15     5     0
-%      0    10    15     5     0
-%      0     2     3     1     0
+%   ans =
+%      8    12     4     0
+%     10    15    13     4
+%      2     3     3     1
 %
 %   ---------
 %
@@ -47,15 +21,18 @@ function gray = grayFilter(img, varargin)
 %
 
 %   HISTORY 
-%   03/11/2004 add 3x3 2D case.
-%   28/08/2007 add doc
+%   03/11/2004 : add 3x3 2D case.
 
+
+% pre-processing
 img = img~=0;
 dim = size(img);
 nd = length(dim);
 
+% size of neighborhood to consider
 nu=1;
 
+% extract input parameters
 if ~isempty(varargin)
     var = varargin{1};
     if length(var)==1

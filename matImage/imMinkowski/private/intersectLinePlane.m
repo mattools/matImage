@@ -1,5 +1,5 @@
 function point = intersectLinePlane(line, plane, varargin)
-%INTERSECTLINEPLANE Intersection point between a 3D line and a plane
+%INTERSECTLINEPLANE Intersection point between a 3D line and a plane.
 %
 %   PT = intersectLinePlane(LINE, PLANE)
 %   Returns the intersection point of the given line and the given plane.
@@ -31,6 +31,7 @@ function point = intersectLinePlane(line, plane, varargin)
 %   See also:
 %   lines3d, planes3d, points3d, clipLine3d
 %
+
 %   ---------
 %   author : David Legland 
 %   INRA - TPV URPOI - BIA IMASTE
@@ -65,7 +66,7 @@ if nLines ~= nPlanes && min(nLines, nPlanes) > 1
 end
 
 % plane normal
-n = vectorCross3d(plane(:,4:6), plane(:,7:9));
+n = crossProduct3d(plane(:,4:6), plane(:,7:9));
 
 % difference between origins of plane and line
 dp = bsxfun(@minus, plane(:, 1:3), line(:, 1:3));

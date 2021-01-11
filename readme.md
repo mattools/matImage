@@ -5,7 +5,8 @@ Toolbox (IPT), and provides additional features as well as integration of IPT
 functions into more elaborate functions.
 
 Official homepage for the MatImage project is http://github.com/mattools/matImage.
-A starting help is provided in the [MatImage wiki](https://github.com/mattools/matImage/wiki "MatImage Wiki homepage")
+A [user manual](https://github.com/mattools/matImage/releases/download/v1.2/matImage-manual-1.2.pdf) is available.
+A wiki is also provided in the [MatImage wiki](https://github.com/mattools/matImage/wiki "MatImage Wiki homepage") (work in progress...).
 
 Installation
 ---

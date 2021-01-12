@@ -1,14 +1,13 @@
 function [rect, labels] = imOrientedBox(img, varargin)
-%IMORIENTEDBOX Minimum-area oriented bounding box of particles in image
+% Minimum-width oriented bounding box of regions in image.
 %
 %   OBB = imOrientedBox(IMG);
-%   Computes the minimum area oriented bounding box of labels in image IMG.
-%   IMG is either a binary or a label image. The result OBB is a N-by-5
-%   array, containing the center, the length, the width, and the
-%   orientation of the bounding box of each particle in image.
-%
-%   The orientation is given in degrees, in the direction of the largest
-%   box axis.
+%   Computes the minimum width oriented bounding box of the region(s) in
+%   image IMG. IMG is either a binary or a label image. 
+%   The result OBB is a N-by-5 array, containing the center, the length,
+%   the width, and the orientation of the bounding box of each particle in
+%   image. The orientation is given in degrees, in the direction of the
+%   largest box axis.
 %
 %   OBB = imOrientedBox(..., SPACING);
 %   OBB = imOrientedBox(..., SPACING, ORIGIN);
@@ -27,8 +26,12 @@ function [rect, labels] = imOrientedBox(img, varargin)
 %   * 'labels'  restrict the computation to the set of specified labels,
 %           given as a N-by-1 array
 %
+%   [OBB, LABELS] = imOrientedBox(...);
+%   Also returns the list of region labels for which the bounding box was
+%   computed.
+%
 %   Example
-%   % Compute and display the oriented box of several particles
+%   % Compute and display the oriented box of several rice grains
 %     img = imread('rice.png');
 %     img2 = img - imopen(img, ones(30, 30));
 %     lbl = bwlabel(img2 > 50, 4);
@@ -37,11 +40,11 @@ function [rect, labels] = imOrientedBox(img, varargin)
 %     drawOrientedBox(boxes, 'linewidth', 2, 'color', 'g');
 %
 %   See also
-%   imFeretDiameter, imInertiaEllipse, imMaxFeretDiameter
+%     imFeretDiameter, imInertiaEllipse, imMaxFeretDiameter
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-02-07,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -50,50 +53,38 @@ function [rect, labels] = imOrientedBox(img, varargin)
 %   2014-06-17 add psb to specify labels
 
 
-% %% Extract number of orientations
-% 
-% theta = 180;
-% if ~isempty(varargin) && ~ischar(varargin{1})
-%     var1 = varargin{1};
-%     if isscalar(var1)
-%         % Number of directions given as scalar
-%         theta = var1;
-%         varargin(1) = [];
-%         
-%     elseif ndims(var1) == 2 && sum(size(var1) ~= [1 2]) ~= 0 %#ok<ISMAT>
-%         % direction set given as vector
-%         theta = var1;
-%         varargin(1) = [];
-%     end
-% end
-
-
-%% Extract spatial calibration
+%% Process input arguments
 
 % default values
 spacing = [1 1];
 origin  = [1 1];
 calib   = false;
+labels  = [];
 
 % extract spacing (for backward compatibility)
-if ~isempty(varargin) && ~ischar(varargin{1})
+if ~isempty(varargin) && isnumeric(varargin{1}) && all(size(varargin{1}) == [1 2])
     spacing = varargin{1};
     varargin(1) = [];
     calib = true;
     origin = [0 0];
+    
+    % extract origin
+    if ~isempty(varargin) && isnumeric(varargin{1}) && all(size(varargin{1}) == [1 2])
+        origin = varargin{1};
+        varargin(1) = [];
+    end
 end
 
-% extract origin (for backward compatibility)
-if ~isempty(varargin) && ~ischar(varargin{1})
-    origin = varargin{1};
+% parse labels
+if ~isempty(varargin) && isnumeric(varargin{1}) && size(varargin{1}, 2) == 1
+    labels = varargin{1};
+    varargin(1) = [];
 end
 
-labels  = [];
+% extract parameter name-value pairs
 while length(varargin) > 1 && ischar(varargin{1})
     paramName = varargin{1};
     switch lower(paramName)
-%         case 'angles'
-%             theta = varargin{2};
         case 'spacing'
             spacing = varargin{2};
         case 'origin'
@@ -110,13 +101,6 @@ end
 
 %% Initialisations
 
-% % if theta is scalar, create an array of directions (in degrees)
-% if isscalar(theta)
-%     theta = linspace(0, 180, theta+1);
-%     theta = theta(1:end-1);
-% end
-% nTheta = length(theta);
-
 % extract the set of labels is necessary, without the background
 if isempty(labels)
     labels = imFindLabels(img);
@@ -130,7 +114,7 @@ rect = zeros(nLabels, 5);
 %% Iterate over labels
 
 for i = 1:nLabels
-    % extract points of the current particle
+    % extract points of the current region
     [y, x] = find(img==labels(i));
     if isempty(x)
         continue;
@@ -142,24 +126,13 @@ for i = 1:nLabels
         y = (y-1) * spacing(2) + origin(2);
     end
     
-    % special case of particles composed of only one pixel
+    % special case of regions composed of only one pixel
     if length(x) == 1
         rect(i,:) = [x y 1 1 0];
         continue;
     end
-    
-%     % keep only points of the convex hull
-%     try
-%         inds = convhull(x, y);
-%         x = x(inds);
-%         y = y(inds);
-%     catch ME %#ok<NASGU>
-%         % an exception can occur if points are colinear.
-%         % in this case we transform all points
-%         disp(sprintf('can not compute convex hull of label: %d', labels(i))); %#ok<DSPS>
-%     end
 
-    % compute bounding box of particle pixel centers
+    % compute bounding box of region pixel centers
     try
         obox = orientedBox([x y]);
     catch ME %#ok<NASGU>

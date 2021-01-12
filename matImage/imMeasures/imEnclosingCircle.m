@@ -47,12 +47,12 @@ function [circle, labels] = imEnclosingCircle(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2012-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
 
-%% Extract spatial calibration
+%% Process input arguments
 
 % default values
 spacing = [1 1];
@@ -72,14 +72,14 @@ if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
     origin = varargin{1};
 end
 
-
-%% Initialisations
-
 % check if labels are specified
 labels = [];
 if ~isempty(varargin) && size(varargin{1}, 2) == 1
     labels = varargin{1};
 end
+
+
+%% Initialisations
 
 % extract the set of labels, without the background
 if isempty(labels)

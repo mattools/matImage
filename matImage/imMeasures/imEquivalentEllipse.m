@@ -53,13 +53,14 @@ function [ellipse, labels] = imEquivalentEllipse(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-03-30,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
-%% extract spatial calibration
 
-% default values
+%% Process input arguments
+
+% default spatial calibration
 spacing = [1 1];
 origin  = [1 1];
 calib   = false;
@@ -70,20 +71,22 @@ if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
     varargin(1) = [];
     calib = true;
     origin = [0 0];
+    
+    % extract origin
+    if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
+        origin = varargin{1};
+        varargin(1) = [];
+    end
 end
-
-% extract origin
-if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
-    origin = varargin{1};
-end
-
-%% Initialisations
 
 % check if labels are specified
 labels = [];
 if ~isempty(varargin) && size(varargin{1}, 2) == 1
     labels = varargin{1};
 end
+
+
+%% Initialisations
 
 % extract the set of labels, without the background
 if isempty(labels)

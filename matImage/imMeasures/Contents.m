@@ -26,7 +26,6 @@
 %   imBoundingBox              - Bounding box of a binary or label image
 %   imEquivalentEllipse        - Equivalent ellipse of a binary or label image.
 %   imEquivalentEllipsoid      - Equivalent ellipsoid of a 3D binary image.
-%   imPrincipalAxes            - Computes principal axes of a 2D/3D binary image.
 %   imInscribedCircle          - Maximal circle inscribed in a particle
 %   imInscribedBall            - Maximal ball inscribed in a 3D particle
 %   imEnclosingCircle          - Minimal enclosing circle of a particle
@@ -37,6 +36,7 @@
 %   imRegionFun                - Apply a function to each region of a label image
 %
 % Particle moments
+%   imPrincipalAxes            - Computes principal axes of a 2D/3D binary image.
 %   imMoment                   - Compute simple moment(s) of an image
 %   imCMoment                  - Compute centered moment of an image
 %   imCSMoment                 - Compute centered and scaled moment of an image

@@ -55,7 +55,27 @@ function [boxes, labels] = imBoundingBox(img, varargin)
 % 2013-03-29 add support for 3D images
 
 
-%% Initialisations
+%% Process input arguments
+
+% default spatial calibration
+nd = ndims(img);
+spacing = ones(1, nd);
+origin  = ones(1, nd);
+calib   = false;
+
+% extract spacing
+if ~isempty(varargin) && all(size(varargin{1}) == [1 nd])
+    spacing = varargin{1};
+    varargin(1) = [];
+    calib = true;
+    origin = zeros(1, nd);
+    
+    % extract origin
+    if ~isempty(varargin) && all(size(varargin{1}) == [1 nd])
+        origin = varargin{1};
+        varargin(1) = [];
+    end
+end
 
 % check if labels are specified
 labels = [];
@@ -63,29 +83,41 @@ if ~isempty(varargin) && size(varargin{1}, 2) == 1
     labels = varargin{1};
 end
 
+
+%% Initialisations
+
 % extract the set of labels, without the background
 if isempty(labels)
     labels = imFindLabels(img);
 end
 
-
-nd = ndims(img);
 if nd == 2
     %% Process planar case 
     props = regionprops(img, 'BoundingBox');
     bb = reshape([props.BoundingBox], [4 length(props)])';
     bb = bb(labels, :);
+    
     % convert to MatImage convention
     boxes = [bb(:, 1) bb(:, 1)+bb(:, 3) bb(:, 2) bb(:, 2)+bb(:, 4)];
+    
+    % spatial calibration
+    if calib
+        boxes = bsxfun(@plus, bsxfun(@times, (boxes - 1), spacing([1 1 2 2])), origin([1 1 2 2]));
+    end
     
 elseif nd == 3
     %% Process 3D case
     stats = regionprops3(img, 'BoundingBox');
     bb = reshape([stats.BoundingBox], [6 size(stats, 1)])';
     bb = bb(labels, :);
+
     % convert to MatImage convention
     boxes = [bb(:, 1) bb(:, 1)+bb(:, 4) bb(:, 2) bb(:, 2)+bb(:, 5) bb(:, 3) bb(:, 3)+bb(:, 6)];
    
+    % spatial calibration
+    if calib
+        boxes = bsxfun(@plus, bsxfun(@times, (boxes - 1), spacing([1 1 2 2 3 3])), origin([1 1 2 2 3 3]));
+    end
 else
     error('Image dimension must be 2 or 3');
 end

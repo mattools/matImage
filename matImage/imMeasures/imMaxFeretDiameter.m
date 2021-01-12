@@ -32,6 +32,8 @@ function [diam, thetaMax] = imMaxFeretDiameter(img, varargin)
 % Copyright 2011 INRA - Cepia Software Platform.
 
 
+%% Process input arguments
+
 % extract orientations
 thetas = 180;
 if ~isempty(varargin) && size(varargin{1}, 2) == 1
@@ -44,12 +46,34 @@ if isscalar(thetas)
     thetas = linspace(0, 180, thetas+1);
     thetas = thetas(1:end-1);
 end
+
+% default spatial calibration
+spacing = [1 1];
+origin  = [1 1];
+calib   = false;
+
+% extract spacing
+if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
+    spacing = varargin{1};
+    varargin(1) = [];
+    calib = true;
+    origin = [0 0];
     
+    % extract origin
+    if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
+        origin = varargin{1};
+        varargin(1) = [];
+    end
+end
+
 % check if labels are specified
 labels = [];
 if ~isempty(varargin) && size(varargin{1}, 2) == 1
     labels = varargin{1};
 end
+
+
+%% Initialisations
 
 % extract the set of labels, without the background
 if isempty(labels)
@@ -64,7 +88,11 @@ thetaMax = zeros(nLabels, 1);
 
 % for each particle, compute set of diameters, and find max
 for i = 1:nLabels
-    diams = imFeretDiameter(img == labels(i), thetas);
+    if calib
+        diams = imFeretDiameter(img == labels(i), thetas, spacing, origin);
+    else
+        diams = imFeretDiameter(img == labels(i), thetas);
+    end
     
     % find max diameters, with indices
     [diam(i), ind] = max(diams, [], 2);

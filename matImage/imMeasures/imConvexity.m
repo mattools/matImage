@@ -9,7 +9,7 @@ function [cv, labels] = imConvexity(img, varargin)
 %   The convexity (also known as solidity) is defined by the ratio of
 %   particle volume over the volume of the convex hull of the particle.
 %
-%   [CV LABELS] = imConvexity(IMG)
+%   [CV, LABELS] = imConvexity(IMG)
 %   Also returns the labels for which the convexity has been computed.
 %
 %   CV = imConvexity(IMG, LABELS)

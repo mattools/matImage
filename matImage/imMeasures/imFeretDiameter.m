@@ -12,14 +12,14 @@ function [fd, labels] = imFeretDiameter(img, varargin)
 %   particles.
 %
 %   FD = imFeretDiameter(IMG);
-%   Uses a default set of directions for computing Feret diameter.
+%   Uses a default set of directions (180) for computing Feret diameters.
 %
-%   FD = imFeretDiameter(..., SPACING);
+%   FD = imFeretDiameter(IMG, THETA, SPACING);
 %   Specifies the spatial calibration of image. SPACING = [SX SY] is a
 %   1-by-2 row vector that contains the size of a pixel. 
 %   Default spacing value is [1 1].
 %
-%   FD = imFeretDiameter(..., SPACING, ORIGIN);
+%   FD = imFeretDiameter(IMG, THETA, SPACING, ORIGIN);
 %   Also specifies the position of the upper left pixel, as a 1-by-2 row
 %   vector.
 %
@@ -57,7 +57,7 @@ function [fd, labels] = imFeretDiameter(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-03-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
@@ -65,8 +65,9 @@ function [fd, labels] = imFeretDiameter(img, varargin)
 %   2011-02-06 update doc, use convex hull, use degrees instead of radians
 
 
-%% Extract number of orientations
+%% Process input arguments
 
+% Extract number of orientations
 theta = 180;
 if ~isempty(varargin)
     var1 = varargin{1};
@@ -82,10 +83,7 @@ if ~isempty(varargin)
     end
 end
 
-
-%% Extract spatial calibration
-
-% default values
+% default spatial calibration
 spacing = [1 1];
 origin  = [1 1];
 calib   = false;
@@ -96,23 +94,22 @@ if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
     varargin(1) = [];
     calib = true;
     origin = [0 0];
+    
+    % extract origin
+    if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
+        origin = varargin{1};
+        varargin(1) = [];
+    end
 end
-
-% extract origin
-if ~isempty(varargin) && sum(size(varargin{1}) == [1 2]) == 2
-    origin = varargin{1};
-end
-
-
-%% Initialisations
-
-nTheta = length(theta);
 
 % check if labels are specified
 labels = [];
 if ~isempty(varargin) && size(varargin{1}, 2) == 1
     labels = varargin{1};
 end
+
+
+%% Initialisations
 
 % extract the set of labels, without the background
 if isempty(labels)
@@ -121,8 +118,10 @@ end
 nLabels = length(labels);
 
 % allocate memory for result
+nTheta = length(theta);
 fd = zeros(nLabels, nTheta);
 
+% iterate over labels
 for i = 1:nLabels
     % extract pixel centroids
     [y, x] = find(img==labels(i));

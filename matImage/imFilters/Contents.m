@@ -41,6 +41,7 @@
 %
 %   Segmentation:
 %   imOtsuThreshold          - Threshold an image using Otsu method
+%   imMultiOtsuThreshold     - Multilevel Thresholding using Otsu Method.
 %   imMaxEntropyThreshold    - Compute image threshold using maximisation of entropies
 %   imImposedWatershed       - Compute watershed after imposition of extended minima
 %   imCannyEdgeDetector      - Edge detection using Canny-Deriche method
@@ -68,7 +69,7 @@
 %   imDistance3d             - Create distance image from a set of 3D points
 %
 %   Filters for binary/label images:
-%   label2rgb3d              - Convert a 3D label image to a 3D RGB image
+%   label2rgb3d              - Convert a 3D label image to a 3D RGB image.
 %   imLabelToValue           - Convert label image to parametric map
 %   imKillBorderRegions      - Remove regions on the border of an image
 %   imAreaOpening            - Remove all regions smaller than a given area

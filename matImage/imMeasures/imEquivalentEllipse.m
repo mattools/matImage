@@ -27,8 +27,9 @@ function [ellipse, labels] = imEquivalentEllipse(img, varargin)
 %   used. If only the sapcing is specified, the origin is set to [0 0].
 %
 %   ELLI = imEquivalentEllipse(..., LABELS)
-%   Specify the labels for which the inertia ellipse needs to be computed.
-%   The result is a N-by-5 array with as many rows as the number of labels.
+%   Specifies the labels for which the equivalent ellipse needs to be
+%   computed. The result is a N-by-5 array with as many rows as the number
+%   of labels.
 %
 %
 %   Example

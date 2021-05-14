@@ -1,5 +1,5 @@
 function metaImageWrite(img, fileName, varargin)
-%METAIMAGEWRITE Write header and data files of an image in MetaImage format
+% Save image data using MetaImage file format (MHD).
 %   
 %   metaImageWrite(IMG, FILENAME);
 %   IMG is a matlab array, and FILENAME is the generic name (without
@@ -10,6 +10,9 @@ function metaImageWrite(img, fileName, varargin)
 %   metaImageWrite(IMG, FILENAME, INFO);
 %   Gives an additional structure as argument, containing additional
 %   properties.
+%
+%   metaImageWrite(..., 'colorImage', true);
+%   Forces writing as a RGB color array.
 %
 %   metaImageWrite(..., PARAM, VALUE);
 %   Specifies additional properties as parameter key and value pairs. Case
@@ -26,11 +29,12 @@ function metaImageWrite(img, fileName, varargin)
 %       'ElementByteOrderMSB', 'True')
 %
 %   See also
+%     metaImageWrite, metaImageInfo
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-02-03,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2010 INRA - Cepia Software Platform.
@@ -48,20 +52,15 @@ if ~isempty(varargin)
     end
 end
 
-% permute image dimension to use x as first index
+% permute image dimensions to use x as first index
 img = permute(img, [2 1 3:ndims(img)]);
 
 % extract image dimension
 dims = size(img);
-
-% check if image is color
-isColor = false;
-if length(dims) > 2 && dims(3) == 3
-    isColor = true;
-    dims = dims([1 2 4:end]);
-end
-    
 nd = length(dims);
+
+% flag for color image (false by default)
+isColor = false;
 
 
 %% Process file names
@@ -100,19 +99,28 @@ if ~isfield(info, 'ElementDataFile')
     info.ElementDataFile = binaryFileName;
 end
 
-if isColor
-    info.ElementNumberOfChannels = 3;
-end
-
-% add additional varargins
+% parse additional input arguments and populate the "info" structure
 while length(varargin) > 1
     key = varargin{1};
     if ~ischar(key)
         error('following parameter must be a string: %s', key);
     end
     
-    info.(key) = varargin{2};
+    % check function-specific options.
+    if strcmpi(key, 'colorImage')
+        isColor = varargin{2};
+    else
+        info.(key) = varargin{2};
+    end
+    
     varargin(1:2) = [];
+end
+
+% in case of color image, update the info structure
+if isColor
+    info.NDims = info.NDims - 1;
+    info.DimSize = info.DimSize([1 2 4:end]);
+    info.ElementNumberOfChannels = 3;
 end
 
 % ensure MSB info is written for data other than 8-bits
@@ -190,6 +198,7 @@ fclose(f);
 
 
 function type = parseMetaType(string)
+% Convert MetaImage type string into a Matlab data type name.
 
 switch string
     case 'MET_UCHAR'
@@ -214,7 +223,7 @@ end
 
 
 function string = metaTypeToString(type)
-% convert a matlab class name to MetaImage Type string
+% Convert a Matlab data type name into MetaImage Type string.
 
 switch type
     case 'int8'
@@ -238,6 +247,7 @@ switch type
 end
 
 function string = convertToString(data)
+% Utility function that converts logical or numeric data to char array.
 
 N = length(data(:));
 
@@ -263,7 +273,9 @@ end
 
 
 function byteOrder = determineByteOrder(info)
-% default byte order given by system
+% Identify the byte-order character to use for low-level fwrite function.
+
+% default byte order given by system (native)
 byteOrder = 'n';
 
 % first check the ElementByteOrderMSB field

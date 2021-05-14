@@ -105,7 +105,7 @@ img = imread('peppers.png');
 imgSize = size(img);
 
 fileName = 'img_rgb8_peppers.mhd';
-metaImageWrite(img, fileName);
+metaImageWrite(img, fileName, 'colorImage', true);
 
 info = metaImageInfo(fileName);
 res = metaImageRead(info);
@@ -266,7 +266,7 @@ I2 = imOverlay(I, I>60, 'r', I==0, 'b');
 imgSize = size(I2);
 
 fileName = 'img_rgb8_headOvr.mhd';
-metaImageWrite(I2, fileName);
+metaImageWrite(I2, fileName, 'colorImage', true);
 
 info = metaImageInfo(fileName);
 res = metaImageRead(info);

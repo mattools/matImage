@@ -1,5 +1,5 @@
 function [img, info] = metaImageRead(info, varargin)
-%METAIMAGEREAD Read an image in MetaImage format
+% Read image data stored in MetaImage format (MHD).
 %
 %   IMG = metaImageRead(INFO)
 %   Read the image IMG from data given in structure INFO. INFO is typically
@@ -28,11 +28,11 @@ function [img, info] = metaImageRead(info, varargin)
 %   IMG = metaImageRead('filename.mhd', 'ElementByteOrderMSB', false);
 %
 %   See also
-%   metaImageInfo, readstack, analyze75info
+%     metaImageInfo, metaImageWrite, readstack, analyze75info
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-01-27,    using Matlab 7.9.0.529 (R2009b)
 % http://www.pfl-cepia.inra.fr/index.php?page=slicer
 % Copyright 2010 INRA - Cepia Software Platform.

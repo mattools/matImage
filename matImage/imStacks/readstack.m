@@ -132,13 +132,13 @@ if any(ismember('#?*', fname))
     % if wildcard exists in file name, stack is stored in several files
     multipleFiles = true;
     
-elseif exist(fname, 'file')
+elseif exist(fname, 'file') && length(ext) > 1
     % if the file exists, try to determine if it contains several images
     registry = imformats;
-    if ismember(ext, [registry.ext])
+    if ismember(ext(2:end), [registry.ext])
         if length(imfinfo(fname)) > 1
             multipleFiles = false;
-        elseif isImageJBigTiffFile(fname)
+        elseif isImageJMultipleImage(fname)
             multipleFiles = false;
         else
             % also tests if filename contains at least two consecutive '0'
@@ -226,7 +226,7 @@ end
 
 
 %% Read data in a large TIFF as saved by ImageJ
-if isImageJBigTiffFile(fname)
+if isImageJMultipleImage(fname)
     infos = imFileInfo(fname);
     desc = infos.ImageDescription;
     tokens = strsplit(desc, newline);
@@ -412,7 +412,7 @@ end
 end
 
 
-function b = isImageJBigTiffFile(fileName)
+function b = isImageJMultipleImage(fileName)
 
 b = false;
 
@@ -421,11 +421,26 @@ if ~strncmpi(ext, '.tif', 4)
     return;
 end
 
+%
 infos = imFileInfo(fileName);
 if length(infos) > 1 || ~isfield(infos(1), 'ImageDescription')
     return;
 end
 
-b = strncmpi(infos.ImageDescription, 'ImageJ=', 7);
+if ~strncmpi(infos.ImageDescription, 'ImageJ=', 7)
+    return;
+end
+
+% parse tokens in the "ImageDescription' Tag.
+tokens = regexp(infos.ImageDescription, '\n', 'split');
+
+% consider multiple if number of images is larger than 1
+ind = find(strcmpi(tokens, 'image'));
+if ~isempty(ind)
+    nImages = str2num(tokens{ind+1}); %#ok<ST2NM>
+    if nImages > 1
+        b = true;
+    end
+end
 
 end

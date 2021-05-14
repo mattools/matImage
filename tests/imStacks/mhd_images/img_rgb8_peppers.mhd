@@ -1,0 +1,8 @@
+ObjectType = Image
+NDims = 2
+DimSize = 512 384
+ElementType = MET_UCHAR
+ElementNumberOfChannels = 3
+BinaryData = true
+ElementByteOrderMSB = false
+ElementDataFile = img_RGB8_peppers.raw

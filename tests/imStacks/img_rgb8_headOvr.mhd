@@ -1,8 +1,0 @@
-ObjectType = Image
-NDims = 3
-DimSize = 128 128 27
-ElementType = MET_UCHAR
-ElementNumberOfChannels = 3
-BinaryData = true
-ElementByteOrderMSB = false
-ElementDataFile = img_rgb8_headOvr.raw

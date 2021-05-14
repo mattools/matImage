@@ -91,9 +91,10 @@ assertEqual(testCase, exp, size(img));
 
 function test_rawImage(testCase)
 
-img = readstack('img_10x15x20_int16.raw', [10 15 20], 'int16');
+fileName = 'img_Int16_rampXYZ_6x5x4_msb.raw';
+img = readstack(fullfile('mhd_images', fileName), [6 5 4], 'int16');
 
-exp = [15 10 20];
+exp = [5 6 4];
 assertEqual(testCase, exp, size(img));
 
 

@@ -1,0 +1,6 @@
+ObjectType = Image
+NDims = 2
+DimSize = 20 10
+ElementType = MET_FLOAT
+ElementByteOrderMSB = false
+ElementDataFile = img_Float32_rampXY_20x10_lsb.raw

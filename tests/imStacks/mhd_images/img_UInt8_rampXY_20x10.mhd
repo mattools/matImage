@@ -1,0 +1,7 @@
+ObjectType = Image
+NDims = 2
+DimSize = 20 10
+ElementType = MET_UCHAR
+BinaryData = true
+ElementByteOrderMSB = false
+ElementDataFile = img_UInt8_rampXY_20x10.raw

@@ -1,0 +1,6 @@
+ObjectType = Image
+NDims = 2
+DimSize = 20 10
+ElementType = MET_USHORT
+ElementByteOrderMSB = false
+ElementDataFile = img_UInt16_rampXY_20x10_lsb.raw

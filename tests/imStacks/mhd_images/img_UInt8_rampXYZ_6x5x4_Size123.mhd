@@ -1,0 +1,8 @@
+ObjectType = Image
+NDims = 3
+DimSize = 6 5 4
+ElementType = MET_UCHAR
+ElementSize = 1 2 3
+BinaryData = true
+ElementByteOrderMSB = false
+ElementDataFile = img_UInt8_rampXYZ_6x5x4.raw

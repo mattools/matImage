@@ -1,0 +1,6 @@
+ObjectType = Image
+NDims = 3
+DimSize = 6 5 4
+ElementType = MET_INT
+ElementByteOrderMSB = false
+ElementDataFile = img_Int32_rampXYZ_6x5x4_lsb.raw

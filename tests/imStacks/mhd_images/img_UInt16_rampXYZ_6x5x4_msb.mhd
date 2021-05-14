@@ -1,0 +1,6 @@
+ObjectType = Image
+NDims = 3
+DimSize = 6 5 4
+ElementType = MET_USHORT
+ElementByteOrderMSB = true
+ElementDataFile = img_UInt16_rampXYZ_6x5x4_msb.raw

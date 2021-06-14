@@ -1,4 +1,4 @@
-Copyright (c) 2019, David Legland (david dot legland at inra dot fr)
+Copyright (c) 2021, David Legland (david dot legland at inra dot fr)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

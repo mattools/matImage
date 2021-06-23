@@ -45,6 +45,7 @@ function [points, labels] = imCentroid(img, varargin)
 %   See also
 %     regionprops, drawPoint, imBoundingBox, imEquivalentEllipse
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@inrae.fr
@@ -91,7 +92,7 @@ nd = ndims(img);
 points = zeros(nLabels, nd);
     
 if nd == 2
-    if isnumeric(img)
+    if isnumeric(img) || islogical(img)
         for i = 1:nLabels
             % extract points of the current particle
             [y, x] = find(img==labels(i));
@@ -116,7 +117,7 @@ if nd == 2
     
 elseif nd == 3
     dim = size(img);
-    if isnumeric(img)
+    if isnumeric(img) || islogical(img)
         for i = 1:nLabels
             % extract points of the current particle
             inds = find(img==labels(i));

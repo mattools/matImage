@@ -10,40 +10,46 @@ function labels = imFindLabels(img)
 %   imFindLabels
 %
 %   See also
-%
+%     imCentroid, imBoundingBox, imFeretDiameter, imOrientedBox, imRAG
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2013-07-17,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 
+% Switch determination of labels depending on data type of image array
 if islogical(img)
+    % in case of logical array, the only label is 1.
     labels = 1;
-    return;
-end
-
-if isfloat(img)
+    
+elseif isfloat(img)
+    % for floating point values, use the 'unique' function
     labels = unique(img(:));
     labels(labels==0) = [];
-    return;
-end
-
-if isstruct(img) && isfield(img, 'NumObjects')
+    
+elseif isstruct(img) && isfield(img, 'NumObjects')
+    % if the array was obtained from a connected-components algorithms, the
+    % result is stored on the resulting struct
     labels = (1:img.NumObjects)';
-    return;
-end
-
-maxLabel = double(max(img(:)));
-labels = zeros(maxLabel, 1);
-
-nLabels = 0;
-
-for i = 1:maxLabel
-    if any(img(:) == i)
-        nLabels = nLabels + 1;
-        labels(nLabels) = i;
+    
+elseif isinteger(img)
+    % in the case of integer array, switch to a memory-frugal algorithm
+    maxLabel = double(max(img(:)));
+    labels = zeros(maxLabel, 1);
+    
+    nLabels = 0;
+    
+    for i = 1:maxLabel
+        if any(img(:) == i)
+            nLabels = nLabels + 1;
+            labels(nLabels) = i;
+        end
     end
+    
+    labels = labels(1:nLabels);
+    
+else
+    error('MatImage:imMeasures:imFindLabels', ...
+        'Can not process images with datatype: %s', class(img));
 end
-
-labels = labels(1:nLabels);

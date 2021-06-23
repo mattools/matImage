@@ -65,15 +65,13 @@ isColor = false;
 
 %% Process file names
 
-% ensure the filename has no '.mhd' extension
-if length(fileName) > 4
-    if strcmp(fileName(end-3:end), '.mhd')
-        fileName(end-3:end) = [];
-    end
-end
+% extract file name parts
+[path, name, ext] = fileparts(fileName);
 
-% split filename and diectory
-[path, name] = fileparts(fileName);
+% if extension is different from '.mhd', keep it as part of the name
+if ~strcmp(ext, '.mhd')
+    name = [name ext];
+end
 
 % header and binary file names
 headerFileName = [name '.mhd'];

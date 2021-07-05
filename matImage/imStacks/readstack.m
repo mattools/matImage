@@ -435,9 +435,10 @@ end
 tokens = regexp(infos.ImageDescription, '\n', 'split');
 
 % consider multiple if number of images is larger than 1
-ind = find(strcmpi(tokens, 'image'));
+ind = find(strncmpi(tokens, 'images', 6));
 if ~isempty(ind)
-    nImages = str2num(tokens{ind+1}); %#ok<ST2NM>
+    token = tokens{ind};
+    nImages = str2num(token(8:end)); %#ok<ST2NM>
     if nImages > 1
         b = true;
     end

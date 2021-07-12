@@ -37,7 +37,7 @@
 %   imResize                 - Resize 2D or 3D image.
 %   imDownSample             - Apply down-sampling on an image by applying operation on blocs
 %   subsamplergb             - Return a sub-sampled version of an rgb image.
-%   imPrincipalAxesAlign     - Aligns image along principal axes of inertia matrix
+%   imPrincipalAxesAlign     - Align a binary image along principal axes of inertia matrix.
 %
 %   Segmentation:
 %   imOtsuThreshold          - Threshold an image using Otsu method
@@ -48,8 +48,8 @@
 %
 %   Color and gray-scale conversions
 %   imOverlay                - Add colored markers to an image (2D or 3D, grayscale or color)
-%   imSplitChannels          - Split the 3 channels of a 2D or 3D image
-%   imMergeChannels          - Merge 3 channels to create a 2D or 3D color image
+%   imSplitChannels          - Split the 3 channels of a 2D or 3D image.
+%   imMergeChannels          - Merge 3 channels to create a 2D or 3D color image.
 %   double2rgb               - Create a RGB image from double values
 %   angle2rgb                - Convert an image of angles to color image
 %   imGetHue                 - Extract hue of a color image, using rgb2hsv.

@@ -1,5 +1,5 @@
 function rgb = imMergeChannels(r, g, b)
-%IMMERGECHANNELS  Merge 3 channels to create a 2D or 3D color image
+% Merge 3 channels to create a 2D or 3D color image.
 %
 %   RGB = imMergeChannels(R, G, B)
 %   R, G and B are 3 images the same size. The result RGB is a color image
@@ -17,7 +17,7 @@ function rgb = imMergeChannels(r, g, b)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-02-02,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
@@ -48,7 +48,7 @@ if nd == 2
     if islogical(ref)
         rgb = false([dim 3]);
     else
-        rgb = zeros([dim 3], class(ref)); %#ok<ZEROLIKE>
+        rgb = zeros([dim 3], class(ref));
     end
     
     % fill result with data
@@ -62,7 +62,7 @@ elseif nd == 3
     if islogical(ref)
         rgb = false(newDim);
     else
-        rgb = zeros(newDim, class(ref)); %#ok<ZEROLIKE>
+        rgb = zeros(newDim, class(ref));
     end
     
     % fill result with data

@@ -1,5 +1,5 @@
 function [r, g, b] = imSplitChannels(rgb)
-%IMSPLITCHANNELS Split the 3 channels of a 2D or 3D image
+% Split the 3 channels of a 2D or 3D image.
 %
 %   [R, G, B] = imSplitChannels(RGB);
 %   
@@ -14,7 +14,7 @@ function [r, g, b] = imSplitChannels(rgb)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-02-02,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 

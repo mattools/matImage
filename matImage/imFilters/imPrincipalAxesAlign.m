@@ -1,5 +1,5 @@
 function res = imPrincipalAxesAlign(img, varargin)
-%IMPRINCIPALAXESALIGN Aligns image along principal axes of inertia matrix
+% Align a binary image along principal axes of inertia matrix.
 %
 %   RES = imPrincipalAxesAlign(IMG)
 %   RES = imPrincipalAxesAlign(DIM2, IMG)
@@ -13,11 +13,11 @@ function res = imPrincipalAxesAlign(img, varargin)
 %     img2 = imPrincipalAxesAlign(img);
 %
 %   See also
-%     imInertiaEllipsoid
+%     imEquivalentEllipsoid
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2018-12-17,    using Matlab 9.5.0.944444 (R2018b)
 % Copyright 2018 INRA - Cepia Software Platform.
 

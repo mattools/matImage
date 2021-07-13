@@ -1,5 +1,6 @@
 function im = strelDisk(radius)
-%STRELDISK Discrete disk structuring element
+% Discrete disk structuring element.
+%
 %   STREL = strelDisk(RADIUS)
 %
 %   Compute a structuring element approximating a disk. 
@@ -29,16 +30,14 @@ function im = strelDisk(radius)
 %      0     1     1     1     1
 %
 %   See also
-%   strel
+%     strel
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2008-03-07,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2008 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
-
 
 % basic shifts of circle center in each dimension
 d1 = 0.31;
@@ -55,4 +54,3 @@ l2 = -N:N;
 % compute distance of each pixel center to circle center, and threshold
 im      = false(size(X1));
 im(:)   = hypot(X1(:)-d1, X2(:)-d2) < radius;
-

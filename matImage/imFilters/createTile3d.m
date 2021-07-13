@@ -1,5 +1,5 @@
 function tile = createTile3d(v)
-%CREATETILE3D Create a 3D binary tile (2x2x2) from its index
+% Create a 3D 2-by-2-by-2 binary configuration tile from its index.
 %
 %   IM = createTile3d(INDEX);
 %   INDEX is a number between 0 and 255, 
@@ -12,14 +12,14 @@ function tile = createTile3d(v)
 %       [ [1 1;0 0] ; [0 0;0 0] ]
 %
 %   See also
-%   tileIndex3d
+%     tileIndex3d, createTile
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-05-25,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 % create empty array
 tile = false([2 2 2]);

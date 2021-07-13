@@ -1,5 +1,5 @@
 function index = tileIndex3d(tile)
-%TILEINDEX3D Return the index of a 2x2x2 binary tile
+% Return the index of a 2-by-2-by-2 3D binary configuration tile.
 %
 %   INDEX = tileIndex3d(TILE)
 %   Compute the index of a tile, given as a 2x2x2 binary image, by adding
@@ -15,14 +15,14 @@ function index = tileIndex3d(tile)
 %       3
 %
 %   See also
-%   createTile3d, tileIndex
+%     createTile3d, tileIndex
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-05-25,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 tile = tile>0;
 index = ...

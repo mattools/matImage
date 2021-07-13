@@ -1,5 +1,6 @@
 function hu = imHuInvariants(img)
-%IMHUINVARIANTS  Compute Hu's invariant for an image
+% Compute Hu's invariant for a 2D image.
+%
 %   HU = imHuInvariants(IMG)
 %   HU is a row vector with 12 elements.
 %
@@ -12,13 +13,12 @@ function hu = imHuInvariants(img)
 %   "Noise tolerance of moment invariants in pattern recognition"
 %   I. Baslev, Pattern Recognition Letters 19 (1998): 1183-1189
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2008-10-08,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2008 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
-
 
 
 %% Compute image moments

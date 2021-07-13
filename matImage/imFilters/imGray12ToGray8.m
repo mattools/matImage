@@ -1,7 +1,7 @@
 function img = imGray12ToGray8(img)
-%IMGRAY12TOGRAY8 Convert a 12 bits gray scale image to 8 bits gray scale
+% Convert a 12 bits gray scale image to 8 bits gray scale.
 %
-%   usage:
+%   Usage:
 %   RES = imGray12ToGray8(IMG);
 %   IMG is a 12-bits grayscale image with 4096 different values. For
 %   simplicity, they are stored as 16-bits images. For some obscure
@@ -14,17 +14,16 @@ function img = imGray12ToGray8(img)
 %   
 %
 %   Example
-%   imGray12ToGray8;
+%     imGray12ToGray8;
 %
 %
 %   See also
-%
-%
+%     imAdjustDynamic
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2008-01-08,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2008 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
       
-img = uint8((double(img)-32768)/16);   
+img = uint8((double(img) - 32768) / 16);   

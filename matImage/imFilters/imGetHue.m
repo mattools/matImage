@@ -1,5 +1,5 @@
 function hue = imGetHue(img)
-%IMGETHUE  Extract hue of a color image, using rgb2hsv.
+% Extract hue from a color image, using rgb2hsv.
 %
 %   HUE = imGetHue(RGB)
 %   When RGB is a color image, returns the hue value of each pixel. The
@@ -15,14 +15,14 @@ function hue = imGetHue(img)
 %     subplot(121);imshow(img); subplot(122); imshow(rgbHue);
 %
 %   See also
-%   rgb2hsv, angle2rgb
+%     rgb2hsv, angle2rgb
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-05-15,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 % History
 % 2010-11-09 update doc, add code for 3D

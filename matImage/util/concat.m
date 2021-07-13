@@ -1,5 +1,5 @@
 function C = concat(A, B, dec, val)
-%CONCAT  concatenate two arrays, with shift
+% Concatenate two arrays, with shift.
 %
 %   RES = concat(A, B, DEC)
 %   concatenate two arrays A and B, by shifting B by the vector DEC, and
@@ -28,13 +28,12 @@ function C = concat(A, B, dec, val)
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2007-08-22,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2007 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 %   HISTORY
 %   2008/07/02 fix mistake in doc, add process for ND, and pads value

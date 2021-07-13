@@ -1,5 +1,5 @@
 function tile = createTile(v)
-%CREATETILE Create a binary tile (2x2) from its index
+% Create a 2-by-2 binary configuration tile from its index.
 %
 %   IM = createTile(INDEX);
 %   INDEX is a number between 0 and 15, 
@@ -12,14 +12,14 @@ function tile = createTile(v)
 %       [1 1;0 0]
 %
 %   See also
-%   tileIndex3d
+%     tileIndex, createTile3d
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-05-25,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 % create empty array
 tile = false([2 2]);

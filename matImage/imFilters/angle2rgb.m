@@ -1,5 +1,5 @@
 function rgb = angle2rgb(img, varargin)
-%ANGLE2RGB  Convert an image of angles to color image
+% Convert an image of angles to a color image.
 %
 %   RES = angle2rgb(IMG);
 %   IMG is an image containing angle values, in radians.
@@ -34,16 +34,14 @@ function rgb = angle2rgb(img, varargin)
 %     subplot(121);imshow(img); subplot(122); imshow(rgbHue);
 %
 %   See also
-%   deg2rad, rad2deg, angle, imGetHue
+%     deg2rad, rad2deg, angle, imGetHue
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-02-06,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
-
 
 % rename as rad2rgb ?
 

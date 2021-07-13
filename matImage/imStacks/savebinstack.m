@@ -1,23 +1,22 @@
 function savebinstack(bin, fname)
-%SAVEBINSTACK Save an binary stack to a file, as RGB Image.
+% Save an binary stack to a file, as an RGB Image.
 %
-%  if file name contains '??', then image is saved into a serie
+%  If file name contains '??', then image is saved into a serie
 %  of files, with increasing index.
 %
 %   See also:
 %   savestack, imread
 %
+
 %   ---------
-%   author: David Legland, david.legland(at)grignon.inra.fr
+%   author: David Legland, david.legland(at)inrae.fr
 %   INRA - Cepia Software Platform
 %   created the 10/09/2003.
 %   http://www.pfl-cepia.inra.fr/index.php?page=slicer
-%   Licensed under the terms of the new BSD license, see file license.txt
 
 dim = size(bin);
 
-pos = strfind(fname, '??');
-if ~isempty(pos)
+if contains(fname, '??')
     % save a serie file, one file per slice of images
     disp('save slices - not yet implemented');
     

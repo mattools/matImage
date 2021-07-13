@@ -1,5 +1,6 @@
 function points = duplicateGerms(lx, ly, points)
-%DUPLICATEGERMS  duplicate germs for voronoi periodic boundary condition
+% Duplicate germs for voronoi periodic boundary condition.
+%
 %   GERMS2 = duplicateGerms(LX, LY, GERMS);
 %   LX and LY are vectors containing positions of pixels in an image
 %   GERMS are points within thin image
@@ -11,15 +12,14 @@ function points = duplicateGerms(lx, ly, points)
 %   duplicateGerms([1 100], [1 100], rand(30, 2)*100);
 %
 %   See also
-%   imvoronoi2d, imAWVoronoi, imPowerDiagram
+%     imvoronoi2d, imAWVoronoi, imPowerDiagram
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-05-29,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
-
 
 N = size(points, 1);
 

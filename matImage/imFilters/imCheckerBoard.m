@@ -1,5 +1,5 @@
 function res = imCheckerBoard(img1, img2, varargin)
-%IMCHECKERBOARD  Create a checkerboard image from 2 images
+% Create a checkerboard image from 2 images.
 %
 %   RES = imCheckerBoard(IMG1, IMG2);
 %   IMG1 and IMG2 are two images the same size. The result is a composite
@@ -15,13 +15,12 @@ function res = imCheckerBoard(img1, img2, varargin)
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-05-04,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
-% Licensed under the terms of the LGPL, see the file "license.txt"
 
 
 %% Initialisations

@@ -2,7 +2,7 @@
 % Version 1.1 01-Jul-2011 .
 %
 % Interactive Display
-%   Slicer              - GUI for exploration of 3D images, using Object Oriented Programming
+%   Slicer              - GUI for exploration of 3D images, using Object Oriented Programming.
 %   OrthoSlicer3d       - Display 3D interactive orthoslicer
 %   orthoSlices         - Display three orthogonal slices in the same figure
 %
@@ -15,17 +15,18 @@
 %
 % Read/Write 3D images
 %   readstack           - Read either a list of 2D images (slices), or a 3D image.
+%   imFileInfo          - Generalization of the imfinfo function
+%   imReadRawData       - Read image data from raw data file.
 %   imReadRegion3d      - Read a specific 3D region of a 3D image
 %   imReadDownSampled3d - Read a down-sampled version of a 3D image
-%   savebinstack        - Save an binary stack to a file, as RGB Image.
-%   savestack           - Save an image stack to a file or a series of files
+%   savebinstack        - Save an binary stack to a file, as an RGB Image.
+%   savestack           - Save a 3D image into a file or a series of files.
 %   metaImageInfo       - Read information header of meta image data
-%   metaImageRead       - Read an image in MetaImage format
-%   metaImageWrite      - Write header and data files of an image in MetaImage format
+%   metaImageRead       - Read image data stored in MetaImage format (MHD).
+%   metaImageWrite      - Save image data using MetaImage file format (MHD).
 %   readVgiStack        - Read a 3D stack stored in VGI format
 %   vgiStackInfo        - Read information necessary to load a 3D stack in VGI format
 %   readVoxelMatrix     - Read a 3D image in VoxelMatrix (.vm) format
-%   imFileInfo          - Generalization of the imfinfo function
 %
 % Get information on 3D images
 %   stackSize           - Compute the size of a 3D stack in [x y z] form
@@ -50,7 +51,7 @@
 
 %
 % Some GUI Classes used by Slicer
-%   CropStackDialog               - Open a dialog for cropping 3D stacks
+%   CropStackDialog               - Open a dialog for cropping 3D stacks.
 %   IsosurfaceOptionsDialog       - Dialog for 3D isosurfaces of intensity images
 %   LabelIsosurfacesOptionsDialog - Open a dialog for 3D label isosurfaces
 %   OrthoSlicer3dOptionsDialog    - Open a dialog for 3D orthoslices display

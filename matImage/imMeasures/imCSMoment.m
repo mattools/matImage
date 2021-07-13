@@ -1,5 +1,6 @@
 function mu = imCSMoment(img, p, q, varargin)
-%IMCSMOMENT  Compute centered and scaled moment of an image
+% Compute centered and scaled moments of an image.
+%
 %   MU = imCSMoment(IMG, P, Q)
 %   compute (p+q)-th centered moment of image IMG.
 %
@@ -10,16 +11,13 @@ function mu = imCSMoment(img, p, q, varargin)
 %   imCMoment
 %
 %   See also
-%
-%
+%     imMoment, imCMoment, imEquivalentEllipse
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2008-10-08,    using Matlab 7.4.0.287 (R2007a)
 % Copyright 2008 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
-% Licensed under the terms of the LGPL, see the file "license.txt"
-
-
 
 % get the centroid, either by argument, or by computation
 if ~isempty(varargin)
@@ -57,8 +55,8 @@ Iy = repmat((1:Dy)', [1 Dx])-cy;
 
 % compute moment
 mu = zeros(size(p));
-for i=1:length(p(:))
-    d = (p(i)+q(i))/2+1;
+for i = 1:length(p(:))
+    d = (p(i)+q(i)) / 2 + 1;
     mu(i) = sum(Ix(:).^p(i) .* Iy(:).^q(i) .* img(:)) / m00^d;
 end
 

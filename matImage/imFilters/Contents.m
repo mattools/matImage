@@ -61,7 +61,7 @@
 %   imDistanceMap           - Compute chamfer distance using scanning algorithm
 %   imDistanceClasses       - Converts a distance map to a label image of regions
 %   imThicknessMap          - Compute thickness map of a binary image
-%   imSkeleton              - Homothopic skeleton of a binary image 
+%   imSkeleton              - Homothopic skeleton of a binary image.
 %   imLabelSkeleton         - Label skeleton pixels according to local topology
 %   imChainPixels           - Chain neighbor pixels in an image to form a contour
 %   imConvexImage           - Compute smallest convex image containing the original pixels

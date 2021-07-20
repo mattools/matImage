@@ -5,7 +5,7 @@ Toolbox (IPT), and provides additional features as well as integration of IPT
 functions into more elaborate functions.
 
 Official homepage for the MatImage project is http://github.com/mattools/matImage.
-A [user manual](https://github.com/mattools/matImage/releases/download/v1.2/matImage-manual-1.2.pdf) is available.
+A [user manual](https://github.com/mattools/matImage/releases/download/v1.2.2/matImage-manual-1.2.2.pdf) is available.
 A wiki is also provided in the [MatImage wiki](https://github.com/mattools/matImage/wiki "MatImage Wiki homepage") (work in progress...).
 
 Installation
@@ -27,7 +27,6 @@ The library is organised into several modules.
 * [imGeodesics](https://github.com/mattools/matImage/wiki/imGeodesics "imGeodesics Wiki page")     - Geodesic distance transform for 2D/3D binary images
 * [imGranulometry](https://github.com/mattools/matImage/wiki/imGranulometry "imGranulometry Wiki page")  - Computation of gray-level granulometry curves with mathematical morphology
 * [imShapes](https://github.com/mattools/matImage/wiki/imShapes "imShapes Wiki page")        - Generation of phantom images representing geometric shapes
-* [util](https://github.com/mattools/matImage/wiki/util "image utilities Wiki page")            - General purpose functions
 A more specific help is provided in each module directory.
 
 

@@ -68,7 +68,7 @@
 %   imDistance              - Distance map computed from a set of points
 %   imDistance3d            - Create distance image from a set of 3D points
 %
-%   Filters for binary/label images:
+%   Operators for label images:
 %   label2rgb3d             - Convert a 3D label image to a 3D RGB image.
 %   imLabelToValue          - Convert label image to parametric map
 %   imKillBorderRegions     - Remove regions on the border of an image
@@ -78,7 +78,7 @@
 %   imLargestRegion         - Keep the largest region in a binary or label image
 %   imCropLabel             - Extract the portion of image that contains the specified label
 %   imMergeRegions          - Merge adajcent regions in a label image.
-%   mergeRegions            - Merge regions of labeled image, using inclusion criteria
+%   imMergeEnclosedRegions  - Merge regions within a label image, based on an inclusion criteria.
 %   imBoundaryIndices       - Find indices of boundary between 2 cells
 %   imLabelEdges            - Label edges between adjacent regions of labeled image.
 %
@@ -136,6 +136,7 @@ help Contents
 %   imKillBorders           - Remove regions on the border of an image
 %   subsample               - Subsample an array by applying operation on blocs
 %   imMergeLabels           - Merge regions in a labeled image
+%   mergeRegions            - Merge regions of labeled image, using inclusion criteria
 
 %   Not supported functions
 %   imMergeCells            - merge labeled cell of an image

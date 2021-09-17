@@ -1,6 +1,8 @@
 function img = imMergeLabels(img, lbls, varargin)
 %IMMERGELABELS Merge regions in a labeled image
 %
+%   Deprecated: replaced by the "imMergeRegions" function.
+%
 %   Usage:
 %   LBL2 = imMergeLabels(IMG, LABELS);
 %   IMG is a label image, LABELS are the labels of the regions to be
@@ -25,36 +27,14 @@ function img = imMergeLabels(img, lbls, varargin)
 %        1     1     1     1     0
 %
 %   See Also
-%   imMergeCells (old)
+%     imMergeRegions
 %
+
 % ------
 % Author: David Legland
 % e-mail: david.legland@grignon.inra.fr
 % Created: 2007-08-07
 % Copyright 2007 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
 
-dim = size(img);
-
-% define morphological filter
-se = [0 1 0;1 1 1;0 1 0];
-if length(dim)>2
-    se = cross3d;
-end
-
-% use input morphological filter
-if ~isempty(varargin)
-    se = varargin{1};
-end
-
-% convert all merged indices to the same index
-bin1 = ismember(img, lbls);
-img(bin1) = lbls(1);
-
-% define a mask based on the dilation of remaining regions
-bin2 = imdilate(~bin1 & img~=0, se);
-
-% close boundary between the merged regions
-bin1 = imclose(bin1, se);
-
-% compute final image
-img(bin1 & ~bin2) = lbls(1);
+% simply call the new function
+img = imMergeRegions(img, lbls, varargin{:});

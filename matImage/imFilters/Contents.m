@@ -77,7 +77,7 @@
 %   imSeparateParticles     - Separate touching particles using watershed algorithm
 %   imLargestRegion         - Keep the largest region in a binary or label image
 %   imCropLabel             - Extract the portion of image that contains the specified label
-%   imMergeLabels           - Merge regions in a labeled image
+%   imMergeRegions          - Merge adajcent regions in a label image.
 %   mergeRegions            - Merge regions of labeled image, using inclusion criteria
 %   imBoundaryIndices       - Find indices of boundary between 2 cells
 %   imLabelEdges            - Label edges between adjacent regions of labeled image.
@@ -135,6 +135,7 @@ help Contents
 %   imGradient              - Compute gradient magnitude of a grayscale image
 %   imKillBorders           - Remove regions on the border of an image
 %   subsample               - Subsample an array by applying operation on blocs
+%   imMergeLabels           - Merge regions in a labeled image
 
 %   Not supported functions
 %   imMergeCells            - merge labeled cell of an image

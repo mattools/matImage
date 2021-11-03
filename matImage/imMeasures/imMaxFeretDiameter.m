@@ -1,5 +1,5 @@
 function [diam, thetaMax] = imMaxFeretDiameter(img, varargin)
-%IMMAXFERETDIAMETER Maximum Feret diameter of a binary or label image
+% Maximum Feret diameter of a binary or label image.
 %
 %   FD = imMaxFeretDiameter(IMG)
 %   Computes the maximum Feret diameter of particles in label image IMG.
@@ -10,9 +10,9 @@ function [diam, thetaMax] = imMaxFeretDiameter(img, varargin)
 %   Also returns the direction for which the diameter is maximal. THETAMAX
 %   is given in degrees, between 0 and 180.
 %
-%   CV = imConvexity(IMG, LABELS)
-%   Specify the labels for which the convexity needs to be computed. The
-%   result is a N-by-1 array with as many rows as the number of labels.
+%   FD = imMaxFeretDiameter(IMG, LABELS)
+%   Specify the labels for which the Feret diameter needs to be computed.
+%   The result is a N-by-1 array with as many rows as the number of labels.
 %
 %
 %   Example
@@ -22,12 +22,12 @@ function [diam, thetaMax] = imMaxFeretDiameter(img, varargin)
 %         272.7144
 %
 %   See also
-%   imFeretDiameter, imOrientedBox
+%     imFeretDiameter, imOrientedBox
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-07-19,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -86,7 +86,7 @@ nLabels = length(labels);
 diam = zeros(nLabels, 1);
 thetaMax = zeros(nLabels, 1);
 
-% for each particle, compute set of diameters, and find max
+% for each label, compute set of diameters, and keep the max
 for i = 1:nLabels
     if calib
         diams = imFeretDiameter(img == labels(i), thetas, spacing, origin);

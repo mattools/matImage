@@ -14,7 +14,7 @@ function [breadth, labels] = imMeanBreadth(img, varargin)
 %   vector containing the voxel size in the X, Y and Z directions, in that
 %   orders. 
 %
-%   [B LABELS]= imMeanBreadth(LBL, ...)
+%   [B, LABELS]= imMeanBreadth(LBL, ...)
 %   Also returns the set of labels for which the mean breadth was computed.
 %
 %   Example
@@ -40,11 +40,11 @@ function [breadth, labels] = imMeanBreadth(img, varargin)
 %     img(5:8, 5:8, 5:8) = 8;
 %     [breadths, labels] = imMeanBreadth(img)
 %     breadths =
-%         2.0000
-%         2.6667
-%         2.6667
-%         3.3333
-%         4.0000
+%         2.1410
+%         2.0676
+%         2.0676
+%         3.9942
+%         4.9208
 %     labels =
 %          1
 %          2

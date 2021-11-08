@@ -1,15 +1,15 @@
 function [fd, labels] = imFeretDiameter(img, varargin)
-%IMFERETDIAMETER Feret diameter of a particle(s) for a given direction(s)
+% Feret diameter of region(s) for a given direction(s).
 %
 %   FD = imFeretDiameter(IMG, THETA);
-%   Compute the Feret diameter for particles in image IMG (binary or
-%   label), for the direction THETA, given in degrees.
+%   Compute the Feret diameter for the region(s) in the (binary or label)
+%   image IMG, for the direction THETA, given in degrees. 
 %   The result is a N-by-1 column vector, containing the Feret diameter of
-%   each particle in IMG.
+%   each region in IMG.
 %
 %   THETA can be a set of directions. In this case, the result has as many
 %   columns as the number of directions, and as many rows as the number of
-%   particles.
+%   regions.
 %
 %   FD = imFeretDiameter(IMG);
 %   Uses a default set of directions (180) for computing Feret diameters.
@@ -26,7 +26,7 @@ function [fd, labels] = imFeretDiameter(img, varargin)
 %   FD = imFeretDiameter(..., LABELS);
 %   Specifies the labels for which the Feret diameter should be computed.
 %   LABELS is a N-by-1 column vector. This can be used to save computation
-%   time when only few particles / regions are of interset within the
+%   time when only few regions / regions are of interset within the
 %   entire image.
 %
 %   [FD, LABELS] = imFeretDiameter(...);
@@ -53,7 +53,8 @@ function [fd, labels] = imFeretDiameter(img, varargin)
 %        84.4386
 %
 %   See also 
-%     imMaxFeretDiameter, imOrientedBox
+%     imMaxFeretDiameter, imOrientedBox, imBoundingBox
+%
 
 % ------
 % Author: David Legland

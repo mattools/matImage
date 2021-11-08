@@ -57,12 +57,12 @@ while ~isempty(varargin)
     var1 = varargin{1};
     varargin(1) = [];
     
-    if size(var1, 2) == 1
-        % the labels to compute
-        labels = var1;
-    elseif all(size(var1) == [1 1])
+    if all(size(var1) == [1 1])
         % connectivity
         conn = var1;
+    elseif size(var1, 2) == 1
+        % the labels to compute
+        labels = var1;
     else
         error('Unable to interpret input argument');
     end
@@ -181,7 +181,7 @@ elseif conn == 26
     
     % compute epc from measurements made on interior of window, and
     % facets of lower dimension
-    chi = epcc - ( epcf/2 - epce/4 + epcn/8);
+    chi = epcc + ( epcf/2 - epce/4 + epcn/8);
     
 else
     error('imEuler3d: uknown connectivity option');

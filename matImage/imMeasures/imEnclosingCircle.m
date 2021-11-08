@@ -1,9 +1,9 @@
 function [circle, labels] = imEnclosingCircle(img, varargin)
-%IMENCLOSINGCIRCLE Minimal enclosing circle of a particle
+% Minimal enclosing circle of a region.
 %
 %   CIRC = imEnclosingCircle(IMG)
-%   Computes the minimal enclosing circle around a binary particle, or
-%   around each labeled particle in the input image.
+%   Computes the minimal enclosing circle around a binary region, or
+%   around each labeled region in the input image.
 %
 %
 %   CIRC = imEnclosingCircle(IMG, SPACING);
@@ -21,13 +21,13 @@ function [circle, labels] = imEnclosingCircle(img, varargin)
 %
 %
 %   Example
-%   % Draw a commplex particle together with its enclosing circle
+%   % Draw a commplex region together with its enclosing circle
 %     img = imread('circles.png');
 %     imshow(img); hold on;
 %     circ = imEnclosingCircle(img);
 %     drawCircle(circ)
 %
-%   % Compute and display the equivalent ellipses of several particles
+%   % Compute and display the equivalent ellipses of several regions
 %     img = imread('rice.png');
 %     img2 = img - imopen(img, ones(30, 30));
 %     lbl = bwlabel(img2 > 50, 4);
@@ -94,7 +94,7 @@ circle = zeros(nLabels, 3);
 %% Iterate over labels
 
 for i = 1:nLabels
-    % extract points of the current particle
+    % extract points of the current region
     [y, x] = find(img==labels(i));
 
     % works on convex hull (faster), or on original points if the hull

@@ -51,7 +51,7 @@ function [ellipsoid, labels] = imEquivalentEllipsoid(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-12-01,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
@@ -64,6 +64,7 @@ dim = size(img);
 
 % extract spatial calibration, if present
 spacing = [1 1 1];
+origin  = [1 1 1];
 if ~isempty(varargin) && ~ischar(varargin{1})
     spacing = varargin{1};
     varargin(1) = [];
@@ -72,25 +73,27 @@ end
 isIntensity = false;
 labels = [];
 
-while ~isempty(varargin)
-    var1 = varargin{1};
- 
-    % swithc option recognition depending on type
-    if ischar(var1)
-        % process options specified as strings
-        if strcmpi(var1, 'intensity')
-            isIntensity = true;
-        else
-            error(['Unknown option: ' var1]);
-        end
-        
-    elseif isnumeric(var1)
-        % if another numerical option is specified, we assume it
-        % corresponds to the labels
-        labels = var1;
+while ~isempty(varargin) && isnumeric(varargin{1})
+    labels = varargin{1};
+    varargin(1) = [];
+end
+
+% process options specified as strings
+while length(varargin) > 1 && ischar(varargin{1})
+    name = varargin{1};
+    if strcmpi(name, 'intensity')
+        isIntensity = varargin{2};
+    elseif strcmpi(name, 'spacing')
+        spacing = varargin{2};
+    elseif strcmpi(name, 'origin')
+        origin = varargin{2};
+    elseif strcmpi(name, 'labels')
+        labels = varargin{2};
+    else
+        error(['Unknown option: ' name]);
     end
     
-    varargin(1) = [];
+    varargin(1:2) = [];
 end
 
 if ~isIntensity
@@ -113,7 +116,7 @@ if ~isIntensity
         yc = mean(y);
         zc = mean(z);
         
-        center = [xc yc zc] .* spacing;
+        center = [xc yc zc];
         
         % recenter points (should be better for numerical accuracy)
         x = (x - xc) * spacing(1);
@@ -147,6 +150,7 @@ if ~isIntensity
         angles = rotation3dToEulerAngles(U);
         
         % concatenate result to form an ellipsoid object
+        center = (center - 1) .* spacing + origin;
         ellipsoid(i, :) = [center radii angles];
     end
     
@@ -221,14 +225,6 @@ function varargout = rotation3dToEulerAngles(mat)
 %   See also
 %   transforms3d, rotation3dAxisAndAngle, createRotation3dLineAngle,
 %   eulerAnglesToRotation3d
-%
-%
-% ------
-% Author: David Legland
-% e-mail: david.legland@inra.fr
-% Created: 2010-08-11,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRA - Cepia Software Platform.
-
 
 % conversion from radians to degrees
 k = 180 / pi;

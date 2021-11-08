@@ -27,12 +27,12 @@
 %   imEquivalentEllipse   - Equivalent ellipse of a binary or label image.
 %   imEquivalentEllipsoid - Equivalent ellipsoid of a 3D binary image.
 %   imInscribedCircle     - Maximal circle inscribed in a region.
-%   imInscribedBall       - Maximal ball inscribed in a 3D particle
-%   imEnclosingCircle     - Minimal enclosing circle of a particle
+%   imInscribedBall       - Maximal ball inscribed in a 3D region.
+%   imEnclosingCircle     - Minimal enclosing circle of a region.
 %   imOrientedBox         - Minimum-width oriented bounding box of regions in image.
-%   imFeretDiameter       - Feret diameter of a particle(s) for a given direction(s)
-%   imMaxFeretDiameter    - Maximum Feret diameter of a binary or label image
-%   imConvexity           - Convexity of particles in label image
+%   imFeretDiameter       - Feret diameter of region(s) for a given direction(s).
+%   imMaxFeretDiameter    - Maximum Feret diameter of a binary or label image.
+%   imConvexity           - Convexity of regions within a 2D or 3D label image.
 %   imRegionFun           - Apply a function to each region of a label image
 %
 % Particle moments

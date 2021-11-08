@@ -1,13 +1,13 @@
 function [cv, labels] = imConvexity(img, varargin)
-%IMCONVEXITY Convexity of particles in label image
+% Convexity of regions within a 2D or 3D label image.
 %
 %   CV = imConvexity(IMG)
 %   Computes the convexity of the binary or label image IMG. The result is
 %   a scalar in the case of binary image, and a column vector in the case
 %   of a label image. 
 %
-%   The convexity (also known as solidity) is defined by the ratio of
-%   particle volume over the volume of the convex hull of the particle.
+%   The convexity (also known as "solidity") is defined by the ratio of
+%   region volume over the volume of the convex hull of the region.
 %
 %   [CV, LABELS] = imConvexity(IMG)
 %   Also returns the labels for which the convexity has been computed.
@@ -34,17 +34,18 @@ function [cv, labels] = imConvexity(img, varargin)
 %     lbl(ismember(lbl, lbl0)) = 0;
 %     % Compute convexity
 %     [conv labels] = imConvexity(lbl);
-%     % Display convexity of each particle (note that some labels are not
+%     % Display convexity of each region (note that some labels are not
 %     % computed, as they were removed)
 %     stem(labels, conv)
-%     % the particle with low convexity corresponds to two touching grains
+%     % the region with low convexity corresponds to two touching grains
 %
 %   See also
 %     imConvexImage
 %
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-07-08,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 

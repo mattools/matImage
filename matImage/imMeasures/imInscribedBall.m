@@ -1,5 +1,5 @@
 function [ball, labels] = imInscribedBall(lbl, varargin)
-%IMINSCRIBEDBALL Maximal ball inscribed in a 3D particle
+% Maximal ball inscribed in a 3D region.
 %
 %   BALL = imInscribedBall(IMG)
 %   Computes the maximal ball inscribed in a given 3D particle, or
@@ -31,7 +31,7 @@ function [ball, labels] = imInscribedBall(lbl, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2013-07-05,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 

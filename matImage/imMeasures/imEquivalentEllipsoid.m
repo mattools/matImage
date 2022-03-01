@@ -109,6 +109,9 @@ if ~isIntensity
     for i = 1:nLabels
         % extract points of the current particle
         inds = find(img==labels(i));
+        if isempty(inds)
+            continue;
+        end
         [y, x, z] = ind2sub(dim, inds);
         
         % compute approximate location of ellipsoid center
@@ -126,7 +129,7 @@ if ~isIntensity
         points = [x y z];
         
         % compute the covariance matrix
-        covPts = cov(points, 1) + diag(spacing / 12);
+        covPts = cov(points, 1) + diag(spacing.^2 / 12);
         
         % perform a principal component analysis with 3 variables,
         % to extract equivalent axes
@@ -175,7 +178,7 @@ else
     zc = mean(z(:));
     center = [xc yc zc];
     
-    covPts = cov([x(:)-xc y(:)-yc z(:)-zc]) + diag(spacing / 12);
+    covPts = cov([x(:)-xc y(:)-yc z(:)-zc]) + diag(spacing.^2 / 12);
     
     % perform a principal component analysis with 3 variables,
     % to extract equivalent axes

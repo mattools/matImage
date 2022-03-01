@@ -1,5 +1,5 @@
 function varargout = imRAG(img, varargin)
-%IMRAG Region adjacency graph of a label image.
+% Region adjacency graph (RAG) of a label image.
 %
 %   Usage:
 %   ADJ = imRAG(LBLMAP);
@@ -134,17 +134,10 @@ function varargout = imRAG(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2004-02-20,  
 % Copyright 2007 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
 
-%   History
-%   2007-10-12 update doc
-%   2007-10-17 add example
-%   2010-03-08 replace calls to regionprops by local centroid computation
-%   2010-07-29 update doc
-%   2012-07-20 remove the use of "diff", using less memory
-%   2017-07-31 return output also when nargin == 0, sort labels in 3D
 
 %% Initialisations
 

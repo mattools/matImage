@@ -6,16 +6,19 @@
 %
 %
 % Computation of granulometry curves
-%   imGranulo         - Compute granulometry curve of a given image.
-%   imGranuloByRegion - Granulometry curve for each region of label image.
+%   imGranulo               - Compute granulometry curve of a given image.
+%   imGranuloByRegion       - Granulometry curve for each region of label image.
 %
 % Analysis of granulometry curves
-%   granuloMeanSize   - Compute geometric mean of granulometric curve.
-%   granuloMean       - Compute arithmetic mean of granulometric curve(s).
-%   granuloStd        - Compute standard deviation of granulometric curve(s).
+%   granuloMeanSize         - Compute geometric mean of granulometric curve.
+%   granuloMean             - Compute arithmetic mean of granulometric curve(s).
+%   granuloStd              - Compute standard deviation of granulometric curve(s).
 %
-% Variations of granulometry analysis
-%   imOrientedGranulo - Gray level granulometry mean size for various orientations.
+% Oriented granulometry analysis
+%   imDirectionalGranulo    - Directional granulometries for several orientations.
+%   imGranuloOrientationMap - Orientation map of directional granulometry.
+%   orientedLineStrel       - Create an oriented line structuring element.
+%   imOrientedGranulo       - Gray level granulometry mean size for various orientations.
 %
 %
 % References

@@ -19,7 +19,8 @@ function [res, diams] = imOrientedGranulo(img, angleList, granuloType, strelSize
 %   imOrientedGranulo
 %
 %   See also
-%     imGranulometry, imGranulo, imGranuloByRegion, granuloMeanSize
+%     imGranulometry, imDirectionalGranulo, imGranulo, imGranuloByRegion,
+%     granuloMeanSize 
  
 % ------
 % Author: David Legland

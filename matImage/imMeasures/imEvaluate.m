@@ -1,5 +1,5 @@
 function val = imEvaluate(img, varargin)
-%IMEVALUATE  Evaluate image value at given position(s)
+% Evaluate image value at given position(s).
 %
 %   VAL = imEvaluate(IMG, X, Y)
 %   VAL = imEvaluate(IMG, X, Y, Z)
@@ -7,10 +7,10 @@ function val = imEvaluate(img, varargin)
 %   position(s) given by X, Y, and eventually Z. 
 %   IMG is an array containing the image
 %
-%   VAL = imEvaluate(IMG, POS)
+%   VALS = imEvaluate(IMG, POS)
 %   Specifies the position as a N-by-2 or N-by-3 array of coordinates. The
-%   result VAL is a N-by-1 array of values in the case of a grayscale image
-%   or a N-by-3 array in the case of a color image.
+%   result VALS is either a N-by-1 numeric array in the case of a grayscale
+%   image or a N-by-3 array in the case of a color image. 
 %
 %   VAL = imEvaluate(..., METHOD)
 %   Specifies the interpolation method to use. The same options as for the
@@ -31,12 +31,12 @@ function val = imEvaluate(img, varargin)
 %   
 %
 %   See also
-%   imLineProfile, interp2, interp3, improfile
+%     imLineProfile, interp2, interp3, improfile
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2012-05-22,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -104,7 +104,7 @@ if nd == 2
     
     if nc == 1
         % planar grayscale
-        val = interp2(x, y, double(img), ...
+        val(:) = interp2(x, y, double(img), ...
             point(:, 1), point(:, 2), method, fillValue);
     else
         % planar color
@@ -122,7 +122,7 @@ elseif nd == 3
     if nc == 1
         % 3D grayscale
         z = 1:size(img, 3);
-        val = interp3(x, y, z, double(img), ...
+        val(:) = interp3(x, y, z, double(img), ...
             point(:, 1), point(:, 2), point(:, 3), method, fillValue);
     else
         % 3D color

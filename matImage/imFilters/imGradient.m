@@ -31,32 +31,35 @@ function varargout = imGradient(img, varargin)
 %
 %   Example
 %   % display edge strength computed on cameraman picture
-%   img = imread('cameraman.tif');
-%   grad = imGradient(img);
-%   imshow(grad, [0 max(grad(:))]);
+%     img = imread('cameraman.tif');
+%     grad = imGradient(img);
+%     imshow(grad, [0 max(grad(:))]);  colormap parula;
+%     % use larger parameter for sigma
+%     grad5 = imGradient(img, 5);
+%     figure; imshow(grad5, [0 max(grad5(:))]); colormap parula;
 %
 %   % compute edge direction on rice picture
-%   img = imread('rice.png');
-%   [dx dy] = imGradient(img);
-%   grad = hypot(dx, dy);
-%   theta = atan2(dy, dx);
-%   rgb = angle2rgb(theta);     % convert to rgb
-%   bin = grad>50;              % select only salient edges
-%   rgb(~bin(:,:, [1 1 1])) = 0;% display salient edges orientation
-%   imshow(rgb);
+%     img = imread('rice.png');
+%     [dx, dy] = imGradient(img);
+%     grad = hypot(dx, dy);
+%     theta = atan2(dy, dx);
+%     rgb = angle2rgb(theta);     % convert to floating-point rgb
+%     bin = grad>20;              % select only salient edges
+%     rgb(~bin(:,:, [1 1 1])) = 0;% display salient edges orientation
+%     imshow(rgb);
 %
 %   % Uses a different filter (the same as for the "gradient" function)
-%   img = imread('cameraman.tif');
-%   grad = imGradient(img, 'filter', [1 0 -1]);
-%   imshow(grad, [0 max(grad(:))]);
+%     img = imread('cameraman.tif');
+%     grad = imGradient(img, 'filter', [1 0 -1]);
+%     imshow(grad, [0 max(grad(:))]);
 %
 %   See also
-%   imLaplacian, imMorphoGradient, imHessian
-%   imfilter, fspecial, angle2rgb, gradient
+%     imLaplacian, imMorphoGradient, imHessian, imGradientFilter
+%     imfilter, fspecial, angle2rgb, gradient
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-08-19,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
@@ -91,17 +94,7 @@ end
 
 % default filter for gradient: normalised sobel
 if nd <= 2
-    if sigma == 0
-        % Default 2D case: normalised sobel matrix
-        sx = fspecial('sobel')'/8;
-    else
-        Nx = ceil((3*sigma));
-        lx = -Nx:Nx;
-        sy = exp(-((lx / sigma) .^2) * .5);
-        sx = -(lx / sigma) .* sy;
-        sx = sy' * sx;
-        sx = sx / sum(sx(sx > 0));
-    end
+    sx = gradientKernels(sigma);
     
 elseif nd == 3
     if sigma == 0

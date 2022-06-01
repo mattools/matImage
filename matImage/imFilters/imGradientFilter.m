@@ -56,7 +56,7 @@ function varargout = imGradientFilter(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-08-19,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
@@ -103,16 +103,7 @@ if verbose
     disp('init kernels');
 end
 if nd <= 2
-    if sigma == 0
-        % Default 2D case: normalised sobel matrix
-        sx = fspecial('sobel')'/8;
-    else
-        Nx = ceil((3*sigma));
-        lx = -Nx:Nx;
-        sy = exp(-((lx / sigma) .^2) * .5) / (sqrt(2*pi) * sigma);
-        sx = -(lx / sigma) .* sy;
-        sx = sy' * sx;
-    end
+    sx = gradientKernels(sigma);
     
 elseif nd == 3
     if sigma == 0

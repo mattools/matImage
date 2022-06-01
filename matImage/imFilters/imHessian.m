@@ -1,5 +1,5 @@
 function varargout = imHessian(img, sigma, varargin)
-%IMHESSIAN Compute coefficients of Hessian matrix for each pixel
+% Compute coefficients of Hessian matrix for each pixel.
 %
 %   For 2D images:
 %   [DXX, DXY, DYY] = imHessian(IMG, SIGMA)
@@ -20,7 +20,7 @@ function varargout = imHessian(img, sigma, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2013-03-20,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2013 INRA - Cepia Software Platform.
 

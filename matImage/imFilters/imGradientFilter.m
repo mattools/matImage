@@ -31,19 +31,19 @@ function varargout = imGradientFilter(img, varargin)
 %
 %   Example
 %   % display edge strength computed on cameraman picture
-%   img = imread('cameraman.tif');
-%   grad = imGradientFilter(img);
-%   imshow(grad, [0 max(grad(:))]);
+%     img = imread('cameraman.tif');
+%     grad = imGradientFilter(img);
+%     imshow(grad, [0 max(grad(:))]);
 %
 %   % compute edge direction on rice picture
-%   img = imread('rice.png');
-%   [dx dy] = imGradientFilter(img);
-%   grad = hypot(dx, dy);
-%   theta = atan2(dy, dx);
-%   rgb = angle2rgb(theta);     % convert to rgb
-%   bin = grad>50;              % select only salient edges
-%   rgb(~bin(:,:, [1 1 1])) = 0;% display salient edges orientation
-%   imshow(rgb);
+%     img = imread('rice.png');
+%     [dx, dy] = imGradientFilter(img);
+%     grad = hypot(dx, dy);
+%     theta = atan2(dy, dx);
+%     rgb = angle2rgb(theta);     % convert to rgb
+%     bin = grad>50;              % select only salient edges
+%     rgb(~bin(:,:, [1 1 1])) = 0;% display salient edges orientation
+%     imshow(rgb);
 %
 %   % Uses a different filter (the same as for the "gradient" function)
 %   img = imread('cameraman.tif');
@@ -68,7 +68,7 @@ function varargout = imGradientFilter(img, varargin)
 % 2010-03-05 return result as double, normalize default filter
 % 2010-12-06 use 3D kernel by default for 3D images
 % 2013-05-20 add support for variable kernel width (2D only)
-% 2015-08-27 rename ti gradientFilter, update normalisation constants
+% 2015-08-27 rename to imGradientFilter, update normalisation constants
 
 %% Parse input arguments
 
@@ -104,28 +104,8 @@ if verbose
 end
 if nd <= 2
     sx = gradientKernels(sigma);
-    
 elseif nd == 3
-    if sigma == 0
-        % Default 3D case: normalisation of 2 classical sobel matrices
-        base = [1 2 1]' * [1 2 1];
-        base = base / sum(base(:))/2;
-        sx = permute(cat(3, base, zeros(3, 3), -base), [2 3 1]);
-    else
-        Nx = ceil((3*sigma));
-        lx = -Nx:Nx;
-        sy = exp(-((lx / sigma) .^2) * .5) / (sqrt(2*pi) * sigma);
-        sx = -(lx / sigma) .* sy;
-        sz = permute(sy, [3 1 2]);
-
-        n = length(lx);
-        tmp = zeros(n, n , n);
-        for i = 1:n
-            tmp(:,:,i) = sz(i) * sy' * sx;
-        end
-        sx = tmp;
-    end
-    
+    sx = gradientKernels3d(sigma);
 else
     error('Input image must have 2 or 3 dimensions');
 end

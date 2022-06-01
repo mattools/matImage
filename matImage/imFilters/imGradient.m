@@ -1,5 +1,5 @@
 function varargout = imGradient(img, varargin)
-%IMGRADIENT Compute gradient magnitude of a grayscale image
+% Compute gradient magnitude of a grayscale image.
 %
 %   [GX, GY] = imGradient(IMG);
 %   [GX, GY, GZ] = imGradient(IMG);
@@ -54,7 +54,7 @@ function varargout = imGradient(img, varargin)
 %     imshow(grad, [0 max(grad(:))]);
 %
 %   See also
-%     imLaplacian, imMorphoGradient, imHessian, imGradientFilter
+%     imLaplacian, imMorphoGradient, imHessian
 %     imfilter, fspecial, angle2rgb, gradient
 
 % ------
@@ -95,29 +95,8 @@ end
 % default filter for gradient: normalised sobel
 if nd <= 2
     sx = gradientKernels(sigma);
-    
 elseif nd == 3
-    if sigma == 0
-        % Default 3D case: normalisation of 2 classical sobel matrices
-        base = [1 2 1]' * [1 2 1];
-        base = base / sum(base(:))/2;
-        sx = permute(cat(3, base, zeros(3, 3), -base), [2 3 1]);
-    else
-        Nx = ceil((3*sigma));
-        lx = -Nx:Nx;
-        sy = exp(-((lx / sigma) .^2) * .5);
-        sx = -(lx / sigma) .* sy;
-        sz = permute(sy, [3 1 2]);
-
-        n = length(lx);
-        tmp = zeros(n, n , n);
-        for i = 1:n
-            tmp(:,:,i) = sz(i) * sy' * sx;
-        end
-        sx = tmp;
-        sx = sx / sum(sx(sx > 0));
-    end
-    
+    sx = gradientKernels3d(sigma);
 else
     error('Input image must have 2 or 3 dimensions');
 end

@@ -104,12 +104,12 @@ if nd == 2
     
     if nc == 1
         % planar grayscale
-        val(:) = interp2(x, y, double(img), ...
+        val(:) = interp2(x, y, single(img), ...
             point(:, 1), point(:, 2), method, fillValue);
     else
         % planar color
         for i = 1:nc
-            val(:, i) = interp2(x, y, double(img(:, :, i)), ...
+            val(:, i) = interp2(x, y, single(img(:, :, i)), ...
                 point(:, 1), point(:, 2), method, fillValue(i));
         end
     end
@@ -122,13 +122,13 @@ elseif nd == 3
     if nc == 1
         % 3D grayscale
         z = 1:size(img, 3);
-        val(:) = interp3(x, y, z, double(img), ...
+        val(:) = interp3(x, y, z, single(img), ...
             point(:, 1), point(:, 2), point(:, 3), method, fillValue);
     else
         % 3D color
         z = 1:size(img, 4);
         for i = 1:nc
-            val(:, i) = interp2(x, y, z, double(squeeze(img(:,:,i,:))), ...
+            val(:, i) = interp2(x, y, z, single(squeeze(img(:,:,i,:))), ...
                 point(:, 1), point(:, 2), point(:, 3), method, fillValue(i));
         end
     end

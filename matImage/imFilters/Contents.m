@@ -12,8 +12,9 @@
 %
 %   Gradient and Laplacian filters:
 %   imGradientFilter        - Compute gradient components of a grayscale image
+%   imLocalGradient         - Compute gradient for chosen locations within image.
 %   imLaplacian             - Discrete Laplacian of an image
-%   imHessian               - Compute coefficients of Hessian matrix for each pixel
+%   imHessian               - Compute coefficients of Hessian matrix for each pixel.
 %   imEigenValues           - Image eigen values from second derivatives
 %   imEigenValues3d         - Image eigen values from second derivatives
 %   imVesselness2d          - Vesselness of cuvilinear structures from Frangi paper
@@ -33,7 +34,10 @@
 %   imAddBorder             - Add a border around a 2D or 3D image
 %   imCropBorder            - Crop the border around a 2D or 3D image
 %   imTranspose             - Transpose an image (grayscale or RGB).
-%   imCropBox               - Crop an image with a box
+%   imCropBox               - Crop the content of an image within a box.
+%   imCropOrientedBox       - Crop the content of an image within an oriented box.
+%   imTangentCrop           - Crop an image around a point based on local orientation.
+%   imTangentCrop3d         - Crop an image around a point based on local orientation.
 %   imResize                - Resize 2D or 3D image.
 %   imDownSample            - Apply down-sampling on an image by applying operation on blocs
 %   subsamplergb            - Return a sub-sampled version of an rgb image.
@@ -104,6 +108,8 @@
 %   Kernels and structuring elements:
 %   ball                    - Generate a ball in a matrix in 2 or 3 dimensions
 %   gaussianKernel3d        - Create a 3D Gaussian kernel for image filtering
+%   gradientKernels         - Create kernels for computing gradient within 2D images.
+%   gradientKernels3d       - Create kernels for computing gradient within 3D images.
 %   orientedGaussianKernel  - Oriented Gaussian kernel for directional filtering
 %   orientedLaplacianKernel - Oriented Laplacian kernel for directional filtering
 %   cross3d                 - Return a 3D structuring element with cross shape
@@ -132,7 +138,7 @@ help Contents
 %   createImage             - Create a new image with given size and type
 %   imMergeBands            - Merge 3 bands to create a 2D or 3D color image
 %   imSplitBands            - Split the 3 bands of a 2D or 3D image
-%   imGradient              - Compute gradient magnitude of a grayscale image
+%   imGradient              - Compute gradient magnitude of a grayscale image.
 %   imKillBorders           - Remove regions on the border of an image
 %   subsample               - Subsample an array by applying operation on blocs
 %   imMergeLabels           - Merge regions in a labeled image
@@ -144,4 +150,5 @@ help Contents
 %   Other functions
 
 %   createFontImageSize7    - One-line description here, please.
+
 

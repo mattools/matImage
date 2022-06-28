@@ -137,3 +137,19 @@ theta = linspace(0,180,61);
 fd = imFeretDiameter(img, theta);
 assertEqual(testCase, 3, min(fd(1,:)), 'AbsTol', 1.01); % minimal diameter is the short side
 assertEqual(testCase, sqrt(18), max(fd(1,:)), 'AbsTol', 1.01); % maximum is the diagonal
+
+
+function test_3D_box(testCase)
+
+% create a binary image of a 8x6x4 box
+img = false([8 10 6]);
+img(2:end-1, 2:end-1, 2:end-1) = true;
+
+fd_x = imFeretDiameter(img, [1 0 0]);
+fd_y = imFeretDiameter(img, [0 1 0]);
+fd_z = imFeretDiameter(img, [0 0 1]);
+
+assertEqual(testCase, 8, fd_x, 'AbsTol', 1.01); 
+assertEqual(testCase, 6, fd_y, 'AbsTol', 1.01); 
+assertEqual(testCase, 4, fd_z, 'AbsTol', 1.01); 
+

@@ -1,4 +1,4 @@
-function gm = granuloMeanSize(tab, xi)
+function gm = granuloMeanSize(tab, xi, dim)
 % Compute geometric mean of granulometric curve.
 %
 %   GLMS = granuloMeanSize(TAB, XI)
@@ -29,15 +29,30 @@ function gm = granuloMeanSize(tab, xi)
 
 % extract data
 data = tab;
-
+   
 % in case data are provided as Table, extract numerical data
 if isa(tab, 'Table')
     data = tab.Data;
     xi = str2num(char(tab.ColNames'))'; %#ok<ST2NM>
+    dim = 2;
 end
 
+if  ~isa('dim', 'var')
+    % by default, use the last non-singleton dimension
+    dim = find(size(data) > 1, 1, 'last');
+end
+
+% reshape the xi array in the DIM direction
+dims = ones(1, ndims(data));
+dims(dim) = length(xi);
+xi = reshape(xi, dims);
+
+% normalize data such that sum along DIM equals 1
+data = bsxfun(@rdivide, data, sum(data, dim));
+% data = data / 100;
+
 % compute geometric mean
-gm = exp(sum(bsxfun(@times, log(xi), data / 100), 2));
+gm = exp(sum(bsxfun(@times, data, log(xi)), dim));
 
 % if input is a table, create new data table with result
 if isa(tab, 'Table')

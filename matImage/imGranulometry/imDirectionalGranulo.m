@@ -5,17 +5,20 @@ function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, v
 %   RES = imDirectionalGranulo(IMG, NORIENT, GRTYPE, LMAX)
 %
 %   Input parameters:
-%   IMG:         input image, 2D gray-level
-%   NORIENT:     the number of orientations to consider
-%   GRTYPE:      the type of granulomtry (only 'opening' is supported for now)
-%   LMAX:        the maximum size of line
+%   IMG:     input image, 2D gray-level
+%   NORIENT: the number of orientations to consider
+%   GRTYPE:  the type of granulometry to perform. Can be one of 'opening'
+%            or 'closing'.
+%   LMAX:    the maximum size of the linear structuring elements used for
+%            computing granulometries. Larger lines can be more precise for 
+%            computing equivalent size, but requires more computation time.
 %
 %
 %   Example
 %     imDirectionalGranulo
 %
 %   See also
-%     orientedLineStrel
+%     imGranulo, orientedLineStrel
 %
 %   Reference
 %   The methodology is described in the following article:
@@ -25,27 +28,21 @@ function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, v
 %   Industrial Crops and Products 152, p. 112548. 
 %   doi: https://doi.org/10.1016/j.indcrop.2020.112548
 %
-
-
-%
  
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2018-12-18,    using Matlab 9.5.0.944444 (R2018b)
 % Copyright 2018 INRA - Cepia Software Platform.
 
 
-%% Input arguments
-
-if ~strcmp(grType, 'opening')
-    error('Only ''opening'' granulometry type is currently supported');
-end
-
-
 %% Initialization
 
+% retrieve input image size
 dim = size(img);
+if length(dim) ~= 2
+    error('Requires a 2D grayscale or intensity image as first input');
+end
 
 % create the list of angles
 orientList = linspace(0, 180, nOrients+1);
@@ -59,9 +56,6 @@ nSteps = length(diamList);
 % allocate memory for global result
 res = zeros([dim nOrients], 'double');
     
-% allocate memory for intermediate results
-resOp = zeros([dim nSteps+1], 'double');
-
 % image for normalizing granulometry curves
 refImage = double(img);
 refImage(img <= 0) = 1;
@@ -77,17 +71,47 @@ for iOrient = 1:nOrients
     % (correspond to CCW when visualizing image results)
     theta = -orientList(iOrient);
 
-    % iterate over granulometry steps to create a stack of results
-    for i = 1:nSteps
-        se = orientedLineStrel(diamList(i), theta);
-        resOp(:,:,i) = imopen(img, se);
+    % allocate memory for intermediate results
+    % (requires double for computation of diff)
+    resOp = zeros([dim nSteps+1], 'double');
+    resOp(:,:,1) = img;
+
+    % iterate over structuring element lengths to create a stack of results
+    if strcmpi(grType, 'opening')
+        for i = 1:nSteps
+            se = orientedLineStrel(diamList(i), theta);
+            resOp(:,:,i+1) = imopen(img, se);
+        end
+    elseif strcmpi(grType, 'closing')
+        for i = 1:nSteps
+            se = orientedLineStrel(diamList(i), theta);
+            resOp(:,:,i+1) = imclose(img, se);
+        end
+    elseif strcmpi(grType, 'dilation')
+        for i = 1:nSteps
+            se = orientedLineStrel(diamList(i), theta);
+            resOp(:,:,i+1) = imdilate(img, se);
+        end
+    elseif strcmpi(grType, 'erosion')
+        for i = 1:nSteps
+            se = orientedLineStrel(diamList(i), theta);
+            resOp(:,:,i+1) = imerode(img, se);
+        end
+    else
+        error('Unknown operation type: %s', grType);
     end
     
     % compute granulometry curve for each pixel
-    gr = bsxfun(@rdivide, cat(3, zeros(dim), diff(-resOp, 1, 3)), refImage) * 100;
-
+    if ismember(lower(grType), {'opening', 'erosion'})
+        % values are decreasing over strel length, so we need to invert the
+        % difference
+        gr = bsxfun(@rdivide, diff(-resOp, 1, 3), refImage) * 100;
+    else
+        gr = bsxfun(@rdivide, diff(resOp, 1, 3), refImage) * 100;
+    end
+    
     % compute mean size for each position
-    meanSizes = granuloMeanSize(reshape(gr, [numel(img) nSteps+1]), [diamList LMax]);
+    meanSizes = granuloMeanSize(reshape(gr, [numel(img) nSteps]), diamList);
     
     % stores the mean size for the current orientation
     res(:,:,iOrient) = reshape(meanSizes, size(img));

@@ -103,6 +103,10 @@ for i = 1:nSizes
             img2 = imopen(img, se);
         case 'closing'
             img2 = imclose(img, se);
+        case 'dilation'
+            img2 = imopen(img, se);
+        case 'erosion'
+            img2 = imopen(img, se);
             
         otherwise
             error(['Could not process granulometry type: ' granuloType]);

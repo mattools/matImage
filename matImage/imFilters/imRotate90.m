@@ -1,5 +1,5 @@
 function [res, permInds, flipInds] = imRotate90(img, number, axis)
-%IMROTATE90  Rotate a 3D image by 90 degrees around one image axis
+% Rotate a 3D image by 90 degrees around one image axis.
 %
 %   RES = imRotate90(IMG, NUMBER);
 %   Rotates counter a planar image by 90 degrees n-times. The rotation is
@@ -14,11 +14,11 @@ function [res, permInds, flipInds] = imRotate90(img, number, axis)
 %
 %   RES = imRotate90(IMG, AXIS, NUMBER);
 %   Apply NUMBER rotation around the axis. NUMBER is the number of
-%   rotations to apply, between 1 and 3. NUMER can also be negative, in
+%   rotations to apply, between 1 and 3. NUMBER can also be negative, in
 %   this case the rotation is performed in reverse direction.
 %
-%   [RES PERM] = imRotate90(...);
-%   [RES PERM FLIP] = imRotate90(...);
+%   [RES, PERM] = imRotate90(...);
+%   [RES, PERM, FLIP] = imRotate90(...);
 %   Returns also informations about rotation:
 %   PERM is the permutation of indices from the first image, such that
 %   stackSize(RES) = stackSize(permute(IMG, PERM));
@@ -53,7 +53,7 @@ function [res, permInds, flipInds] = imRotate90(img, number, axis)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2012-05-18,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 

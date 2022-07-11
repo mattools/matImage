@@ -27,13 +27,15 @@ function [gr, diams, vols] = imGranulo(img, granuloType, strelShape, strelSizes,
 %
 %
 %   Example
-%     % Compute granulometric curve by opening with square structuring
-%     % element on rice image 
-%     img = imread('rice.png');
-%     gr = imGranulo(img, 'opening', 'square', 1:20);
+%     % Compute granulometric curve by opening on coins image (with two
+%     % distinct sizes), using disk structuring element 
+%     img = imread('coins.png');
+%     Rmax = 50;
+%     gr = imGranulo(img, 'opening', 'disk', 1:Rmax);
 %     % display as a function of strel diameter
-%     plot(2*(1:20)+1, gr);
+%     figure; plot(2*(1:Rmax)+1, gr); xlim([0 2*Rmax]);
 %     xlabel('Strel diameter (pixel)'); ylabel('Percentage of Variations');
+%     title('Granulometry on "coins" image');
 %
 %   See also
 %     imGranulometry, granuloMeanSize, imGranuloByRegion
@@ -67,6 +69,26 @@ while length(varargin) > 1
             error(['Can not understand option: ' varargin{1}]);
     end
     varargin(1:2) = [];
+end
+
+% create funtion handle for morphological operation
+if isa(granuloType, 'functionHandle')
+    morphoOp = granuloType;
+else
+    switch lower(granuloType)
+        case 'opening'
+            morphoOp = @imopen;
+        case 'closing'
+            morphoOp = @imclose;
+        case 'dilation'
+            morphoOp = @imdilate;
+        case 'erosion'
+            morphoOp = @imerode;
+            
+        otherwise
+            error(['matImage:' mfilename], ...
+                ['Could not process granulometry type: ' granuloType]);
+    end
 end
 
 
@@ -118,22 +140,9 @@ for i = 1:nSizes
     end
     
     % compute morphological operation
-    switch lower(granuloType)
-        case 'opening'
-            img2 = imopen(img, se);
-        case 'closing'
-            img2 = imclose(img, se);
-        case 'dilation'
-            img2 = imdilate(img, se);
-        case 'erosion'
-            img2 = imerode(img, se);
-            
-        otherwise
-            error(['matImage:' mfilename], ...
-                ['Could not process granulometry type: ' granuloType]);
-    end
+    img2 = morphoOp(img, se);
     
-    % compute local volume
+    % sum of gray levels within each region
     vols(i+1) = sum(img2(roi));
 end
 

@@ -1,6 +1,13 @@
 function [res, diams] = imOrientedGranulo(img, angleList, granuloType, strelSizes, varargin)
 % Gray level granulometry mean size for various orientations.
 %
+%   Compute typical size of bright or dark structures within images by
+%   performing gray-level granulometries with horizontal structuring
+%   elements and for various rotations of the input image.
+%   The function "imDirectionalGranulo" is an alternative approach based on
+%   line structuring elements with various orientations.
+%
+%   Usage
 %   RES = imOrientedGranulo(IMG, ANGLES, TYPE, SIZES)
 %   IMG should be a 2D image (binary, grayscale or color)
 %   ANGLES is the list of angles to consider, in degrees, as a 1-by-N row
@@ -21,6 +28,15 @@ function [res, diams] = imOrientedGranulo(img, angleList, granuloType, strelSize
 %   See also
 %     imGranulometry, imDirectionalGranulo, imGranulo, imGranuloByRegion,
 %     granuloMeanSize 
+%
+%   Reference
+%   The methodology is described in the following article:
+%   "Exploring the microstructure of natural fibre composites by confocal
+%   Raman imaging and image analysis", by Antoine Gallos, Gabriel Paës,
+%   David Legland, Florent Allais, Johnny Beaugrand (2017).
+%   Composites Part A: Applied Science and Manufacturing 94, p. 32-40. 
+%   doi: https://doi.org/10.1016/j.compositesa.2016.12.005
+%
  
 % ------
 % Author: David Legland

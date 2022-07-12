@@ -71,6 +71,31 @@ while length(varargin) > 1
     varargin(1:2) = [];
 end
 
+% create structuring element factory, as a function handle that returns a
+% strel object (or an array) from the radius of the strel.
+if isa(strelShape, 'functionHandle')
+    strelMaker = strelShape;
+else
+    % create factory from strel name
+    switch lower(strelShape)
+        case 'square'
+            strelMaker = @(r) strel('square', r);
+        case {'octagon', 'diamond'}
+            strelMaker = @(r) strel(lower(strelShape), r);
+        case 'disk'
+            % do not use simplification, as it is not suitable for
+            % granulometries
+            strelMaker = @(r) strel('disk', r, 0);
+        case 'lineh'
+            strelMaker = @(r) ones(1, 2*r+1);
+        case 'linev'
+            strelMaker = @(r) ones(2*r+1, 1);
+        otherwise
+            error(['matImage:' mfilename], ...
+                ['Could not process strel type: ' strelShape]);
+    end
+end
+
 % create funtion handle for morphological operation
 if isa(granuloType, 'functionHandle')
     morphoOp = granuloType;
@@ -114,30 +139,13 @@ vols(1) = vol0;
 for i = 1:nSizes
     % size of strel for current iteration
     radius = strelSizes(i);
-    diam = 2 * radius + 1;
     
     if verbose 
         fprintf('iter %2d/%d, radius = %f\n', i, nSizes, radius);
     end
     
     % create current strel 
-    switch lower(strelShape)
-        case 'square'
-            se = strel('square', diam);
-        case {'octagon', 'diamond'}
-            se = strel(lower(strelShape), radius);
-        case 'disk'
-            % do not use simplification, as it is not suitable for
-            % granulometries
-            se = strel('disk', radius, 0);
-        case 'lineh'
-            se = ones(1, diam);
-        case 'linev'
-            se = ones(diam, 1);
-        otherwise
-            error(['matImage:' mfilename], ...
-                ['Could not process strel type: ' strelShape]);
-    end
+    se = strelMaker(radius);
     
     % compute morphological operation
     img2 = morphoOp(img, se);

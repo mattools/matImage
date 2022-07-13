@@ -20,10 +20,20 @@ function rgb = angle2rgb(img, varargin)
 %   the function considers unoriented angles, or 360, in this case consider
 %   degrees instead of radians.
 %
+%   RES = angle2rgb(..., 'range', RANGE)
+%   Provides the angular range (min and max value of angles) as a 1-by-2
+%   row vector.
+%
+%   RES = angle2rgb(..., 'weights', WEIGHTS)
+%   Provides weights associated to each angle, as a numeric array the same
+%   size as the input array. Large weights will result in saturated colors,
+%   small weights to unsatured (default: white) colors.
+%   
+%
 %   Example
-%   % show angle of complex values around origin
-%     [x y] = meshgrid(-50:50, -50:50);
-%     a = angle(x+i*y);
+%   % show angle of angular values around origin
+%     [x, y] = meshgrid(-50:50, -50:50);
+%     a = atan2(y, x);
 %     imshow(angle2rgb(a));
 %
 %   % show hue value of a color image
@@ -31,7 +41,7 @@ function rgb = angle2rgb(img, varargin)
 %     hsv = rgb2hsv(img);
 %     % convert hue value, coded between 0 and 1, into RGB
 %     rgbHue = angle2rgb(hsv(:,:,1), 1);
-%     subplot(121);imshow(img); subplot(122); imshow(rgbHue);
+%     subplot(121); imshow(img); subplot(122); imshow(rgbHue);
 %
 %   See also
 %     deg2rad, rad2deg, angle, imGetHue
@@ -43,21 +53,69 @@ function rgb = angle2rgb(img, varargin)
 % Created: 2009-02-06,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - BIA PV Nantes - MIAJ Jouy-en-Josas.
 
-% rename as rad2rgb ?
 
-% extract value for normalizing angles
-maxi = 2*pi;
+%% Process input arguments
+
+% default values
+mini = 0;
+maxi = 2 * pi;
+weights = ones(size(img));
+
+% extract input arguments given as numeric values
 if ~isempty(varargin)
-    var =  varargin{1};
-    maxi = var(end);
+    var1 =  varargin{1};
+    if isnumeric(var1) && isscalar(var1)
+        maxi = var1;
+    elseif isnumeric(var1) && all(size(var1) == [1 2])
+        mini = var1(1);
+        maxi = var1(2);
+    else
+        error('Second argument must be either a scalar or 2-elements row vector');
+    end
+    
+    varargin(1) = [];
 end
 
-% normalise between 0 and 255
-img = uint8(floor(256*mod(mod(img, maxi) + maxi, maxi)/maxi));
+% process input argument as parameter name-value pairs
+while length(varargin) > 1
+    name = varargin{1};
+    
+    if strcmpi(name, 'range')
+        % range of angle values, such as [0 2*pi], [-90 90]...
+        value = varargin{2};
+        if any(size(value) ~= [1 2])
+            error('range parameter must have size [1 2]');
+        end
+        mini = value(1);
+        maxi = value(2);
+        
+    elseif strcmpi(name, 'weights')
+        % weights associated to each angular value
+        weights = varargin{2};
+        if any(size(value) ~= size(img))
+            error('weights parameter must have same size as input array');
+        end
+        
+    else
+        error('matImage:angle2rgb', ....
+            'Unable to interpret argument name %s', name);
+    end
+    
+    varargin(1:2) = [];
+end
 
-% build the color map
-map = hsv(256);
 
-% apply colormap to normalised image
-rgb = ind2rgb(img, map);
+%% Main processing
+
+% normalise within range of angular values
+hue = (img - mini) / (maxi - mini);
+% clamp values between 0 and 1
+hue = mod(mod(hue, 1) + 1, 1);
+
+% use weights as saturation, and max intensity everywhere
+sat = double(weights) / double(max(weights(:)));
+val = ones(size(weights));
+
+% convert to RGB
+rgb = hsv2rgb(cat(3, hue, sat, val));
 

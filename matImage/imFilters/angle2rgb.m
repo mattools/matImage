@@ -20,6 +20,10 @@ function rgb = angle2rgb(img, varargin)
 %   the function considers unoriented angles, or 360, in this case consider
 %   degrees instead of radians.
 %
+%   RES = angle2rgb(IMG, RANGE)
+%   Specifies the angular range as a 1-by-2 row vector containing the
+%   minimal and maximal angle values.
+%
 %   RES = angle2rgb(..., 'range', RANGE)
 %   Provides the angular range (min and max value of angles) as a 1-by-2
 %   row vector.
@@ -62,9 +66,10 @@ maxi = 2 * pi;
 weights = ones(size(img));
 
 % extract input arguments given as numeric values
-if ~isempty(varargin)
+if ~isempty(varargin) && isnumeric(varargin{1})
     var1 =  varargin{1};
-    if isnumeric(var1) && isscalar(var1)
+    
+    if isscalar(var1)
         maxi = var1;
     elseif isnumeric(var1) && all(size(var1) == [1 2])
         mini = var1(1);
@@ -92,7 +97,7 @@ while length(varargin) > 1
     elseif strcmpi(name, 'weights')
         % weights associated to each angular value
         weights = varargin{2};
-        if any(size(value) ~= size(img))
+        if any(size(weights) ~= size(img))
             error('weights parameter must have same size as input array');
         end
         

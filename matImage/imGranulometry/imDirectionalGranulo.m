@@ -9,16 +9,26 @@ function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, v
 %
 %   Usage:
 %   RES = imDirectionalGranulo(IMG, NORIENT, GRTYPE, LMAX)
+%   RES = imDirectionalGranulo(IMG, ORIENTLIST, GRTYPE, LMAX)
 %
 %   Input parameters:
-%   IMG:       The input 2D gray-level image.
-%   NORIENT:   The number of orientations to consider.
-%   GRTYPE:    The type of granulometry. Can be one of 'opening', 'closing',
-%              'dilation', 'erosion', or a function handle to a function
-%              that accepts an image and a structuring element. 
-%   LMAX:      The maximum size of line SE. Structuring elements use a
-%              number of pixels such that equivalent length of the line is
-%              as close as possible to the LMAX value.
+%   IMG:        The input 2D gray-level image.
+%   NORIENT:    The number of orientations to consider, as a scalar numeric.
+%   ORIENTLIST: The list of orientations to consider, given as a 1-by-N
+%               array of numeric values. No orderingf
+%   GRTYPE:     The type of granulometry. Can be one of 'opening',
+%               'closing', 'dilation', 'erosion', or a function handle to a
+%               function that accepts an image and a structuring element. 
+%   LMAX:       The maximum size of line Structuring element (SE). The
+%               number of pixels of the SE is chosen such that equivalent
+%               length of the line is as close as possible to the LMAX
+%               value. 
+%
+%   [RES, ORIENTLIST] = imDirectionalGranulo(...)
+%   Also returns the array of orientations that was used for computing the
+%   granulometry. It ORIENTLIST was given as an input parameter, it is
+%   returns as second output argument.
+%
 %
 %   Example
 %     imDirectionalGranulo
@@ -44,6 +54,15 @@ function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, v
 
 %% Parse input arguments
 
+% create the list of angles, or use the array given as argument
+if isscalar(nOrients)
+    orientList = linspace(0, 180, nOrients+1);
+    orientList(end) = [];
+else
+    orientList = nOrients;
+    nOrients = length(orientList);
+end
+
 % create funtion handle for morphological operation
 if isa(grType, 'functionHandle')
     morphoOp = grType;
@@ -65,13 +84,9 @@ else
 end
 
 
-%% Initialization
+%% Initializations
 
 dim = size(img);
-
-% create the list of angles
-orientList = linspace(0, 180, nOrients+1);
-orientList(end) = [];
 
 % create the list of line diameters 
 % (consider only odd values to ensure symetry of the strel)

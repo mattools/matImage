@@ -1,0 +1,8318 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrreprt
+\begin_preamble
+\PassOptionsToPackage{usenames,dvipsnames}{xcolor}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[T1]{fontenc}
+
+\usepackage{hyperref}
+
+\definecolor{bl}{rgb}{0.0,0.2,0.6} 
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\hypersetup{colorlinks=true, citecolor=blue, linkcolor=blue}
+
+% package that modifies style of section headers
+\addtokomafont{chapter}{\color{bl}\scshape \selectfont}
+\addtokomafont{section}{\color{bl}\scshape \selectfont}
+\addtokomafont{subsection}{\color{bl}\scshape \selectfont}
+\addtokomafont{subsubsection}{\color{bl}\scshape \selectfont}
+
+% setup font style for different title elements
+\setkomafont{title}{\color{bl} \bfseries \scshape}
+\setkomafont{author}{\centering \small}
+\setkomafont{date}{\centering \small}
+
+
+% Change the abstract environment
+\usepackage[runin]{abstract}		% runin option for a run-in title
+\setlength\absleftindent{30pt}		% left margin
+\setlength\absrightindent{30pt}		% right margin
+\abslabeldelim{\quad }			
+\setlength{\abstitleskip}{-10pt}
+\renewcommand{\abstractname}{}
+\renewcommand{\abstracttextfont}{\color{bl} \small \slshape }	% slanted text
+
+
+% Custom headers and adapted to KOMA-Script
+\usepackage{scrlayer-scrpage}
+\usepackage{lastpage}	
+
+% header
+\lehead*{\slshape\rightmark}
+\rohead*{\slshape\rightmark}
+
+% footer
+\ofoot{\footnotesize page \thepage\ / \pageref{LastPage}}
+\ifoot{\footnotesize MatImage user manual}
+
+
+% right section with number
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+% Added by lyx2lyx
+\usepackage[charter]{mathdesign}
+
+% setup of figure captions 
+\usepackage[format=plain,font=it,labelfont=bf]{caption}
+
+
+% To add mini-TOC in the beginning of each chapter
+% The 'nohints' option is to prevent a conflict with the lastpage package, 
+% resulting in an extra empty page at the end of the document.
+\usepackage[nohints]{minitoc}
+
+
+% "Prettification" of Matlab listings
+%\renewcommand{\textasteriskcentered}{\ensuremath{*}}
+\usepackage{matlab-prettifier}
+
+
+% some info for populating document title page
+\author{D. Legland}
+\date{\today}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "cmtt" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf2
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement h
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 1
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\listings_params "language=Matlab,style={Matlab-editor},numbers=left,tabsize=2,frame=single,breaklines=true,basicstyle={\footnotesize\mlttfamily},aboveskip=5pt,showspaces=false"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+MatImage library user manual
+\end_layout
+
+\begin_layout Abstract
+The MatImage library provides a collection of functions for image processing
+ and analysis within the Matab environment.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+dominitoc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO:
+\end_layout
+
+\begin_layout Itemize
+quick tour ?
+\end_layout
+
+\begin_layout Itemize
+Refactor the 
+\begin_inset Quotes eld
+\end_inset
+
+imMeasure
+\begin_inset Quotes erd
+\end_inset
+
+ package 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(imStacks + imMeasures) -> (imExplore + imQuantify)
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Introduction
+\end_layout
+
+\begin_layout Section
+Presentation
+\end_layout
+
+\begin_layout Standard
+MatImage is a library for image processing and analysis, with unified interface
+ for 2D/3D images, or color/gray-scale images.
+ It is build as a complement of the Image Processing Toolbox from Matlab.
+\end_layout
+
+\begin_layout Standard
+The library was develop to facilitate the manipulation and the analysis
+ of images with various dimensionalities (2D/3D) and various contents (grayscale
+, color, binary, label maps).
+ Some key features of the library are:
+\end_layout
+
+\begin_layout Itemize
+interactive graphical visualization tools for 3D images
+\end_layout
+
+\begin_layout Itemize
+implementation of several functions for quantitative image analysis
+\end_layout
+
+\begin_layout Itemize
+possibility to take into account the spatial calibration of the images for
+ many functions
+\end_layout
+
+\begin_layout Itemize
+generic operators, avoiding when possible the use of specific functions
+ depending on image type or image dimensionality
+\end_layout
+
+\begin_layout Standard
+The official homepage for the project is hosted on GitHub
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://github.com/mattools/matImage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ A starting help is provided in the 
+\begin_inset CommandInset href
+LatexCommand href
+name "MatImage wiki"
+target "https://github.com/mattools/matImage/wiki"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Installation
+\end_layout
+
+\begin_layout Standard
+The latest version of the library can be downloaded from the GitHub project
+ page
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/mattools/matImage/releases/latest
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Installation from zip-file
+\end_layout
+
+\begin_layout Standard
+To install the library from the zip archive, proceed as follow:
+\end_layout
+
+\begin_layout Enumerate
+Download the zip archive corresponding to the latest version
+\end_layout
+
+\begin_layout Enumerate
+Extract the file
+\end_layout
+
+\begin_layout Enumerate
+Start Matlan, and run the 
+\begin_inset Quotes eld
+\end_inset
+
+installMatImage.m
+\begin_inset Quotes erd
+\end_inset
+
+ script located in the 
+\begin_inset Quotes eld
+\end_inset
+
+matImage
+\begin_inset Quotes erd
+\end_inset
+
+ folder.
+ This will automatically add the required directories to the 
+\begin_inset Quotes eld
+\end_inset
+
+path
+\begin_inset Quotes erd
+\end_inset
+
+ variable of the Matlab workspace.
+\end_layout
+
+\begin_layout Enumerate
+To keep the installation for the future, you can save the configuration
+ from the 
+\begin_inset Quotes eld
+\end_inset
+
+Set Path
+\begin_inset Quotes erd
+\end_inset
+
+ dialog available in the toolbar.
+\end_layout
+
+\begin_layout Subsection
+For developers
+\end_layout
+
+\begin_layout Standard
+It is also possible to clone the project, to facilitate the synchronization
+ with the latest developments, and / or to propose enhancement to the library.
+\end_layout
+
+\begin_layout Subsection
+Dependencies
+\end_layout
+
+\begin_layout Standard
+Several functions of the library require the Image Processing Toolbox from
+ Matlab.
+\end_layout
+
+\begin_layout Standard
+Other external libraries are required to run some of the functions:
+\end_layout
+
+\begin_layout Itemize
+the MatGeom library
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/mattools/matGeom
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ is used for several image analysis functions (chapters 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imMeasures"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imMinkowski"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and for the generation of synthetic shapes (chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imShapes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+the GUI Layout Toolbox
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://fr.mathworks.com/matlabcentral/fileexchange/27758-gui-layout-toolbox
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ is required to run the 
+\begin_inset Quotes eld
+\end_inset
+
+Slicer
+\begin_inset Quotes erd
+\end_inset
+
+ application, that facilitates the interactive exploration of 3D images.
+\end_layout
+
+\begin_layout Section
+Library organization
+\end_layout
+
+\begin_layout Standard
+The library is organised into several modules.
+ They are presented in a 
+\begin_inset Quotes eld
+\end_inset
+
+from global to technical
+\begin_inset Quotes erd
+\end_inset
+
+ order: first the modules for classical image processing and for exploration/vis
+ualization, then the modules for analysis/quantification, and finally some
+ more specialized modules.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imFilters]{imFilters}
+\end_layout
+
+\end_inset
+
+ generic filters and utilities for image processing.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imStacks]{imStacks}
+\end_layout
+
+\end_inset
+
+ functions and graphical user interfaces for the manipulation and the representa
+tion of 3D images.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imMeasures]{imMeasures}
+\end_layout
+
+\end_inset
+
+ functions for quantitative measurements on binary and label images.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imMinkowski]{imMinkowski}
+\end_layout
+
+\end_inset
+
+ estimation of intrinsic volumes (volume, surface area, perimeter, Euler
+ number...) from 2D/3D binary or label images.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imGranulometry]{imGranulometry}
+\end_layout
+
+\end_inset
+
+ computation of granulometric curves based on mathematical morphology.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imGeodesics]{imGeodesics}
+\end_layout
+
+\end_inset
+
+ computation of geodesic distances and of geodesic diameters from 2D/3D
+ images.
+\end_layout
+
+\begin_layout Description
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imShapes]{imShapes}
+\end_layout
+
+\end_inset
+
+ generation of 2D and 3D binary images containing geometric shapes (ellipse,
+ cube, cylinder...).
+\end_layout
+
+\begin_layout Chapter
+Module imFilters
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:imFilters"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Generic filters for image processing, build as a complement to the Image
+ Processing Toolbox.
+ The aim is to provide a unified interface for the processing or 2D/3D images,
+ and grayscale/color images.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+minitoc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Image shape operators
+\end_layout
+
+\begin_layout Standard
+Several operators that change the shape of the image: flip, rotate, resize...
+ They are often used as first pre-processing before more advanced operations.
+ For most functions, axes are indexed in the x, y, z order (contrary to
+ native Matlab functions, indexed in i,j order).
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% read data
+\end_layout
+
+\begin_layout Plain Layout
+
+img = imread('cameraman.tif');
+\end_layout
+
+\begin_layout Plain Layout
+
+% flip in horizontal direction (here, x=1)
+\end_layout
+
+\begin_layout Plain Layout
+
+imgFlip = imFlip(img, 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+% rotate by 90 degrees
+\end_layout
+
+\begin_layout Plain Layout
+
+imgRot90 = imRotate90(img);
+\end_layout
+
+\begin_layout Plain Layout
+
+% crop borders with various widths
+\end_layout
+
+\begin_layout Plain Layout
+
+imgCropBorder = imCropBorder(img, [20 40 30 50]);
+\end_layout
+
+\begin_layout Plain Layout
+
+% add border
+\end_layout
+
+\begin_layout Plain Layout
+
+imgAddBorder = imAddBorder(img, [20 40 30 50]);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/shape/cameraman_flipH.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+flip.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/shape/cameraman_rot90.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+rotate90.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/shape/cameraman_cropBorder.png
+	width 18text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+cropBorders.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/shape/cameraman_addBorder.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+addBorders.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Shape-Operators"
+
+\end_inset
+
+Several shape operations on images.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imFlip
+\end_layout
+
+\begin_layout Standard
+Flips an image along one of its dimensions (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Shape-Operators"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imRotate90 
+\end_layout
+
+\begin_layout Standard
+Rotates an image by 90 degrees around one of the main axes (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Shape-Operators"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ Can be applied on 3D images as well.
+\end_layout
+
+\begin_layout Minisec
+imAddBorder
+\end_layout
+
+\begin_layout Standard
+Adds a border around a 2D or 3D image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Shape-Operators"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imCropBorder
+\end_layout
+
+\begin_layout Standard
+Crops the border around a 2D or 3D image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Shape-Operators"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imTranspose 
+\end_layout
+
+\begin_layout Standard
+Transposes an image (grayscale or RGB).
+\end_layout
+
+\begin_layout Minisec
+imCropBox
+\end_layout
+
+\begin_layout Standard
+Crops an image with a box.
+\end_layout
+
+\begin_layout Minisec
+imResize
+\end_layout
+
+\begin_layout Standard
+Resizes 2D or 3D image.
+\end_layout
+
+\begin_layout Minisec
+imDownSample
+\end_layout
+
+\begin_layout Standard
+Subsamples an array by applying operation on blocs.
+\end_layout
+
+\begin_layout Minisec
+subsamplergb
+\end_layout
+
+\begin_layout Standard
+Returns a sub-sampled version of a color RGB image.
+\end_layout
+
+\begin_layout Minisec
+imPrincipalAxesAlign 
+\end_layout
+
+\begin_layout Standard
+Aligns a binary 3D image along the principal axes of the matrix of second-order
+ moments.
+\end_layout
+
+\begin_layout Section
+Image filtering
+\end_layout
+
+\begin_layout Standard
+Operators described in this section aim at removing the noise or at enhancing
+ specific structures within the images.
+\end_layout
+
+\begin_layout Subsection
+Image enhancement and noise reduction
+\end_layout
+
+\begin_layout Standard
+Some function mostly used for removing imaging artifacts.
+\end_layout
+
+\begin_layout Minisec
+imAdjustDynamic
+\end_layout
+
+\begin_layout Standard
+Rescales gray levels of image to get better dynamic.
+\end_layout
+
+\begin_layout Minisec
+imNormalizeBackground
+\end_layout
+
+\begin_layout Standard
+Normalizes image by removing background estimate.
+\end_layout
+
+\begin_layout Subsection
+Noise reduction
+\end_layout
+
+\begin_layout Standard
+Several functions for spatial filtering of images, with the objective of
+ reducing the noise within image.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/filters/riceCrop.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Original
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/filters/riceCrop_boxFilter5x5.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Box 5x5.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/filters/riceCrop_gaussianFilter2x2.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Gaussian 2x2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/filters/riceCrop_medianFilter5x5.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Median 5x5
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Noise-Reduction"
+
+\end_inset
+
+Noise reduction algorithms applied on a portion of a grayscale image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+decision tree?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imBoxFilter
+\end_layout
+
+\begin_layout Standard
+Box filter on 2D/3D image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Noise-Reduction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-b).
+\end_layout
+
+\begin_layout Minisec
+imMeanFilter
+\end_layout
+
+\begin_layout Standard
+Computes mean value in the neighborhood of each pixel.
+\end_layout
+
+\begin_layout Minisec
+imMedianFilter
+\end_layout
+
+\begin_layout Standard
+Computes median value in the neighborhood of each pixel (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Noise-Reduction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-d).
+\end_layout
+
+\begin_layout Minisec
+imGaussianFilter
+\end_layout
+
+\begin_layout Standard
+Applies gaussian filter to 2D/3D image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Noise-Reduction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-c).
+ The functions uses separability of the kernel to accelerate the processing.
+\end_layout
+
+\begin_layout Minisec
+imDirectionalFilter
+\end_layout
+
+\begin_layout Standard
+Applies and combines several directional filters.
+\end_layout
+
+\begin_layout Subsection
+Gradient and Laplacian filters
+\end_layout
+
+\begin_layout Standard
+Extraction of various gradients from the images, that can be used for edge
+ detection.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/filters/riceCrop_gradientFilterN.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Gradient Norm.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/filters/riceCrop_gradientFilterX.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Gradient X.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/filters/riceCrop_gradientFilterY.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Gradient Y.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/filters/riceCrop_Laplacian.png
+	width 23text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Laplacian.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Edge-Detection"
+
+\end_inset
+
+Edge detection filters.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imGradientFilter
+\end_layout
+
+\begin_layout Standard
+Computes gradient components of a grayscale image.
+ The result can be provided as a single image (corresponding to the the
+ gradient norm, see Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Edge-Detection"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-a), or as two (or three) images, corresponding to the gradient in each
+ elementary direction (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Edge-Detection"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-b,c).
+\end_layout
+
+\begin_layout Minisec
+imLaplacian
+\end_layout
+
+\begin_layout Standard
+Discrete Laplacian of an image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Edge-Detection"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-d).
+\end_layout
+
+\begin_layout Minisec
+imRobinsonFilter
+\end_layout
+
+\begin_layout Standard
+Extracts image edges using Robinson directional filters.
+\end_layout
+
+\begin_layout Minisec
+imKirschFilter 
+\end_layout
+
+\begin_layout Standard
+Extracts image edges using Kirsch directional filters.
+\end_layout
+
+\begin_layout Minisec
+imHessian 
+\end_layout
+
+\begin_layout Standard
+Computes the coefficients of the Hessian matrix (containing all second derivativ
+es) for each pixel.
+\end_layout
+
+\begin_layout Minisec
+imEigenValues 
+\end_layout
+
+\begin_layout Standard
+Image eigen values from second derivatives.
+\end_layout
+
+\begin_layout Minisec
+imEigenValues3d 
+\end_layout
+
+\begin_layout Standard
+Image eigen values from second derivatives.
+\end_layout
+
+\begin_layout Minisec
+imVesselness2d
+\end_layout
+
+\begin_layout Standard
+Computes the local vesselness of curvilinear structures, from Frangi's paper
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Frangi1998"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Morphological filters
+\end_layout
+
+\begin_layout Standard
+Additional morphological filters, as a complement to the ones implemented
+ in the Image Processing Toolbox.
+ A good reference for morphological filters is the book of 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Soille2003"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+imMorphoGradient
+\end_layout
+
+\begin_layout Standard
+Morphological gradient of an image.
+\end_layout
+
+\begin_layout Minisec
+imMorphoLaplacian
+\end_layout
+
+\begin_layout Standard
+Morphological laplacian of an image.
+\end_layout
+
+\begin_layout Minisec
+imrecerode 
+\end_layout
+
+\begin_layout Standard
+Performs a morphological reconstruction by erosion.
+\end_layout
+
+\begin_layout Minisec
+imHConcave 
+\end_layout
+
+\begin_layout Standard
+H-concave transformation of an image.
+\end_layout
+
+\begin_layout Minisec
+imHConvex 
+\end_layout
+
+\begin_layout Standard
+H-convex transformation of an image.
+\end_layout
+
+\begin_layout Section
+Segmentation
+\end_layout
+
+\begin_layout Standard
+Several functions for facilitating segmentation of images.
+\end_layout
+
+\begin_layout Minisec
+imOtsuThreshold
+\end_layout
+
+\begin_layout Standard
+Thresholds an image using Otsu method.
+\end_layout
+
+\begin_layout Minisec
+imMaxEntropyThreshold
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imMaxEntropyThreshold"
+
+\end_inset
+
+Computes image threshold using maximisation of entropies.
+\end_layout
+
+\begin_layout Minisec
+imMultiOtsuThreshold
+\end_layout
+
+\begin_layout Standard
+Computes a segmentation of the input grayscale image into an arbitrary number
+ of classes, using minimisation of intra-class variances.
+\end_layout
+
+\begin_layout Minisec
+imImposedWatershed 
+\end_layout
+
+\begin_layout Standard
+Computes watershed after imposition of extended minima.
+\end_layout
+
+\begin_layout Minisec
+imCannyEdgeDetector 
+\end_layout
+
+\begin_layout Standard
+Edge detection using Canny-Deriche method.
+\end_layout
+
+\begin_layout Section
+Color images and gray-scale conversions
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Color-Images"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Several functions allows for converting images into color images, and extracting
+ specific information from color images.
+\end_layout
+
+\begin_layout Minisec
+imOverlay 
+\end_layout
+
+\begin_layout Standard
+Generates a new color image by adding a binary overlay over another image
+ (2D or 3D, grayscale or color).
+\end_layout
+
+\begin_layout Minisec
+imSplitChannels
+\end_layout
+
+\begin_layout Standard
+Splits the 3 channels of a 2D or 3D image.
+\end_layout
+
+\begin_layout Minisec
+imMergeChannels 
+\end_layout
+
+\begin_layout Standard
+Merges 3 channels to create a 2D or 3D color image.
+\end_layout
+
+\begin_layout Minisec
+double2rgb 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:double2rgb"
+
+\end_inset
+
+Creates a RGB image from double values.
+\end_layout
+
+\begin_layout Minisec
+angle2rgb 
+\end_layout
+
+\begin_layout Standard
+Converts an image of angles to color image.
+\end_layout
+
+\begin_layout Minisec
+imGetHue 
+\end_layout
+
+\begin_layout Standard
+Extracts hue of a color image, using the rgb2hsv function.
+\end_layout
+
+\begin_layout Minisec
+imGray12ToGray8 
+\end_layout
+
+\begin_layout Standard
+Converts a 12 bits gray scale image to 8 bits gray scale.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Binary and label image operators
+\end_layout
+
+\begin_layout Standard
+Binary and label images are a convenient way of representing the result
+ of segmentation algorithms.
+ The MatImage library provides several functions for processing them.
+\end_layout
+
+\begin_layout Subsection
+Filters for binary images
+\end_layout
+
+\begin_layout Standard
+Several functions are devoted to the processing of binary images.
+ Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Operators-binary-image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are obtained from the following commands:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+img = imread('circles.png');
+\end_layout
+
+\begin_layout Plain Layout
+
+bnd = imBoundary(img);
+\end_layout
+
+\begin_layout Plain Layout
+
+imgFH = imFillHoles(img);
+\end_layout
+
+\begin_layout Plain Layout
+
+skel = imSkeleton(img);
+\end_layout
+
+\begin_layout Plain Layout
+
+cvx = imConvexImage(img);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/binary/circles-boundary-inv.png
+	width 24text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imFilters/binary/circles-fillHoles-inv.png
+	width 24text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imFilters/binary/circles-skeleton-inv.png
+	width 24text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imFilters/binary/circles-convex-inv.png
+	width 24text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Operators-binary-image"
+
+\end_inset
+
+Several operators applied on the 
+\begin_inset Quotes eld
+\end_inset
+
+circles.png
+\begin_inset Quotes erd
+\end_inset
+
+ binary image: boundary, fill holes, skeleton, convex hull.
+ Images are displayed with inverted LUT.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imBoundary 
+\end_layout
+
+\begin_layout Standard
+Computes the boundary of a binary image.
+ The result is given as another binary image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Operators-binary-image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-a).
+\end_layout
+
+\begin_layout Minisec
+imFillHoles
+\end_layout
+
+\begin_layout Standard
+Fills the holes in a binary image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Operators-binary-image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-b).
+\end_layout
+
+\begin_layout Minisec
+imSkeleton
+\end_layout
+
+\begin_layout Standard
+Homothopic skeleton of a binary image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Operators-binary-image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-c).
+\end_layout
+
+\begin_layout Minisec
+imLabelSkeleton
+\end_layout
+
+\begin_layout Standard
+Labels skeleton pixels according to local topology.
+\end_layout
+
+\begin_layout Minisec
+imChainPixels
+\end_layout
+
+\begin_layout Standard
+Chains neighbor pixels in an image to form a contour.
+\end_layout
+
+\begin_layout Minisec
+imConvexImage
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imConvexImage"
+
+\end_inset
+
+Computes smallest convex image containing the original pixels (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Operators-binary-image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-d).
+\end_layout
+
+\begin_layout Subsection
+Distance maps
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Distance-Maps"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When analyzing images, it is often necessary to compute distances to a particula
+r structure or position.
+ A convenient operator for binary images is the
+\series bold
+ distance transform
+\series default
+.
+ Its principle is to compute, for each foreground pixel, the distance to
+ the nearest background pixel.
+ The result is commonly referred to as 
+\series bold
+Distance Map
+\series default
+ (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Distance-Map"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/binary/ijLeaf-binInv.png
+	lyxscale 70
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imFilters/binary/ijLeaf-bin-distMap-rgb.png
+	lyxscale 70
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imFilters/binary/ijLeaf-bin-thickMap-rgb.png
+	lyxscale 70
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Distance-Map"
+
+\end_inset
+
+A binary image, and the results of distance map and local thickness map.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The image processing toolbox in Matlab provides the bwist function.
+ As a complement, the MatImage toolbox provides the imDistanceMap function,
+ that is based on Chamfer distances 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Borgefors_1984_CVGIP,Borgefors_1986_CVGIP"
+literal "false"
+
+\end_inset
+
+.
+ It uses the same metric as geodesic distances (Chapter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imGeodesics"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Minisec
+imDistanceMap
+\end_layout
+
+\begin_layout Standard
+Computes distance from a binary image using chamfer distances (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Distance-Map"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ Note that the imDistanceMap function computes the distance for each pixel
+ within the region to the nearest background pixel or voxel, whereas the
+ bwdist function computes the distance of each background pixel or voxel
+ to the nearest pixel or voxel within the region.
+\end_layout
+
+\begin_layout Minisec
+imDistanceClasses
+\end_layout
+
+\begin_layout Standard
+Converts a distance map into a label image of regions, by quantifying the
+ distance values.
+\end_layout
+
+\begin_layout Minisec
+imThicknessMap
+\end_layout
+
+\begin_layout Standard
+Computes thickness map of a binary image.
+ Thickness corresponds to the size of the largest disk contained in the
+ region and that contains the considered pixel (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Distance-Map"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imDistance
+\end_layout
+
+\begin_layout Standard
+Distance map computed from a set of points.
+\end_layout
+
+\begin_layout Minisec
+imDistance3d
+\end_layout
+
+\begin_layout Standard
+Creates a 3D distance map from a set of 3D points.
+\end_layout
+
+\begin_layout Subsection
+Filters for binary/label images
+\end_layout
+
+\begin_layout Standard
+Several functions are devoted to the processing of label images representing
+ a collection of regions.
+\end_layout
+
+\begin_layout Minisec
+imFindLabels 
+\end_layout
+
+\begin_layout Standard
+Finds the unique labels in a label image.
+ This function is used by several functions from the imMeasures module (chapter
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imMeasures"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+label2rgb3d 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:label2rgb3d"
+
+\end_inset
+
+Converts a 3D label image to a 3D RGB image.
+\end_layout
+
+\begin_layout Minisec
+imLabelToValue 
+\end_layout
+
+\begin_layout Standard
+Converts a label image to a parametric map using an array of feature values
+ computed for each label.
+\end_layout
+
+\begin_layout Minisec
+imKillBorderRegions
+\end_layout
+
+\begin_layout Standard
+Removes regions on the border of an image.
+\end_layout
+
+\begin_layout Minisec
+imAreaOpening 
+\end_layout
+
+\begin_layout Standard
+Removes all regions smaller than a given area.
+\end_layout
+
+\begin_layout Minisec
+imAttributeOpening 
+\end_layout
+
+\begin_layout Standard
+Filters regions on a size or shape criterium.
+\end_layout
+
+\begin_layout Minisec
+imSeparateParticles 
+\end_layout
+
+\begin_layout Standard
+Separates touching particles using watershed algorithm applied on the inverse
+ of the distance function.
+\end_layout
+
+\begin_layout Minisec
+imLargestRegion 
+\end_layout
+
+\begin_layout Standard
+Keeps the largest region in a binary or label image.
+\end_layout
+
+\begin_layout Minisec
+imCropLabel 
+\end_layout
+
+\begin_layout Standard
+Extracts the portion of image that contains the specified label.
+\end_layout
+
+\begin_layout Minisec
+imMergeLabels 
+\end_layout
+
+\begin_layout Standard
+Merges regions in a labeled image.
+\end_layout
+
+\begin_layout Minisec
+mergeRegions 
+\end_layout
+
+\begin_layout Standard
+Merges regions of labeled image, using inclusion criteria.
+\end_layout
+
+\begin_layout Minisec
+imBoundaryIndices 
+\end_layout
+
+\begin_layout Standard
+Finds the indices of the boundary between 2 regions.
+\end_layout
+
+\begin_layout Minisec
+imLabelEdges 
+\end_layout
+
+\begin_layout Standard
+Labels edges between adjacent regions of labeled image.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Utility functions
+\end_layout
+
+\begin_layout Subsection
+Utilities and drawing
+\end_layout
+
+\begin_layout Standard
+The functions in this section aim at facilitating the representation and
+ comparison of images.
+\end_layout
+
+\begin_layout Minisec
+imCreate 
+\end_layout
+
+\begin_layout Standard
+Creates a new image with given the size and type.
+\end_layout
+
+\begin_layout Minisec
+imCheckerBoard
+\end_layout
+
+\begin_layout Standard
+Creates a checkerboard image from 2 images.
+\end_layout
+
+\begin_layout Minisec
+imCheckerboardLabels
+\end_layout
+
+\begin_layout Standard
+Creates a checkerboard label image.
+\end_layout
+
+\begin_layout Minisec
+imThumbnail 
+\end_layout
+
+\begin_layout Standard
+Resizes an image to bound the size in each direction.
+\end_layout
+
+\begin_layout Minisec
+imDrawLine 
+\end_layout
+
+\begin_layout Standard
+Draws a line between two points in the image.
+\end_layout
+
+\begin_layout Minisec
+bresenhamLine
+\end_layout
+
+\begin_layout Standard
+Integer coordinates of a bresenham line.
+\end_layout
+
+\begin_layout Minisec
+imDrawText 
+\end_layout
+
+\begin_layout Standard
+Draws some text in an image.
+\end_layout
+
+\begin_layout Minisec
+imTpsWarp 
+\end_layout
+
+\begin_layout Standard
+Warps an image using Thin-Plate Splines transform.
+\end_layout
+
+\begin_layout Subsection
+Kernels and structuring elements
+\end_layout
+
+\begin_layout Standard
+Utility functions that are either used by other functions, or that can be
+ used as argument of other functions.
+\end_layout
+
+\begin_layout Minisec
+ball 
+\end_layout
+
+\begin_layout Standard
+Generates a ball in a matrix in 2 or 3 dimensions.
+\end_layout
+
+\begin_layout Minisec
+gaussianKernel3d 
+\end_layout
+
+\begin_layout Standard
+Creates a 3D Gaussian kernel for image filtering.
+\end_layout
+
+\begin_layout Minisec
+orientedGaussianKernel 
+\end_layout
+
+\begin_layout Standard
+Oriented Gaussian kernel for directional filtering.
+\end_layout
+
+\begin_layout Minisec
+orientedLaplacianKernel 
+\end_layout
+
+\begin_layout Standard
+Oriented Laplacian kernel for directional filtering.
+\end_layout
+
+\begin_layout Minisec
+cross3d 
+\end_layout
+
+\begin_layout Standard
+Returns a 3D structuring element with cross shape.
+\end_layout
+
+\begin_layout Minisec
+intline 
+\end_layout
+
+\begin_layout Standard
+Integer-coordinate line drawing algorithm.
+\end_layout
+
+\begin_layout Minisec
+strelDisk 
+\end_layout
+
+\begin_layout Standard
+Discrete disk structuring element.
+\end_layout
+
+\begin_layout Minisec
+imNeighborhood 
+\end_layout
+
+\begin_layout Standard
+Returns the neighborhood of a given pixel.
+\end_layout
+
+\begin_layout Subsection
+Configuration map images
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Configuration-Maps"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Most functions in this section work with 
+\series bold
+configuration maps
+\series default
+.
+ Configuration maps are obtained from binary images, by replacing each binary
+ 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ or 
+\begin_inset Formula $2\times2\times2$
+\end_inset
+
+ configuration by the index of the configuration.
+ The number of configuration indices is 
+\begin_inset Formula $16=2^{4}$
+\end_inset
+
+ for 2D binary images, and 
+\begin_inset Formula $256=2^{8}$
+\end_inset
+
+ for 3D binary images.
+ More information about configuration maps can be found in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Ohser2009"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+explanation about tile image ?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+grayFilter 
+\end_layout
+
+\begin_layout Standard
+Computes configuration map of a binary image.
+\end_layout
+
+\begin_layout Minisec
+grayHist 
+\end_layout
+
+\begin_layout Standard
+Computes frequencies of configurations in binary images.
+\end_layout
+
+\begin_layout Minisec
+imLUT 
+\end_layout
+
+\begin_layout Standard
+Applies a look-up table (LUT) to a gray-scale image.
+\end_layout
+
+\begin_layout Minisec
+createTile 
+\end_layout
+
+\begin_layout Standard
+Creates a binary tile (2x2) from its index.
+\end_layout
+
+\begin_layout Minisec
+tileIndex 
+\end_layout
+
+\begin_layout Standard
+Returns the index of a 2x2 binary tile.
+\end_layout
+
+\begin_layout Minisec
+createTile3d
+\end_layout
+
+\begin_layout Standard
+Creates a 3D binary tile (2x2x2) from its index.
+\end_layout
+
+\begin_layout Minisec
+tileIndex3d 
+\end_layout
+
+\begin_layout Standard
+Returns the index of a 2x2x2 binary tile.
+\end_layout
+
+\begin_layout Chapter
+Module imStacks
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:imStacks"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The imStacks modules provides several functions and graphical user interfaces
+ for the manipulation and the representation of 3D images.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+minitoc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Slicer application
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+Slicer
+\begin_inset Quotes erd
+\end_inset
+
+ is a graphical application that allows for quick interactive exploration
+ of 3D grayscale or color images, including the computation of histograms,
+ isosurfaces, or cross-sections (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Slicer-app"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/imgSlicerBrainsRGB.png
+	lyxscale 50
+	width 90text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Slicer-app"
+
+\end_inset
+
+Several views of the Slicer application on a sample 3D color image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The main interface is a slice-by-slice viewer that integrates slice changing
+ slider, status bar, and an action menu.
+ The menu provides several actions to import/export 3D images, to apply
+ various operations on the 3D image (crop, rotation...), and to generate new
+ visualizations of the 3D data: isosurfaces, 3D orhoslices, histograms...
+ It is possible to specifiy the spatial calibration, facilitating the visualisat
+ion of 3D structures with non-cubic voxels.
+\end_layout
+
+\begin_layout Standard
+All the features of the Slicer application are available as Matlab functions
+ of the 
+\begin_inset Quotes eld
+\end_inset
+
+stacks
+\begin_inset Quotes erd
+\end_inset
+
+ module.
+\end_layout
+
+\begin_layout Subsection
+Menu description
+\end_layout
+
+\begin_layout Subsubsection
+File menu
+\end_layout
+
+\begin_layout Standard
+Contains several options to import/export 3D images.
+ See also the section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Read-3D-image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/Slicer/menusSlicer.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Slicer-Menu"
+
+\end_inset
+
+The menu bar of the Slicer application.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Open...
+\end_layout
+
+\begin_layout Standard
+Opens a 3D image.
+ Several common file formats are supported (TIFF, Analyze, MHD, VGI...).
+ 
+\end_layout
+
+\begin_layout Minisec
+Import Raw Data....
+\end_layout
+
+\begin_layout Standard
+Imports image data from a binary data file.
+\end_layout
+
+\begin_layout Minisec
+Import From Workspace
+\end_layout
+
+\begin_layout Standard
+Displays a 3D array from Matlab workspace into a new Slicer frame.
+\end_layout
+
+\begin_layout Minisec
+Demo images
+\end_layout
+
+\begin_layout Standard
+Opens a selection of demonstration images.
+\end_layout
+
+\begin_layout Minisec
+Save image
+\end_layout
+
+\begin_layout Standard
+Saves current 3D image.
+\end_layout
+
+\begin_layout Minisec
+Export To Workspace
+\end_layout
+
+\begin_layout Standard
+Exports current image into workspace as a 3D or 4D numeric array.
+\end_layout
+
+\begin_layout Minisec
+Close
+\end_layout
+
+\begin_layout Standard
+Closes the current viewer.
+\end_layout
+
+\begin_layout Subsubsection
+Image Menu
+\end_layout
+
+\begin_layout Standard
+Allows for calibrating the image, and converting data types.
+\end_layout
+
+\begin_layout Minisec
+Image Info
+\end_layout
+
+\begin_layout Standard
+Display a short description of image properties.
+\end_layout
+
+\begin_layout Minisec
+Spatial Calibration
+\end_layout
+
+\begin_layout Standard
+Updates sptial calibration (voxel size and unit name) of image.
+\end_layout
+
+\begin_layout Minisec
+Image Origin
+\end_layout
+
+\begin_layout Standard
+Updates the coordinates of first voxel in user coordinates.
+\end_layout
+
+\begin_layout Minisec
+Change Image Type
+\end_layout
+
+\begin_layout Standard
+Changes the type associated to the current image.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+Type
+\begin_inset Quotes erd
+\end_inset
+
+ can be one of 
+\begin_inset Quotes eld
+\end_inset
+
+Grayscale
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Intensity
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Binary
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Label
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+Change Gray Levels
+\end_layout
+
+\begin_layout Standard
+Changes the number of levels used to represent grayscale image data.
+\end_layout
+
+\begin_layout Minisec
+Convert Intensity to Color
+\end_layout
+
+\begin_layout Standard
+Converts a scalar image into a color image by choosing a colormap.
+ See also section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Color-Images"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (function double2rgb).
+\end_layout
+
+\begin_layout Minisec
+Convert Labels to Color
+\end_layout
+
+\begin_layout Standard
+Converts a label image into a color image by choosing a colormap.
+ See also section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fun:label2rgb3d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (function label2rgb3d).
+\end_layout
+
+\begin_layout Minisec
+RGB To Gray
+\end_layout
+
+\begin_layout Standard
+Converts a RGB color image into a grayscale image.
+\end_layout
+
+\begin_layout Minisec
+Split RGB
+\end_layout
+
+\begin_layout Standard
+Splits the color components of a 3D color image into three distinct images.
+ Each component is displayed into a new Slicer frame.
+\end_layout
+
+\begin_layout Subsubsection
+View Menu
+\end_layout
+
+\begin_layout Standard
+Allows for tuning display settings, and computing 3D representations.
+\end_layout
+
+\begin_layout Minisec
+Display Range
+\end_layout
+
+\begin_layout Standard
+Chooses the range of values used to display grayscale or intensity images.
+ Can be chosen automatically from image data values, inferred from image
+ data type, or manually selected.
+\end_layout
+
+\begin_layout Minisec
+Look-Up Table
+\end_layout
+
+\begin_layout Standard
+Chooses the look-up table to use for representing intensity or label images.
+\end_layout
+
+\begin_layout Minisec
+Show Ortho Slices
+\end_layout
+
+\begin_layout Standard
+Displays the 3D image as three 2D images representing XY, YZ and XZ slices
+ (See Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-a).
+ Each slice is displayed as a 2D image.
+ The slice position can be updated by clicking on the images.
+\end_layout
+
+\begin_layout Minisec
+Show 3D Ortho Slices
+\end_layout
+
+\begin_layout Standard
+Displays the 3D image as three 2D images mutually intersecting in 3D (See
+ Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-b).
+ Each slice is represented in 3D.
+ The slice position can be updated by dragging the 3D images.
+\end_layout
+
+\begin_layout Minisec
+Isosurface rendering
+\end_layout
+
+\begin_layout Standard
+Computes and renders a 3D isosurface from image data and user-defined value.
+ Can be slow for large images.
+\end_layout
+
+\begin_layout Minisec
+Binary/Labels surface rendering
+\end_layout
+
+\begin_layout Standard
+Computes and renders a 3D isosurface from binary and label images.
+ Similar to isosurface rendering, but a specific processing is added to
+ iterate over the set of distinct labels within image.
+\end_layout
+
+\begin_layout Minisec
+Zoom In/Out/1:1/Best...
+\end_layout
+
+\begin_layout Standard
+Changes the zoom level of the current image view.
+\end_layout
+
+\begin_layout Subsubsection
+Process Menu
+\end_layout
+
+\begin_layout Standard
+Provides basic image processing tools.
+\end_layout
+
+\begin_layout Minisec
+Geometric Transforms
+\end_layout
+
+\begin_layout Standard
+Performs elementary shape transformation on the 3D image: flip along one
+ of the main axes, rotation by 90 degrees around one of the main axes.
+\end_layout
+
+\begin_layout Minisec
+Crop Image
+\end_layout
+
+\begin_layout Standard
+Extracts a 3D rectangular selection from the image.
+\end_layout
+
+\begin_layout Minisec
+Crop Label
+\end_layout
+
+\begin_layout Standard
+Extracts the 3D region containing the specified label.
+ Returns a new label image with only one label.
+\end_layout
+
+\begin_layout Minisec
+View Histogram
+\end_layout
+
+\begin_layout Standard
+Displays the histogram of the grayscale or color values within the image.
+ See also the imHistogram function (p.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand pageref
+reference "fun:imHistogram"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Image exploration
+\end_layout
+
+\begin_layout Standard
+The imStacks modules provides several tools for interactive exploration
+ of 3D images.
+ Most functions work independently for both grayscale or color images, and
+ allow to specifiy the spatial calibration of images.
+ Several histograms functions are also provided in the measure module (see
+ section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Image-histograms"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
+3D Images
+\end_layout
+
+\begin_layout Standard
+Several functions are specifically dedicated to the exploration of 3D images,
+ or more generally to 3D arrays.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Matlab"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% read data and adjust dynamic
+\end_layout
+
+\begin_layout Plain Layout
+
+img = imAdjustDynamic(analyze75read('brainMRI.hdr'));
+\end_layout
+
+\begin_layout Plain Layout
+
+% Display orthogonal slices
+\end_layout
+
+\begin_layout Plain Layout
+
+figure(1); clf; axis equal; hold on;
+\end_layout
+
+\begin_layout Plain Layout
+
+orthoSlices(img, [60 80 13], 'Spacing', [1 1 2.5]);
+\end_layout
+
+\begin_layout Plain Layout
+
+% Display 3D orthogonal slices
+\end_layout
+
+\begin_layout Plain Layout
+
+figure(2); clf; axis equal; hold on;
+\end_layout
+
+\begin_layout Plain Layout
+
+orthoSlices3d(img, [60 80 13], [1 1 2.5]);
+\end_layout
+
+\begin_layout Plain Layout
+
+% setup axis limits
+\end_layout
+
+\begin_layout Plain Layout
+
+axis(imPhysicalExtent(img, [1 1 2.5])); view(3); 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/brainMRI_orthoSlices.png
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+showOrthoPlanes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/brainMRI_orthoSlices3d.png
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+showOrthoSlices3d
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Visualization-3D-Image"
+
+\end_inset
+
+Different representations of a 3D grayscale image.
+ Results of the showOrthoPlanes and showOrthoSlices3d functions.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+orthoSlices
+\end_layout
+
+\begin_layout Standard
+Displays three orthogonal slices in the same figure (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-a).
+\end_layout
+
+\begin_layout Minisec
+OrthoSlicer3d
+\end_layout
+
+\begin_layout Standard
+Displays 3D interactive orthoslicer.
+\end_layout
+
+\begin_layout Minisec
+orthoSlices3d
+\end_layout
+
+\begin_layout Standard
+Shows three orthogonal 3D slices of a 3D image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-b).
+ The slices can be dragged interactively.
+\end_layout
+
+\begin_layout Subsection
+Interactive tools
+\end_layout
+
+\begin_layout Standard
+Functions for semi-interactive image exploration, such as computation of
+ line profiles.
+\end_layout
+
+\begin_layout Minisec
+imLineProfile 
+\end_layout
+
+\begin_layout Standard
+Evaluates image value along a line segment.
+\end_layout
+
+\begin_layout Minisec
+imEvaluate 
+\end_layout
+
+\begin_layout Standard
+Evaluates image value at given position(s).
+\end_layout
+
+\begin_layout Section
+Get information on images
+\end_layout
+
+\begin_layout Standard
+Some functions to query the physical size or type of the image.
+ 
+\end_layout
+
+\begin_layout Minisec
+imSize 
+\end_layout
+
+\begin_layout Standard
+Computes the size of an image in [x y z] order.
+ For color images, returns only the spatial components.
+\end_layout
+
+\begin_layout Minisec
+is3DImage
+\end_layout
+
+\begin_layout Standard
+Checks if an image is 3D.
+\end_layout
+
+\begin_layout Minisec
+isColorImage 
+\end_layout
+
+\begin_layout Standard
+Checks if an image is a color image.
+\end_layout
+
+\begin_layout Minisec
+imPhysicalExtent 
+\end_layout
+
+\begin_layout Standard
+Computes the physical extent of an image.
+ Returns a 1-by-4 row array for 2D images, and a 1-by-6 row array for 3D
+ images.
+\end_layout
+
+\begin_layout Minisec
+imGrayscaleExtent 
+\end_layout
+
+\begin_layout Standard
+Grayscale extent of an image.
+\end_layout
+
+\begin_layout Subsection
+Stacks
+\end_layout
+
+\begin_layout Minisec
+stackSize
+\end_layout
+
+\begin_layout Standard
+Computes the size of a 3D stack in [x y z] form.
+\end_layout
+
+\begin_layout Minisec
+stackExtent
+\end_layout
+
+\begin_layout Standard
+Computes the physical extent of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+isColorStack
+\end_layout
+
+\begin_layout Standard
+Checks if a 3D stack is color or gray-scale.
+\end_layout
+
+\begin_layout Section
+Read/Write 3D images
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Read-3D-image"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Several functions are provided for importing and exporting 3D images in
+ various file formats, or for reading only a specific portion of a large
+ 3D image.
+\end_layout
+
+\begin_layout Subsection
+General use functions
+\end_layout
+
+\begin_layout Minisec
+readstack
+\end_layout
+
+\begin_layout Standard
+Reads a 3D image stored either in a list of 2D images (slices), or in a
+ 3D image file.
+ The function can parse some of the meta-data stored by ImageJ
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+ImageJ
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+savestack
+\end_layout
+
+\begin_layout Standard
+Saves an image stack to a file or a series of files.
+\end_layout
+
+\begin_layout Minisec
+savebinstack
+\end_layout
+
+\begin_layout Standard
+Saves an binary stack to a file, as RGB Image.
+\end_layout
+
+\begin_layout Minisec
+imReadRawData
+\end_layout
+
+\begin_layout Standard
+Reads image data from raw data file.
+\end_layout
+
+\begin_layout Minisec
+imFileInfo
+\end_layout
+
+\begin_layout Standard
+Generalization of the imfinfo function that manages 3D image file formats.
+\end_layout
+
+\begin_layout Subsection
+Read image portion
+\end_layout
+
+\begin_layout Standard
+When the size of the image is very large, it may be useful to be able to
+ read only a specific rectangular region within the image, or to read a
+ down-sampled version of the image.
+ Note that the 
+\family typewriter
+\color gray
+tiffreadVolume
+\family default
+\color inherit
+ from the Image Processing Toolbox also provides similar functionnalities.
+\end_layout
+
+\begin_layout Minisec
+imReadRegion3d
+\end_layout
+
+\begin_layout Standard
+Reads a specific 3D region of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+imReadDownSampled3d
+\end_layout
+
+\begin_layout Standard
+Reads a down-sampled version of a 3D image.
+\end_layout
+
+\begin_layout Subsection
+Management of specific file formats
+\end_layout
+
+\begin_layout Standard
+In addition to the image file formats available with Matlab, MatImage also
+ provides partial support of additional image file formats.
+\end_layout
+
+\begin_layout Minisec
+metaImageInfo
+\end_layout
+
+\begin_layout Standard
+Reads information header of meta image data.
+\end_layout
+
+\begin_layout Minisec
+metaImageRead
+\end_layout
+
+\begin_layout Standard
+Reads an image in MetaImage file format
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://itk.org/Wiki/ITK/MetaIO/Documentation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Minisec
+metaImageWrite
+\end_layout
+
+\begin_layout Standard
+Writes header and data files of an image in MetaImage format.
+ This results in a header file with extension 
+\begin_inset Quotes eld
+\end_inset
+
+.mhd
+\begin_inset Quotes erd
+\end_inset
+
+, and a binary data file with extension 
+\begin_inset Quotes eld
+\end_inset
+
+.raw
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+readVgiStack
+\end_layout
+
+\begin_layout Standard
+Reads a 3D stack stored in VGI format.
+\end_layout
+
+\begin_layout Minisec
+vgiStackInfo
+\end_layout
+
+\begin_layout Standard
+Reads information necessary to load a 3D stack in VGI format.
+\end_layout
+
+\begin_layout Minisec
+readVoxelMatrix
+\end_layout
+
+\begin_layout Standard
+Reads a 3D image in VoxelMatrix (.vm) format, used by the Free-D library
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Andrey2005"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+3D images processing
+\end_layout
+
+\begin_layout Standard
+Some specific utility functions for processing 3D images.
+\end_layout
+
+\begin_layout Minisec
+createRGBStack
+\end_layout
+
+\begin_layout Standard
+Concatenates 2 or 3 grayscale stacks to form a color stack.
+\end_layout
+
+\begin_layout Minisec
+stackSlice
+\end_layout
+
+\begin_layout Standard
+Extracts a planar slice from a 3D image.
+\end_layout
+
+\begin_layout Minisec
+stackRotate90
+\end_layout
+
+\begin_layout Standard
+Rotates a 3D image by 90 degrees around one image axis.
+\end_layout
+
+\begin_layout Minisec
+rotateStack90
+\end_layout
+
+\begin_layout Standard
+Rotates a 3D image by 90 degrees around one image axis.
+\end_layout
+
+\begin_layout Minisec
+flipStack
+\end_layout
+
+\begin_layout Standard
+Flips a 3D image along specified X, Y, or Z dimension.
+\end_layout
+
+\begin_layout Minisec
+cropStack
+\end_layout
+
+\begin_layout Standard
+Crops a 3D image with the specified box limits.
+\end_layout
+
+\begin_layout Minisec
+imMiddleSlice
+\end_layout
+
+\begin_layout Standard
+Extracts the middle slice of a 3D stack.
+\end_layout
+
+\begin_layout Subsection
+Visualisation routines
+\end_layout
+
+\begin_layout Standard
+These low-level functions are used by other visualization functions, but
+ can be used independently.
+\end_layout
+
+\begin_layout Minisec
+slice3d
+\end_layout
+
+\begin_layout Standard
+Shows a moving 3D slice of an image.
+\end_layout
+
+\begin_layout Minisec
+showXSlice
+\end_layout
+
+\begin_layout Standard
+Shows YZ slice of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+showYSlice
+\end_layout
+
+\begin_layout Standard
+Shows ZX slice of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+showZSlice
+\end_layout
+
+\begin_layout Standard
+Shows XY slice of a 3D image.
+\end_layout
+
+\begin_layout Chapter
+Module imMeasures
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:imMeasures"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Provides several functions for measurements on digital images.
+ Some functions are simple wrappers that manage 3D and/or color images,
+ as well as eventual type conversion.
+ Some geometrical measurements are also provided, for the quantitative analysis
+ of regions in binary or label images.
+\end_layout
+
+\begin_layout Standard
+Additional quantifications are provided in the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imMinkowski]{imMinkowski}
+\end_layout
+
+\end_inset
+
+ module (area, volume, perimeter, surface area, mean breadth, Euler number
+ for 2D and 3D binary/label images) and in the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imGranulometry]{
+\end_layout
+
+\end_inset
+
+imGranulometry
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ module.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+minitoc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Statistics for pixel values
+\end_layout
+
+\begin_layout Subsection
+Image histograms
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Image-histograms"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Several functions allows for computing histogram of grayscale or color images.
+ They can be applied to 2D/3D images.
+ The following example provides results of Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Histograms-Color-Image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+img = imread('peppers.png');
+\end_layout
+
+\begin_layout Plain Layout
+
+% Histogram of each channel
+\end_layout
+
+\begin_layout Plain Layout
+
+figure; imHistogram(img);
+\end_layout
+
+\begin_layout Plain Layout
+
+ylim([0 8000])
+\end_layout
+
+\begin_layout Plain Layout
+
+% Joint histogram of red and green channels
+\end_layout
+
+\begin_layout Plain Layout
+
+h = imJointHistogram(img(:,:,1), img(:,:,2));
+\end_layout
+
+\begin_layout Plain Layout
+
+figure; imshow(log(h+1), []); colormap([1 1 1; parula(256)]);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imHistogram
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imHistogram"
+
+\end_inset
+
+Computes the histogram of the input image.
+ In case of a color images, returns or display the histogram of each channel.
+\end_layout
+
+\begin_layout Minisec
+imHistogramDialog 
+\end_layout
+
+\begin_layout Standard
+Opens a dialog to setup image histogram display options.
+\end_layout
+
+\begin_layout Minisec
+imJointHistogram
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imJointHistogram"
+
+\end_inset
+
+Computes the joint histogram of two images.
+\end_layout
+
+\begin_layout Minisec
+imColorHistogram 
+\end_layout
+
+\begin_layout Standard
+Plots 3D histogram of a color image.
+\end_layout
+
+\begin_layout Minisec
+imWeightedHistogram
+\end_layout
+
+\begin_layout Standard
+Computes the weighted histogram of the values within the image, using an
+ additional array/image as weights.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMeasures/imHistogram_peppers.png
+	lyxscale 50
+	height 5cm
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imMeasures/imJointHistogram_peppersRG_log.png
+	height 5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Histograms-Color-Image"
+
+\end_inset
+
+Various histograms of a color image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary statistics on pixel values
+\end_layout
+
+\begin_layout Standard
+These functions compute summary statistics of the gray values within an
+ image.
+ Some functions also accept color images as input, and compute the desired
+ summary statistic along each channel.
+\end_layout
+
+\begin_layout Minisec
+imSum 
+\end_layout
+
+\begin_layout Standard
+Sum of a grayscale image, or sum of each color component.
+\end_layout
+
+\begin_layout Minisec
+imMean 
+\end_layout
+
+\begin_layout Standard
+Mean of a grayscale image, or mean of each color component.
+\end_layout
+
+\begin_layout Minisec
+imStd 
+\end_layout
+
+\begin_layout Standard
+Standard deviation of pixel values.
+\end_layout
+
+\begin_layout Minisec
+imVar 
+\end_layout
+
+\begin_layout Standard
+Variance of a grayscale image, or of each color component.
+\end_layout
+
+\begin_layout Minisec
+imMin 
+\end_layout
+
+\begin_layout Standard
+Minimum value of a grayscale image, or of each color component.
+\end_layout
+
+\begin_layout Minisec
+imMax
+\end_layout
+
+\begin_layout Standard
+Maximum value of a grayscale image, or of each color component.
+\end_layout
+
+\begin_layout Minisec
+imMedian
+\end_layout
+
+\begin_layout Standard
+Median value of a grayscale image, or of each color component.
+\end_layout
+
+\begin_layout Minisec
+imQuantile 
+\end_layout
+
+\begin_layout Standard
+Computes value that threshold a given proportion of pixels.
+\end_layout
+
+\begin_layout Minisec
+imMode 
+\end_layout
+
+\begin_layout Standard
+Mode of pixel values in an image.
+\end_layout
+
+\begin_layout Minisec
+imRegionFun 
+\end_layout
+
+\begin_layout Standard
+Applies a summary function to each region of a label image.
+\end_layout
+
+\begin_layout Subsection
+Entropy and mutual information
+\end_layout
+
+\begin_layout Standard
+Entropy can be used for image segmentation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fun:imMaxEntropyThreshold"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Mutual information is based on joint histogram 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fun:imJointHistogram"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+imEntropy 
+\end_layout
+
+\begin_layout Standard
+Computes entropy of an image.
+\end_layout
+
+\begin_layout Minisec
+imJointEntropy 
+\end_layout
+
+\begin_layout Standard
+Joint entropy between two images.
+\end_layout
+
+\begin_layout Minisec
+imMutualInformation 
+\end_layout
+
+\begin_layout Standard
+Computes the mutual information between two images.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Analysis of regions 
+\end_layout
+
+\begin_layout Standard
+Region analysis usually refers to the quantification of features related
+ to the 
+\series bold
+size
+\series default
+ and the 
+\series bold
+shape
+\series default
+ of regions identified within images.
+ 
+\end_layout
+
+\begin_layout Standard
+The functions in this section usually accept as input either binary images
+ (one result is returned), or label images (an array of results is returned).
+ 
+\end_layout
+
+\begin_layout Subsection
+Intrinsic volumes
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Intrinsic-Volumes-2D"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+intrinsic volumes 
+\series default
+are a set of features with interesting mathematical properties that are
+ commonly used for describing individual regions as well as binary microstructur
+es.
+ In 2D, they correspond to the 
+\series bold
+area
+\series default
+, the 
+\series bold
+perimeter
+\series default
+ and the 
+\series bold
+Euler number
+\series default
+.
+ For 3D regions, intrinsic volumes correspond to the 
+\series bold
+volume
+\series default
+, the
+\series bold
+ surface area
+\series default
+, the 
+\series bold
+mean breadth
+\series default
+ and the 
+\series bold
+3D Euler number
+\series default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The functions for computing intrinsic volumes are located in the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imMinkowski]{imMinkowski}
+\end_layout
+
+\end_inset
+
+ module (chap 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imMinkowski"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ The functions used for describing regions are recalled here for convience.
+ It is possible to specify options (connectivity for Euler Number, number
+ of directions for perimeter or surface area), as well as image spatial
+ calibration.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Examples of use
+\end_layout
+
+\begin_layout Standard
+Example for a 2D image:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+>> img = imread('circles.png'); 
+\end_layout
+
+\begin_layout Plain Layout
+
+>> [imArea(img) imPerimeter(img) imEuler2d(img)]
+\end_layout
+
+\begin_layout Plain Layout
+
+ans =
+\end_layout
+
+\begin_layout Plain Layout
+
+   1.0e+04 *
+\end_layout
+
+\begin_layout Plain Layout
+
+    1.4134    0.1046   -0.0003 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Example for a 3D image:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+>> % Surface area measured in 3D binary image (result in pixel^2)
+\end_layout
+
+\begin_layout Plain Layout
+
+>> img = analyze75read(analyze75info('brainMRI.hdr'));
+\end_layout
+
+\begin_layout Plain Layout
+
+>> bin = imclose(img>0, ones([5 5 3]));
+\end_layout
+
+\begin_layout Plain Layout
+
+>> S = imSurface(bin, [1 1 2.5])      % specify resolution
+\end_layout
+
+\begin_layout Plain Layout
+
+ ans = 
+\end_layout
+
+\begin_layout Plain Layout
+
+     2.7291e+004
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+List of functions
+\end_layout
+
+\begin_layout Minisec
+imArea 
+\end_layout
+
+\begin_layout Standard
+Computes area of binary 2D image.
+\end_layout
+
+\begin_layout Minisec
+imPerimeter 
+\end_layout
+
+\begin_layout Standard
+Perimeter of a 2D image using Crofton formula.
+\end_layout
+
+\begin_layout Minisec
+imEuler2d 
+\end_layout
+
+\begin_layout Standard
+Euler number of a binary 2D image.
+\end_layout
+
+\begin_layout Minisec
+imVolume 
+\end_layout
+
+\begin_layout Standard
+Volume measure of a 3D binary structure.
+\end_layout
+
+\begin_layout Minisec
+imSurfaceArea
+\end_layout
+
+\begin_layout Standard
+Surface area of a 3D binary structure.
+\end_layout
+
+\begin_layout Minisec
+imMeanBreadth 
+\end_layout
+
+\begin_layout Standard
+Mean breadth of a 3D binary or label image.
+\end_layout
+
+\begin_layout Minisec
+imEuler3d 
+\end_layout
+
+\begin_layout Standard
+Euler number of a binary 3D image.
+\end_layout
+
+\begin_layout Subsection
+Centroid and bounding shapes
+\end_layout
+
+\begin_layout Standard
+The centroid and the bounding box are convenient tools to quickly describe
+ the location of 2D or 3D regions.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMeasures/demoShape-boundingBox.png
+	lyxscale 50
+	width 32text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imMeasures/demoShape-circumCircle.png
+	lyxscale 50
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Bounding-Shapes-2D"
+
+\end_inset
+
+Representative geometries obtained from a binary region.
+ Left: Bounding box, centroid (black cross).
+ Right: smallest enclosing circle (black) and largest inscribed circle (blue).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imCentroid
+\end_layout
+
+\begin_layout Standard
+Centroid of regions in a label image.
+\end_layout
+
+\begin_layout Minisec
+imBoundingBox 
+\end_layout
+
+\begin_layout Standard
+Computes the minimum and maximum of 
+\begin_inset Formula $x$
+\end_inset
+
+, y and if necessary 
+\begin_inset Formula $z$
+\end_inset
+
+ coordinates of each region within a binary or label image (see Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bounding-Shapes-2D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imInscribedCircle 
+\end_layout
+
+\begin_layout Standard
+Maximal circle inscribed in a particle (see Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bounding-Shapes-2D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imInscribedBall
+\end_layout
+
+\begin_layout Standard
+Maximal ball inscribed in a 3D particle (see Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bounding-Shapes-2D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imEnclosingCircle
+\end_layout
+
+\begin_layout Standard
+Computes the smallest circle that completely encloses (see Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Bounding-Shapes-2D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Geometric moments
+\end_layout
+
+\begin_layout Standard
+An image moment is a certain particular weighted average of the intensities
+ within image.
+ Image moments are particularly useful to describe binary regions, as they
+ can be related to their centroid, their size and their orientation.
+\end_layout
+
+\begin_layout Subsubsection
+Planar case
+\end_layout
+
+\begin_layout Standard
+A binary region 
+\begin_inset Formula $X$
+\end_inset
+
+ may be described mathematically by its geometric moments 
+\begin_inset Formula $m_{pq}$
+\end_inset
+
+ of order 
+\begin_inset Formula $(p,q)$
+\end_inset
+
+, which correspond to an integral of its indicator function 
+\begin_inset Formula $I_{X}$
+\end_inset
+
+, with various degrees along the directions:
+\begin_inset Formula 
+\begin{align}
+m_{pq}(X) & =\int\int I_{X}(x,y)x^{p}y^{q}\cdot dx\cdot dy\label{eq:Moment-of-X-2D}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The moment of order 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+ simply corresponds to the area of 
+\begin_inset Formula $X$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align}
+m_{00} & =\int\int I_{X}(x,y)\cdot dx\cdot dy=\text{Area}(X)
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The coordinates of the centroid of 
+\begin_inset Formula $X$
+\end_inset
+
+ can be expressed from the first-order moments:
+\begin_inset Formula 
+\begin{align*}
+x_{c} & =\frac{m_{10}}{m_{00}}=\frac{1}{\text{Area}(X)}\int\int I_{X}(x,y)\cdot x\cdot dx\cdot dy\\
+y_{c} & =\frac{m_{01}}{m_{00}}=\frac{1}{\text{Area}(X)}\int\int I_{X}(x,y)\cdot y\cdot dx\cdot dy
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is often more convenient to work with 
+\series bold
+centered moments
+\series default
+, given by:
+\begin_inset Formula 
+\begin{align}
+\mu_{pq} & =\int\int I_{X}(x,y)\left(x-x_{c}\right)^{p}\left(y-yc\right)^{q}\cdot dx\cdot dy
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMeasures/demoShape-ellipse.png
+	lyxscale 50
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Equivalent-Ellipse"
+
+\end_inset
+
+Equivalent ellipse for a region.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The orientation of the region can be retrieved from its (centered) second-order
+ moments 
+\begin_inset Formula $\mu_{20}$
+\end_inset
+
+, 
+\begin_inset Formula $\mu_{11}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu_{02}$
+\end_inset
+
+.
+ The moments are often used to compute an equivalent ellipse with the same
+ centroid and second order moments as the original region (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Equivalent-Ellipse"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
+3D moments
+\end_layout
+
+\begin_layout Standard
+The mathematical definition of the geometric moments for 3D regions is similar
+ to the 2D case:
+\begin_inset Formula 
+\begin{align}
+m_{pqr}(X) & =\int\int\int I_{X}(x,y,z)x^{p}y^{q}z^{r}\cdot dx\cdot dy\cdot dz\label{eq:Moment-of-X-3D}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The first moment 
+\begin_inset Formula $m_{000}(X)$
+\end_inset
+
+ corresponds to the volume of the particle.
+ The normalization of the first-order moments by the volume leads to the
+ 
+\series bold
+3D centroid
+\series default
+ of the particle.
+ The second-order moments can be used to compute an 
+\series bold
+equivalent ellipsoid
+\series default
+, defined as the ellipsoid with the same moments up to the second order
+ as the region of interest.
+\end_layout
+
+\begin_layout Subsubsection
+Convention for 3D angles
+\end_layout
+
+\begin_layout Standard
+In the MatImage library, 3D ellipsoids are represented by nine parameters:
+ three for the coordinates of the centroid, three for size along each main
+ direction, and three angles depicting the orientation.
+ The three angles correspond to a succession of three rotations (see Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Ellipsoid-Angles"
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Enumerate
+a rotation 
+\begin_inset Formula $R_{x}(\psi)$
+\end_inset
+
+ about the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis by 
+\begin_inset Formula $\psi$
+\end_inset
+
+ degrees (positive when the 
+\begin_inset Formula $y$
+\end_inset
+
+-axis moves towards the 
+\begin_inset Formula $z$
+\end_inset
+
+-axis)
+\end_layout
+
+\begin_layout Enumerate
+a rotation 
+\begin_inset Formula $R_{y}(\theta)$
+\end_inset
+
+ about the 
+\begin_inset Formula $y$
+\end_inset
+
+-axis by 
+\begin_inset Formula $\theta$
+\end_inset
+
+ degrees (positive when the 
+\begin_inset Formula $z$
+\end_inset
+
+-axis moves towards the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis)
+\end_layout
+
+\begin_layout Enumerate
+a rotation 
+\begin_inset Formula $R_{z}(\varphi)$
+\end_inset
+
+ about the 
+\begin_inset Formula $z$
+\end_inset
+
+-axis by 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ degrees (positive when the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis moves towards the 
+\begin_inset Formula $y$
+\end_inset
+
+-axis)
+\end_layout
+
+\begin_layout Standard
+The global rotation matrix is assimilated to the product 
+\begin_inset Formula $R_{z}(\varphi)\cdot R_{y}(\theta)\cdot R_{x}(\psi)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMeasures/ellipsoid-angles.png
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Ellipsoid-Angles"
+
+\end_inset
+
+Definition of angles for representing the orientation of equivalent ellipsoid.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Associated functions
+\end_layout
+
+\begin_layout Minisec
+imEquivalentEllipse 
+\end_layout
+
+\begin_layout Standard
+Equivalent ellipse of a binary or label image.
+\end_layout
+
+\begin_layout Minisec
+imEquivalentEllipsoid 
+\end_layout
+
+\begin_layout Standard
+Equivalent ellipsoid of a 3D binary image.
+\end_layout
+
+\begin_layout Minisec
+imMoment 
+\end_layout
+
+\begin_layout Standard
+Computes simple moment(s) of an image.
+\end_layout
+
+\begin_layout Minisec
+imCMoment
+\end_layout
+
+\begin_layout Standard
+Computes centered moment of an image.
+\end_layout
+
+\begin_layout Minisec
+imCSMoment 
+\end_layout
+
+\begin_layout Standard
+Computes centered and scaled moment of an image.
+\end_layout
+
+\begin_layout Minisec
+imHuInvariants 
+\end_layout
+
+\begin_layout Standard
+Hu's invariants are a common method used to summarize moments computed on
+ a region 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Hu1962"
+literal "false"
+
+\end_inset
+
+.
+ They can be used for indexing region based on morphology.
+\end_layout
+
+\begin_layout Subsection
+Feret diameter and oriented box
+\end_layout
+
+\begin_layout Standard
+A popular way to assess the size of a region is to measure its 
+\series bold
+largest Feret diameter
+\series default
+.
+ The maximum Feret diameter of a region is simply the maximum distance computed
+ over all the pairs of points belonging to the region:
+\begin_inset Formula 
+\begin{align}
+F_{\text{max}} & =\max_{\boldsymbol{x},\boldsymbol{y}\in X}d(\boldsymbol{x},\boldsymbol{y})
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is easy to realize that the search can be performed on the set of boundary
+ points (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Measurements-2D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ In practice, the computation of maximum Feret diameter can be accelerated
+ by first computing the convex hull of the region.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMeasures/demoShape-maxFeret.png
+	lyxscale 50
+	width 32text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imMeasures/demoShape-orientedBox.png
+	lyxscale 50
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Measurements-2D"
+
+\end_inset
+
+Examples of measurements on a planar region: maximum Feret diameter and
+ oriented box.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Associated functions
+\end_layout
+
+\begin_layout Minisec
+imOrientedBox
+\end_layout
+
+\begin_layout Standard
+Minimum-area oriented bounding box of particles in image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Measurements-2D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imMaxFeretDiameter
+\end_layout
+
+\begin_layout Standard
+Maximum Feret diameter of a binary or label image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Measurements-2D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imFeretDiameter 
+\end_layout
+
+\begin_layout Standard
+Feret diameter of a particle(s) for a given direction(s).
+\end_layout
+
+\begin_layout Subsection
+Quantification by shape indices
+\end_layout
+
+\begin_layout Standard
+It is often convenient to describe and 
+\series bold
+quantify the shape 
+\series default
+of regions independently of their location, orientation, or relative scaling.
+ Several indices are commonly used to describe the shape of the particles,
+ independently of their size.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMeasures/demoShape-convexity.png
+	lyxscale 50
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Convexity"
+
+\end_inset
+
+Convexity of a planar region.
+ The convex area is the union of the blue and yellow regions.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imConvexity 
+\end_layout
+
+\begin_layout Standard
+Convexity of particles in label image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Convexity"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Extraction of geometric primitives
+\end_layout
+
+\begin_layout Standard
+This sections gathers additional functions for converting binary or label
+ images to geometric primitives.
+\end_layout
+
+\begin_layout Minisec
+imFind
+\end_layout
+
+\begin_layout Standard
+Returns the coordinates of non-zero pixels in an image.
+\end_layout
+
+\begin_layout Minisec
+imRAG 
+\end_layout
+
+\begin_layout Standard
+Region adjacency graph of a labeled image.
+ The result is provided as a graph, with vertices corresponding to region
+ centroids, and edges corresponding to neighbor regions (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:imRAG"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Minisec
+imContours 
+\end_layout
+
+\begin_layout Standard
+Extracts polygonal contours of a binary image.
+ The result is provided as a cell array, with one polygon per cell.
+\end_layout
+
+\begin_layout Minisec
+imBinaryToGraph 
+\end_layout
+
+\begin_layout Standard
+Transforms a binary image into a graph structure.
+ The result is provided as a graph, with vertices corresponding to pixels,
+ and edges corresponding to neighbor pixels.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMeasures/demoImRAG.png
+	lyxscale 50
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:imRAG"
+
+\end_inset
+
+Computation of the Region Adjacency Graph on a label image.
+ Plotting the graph network requires the MatGeom toolbox.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Module imMinkowski
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:imMinkowski"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Contains various functions for measuring or estimating geometric quantities
+ from 2D or 3D images.
+\end_layout
+
+\begin_layout Standard
+For 2D images, parameters are the area, the perimeter and the (2D) Euler
+ Number.
+ For 3D images, parameters are the volume, the surface area, the mean breadth
+ (also known as integral of mean curvature), and the (3D) Euler Number.
+ For the sake of completeness, parameters for 1D images are also included:
+ length and number (1D Euler Number).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+minitoc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The methods for computing the parameters are described in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Lang2001,Legland2007,Ohser2009"
+literal "false"
+
+\end_inset
+
+.
+ Implementation notes and examples are given in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Lehmann2012"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For each quantity, several functions are provided:
+\end_layout
+
+\begin_layout Description
+im<Quantity> evaluates the quantity from a binary or label image.
+ If the structure touches the border of the image, it is considered as a
+ structure border.
+ Such functions should fit most needs.
+\end_layout
+
+\begin_layout Description
+im<Quantity>Density evaluates the quantity within the image, by considering
+ that the image is a representative window of a larger structure.
+ The intersection of the structure with image border is not taken into account
+ for measurements.
+\end_layout
+
+\begin_layout Description
+im<Quantity>Estimate same as im<Quantity>Estimate, but the result is normalised
+ by the area or the volume of the observed window.
+\end_layout
+
+\begin_layout Description
+im<Quantity>Lut returns a look-up-table of values that can be used to estimate
+ the parameter from the histogram of binary configuration in original image,
+ as computed by the function "imBinaryConfigHisto" (page 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "imBinaryConfigHisto"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Most functions work both for binary and label images.
+ It is possible to specify options (connectivity for Euler Number, number
+ of directions for perimeter or surface area), as well as image resolution
+ in each direction.
+ Examples of use:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+>> % compute perimeter of several coins 
+\end_layout
+
+\begin_layout Plain Layout
+
+>> lbl = bwlabel(imread('coins.png') > 100);
+\end_layout
+
+\begin_layout Plain Layout
+
+>> imPerimeter(lbl)
+\end_layout
+
+\begin_layout Plain Layout
+
+ ans = 
+\end_layout
+
+\begin_layout Plain Layout
+
+   184.8668
+\end_layout
+
+\begin_layout Plain Layout
+
+   154.9495
+\end_layout
+
+\begin_layout Plain Layout
+
+   185.1921
+\end_layout
+
+\begin_layout Plain Layout
+
+   267.1690
+\end_layout
+
+\begin_layout Plain Layout
+
+   187.3183
+\end_layout
+
+\begin_layout Plain Layout
+
+   179.5038
+\end_layout
+
+\begin_layout Plain Layout
+
+   182.7406
+\end_layout
+
+\begin_layout Plain Layout
+
+   180.8445
+\end_layout
+
+\begin_layout Plain Layout
+
+   155.5049
+\end_layout
+
+\begin_layout Plain Layout
+
+   155.5049
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+>> % Surface area measured in 3D binary image (result in pixel^2)
+\end_layout
+
+\begin_layout Plain Layout
+
+>> img = analyze75read(analyze75info('brainMRI.hdr'));
+\end_layout
+
+\begin_layout Plain Layout
+
+>> bin = imclose(img>0, ones([5 5 3]));
+\end_layout
+
+\begin_layout Plain Layout
+
+>> S = imSurfaceArea(bin, [1 1 2.5])      % specify resolution
+\end_layout
+
+\begin_layout Plain Layout
+
+ ans = 
+\end_layout
+
+\begin_layout Plain Layout
+
+     2.7291e+004
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Analysis of 2D images
+\end_layout
+
+\begin_layout Standard
+For 2D images, parameters are the area, the perimeter and the (2D) Euler
+ Number.
+ The 
+\series bold
+area
+\series default
+ corresponds to the number of pixels belonging to the structure, multiplied
+ by the spatial calibration if it is given.
+ The 
+\series bold
+perimeter
+\series default
+ corresponds to an integral over the boundary of the structure.
+ The (2D) 
+\series bold
+Euler number 
+\series default
+corresponds to the number of connected components minus the number of holes
+ within the structure.
+\end_layout
+
+\begin_layout Subsection
+Definitions
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+area
+\series default
+ and the 
+\series bold
+perimeter
+\series default
+ of a set 
+\begin_inset Formula $X$
+\end_inset
+
+ with smooth surface 
+\begin_inset Formula $\partial X$
+\end_inset
+
+ can be defined using integrals over the set, or over its boundary:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+A(X)=\int_{X}dx,\, & P(X)=\int_{\partial X}dx
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In image analysis, the 
+\series bold
+measurement of area 
+\series default
+of 2D particles simply consists in counting the number of pixels that constitute
+ it, weighted by the area of an individual pixel.
+ 
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+Euler number
+\series default
+ is a feature that describes the 
+\series bold
+topology 
+\series default
+of a region.
+ It corresponds to the number of connected components, minus the number
+ of holes (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Euler-Number"
+
+\end_inset
+
+-a).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMinkowski/euler-number-2d-horiz.png
+	height 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Euler-Number"
+
+\end_inset
+
+Euler Number for 2D regions.
+ Particle A is composed of a single component, its Euler number is 1.
+ Particles B and C present one and two holes respectively.
+ Their corresponding Euler numbers are equal to 
+\begin_inset Formula $0=1-1$
+\end_inset
+
+ and 
+\begin_inset Formula $-1=1-2$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In 2D, the Euler number of a region with smooth boundary also equals the
+ 
+\series bold
+integral of the curvature
+\series default
+ over the boundary of the set:
+\begin_inset Formula 
+\begin{equation}
+\chi(X)=\frac{1}{2\pi}\int_{\partial X}\kappa(x)dx
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Analysis of regions
+\end_layout
+
+\begin_layout Standard
+The functions described here allow to quantify the morphology of either
+ a single region given as a binary image (a logical array), or of several
+ regions given as a label image (an array of integer values corresponding
+ to the region labels).
+\end_layout
+
+\begin_layout Minisec
+imArea 
+\end_layout
+
+\begin_layout Standard
+Computes area of binary 2D image.
+\end_layout
+
+\begin_layout Minisec
+imPerimeter 
+\end_layout
+
+\begin_layout Standard
+Perimeter of a 2D image using Crofton formula.
+\end_layout
+
+\begin_layout Minisec
+perimeter 
+\end_layout
+
+\begin_layout Standard
+Estimates perimeter of a structure.
+\end_layout
+
+\begin_layout Minisec
+imEuler2d 
+\end_layout
+
+\begin_layout Standard
+Euler number of a binary 2D image.
+\end_layout
+
+\begin_layout Subsection
+Analysis of microstructures 
+\end_layout
+
+\begin_layout Minisec
+imAreaDensity 
+\end_layout
+
+\begin_layout Standard
+Computes area density in a 2D image.
+\end_layout
+
+\begin_layout Minisec
+imAreaEstimate 
+\end_layout
+
+\begin_layout Standard
+Estimates area of binary 2D structure with edge correction.
+\end_layout
+
+\begin_layout Minisec
+imPerimeterDensity
+\end_layout
+
+\begin_layout Standard
+Perimeter density of a 2D binary structure, using Crofton formula.
+\end_layout
+
+\begin_layout Minisec
+imPerimeterEstimate
+\end_layout
+
+\begin_layout Standard
+Perimeter estimate of a 2D binary structure.
+\end_layout
+
+\begin_layout Minisec
+imEuler2dDensity 
+\end_layout
+
+\begin_layout Standard
+Euler density in a 2D image.
+\end_layout
+
+\begin_layout Minisec
+imEuler2dEstimate 
+\end_layout
+
+\begin_layout Standard
+Estimates Euler number in a 2D image.
+\end_layout
+
+\begin_layout Subsection
+Utility functions (2D)
+\end_layout
+
+\begin_layout Minisec
+imPerimeterLut 
+\end_layout
+
+\begin_layout Standard
+Look-Up Table for measuring perimeter in a binary image.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Analysis of 3D Images
+\end_layout
+
+\begin_layout Standard
+For 3D regions, intrinsic volumes correspond to the 
+\series bold
+volume
+\series default
+, the
+\series bold
+ surface area
+\series default
+ (sometimes simply called surface) the 
+\series bold
+mean breadth
+\series default
+ (also known as the integral of mean curvature) and the
+\series bold
+ (3D) Euler number
+\series default
+.
+ While the volume and the surface area are rather common, the latter two
+ are less intuitive.
+ Both the mean breadth and the 3D Euler number can be related to the curvatures
+ that can be measured on smooth surfaces.
+\end_layout
+
+\begin_layout Subsection
+Definitions
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+volume
+\series default
+ and the 
+\series bold
+surface area
+\series default
+ of a set 
+\begin_inset Formula $X$
+\end_inset
+
+ with smooth surface 
+\begin_inset Formula $\partial X$
+\end_inset
+
+ can be defined using integrals over the set, or over its boundary:
+\begin_inset Formula 
+\begin{align}
+V(X) & =\int_{X}dx\\
+S(X) & =\int_{\partial X}dx
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+mean breadth 
+\series default
+
+\begin_inset Formula $\bar{b}$
+\end_inset
+
+ of a convex set can be seen as the average of the caliper diameter over
+ all directions.
+ For a set 
+\begin_inset Formula $X$
+\end_inset
+
+ with smooth boundary 
+\begin_inset Formula $\partial X$
+\end_inset
+
+, the mean breadth is proportionnal to the 
+\series bold
+integral of the mean curvature
+\series default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Serra_1982,Ohser2009"
+literal "true"
+
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align}
+\bar{b}(X) & =\frac{1}{2\pi}\int_{\partial X}\frac{\kappa_{1}(x)+\kappa_{2}(x)}{2}dx
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As in 2D, the 
+\series bold
+3D Euler number 
+\series default
+also quantifies the topology of a set.
+ It corresponds to the number of connected components, minus the number
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+handles
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+tunnels
+\begin_inset Quotes eld
+\end_inset
+
+ through the structure, plus the number of bubbles within the particles
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Serra_1982,Ohser2009"
+literal "true"
+
+\end_inset
+
+, see Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Euler-Number-3d"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMinkowski/euler-number-3d.png
+	height 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Euler-Number-3d"
+
+\end_inset
+
+Euler Number of a 3D particle.
+ The Euler number equals -1, corresponding to the subtraction of 1 connected
+ components minus two handles.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a set 
+\begin_inset Formula $X$
+\end_inset
+
+ with smooth boundary 
+\begin_inset Formula $\partial X$
+\end_inset
+
+, the 3D Euler number is proportionnal to the integral of the 
+\series bold
+gaussian curvature
+\series default
+, corresponding to the product of the curvatures:
+\begin_inset Formula 
+\begin{align}
+\chi(X) & =\frac{1}{4\pi}\int_{\partial X}\kappa_{1}(x)\cdot\kappa_{2}(x)dx
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Analysis of regions
+\end_layout
+
+\begin_layout Standard
+The functions described here allow to quantify the morphology of either
+ a single region given as a binary image (a logical array), or of several
+ regions given as a label image (an array of integer values corresponding
+ to the region labels).
+\end_layout
+
+\begin_layout Minisec
+imVolume 
+\end_layout
+
+\begin_layout Standard
+Volume measure of a 3D binary structure.
+\end_layout
+
+\begin_layout Minisec
+imSurfaceArea
+\end_layout
+
+\begin_layout Standard
+Surface area of a 3D binary structure.
+\end_layout
+
+\begin_layout Minisec
+imJointSurfaceArea
+\end_layout
+
+\begin_layout Standard
+Surface area of the interface between two regions.
+\end_layout
+
+\begin_layout Minisec
+imMeanBreadth 
+\end_layout
+
+\begin_layout Standard
+Mean breadth of a 3D binary or label image.
+\end_layout
+
+\begin_layout Minisec
+imEuler3d 
+\end_layout
+
+\begin_layout Standard
+Euler number of a binary 3D image.
+\end_layout
+
+\begin_layout Subsection
+Analysis of microstrucures
+\end_layout
+
+\begin_layout Standard
+Functions described here allow to quantify the morphology of binary microstructu
+res, not necessarily defined as a collection of disjoint particles.
+ Examples are porous media such as soil, sponges, bread...
+ The quantification relies on intrinsic volumes normalized by the size of
+ the observation window.
+\end_layout
+
+\begin_layout Minisec
+imVolumeDensity
+\end_layout
+
+\begin_layout Standard
+Computes volume density of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+imVolumeEstimate 
+\end_layout
+
+\begin_layout Standard
+Estimates volume of a 3D binary structure with edge correction.
+\end_layout
+
+\begin_layout Minisec
+imSurfaceAreaDensity 
+\end_layout
+
+\begin_layout Standard
+Surface area density of a 3D binary structure.
+\end_layout
+
+\begin_layout Minisec
+imSurfaceAreaEstimate
+\end_layout
+
+\begin_layout Standard
+Estimates surface area of a binary 3D structure.
+\end_layout
+
+\begin_layout Minisec
+specificSurface 
+\end_layout
+
+\begin_layout Standard
+Implementation of Ohser's algorithm for surface area computation.
+\end_layout
+
+\begin_layout Minisec
+imMeanBreadthDensity 
+\end_layout
+
+\begin_layout Standard
+Mean breadth density of a 3D binary structure.
+\end_layout
+
+\begin_layout Minisec
+imMeanBreadthEstimate 
+\end_layout
+
+\begin_layout Standard
+Estimates mean breadth of a binary structure.
+\end_layout
+
+\begin_layout Minisec
+imEuler3dDensity 
+\end_layout
+
+\begin_layout Standard
+Computes Euler density in a 3D image.
+\end_layout
+
+\begin_layout Minisec
+imEuler3dEstimate 
+\end_layout
+
+\begin_layout Standard
+Estimates Euler number in a 3D image.
+\end_layout
+
+\begin_layout Subsection
+Utility functions (3D)
+\end_layout
+
+\begin_layout Minisec
+imSurfaceAreaLut 
+\end_layout
+
+\begin_layout Standard
+Look-Up Table for computing surface area of a 3D binary image.
+\end_layout
+
+\begin_layout Minisec
+imMeanBreadthLut 
+\end_layout
+
+\begin_layout Standard
+Look-Up Table for computing mean breadth of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+specificIntMeanCurv 
+\end_layout
+
+\begin_layout Standard
+Ohser's Integral of Mean Curvature, from 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Ohser2000"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+specificIntMeanCurvDetails 
+\end_layout
+
+\begin_layout Standard
+Ohser's Integral of Mean Curvature, with details.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Analysis of 1D images
+\end_layout
+
+\begin_layout Standard
+For the sake of completeness, parameters for 1D images are also included:
+ the length and the number (1D Euler Number).
+\end_layout
+
+\begin_layout Subsection
+Analysis of regions
+\end_layout
+
+\begin_layout Minisec
+imLength 
+\end_layout
+
+\begin_layout Standard
+Computes the total length of a binary 1D structure.
+\end_layout
+
+\begin_layout Minisec
+imEuler1d 
+\end_layout
+
+\begin_layout Standard
+Computes Euler number of a binary 1D image.
+\end_layout
+
+\begin_layout Subsection
+Analysis of densities
+\end_layout
+
+\begin_layout Minisec
+imLengthDensity 
+\end_layout
+
+\begin_layout Standard
+Estimates length density of a binary 1D structure using edge correction.
+\end_layout
+
+\begin_layout Minisec
+imLengthEstimate 
+\end_layout
+
+\begin_layout Standard
+Estimates total length of a binary 1D structure using edge correction.
+\end_layout
+
+\begin_layout Minisec
+imEuler1dEstimate 
+\end_layout
+
+\begin_layout Standard
+Computes Euler number of a binary 1D image.
+\end_layout
+
+\begin_layout Section
+Utility functions
+\end_layout
+
+\begin_layout Minisec
+imBinaryConfigHisto 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "imBinaryConfigHisto"
+
+\end_inset
+
+Computes the histogram of the binary configurations within a 2D or 3D image.
+ Other utilities for configuration maps are described in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Configuration-Maps"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+imProjectedDiameter 
+\end_layout
+
+\begin_layout Standard
+Projected diameter in a given direction.
+\end_layout
+
+\begin_layout Minisec
+imProjectedArea
+\end_layout
+
+\begin_layout Standard
+Total projected area in a given direction.
+\end_layout
+
+\begin_layout Minisec
+epc 
+\end_layout
+
+\begin_layout Standard
+Computes Euler-Poincare Characteristic (EPC) of a structure.
+\end_layout
+
+\begin_layout Minisec
+tpl 
+\end_layout
+
+\begin_layout Standard
+Computes total projection length.
+\end_layout
+
+\begin_layout Chapter
+Module imGranulometry
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:imGranulometry"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Gray-level granulometry is an image texture analysis approach based on mathemati
+cal morphology 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Soille2003"
+literal "false"
+
+\end_inset
+
+.
+ It consists in applying morphological filters (typically opening or closing)
+ using structuring elements of increasing size 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Chermant_1991_actaStereol,Soille2003"
+literal "true"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Gray-level granulometry results in 
+\series bold
+granulometry curves
+\series default
+ that can be interpreted in terms of size distribution, making it easier
+ to relate to the physical properties of the studied structures.
+ Another advantage of morphological granulometries is that it is possible
+ to focus on 
+\series bold
+either bright or dark structures
+\series default
+ in the image, or to consider both of them.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+minitoc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Principle of gray-level granulometry
+\end_layout
+
+\begin_layout Subsection
+Computation of granulometry curves
+\end_layout
+
+\begin_layout Standard
+The principle of gray-level granulometry is to apply morphological filters
+ using structuring elements (
+\begin_inset Quotes eld
+\end_inset
+
+strel
+\begin_inset Quotes erd
+\end_inset
+
+) of increasing size.
+ By applying morphological openings of increasing size, bright structures
+ of increasing sizes are removed.
+ A 
+\series bold
+digital sieving
+\series default
+ is therefore obtained.
+ Similarily, applying morphological closings of increasing sizes makes dark
+ structures progressively disappear.
+ 
+\end_layout
+
+\begin_layout Standard
+The difference between two successive opening or closing steps is obtained
+ by computing the sum of gray levels within each image, called the volume
+ of the image.
+ Using openings [resp.
+ closings], the volume curve decreases [resp.
+ increases] monotonously, and reaches a plateau.
+ The derivative of this curve, normalised by the initial and final values,
+ can be interpreted as a 
+\series bold
+size distribution
+\series default
+ of the bright [resp.
+ dark] structures within the image, taking into account the gray levels.
+ More formally, if 
+\begin_inset Formula $V_{i}$
+\end_inset
+
+ is the sum of the gray levels of the image at the 
+\begin_inset Formula $i$
+\end_inset
+
+-th iteration, the granulometry curve is given by:
+\begin_inset Formula 
+\[
+g_{i}=\frac{V_{i+1}-V_{i}}{V_{\text{final}}-V_{\text{initial}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gray-Level-Granulometry"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ presents the results of granulometry curve obtained on sample image with
+ the following script:
+\begin_inset listings
+lstparams "language=Matlab,extendedchars=true"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% read image
+\end_layout
+
+\begin_layout Plain Layout
+
+img = imread('rice.png');
+\end_layout
+
+\begin_layout Plain Layout
+
+% compute granulometry curve by opening using square strel
+\end_layout
+
+\begin_layout Plain Layout
+
+xi = 1:20; 
+\end_layout
+
+\begin_layout Plain Layout
+
+[gr, diams, vol] = imGranulo(img, 'opening', 'square', xi);
+\end_layout
+
+\begin_layout Plain Layout
+
+% display granulo
+\end_layout
+
+\begin_layout Plain Layout
+
+figure; plot(diams, gr); xlim([0 40]);
+\end_layout
+
+\begin_layout Plain Layout
+
+xlabel('Diameter of structuring element (pixels)'); 
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel('Variation of gray levels (%)');
+\end_layout
+
+\begin_layout Plain Layout
+
+title('Gray level granulometry by opening');
+\end_layout
+
+\end_inset
+
+More details can be found in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Devaux2005,Devaux2008,Devaux2014"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGranulo/rice.png
+	width 25text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Original image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGranulo/rice_grOpSq20_sumOfGrays.png
+	lyxscale 50
+	width 35text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sum of gray levels.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGranulo/rice_grOpSq20.png
+	lyxscale 50
+	width 35text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Granulometry curve (pattern spectrum).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Gray-Level-Granulometry"
+
+\end_inset
+
+Exemple of gray-level granulometry by opening.
+ (a) Original gray-level image of rice grains.
+ (b) Sum of gray levels for differents sizes of square structuring element.
+ (c) Granulometry curve, corresponding to size distribution.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary statistics
+\end_layout
+
+\begin_layout Standard
+It may be useful to compute 
+\series bold
+summary statistics
+\series default
+ from granulometry curves, to facilitate their comparison.
+ The simplest one is the arithmetic average, that can be obtained from:
+\begin_inset Formula 
+\begin{equation}
+m=\sum_{i}g_{i}\cdot x_{i}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+ is the value of the granulometric curve (between 0 and 1), and 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is the size of the corresponding step, expressed either in pixels, or in
+ physical unit.
+ The standard deviation can also be obtained:
+\begin_inset Formula 
+\begin{equation}
+s=\left[\sum_{i}g_{i}\cdot(x_{i}-m)^{2}\right]^{1/2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Granulometry curves often present a log-normal shape, making the arithmetic
+ average sometimes different from the mode of the distribution.
+ An alternative is to compute the average size by using the 
+\series bold
+geometrical mean
+\series default
+:
+\begin_inset Formula 
+\begin{equation}
+m_{G}=\text{exp}\left(\sum_{i}g_{i}\cdot\text{log}x_{i}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+List of functions
+\end_layout
+
+\begin_layout Subsection
+Computation of granulometry curves
+\end_layout
+
+\begin_layout Minisec
+imGranulo 
+\end_layout
+
+\begin_layout Standard
+Computes granulometry curve for the whole image.
+ The syntax is as follow:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+GR = imGranulo(IMG, TYPE, SHAPE, SIZES);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imGranuloByRegion 
+\end_layout
+
+\begin_layout Standard
+Computes granulometry curve for each region of a label image.
+ The result is an array with as many rows as the number of regions.
+ The regions can also be specified by a cell array containing pixel indices
+ for each regions.
+ The latter possibility makes it possible to specify overlapping regions.
+\end_layout
+
+\begin_layout Minisec
+imOrientedGranulo 
+\end_layout
+
+\begin_layout Standard
+Computes gray level granulometry mean size for various orientations, by
+ rotating the image before computing granulometry with a line structuring
+ element.
+ More details can be found in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Gallos_2017_cpa"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Summary statistics
+\end_layout
+
+\begin_layout Minisec
+granuloMeanSize 
+\end_layout
+
+\begin_layout Standard
+Computes the geometric mean of a granulometric curve, or of a series of
+ granulometric curves.
+\end_layout
+
+\begin_layout Minisec
+granuloMean 
+\end_layout
+
+\begin_layout Standard
+Computes the arithmetic mean of granulometric curve(s).
+\end_layout
+
+\begin_layout Minisec
+granuloStd 
+\end_layout
+
+\begin_layout Standard
+Computes the standard deviation of granulometric curve(s).
+\end_layout
+
+\begin_layout Chapter
+Module imGeodesics
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:imGeodesics"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The functions in this module are devoted to the computation of geodesic
+ distances within images.
+ The geodesic distances can be ued for the extraction of specific features
+ such as geodesic diameters, geodesic centers of geodesic extremities.
+\end_layout
+
+\begin_layout Standard
+More information about the concept of geodesic distances and geodesic propagatio
+n can be found in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Lantuejoul1981"
+literal "false"
+
+\end_inset
+
+, and in the book of 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Soille2003"
+literal "false"
+
+\end_inset
+
+.
+ These functions were developed in the context of the study presented in
+ 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Legland2013"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Distance propagation
+\end_layout
+
+\begin_layout Standard
+The functions in this sections compute geodesic distances, from a marker
+ image constrained to a mask images.
+ The computation of geodesic distance maps is based on chamfer distances,
+ that are an approximation of the Euclidean distance (see also Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Distance-Maps"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+From the geodesic distance maps, it is possible to extract geodesic paths
+ and/or maximal length geodesic path.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGeodesics/geodesic_Disks_Point_w34.png
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Geodesic Distance Map.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGeodesics/demoImGeodesicPath.png
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Geodesic Path.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGeodesics/demoImMaxGeodesicPath.png
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Geodesic Diameters.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Geodesic-paths-and-diameters"
+
+\end_inset
+
+Geodesic paths and diameters.
+ (a) Computation of the geodesic distance map from a marker located within
+ the binary region.
+ (b) Computation of a geodesic path between two points with a binary region.
+ The geodesic path correspond to the shortest path with the chosen metric.
+ (c) Geodesic diameter computed for each binarised grains, and superimposed
+ on the original image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imGeodesicDistanceMap
+\end_layout
+
+\begin_layout Standard
+Geodesic distance transform for binary or label images.
+\end_layout
+
+\begin_layout Minisec
+imGeodesicDistanceMap3d
+\end_layout
+
+\begin_layout Standard
+Geodesic distance transform for 3D binary or label images.
+\end_layout
+
+\begin_layout Minisec
+imGeodesicPath
+\end_layout
+
+\begin_layout Standard
+Compute a geodesic path between two markers in an image.
+\end_layout
+
+\begin_layout Minisec
+imMaxGeodesicPath
+\end_layout
+
+\begin_layout Standard
+Find a path in a region with maximal geodesic length.
+\end_layout
+
+\begin_layout Minisec
+imGeodesicDistance
+\end_layout
+
+\begin_layout Standard
+Compute geodesic distance between 2 markers.
+\end_layout
+
+\begin_layout Section
+Geodesic parameters
+\end_layout
+
+\begin_layout Standard
+Based on the geodesic distance distance map, it is possible to define several
+ features describing the morphology of the particles.
+\end_layout
+
+\begin_layout Minisec
+imGeodesicDiameter
+\end_layout
+
+\begin_layout Standard
+Computes geodesic diameter of particles.
+\end_layout
+
+\begin_layout Minisec
+imGeodesicDiameter3d
+\end_layout
+
+\begin_layout Standard
+Computes geodesic diameter of 3D particles.
+\end_layout
+
+\begin_layout Minisec
+imGeodesicCenter
+\end_layout
+
+\begin_layout Standard
+Computes geodesic center of a binary particle.
+\end_layout
+
+\begin_layout Minisec
+imGeodesicExtremities
+\end_layout
+
+\begin_layout Standard
+Computes geodesic extremities of a binary particle.
+\end_layout
+
+\begin_layout Minisec
+imGeodesicRadius
+\end_layout
+
+\begin_layout Standard
+Computes the geodesic radius of a binary particle.
+\end_layout
+
+\begin_layout Minisec
+imGeodesicPropagation
+\end_layout
+
+\begin_layout Standard
+Computes geodesic propagation for each foreground pixel.
+\end_layout
+
+\begin_layout Section
+Validation
+\end_layout
+
+\begin_layout Minisec
+chamferDistanceError
+\end_layout
+
+\begin_layout Standard
+Computes relative error of chamfer distance with Euclidean distance.
+\end_layout
+
+\begin_layout Chapter
+Module imShapes
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:imShapes"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The functions from this module aim at generating 2D or 3D phantom images
+ of geometric primitives such as rectangles, ellipsoids, cylinders...
+ Generated images can be used for validation of image quantification algorithms
+ (such as in chapters 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imMeasures"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ or 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imMinkowski"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Most functions from this module requires the MatGeom library
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/mattools/matGeom
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+2D images
+\end_layout
+
+\begin_layout Standard
+Typical script for creating images is as follow:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% generate coordinate system for square images
+\end_layout
+
+\begin_layout Plain Layout
+
+lx = 1:100;
+\end_layout
+
+\begin_layout Plain Layout
+
+ly = 1:100;
+\end_layout
+
+\begin_layout Plain Layout
+
+% define ellipse by center, two radius and one orientation
+\end_layout
+
+\begin_layout Plain Layout
+
+ellipse = [50 50  40 20  theta];
+\end_layout
+
+\begin_layout Plain Layout
+
+% generation of binary image
+\end_layout
+
+\begin_layout Plain Layout
+
+img = discreteEllipse(lx, ly, ellipse);
+\end_layout
+
+\begin_layout Plain Layout
+
+% display
+\end_layout
+
+\begin_layout Plain Layout
+
+figure; imshow(img);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Some examples are given in Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Simple"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Curved"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Planar domains
+\end_layout
+
+\begin_layout Minisec
+discreteDisc
+\end_layout
+
+\begin_layout Standard
+Discretize a disc, defined by its center and radius (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Simple"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+discreteEllipse 
+\end_layout
+
+\begin_layout Standard
+Discretize a planar ellipse, defiend by its center, two radius, and an orientati
+on (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Simple"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+discreteSquare
+\end_layout
+
+\begin_layout Standard
+Discretize a planar square (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Simple"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+discreteRectangle 
+\end_layout
+
+\begin_layout Standard
+Discretize a planar rectangle (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Simple"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imShapes/disk.png
+	width 24text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/square_theta30.png
+	width 24text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/ellipse_theta30.png
+	width 24text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/rectangle_theta30.png
+	width 24text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Discrete-Shapes-2D-Simple"
+
+\end_inset
+
+Examples of simple discrete shapes in 2D.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+discreteCapsule 
+\end_layout
+
+\begin_layout Standard
+Discretize a planar capsule (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Curved"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+discretePolygon 
+\end_layout
+
+\begin_layout Standard
+Discretize a planar polygon, defined by a series of vertex coordinates.
+\end_layout
+
+\begin_layout Minisec
+discreteHalfPlane 
+\end_layout
+
+\begin_layout Standard
+Discretize a half plane.
+\end_layout
+
+\begin_layout Minisec
+discreteParabola
+\end_layout
+
+\begin_layout Standard
+Discretize a planar parabola.
+\end_layout
+
+\begin_layout Minisec
+discreteEgg
+\end_layout
+
+\begin_layout Standard
+Discretize a planar egg (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Curved"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+discreteTrefoil 
+\end_layout
+
+\begin_layout Standard
+Discretize a trefoil curve (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Curved"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+discreteStarfish 
+\end_layout
+
+\begin_layout Standard
+Discretize a starfish curve (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-2D-Curved"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imShapes/capsule_theta30.png
+	width 24text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/egg_theta30.png
+	width 24text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/starfish_theta30.png
+	width 24text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/trefoil_theta30.png
+	width 24text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Discrete-Shapes-2D-Curved"
+
+\end_inset
+
+More examples of discrete shapes in 2D.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Curves and points
+\end_layout
+
+\begin_layout Minisec
+discretePoints 
+\end_layout
+
+\begin_layout Standard
+Discretize a set of points, defined by a series of coordinates.
+\end_layout
+
+\begin_layout Minisec
+discretePolyline 
+\end_layout
+
+\begin_layout Standard
+Discretize a planar polyline, defined by a series of vertex coordinates.
+\end_layout
+
+\begin_layout Minisec
+discreteCurve 
+\end_layout
+
+\begin_layout Standard
+Discretize a planar curve, defined by a series of vertex coordinates.
+\end_layout
+
+\begin_layout Section
+3D images
+\end_layout
+
+\begin_layout Standard
+Typical script for creating 3D binary shapes is as follow:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+elli = [50 50 50  30 20 10  40 30 20];
+\end_layout
+
+\begin_layout Plain Layout
+
+img = discreteEllipsoid(1:100, 1:100, 1:100, elli);
+\end_layout
+
+\begin_layout Plain Layout
+
+figure;
+\end_layout
+
+\begin_layout Plain Layout
+
+isosurface(img, .5);
+\end_layout
+
+\begin_layout Plain Layout
+
+hold on; axis square; view(3); light;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Some examples are given in Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-3D"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Discrete-Shapes-3D-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imShapes/ball_R40.png
+	lyxscale 30
+	width 32text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/ellipsoid_A50_B30_C10_Y30_P30_R00.png
+	lyxscale 30
+	width 32text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/cube_S60_Y30_P30_R00.png
+	lyxscale 30
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Discrete-Shapes-3D"
+
+\end_inset
+
+Examples of simple discrete shapes in 3D
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+discreteBall 
+\end_layout
+
+\begin_layout Standard
+Discretize a 3D Ball, defined by a center and a radius.
+\end_layout
+
+\begin_layout Minisec
+discreteHalfBall 
+\end_layout
+
+\begin_layout Standard
+discretize a 3D half-ball, defined by a center, a radius and a normal orientatio
+n.
+\end_layout
+
+\begin_layout Minisec
+discreteEllipsoid 
+\end_layout
+
+\begin_layout Standard
+discretize a 3D ellipsoid.
+\end_layout
+
+\begin_layout Minisec
+discreteCube 
+\end_layout
+
+\begin_layout Standard
+discretize a 3D cube.
+\end_layout
+
+\begin_layout Minisec
+discreteCuboid 
+\end_layout
+
+\begin_layout Standard
+discretize a 3D cuboid.
+\end_layout
+
+\begin_layout Minisec
+discreteTorus 
+\end_layout
+
+\begin_layout Standard
+Discretize a 3D Torus.
+\end_layout
+
+\begin_layout Minisec
+discreteCylinder 
+\end_layout
+
+\begin_layout Standard
+Discretize a 3D cylinder, defined by two extreimty points and a radius.
+\end_layout
+
+\begin_layout Minisec
+discreteCapsule3d
+\end_layout
+
+\begin_layout Standard
+Create a binary image of a 3D capsule.
+\end_layout
+
+\begin_layout Minisec
+discreteReuleauxRevol
+\end_layout
+
+\begin_layout Standard
+Discretize the revolution of a Reuleaux triangle.
+\end_layout
+
+\begin_layout Minisec
+discreteSphereEighth 
+\end_layout
+
+\begin_layout Standard
+Discretize a 3D sphere eighth.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imShapes/cuboid_A90_B40_C10_Y30_P30_R00.png
+	lyxscale 30
+	width 32text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/cylinder_L60_R10_Y30_P00_R00.png
+	lyxscale 30
+	width 32text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/capsule_L60_R15_Y30_P00_R00.png
+	lyxscale 30
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imShapes/torus_A30_B10_Y30_P00_R00.png
+	lyxscale 30
+	width 32text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/reuleaux_R80_T30_P00.png
+	lyxscale 30
+	width 32text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imShapes/spheighth_R40_T10_P80.png
+	lyxscale 30
+	width 32text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Discrete-Shapes-3D-1"
+
+\end_inset
+
+More examples of discrete shapes in 3D.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Tessellations
+\end_layout
+
+\begin_layout Standard
+The functions in this section allows to quickly generate images of cellular
+ patterns.
+ Outputs are usually label images.
+\end_layout
+
+\begin_layout Minisec
+imPointsInfluenceZones
+\end_layout
+
+\begin_layout Standard
+Maps influence zones of a set of 2D/3D points.
+\end_layout
+
+\begin_layout Minisec
+imvoronoi2d 
+\end_layout
+
+\begin_layout Standard
+Generate a 2D voronoi image from a set of points.
+\end_layout
+
+\begin_layout Minisec
+imvoronoi3d
+\end_layout
+
+\begin_layout Standard
+generate a 3D voronoi image from a set of points.
+\end_layout
+
+\begin_layout Minisec
+dilatedVoronoi
+\end_layout
+
+\begin_layout Standard
+Simulate a 'thick' voronoi tesselation.
+\end_layout
+
+\begin_layout Minisec
+imAWVoronoi
+\end_layout
+
+\begin_layout Standard
+generate Additively Weighted Voronoi Diagram image.
+\end_layout
+
+\begin_layout Minisec
+imPowerDiagram
+\end_layout
+
+\begin_layout Standard
+Power diagram of a set of points.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "matImage-manual"
+options "apalike2"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

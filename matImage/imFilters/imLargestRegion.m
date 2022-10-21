@@ -1,13 +1,13 @@
 function [bin, indMax] = imLargestRegion(lbl, varargin)
-%IMLARGESTREGION Keep the largest region in a binary or label image
+% Keep the largest region within a binary or label image.
 % 
 %   REG = imLargestRegion(LBL)
 %   Finds the largest region in label image LBL, and returns the binary
 %   image corresponding to this label. Can be used to select automatically
 %   the most proeminent region in a segmentation or labelling result.
 %
-%   [REG IND] = imLargestRegion(LBL)
-%   Also returns the index of the largest region.
+%   [REG, IND] = imLargestRegion(LBL)
+%   Also returns the index of the largest region in the original image.
 %
 %   REG = imLargestRegion(BIN)
 %   REG = imLargestRegion(BIN, CONN)
@@ -44,7 +44,7 @@ function [bin, indMax] = imLargestRegion(lbl, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2012-07-27,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -53,7 +53,7 @@ if islogical(lbl)
     lbl = labelmatrix(bwconncomp(lbl, varargin{:}));
 end
 
-% compute area of each label
+% compute area/volume of each label
 nLabels = max(lbl(:));
 areas = zeros(nLabels, 1);
 for i = 1:nLabels

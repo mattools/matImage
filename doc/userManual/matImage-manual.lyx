@@ -6696,7 +6696,7 @@ Principle of gray-level granulometry
 \end_layout
 
 \begin_layout Subsection
-Computation of granulometry curves
+Morphological sieving
 \end_layout
 
 \begin_layout Standard
@@ -6720,6 +6720,193 @@ digital sieving
  Similarily, applying morphological closings of increasing sizes makes dark
  structures progressively disappear.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGranulo/coins.png
+	width 22text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Original image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGranulo/coins_OpDisk15.tif
+	width 22text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Opening R=15.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGranulo/coins_OpDisk27.tif
+	width 22text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Opening R=27.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGranulo/coins_OpDisk35.tif
+	width 22text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Opening R=35.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Gray-Level-Openings-Coins"
+
+\end_inset
+
+Exemple of gray-level granulometry by opening.
+ (a) Original gray-level image of rice grains.
+ (b) Sum of gray levels for differents sizes of square structuring element.
+ (c) Granulometry curve, corresponding to size distribution.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An example is provided on Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gray-Level-Openings-Coins"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for a grayscale image of coins.
+ For small values of structuring element radius, only small details vanish.
+ When the value is equal to around 27, the morphological opening removes
+ small coins (with diameter around 50 pixels), but retains large coins (with
+ diameter around 60 pixels).
+ For large values of radius, all the coins disappear.
+\end_layout
+
+\begin_layout Subsection
+Computation of granulometry curves
 \end_layout
 
 \begin_layout Standard
@@ -6756,22 +6943,137 @@ g_{i}=\frac{V_{i+1}-V_{i}}{V_{\text{final}}-V_{\text{initial}}}
 \end_layout
 
 \begin_layout Standard
-Fig.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGranulo/coins_grOpDk40_sumOfGrays.png
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sum of gray levels.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imGranulo/coins_grOpDk30.png
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Granulometry curve (pattern spectrum).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Gray-Level-Granulometry-coins"
+
+\end_inset
+
+Exemple of gray-level granulometry by opening.
+ (b) Sum of gray levels for differents sizes of square structuring element.
+ (c) Granulometry curve, corresponding to size distribution.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An example is provided on Figure.
 \begin_inset space ~
 \end_inset
 
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Gray-Level-Granulometry"
+reference "fig:Gray-Level-Granulometry-coins"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- presents the results of granulometry curve obtained on sample image with
- the following script:
+, using the coins image as original image, and using granulometry by opening
+ with disk structuring elements.
+ Two peaks an be noticed on the granulometry curve: they correspond to the
+ size of the small and large coins.
+ Then, the two population of coins can be determined from the granulometry
+ curve.
+ In practice, the granulometry curve presents larger peaks, and the populations
+ are difficult to distinguish.
+ However, the typical size of the structures may be assessed without requiring
+ segmentation.
+\end_layout
+
+\begin_layout Standard
+The granulometry curve on sample image can be computed with the following
+ script:
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
 lstparams "language=Matlab,extendedchars=true"
 inline false
@@ -6784,7 +7086,7 @@ status open
 
 \begin_layout Plain Layout
 
-img = imread('rice.png');
+img = imread('coins.png');
 \end_layout
 
 \begin_layout Plain Layout
@@ -6794,12 +7096,37 @@ img = imread('rice.png');
 
 \begin_layout Plain Layout
 
-xi = 1:20; 
+xi = 1:50; 
 \end_layout
 
 \begin_layout Plain Layout
 
-[gr, diams, vol] = imGranulo(img, 'opening', 'square', xi);
+[gr, diams, vols] = imGranulo(img, 'opening', 'disk', xi);
+\end_layout
+
+\begin_layout Plain Layout
+
+% display volume curve
+\end_layout
+
+\begin_layout Plain Layout
+
+figure; plot([0 diams], vols); xlim([0 100]);
+\end_layout
+
+\begin_layout Plain Layout
+
+xlabel('Diameter of structuring element (pixels)'); 
+\end_layout
+
+\begin_layout Plain Layout
+
+ylabel('Sum of gray levels');
+\end_layout
+
+\begin_layout Plain Layout
+
+title('Variation of volume curve');
 \end_layout
 
 \begin_layout Plain Layout
@@ -6809,7 +7136,7 @@ xi = 1:20;
 
 \begin_layout Plain Layout
 
-figure; plot(diams, gr); xlim([0 40]);
+figure; plot(diams, gr); xlim([0 100]);
 \end_layout
 
 \begin_layout Plain Layout
@@ -6841,137 +7168,13 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imGranulo/rice.png
-	width 25text%
-
+\begin_inset Newpage newpage
 \end_inset
 
 
 \end_layout
 
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Original image.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imGranulo/rice_grOpSq20_sumOfGrays.png
-	lyxscale 50
-	width 35text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Sum of gray levels.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imGranulo/rice_grOpSq20.png
-	lyxscale 50
-	width 35text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Granulometry curve (pattern spectrum).
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Gray-Level-Granulometry"
-
-\end_inset
-
-Exemple of gray-level granulometry by opening.
- (a) Original gray-level image of rice grains.
- (b) Sum of gray levels for differents sizes of square structuring element.
- (c) Granulometry curve, corresponding to size distribution.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
+\begin_layout Section
 Summary statistics
 \end_layout
 
@@ -7029,6 +7232,71 @@ m_{G}=\text{exp}\left(\sum_{i}g_{i}\cdot\text{log}x_{i}\right)
 \end_layout
 
 \begin_layout Section
+Granulometry mapping
+\end_layout
+
+\begin_layout Standard
+Instead of considering the whole image for computing the granulometry curves,
+ it is possible to restrict the process to a specific region of interest.
+ The region of interest is typically defined by a binary mask with the same
+ size as the grayscale image.
+ 
+\end_layout
+
+\begin_layout Standard
+By applying the process on several region of interest, and computing a summary
+ statistic for each region, it is possible to build a synthetic result image
+ where the value is given by the summary value of the regions.
+ Such a method was used to build parametric mapping of cellular morphology
+ from images of plant tissues 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Legland_2020_PlantMethods"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Oriented granulometry
+\end_layout
+
+\begin_layout Standard
+Granulometry curves strongly depends on the shape of the structuring elements.
+ Using disks, the size can be related to the thickness of the structures,
+ as the disks can erode from any direction.
+\end_layout
+
+\begin_layout Standard
+When using
+\series bold
+ linear structuring elements
+\series default
+, it is possible to consider also thin elongated structures.
+ The principle can be either to consider horizontal structuring elements,
+ and applying rotations of the image 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Gallos_2017_cpa"
+literal "false"
+
+\end_inset
+
+, or to consider a family of orientated structuring elements.
+ The latter strategy was used in 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Gager_2020_IndCropProd,Melelli2020"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
 List of functions
 \end_layout
 
@@ -7052,6 +7320,11 @@ status open
 GR = imGranulo(IMG, TYPE, SHAPE, SIZES);
 \end_layout
 
+\begin_layout Plain Layout
+
+[GR, DIAMS, VOLS] = imGranulo(IMG, TYPE, SHAPE, SIZES);
+\end_layout
+
 \end_inset
 
 
@@ -7067,25 +7340,6 @@ Computes granulometry curve for each region of a label image.
  The regions can also be specified by a cell array containing pixel indices
  for each regions.
  The latter possibility makes it possible to specify overlapping regions.
-\end_layout
-
-\begin_layout Minisec
-imOrientedGranulo 
-\end_layout
-
-\begin_layout Standard
-Computes gray level granulometry mean size for various orientations, by
- rotating the image before computing granulometry with a line structuring
- element.
- More details can be found in 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Gallos_2017_cpa"
-literal "false"
-
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Subsection
@@ -7115,6 +7369,53 @@ granuloStd
 
 \begin_layout Standard
 Computes the standard deviation of granulometric curve(s).
+\end_layout
+
+\begin_layout Subsection
+Oriented granulometry
+\end_layout
+
+\begin_layout Minisec
+imDirectionalGranulo 
+\end_layout
+
+\begin_layout Standard
+Directional granulometries for several orientations.
+\end_layout
+
+\begin_layout Minisec
+imGranuloOrientationMap 
+\end_layout
+
+\begin_layout Standard
+Orientation map of directional granulometry.
+\end_layout
+
+\begin_layout Minisec
+orientedLineStrel 
+\end_layout
+
+\begin_layout Standard
+Creates an oriented line structuring element.
+\end_layout
+
+\begin_layout Minisec
+imOrientedGranulo 
+\end_layout
+
+\begin_layout Standard
+Computes gray level granulometry mean size for various orientations, by
+ rotating the image before computing granulometry with a line structuring
+ element.
+ More details can be found in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Gallos_2017_cpa"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Chapter

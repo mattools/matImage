@@ -1,6 +1,10 @@
 function [B, L, N, A] = imContours(bin, varargin)
 %IMCONTOURS Extract polygonal contours of a binary image
 %
+%   Warning: function "imContour" is deprecated; use the function
+%   "imBoundaryContours" (for binary images) or "imContourLines" (for
+%   grayscale or intensity images) instead. 
+%
 %   CNTS = imContours(BIN)
 %   Computes a set of contours corresponding to the structures in binary
 %   image BIN. The result CNTS is a cell array of polygons, each polygon
@@ -32,6 +36,8 @@ function [B, L, N, A] = imContours(bin, varargin)
 % e-mail: david.legland@nantes.inra.fr
 % Created: 2012-07-27,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
+
+warning('function "imContour" is deprecated: use "imBoundaryContours" or "imContourLines" instead');
 
 % ensure input image is binary, eventually using specified threshold value
 if ~isempty(varargin)

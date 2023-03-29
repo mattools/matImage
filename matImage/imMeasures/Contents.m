@@ -7,15 +7,15 @@
 %   Some geometrical measures are provided as well, for description of
 %   particles in binary or in label images.
 %
-% Image exploration
+% Evaluate image values
+%   imLineProfile         - Evaluate image value along a line segment
+%   imEvaluate            - Evaluate image value at given position(s).
+%
+% Statistics on image element values
 %   imHistogram           - Histogram of 2D/3D grayscale or color images
 %   imHistogramDialog     - Open a dialog to setup image histogram display options
 %   imColorHistogram      - Plot 3D histogram of a color image
 %   imWeightedHistogram   - Weighted histogram of 2D/3D grayscale image.
-%   imLineProfile         - Evaluate image value along a line segment
-%   imEvaluate            - Evaluate image value at given position(s)
-%
-% Entropy and mutual information
 %   imJointHistogram      - Joint histogram of two images.
 %   imEntropy             - Compute entropy of an image
 %   imJointEntropy        - Joint entropy between two images
@@ -50,7 +50,7 @@
 %   imGrayscaleExtent     - Grayscale extent of an image
 %   imFindLabels          - Find unique labels within a label image.
 %
-%  Descriptive statistics on pixel values
+%  Summary statistics on pixel values
 %   imSum                 - Sum of a grayscale image, or sum of each color component
 %   imMean                - Mean of a grayscale image, or mean of each color component
 %   imStd                 - Standard deviation of pixel values
@@ -63,16 +63,16 @@
 %
 % Extract geometric primitives
 %   imFind                - Return coordinates of non-zero pixels in an image
-%   imRAG                 - Region adjacency graph of a label image.
-%   imContours            - Extract polygonal contours of a binary image
+%   imRAG                 - Region adjacency graph (RAG) of a label image.
+%   imBoundaryContours    - Extract polygonal contours of a binary image.
+%   imContourLines        - Extract iso contours of an image as polylines.
 %   imBinaryToGraph       - Transform a binary image into a graph structure
 %
-%
+
 % Author: David Legland
-% e-mail: david.legland@inra.fr
-% Copyright INRA - Cepia Software Platform.
+% e-mail: david.legland@inrae.fr
+% Copyright INRAE
 % http://github.com/mattools/matImage
-% http://www.pfl-cepia.inra.fr/index.php?page=imael
  
 % display help if executed
 help Contents
@@ -81,6 +81,7 @@ help Contents
 
 %   imInertiaEllipse      - Inertia ellipse of a binary or label image
 %   imInertiaEllipsoid    - Inertia ellipsoid of a 3D binary image
+%   imContours            - Extract polygonal contours of a binary image
 
 %   Others:
 

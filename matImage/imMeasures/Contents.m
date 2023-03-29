@@ -10,6 +10,7 @@
 % Evaluate image values
 %   imLineProfile         - Evaluate image value along a line segment
 %   imEvaluate            - Evaluate image value at given position(s).
+%   imLocalGradient       - Compute gradient for chosen locations within image.
 %
 % Statistics on image element values
 %   imHistogram           - Histogram of 2D/3D grayscale or color images

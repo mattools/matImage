@@ -12,7 +12,6 @@
 %
 %   Gradient and Laplacian filters:
 %   imGradientFilter        - Compute gradient components of a grayscale image
-%   imLocalGradient         - Compute gradient for chosen locations within image.
 %   imLaplacian             - Discrete Laplacian of an image
 %   imHessian               - Compute coefficients of Hessian matrix for each pixel.
 %   imEigenValues           - Image eigen values from second derivatives

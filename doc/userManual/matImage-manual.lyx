@@ -362,7 +362,7 @@ Extract the file
 \end_layout
 
 \begin_layout Enumerate
-Start Matlan, and run the 
+Start Matlab, and run the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1028,6 +1028,12 @@ imResize
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imResize"
+
+\end_inset
+
 Resizes 2D or 3D image.
 \end_layout
 
@@ -1036,7 +1042,35 @@ imDownSample
 \end_layout
 
 \begin_layout Standard
-Subsamples an array by applying operation on blocs.
+Reduces size of an image array by downscalng with an integer scaling factor,
+ allowing to specify the operation applied on blocs.
+ See also 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[fun:imResize]{imResize}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[fun:imReadDownSampled3d]{imReadDownSampled3d}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Minisec
@@ -3280,7 +3314,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-Image exploration
+3D Image exploration
 \end_layout
 
 \begin_layout Standard
@@ -3304,10 +3338,6 @@ noprefix "false"
 \end_inset
 
 ).
-\end_layout
-
-\begin_layout Subsection
-3D Images
 \end_layout
 
 \begin_layout Standard
@@ -3527,31 +3557,6 @@ noprefix "false"
  The slices can be dragged interactively.
 \end_layout
 
-\begin_layout Subsection
-Interactive tools
-\end_layout
-
-\begin_layout Standard
-Functions for semi-interactive image exploration, such as computation of
- line profiles.
-\end_layout
-
-\begin_layout Minisec
-imLineProfile 
-\end_layout
-
-\begin_layout Standard
-Evaluates image value along a line segment.
-\end_layout
-
-\begin_layout Minisec
-imEvaluate 
-\end_layout
-
-\begin_layout Standard
-Evaluates image value at given position(s).
-\end_layout
-
 \begin_layout Section
 Get information on images
 \end_layout
@@ -3738,6 +3743,12 @@ imReadDownSampled3d
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imReadDownSampled3d"
+
+\end_inset
+
 Reads a down-sampled version of a 3D image.
 \end_layout
 
@@ -4038,7 +4049,46 @@ minitoc
 \end_layout
 
 \begin_layout Section
+Image values
+\end_layout
+
+\begin_layout Standard
+Functions for semi-interactive image exploration, such as computation of
+ line profiles.
+\end_layout
+
+\begin_layout Minisec
+imEvaluate 
+\end_layout
+
+\begin_layout Standard
+Evaluates image value at given position(s).
+\end_layout
+
+\begin_layout Minisec
+imLineProfile 
+\end_layout
+
+\begin_layout Standard
+Evaluates image value along a line segment.
+\end_layout
+
+\begin_layout Minisec
+imLocalGradient 
+\end_layout
+
+\begin_layout Standard
+Computes gradient vector for chosen locations within image.
+\end_layout
+
+\begin_layout Section
 Statistics for pixel values
+\end_layout
+
+\begin_layout Standard
+Functions in this section allow for global exploration of all elements within
+ an image or a pair of images, without taking into account the spatial position
+ of image pixels or voxels.
 \end_layout
 
 \begin_layout Subsection
@@ -4056,9 +4106,11 @@ name "subsec:Image-histograms"
 \end_layout
 
 \begin_layout Standard
-Several functions allows for computing histogram of grayscale or color images.
+Several functions allow for computing histogram of grayscale or color images.
  They can be applied to 2D/3D images.
- The following example provides results of Figure
+ The following example demonstrates the exploration of the values within
+ a color image, either by computing the histogram of each channel, or by
+ computing joint histogram of two channels (see result in Figure
 \begin_inset space ~
 \end_inset
 
@@ -4072,7 +4124,7 @@ noprefix "false"
 
 \end_inset
 
-:
+).
 \end_layout
 
 \begin_layout Standard
@@ -4158,45 +4210,31 @@ Computes the joint histogram of two images.
 \end_layout
 
 \begin_layout Minisec
-imColorHistogram 
-\end_layout
-
-\begin_layout Standard
-Plots 3D histogram of a color image.
-\end_layout
-
-\begin_layout Minisec
-imWeightedHistogram
-\end_layout
-
-\begin_layout Standard
-Computes the weighted histogram of the values within the image, using an
- additional array/image as weights.
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename images/imMeasures/imHistogram_peppers.png
 	lyxscale 50
-	height 5cm
+	height 4cm
 
 \end_inset
 
 
 \begin_inset Graphics
 	filename images/imMeasures/imJointHistogram_peppersRG_log.png
-	height 5cm
+	height 4cm
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imMeasures/imColorHistogram_peppers.png
+	height 4cm
 
 \end_inset
 
@@ -4213,7 +4251,7 @@ name "fig:Histograms-Color-Image"
 
 \end_inset
 
-Various histograms of a color image.
+Exploration of color distribution within images.
 \end_layout
 
 \end_inset
@@ -4221,13 +4259,26 @@ Various histograms of a color image.
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
+\end_layout
+
+\begin_layout Minisec
+imColorHistogram 
+\end_layout
+
+\begin_layout Standard
+Plots 3D histogram of a color image.
+\end_layout
+
+\begin_layout Minisec
+imWeightedHistogram
+\end_layout
+
+\begin_layout Standard
+Computes the weighted histogram of the values within the image, using an
+ additional array/image as weights.
 \end_layout
 
 \begin_layout Subsection
@@ -4375,7 +4426,7 @@ Computes the mutual information between two images.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage newpage
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -4401,7 +4452,8 @@ shape
 
 \begin_layout Standard
 The functions in this section usually accept as input either binary images
- (one result is returned), or label images (an array of results is returned).
+ (a single result is returned, usually as a scalar or as a row vector),
+ or label images (an array of results is returned).
  
 \end_layout
 
@@ -5500,7 +5552,24 @@ noprefix "false"
 \end_layout
 
 \begin_layout Minisec
-imContours 
+imBoundaryContours 
+\end_layout
+
+\begin_layout Standard
+Extract polygonal boundary contours from a binary image.
+\end_layout
+
+\begin_layout Minisec
+imContourLines 
+\end_layout
+
+\begin_layout Standard
+Extracts iso contours from an intensity or grayscale image as a collection
+ of polylines.
+\end_layout
+
+\begin_layout Minisec
+imContours (deprecated)
 \end_layout
 
 \begin_layout Standard

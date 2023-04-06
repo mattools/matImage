@@ -79,7 +79,7 @@ else
     % create factory from strel name
     switch lower(strelShape)
         case 'square'
-            strelMaker = @(r) strel('square', r);
+            strelMaker = @(r) strel('square', 2*r+1);
         case {'octagon', 'diamond'}
             strelMaker = @(r) strel(lower(strelShape), r);
         case 'disk'

@@ -60,5 +60,5 @@ lbl = bwlabel(imread('coins.png') > 100);
 p = imPerimeter(lbl);
 
 assertEqual(testCase, 10, length(p));
-assertTrue(min(p) > 150);
-assertTrue(max(p) < 300);
+assertTrue(testCase, min(p) > 150);
+assertTrue(testCase, max(p) < 300);

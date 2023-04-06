@@ -58,5 +58,5 @@ lbl = bwlabel(imread('coins.png') > 100);
 a = imArea(lbl);
 
 assertEqual(testCase, 10, length(a));
-assertTrue(min(a) > 1500);
-assertTrue(max(a) < 3000);
+assertTrue(testCase, min(a) > 1500);
+assertTrue(testCase, max(a) < 3000);

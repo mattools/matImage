@@ -17,15 +17,16 @@ function tests = test_imGeodesicDiameter(varargin)
 
 tests = functiontests(localfunctions);
 
+
 function test_Square5x5(testCase) %#ok<*DEFNU>
 
 img = zeros(8, 8);
 img(2:6, 3:7) = 1;
 
-assertElementsAlmostEqual((2*11+2*5+1)/5, imGeodesicDiameter(img));
-assertElementsAlmostEqual(5, imGeodesicDiameter(img, [1 1]));
-assertElementsAlmostEqual(9, imGeodesicDiameter(img, [1 2]));
-assertElementsAlmostEqual(19/3, imGeodesicDiameter(img, [3 4]));
+assertEqual(testCase, (2*11+2*5+1)/5, imGeodesicDiameter(img), 'AbsTol', 0.01);
+assertEqual(testCase, 5, imGeodesicDiameter(img, [1 1]), 'AbsTol', 0.01);
+assertEqual(testCase, 9, imGeodesicDiameter(img, [1 2]), 'AbsTol', 0.01);
+assertEqual(testCase, 19/3, imGeodesicDiameter(img, [3 4]), 'AbsTol', 0.01);
 
 
 function test_SmallSpiral(testCase)
@@ -49,11 +50,11 @@ nd = 2 + 2 + 3 + 1;
 % exp1s2 = no + nd*sqrt(2) + 1;
 % assertElementsAlmostEqual(exp1s2, imGeodesicDiameter(img));
 exp11 = no + nd + 1;
-assertElementsAlmostEqual(exp11, imGeodesicDiameter(img, [1 1]));
+assertEqual(testCase, exp11, imGeodesicDiameter(img, [1 1]), 'AbsTol', 0.01);
 exp12 = no + nd*2 + 1;
-assertElementsAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
+assertEqual(testCase, exp12, imGeodesicDiameter(img, [1 2]), 'AbsTol', 0.01);
 exp34 = (no*3 + nd*4)/3 + 1;
-assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
+assertEqual(testCase, exp34, imGeodesicDiameter(img, [3 4]), 'AbsTol', 0.01);
 % assertElementsAlmostEqual(uint16(exp34), imGeodesicDiameter(img, uint16([3 4])));
 
 
@@ -74,11 +75,12 @@ img = [...
 
 exp = 7;
 
-assertElementsAlmostEqual(exp, imGeodesicDiameter(img));
-assertElementsAlmostEqual(exp, imGeodesicDiameter(img, [1 1]));
-assertElementsAlmostEqual(exp, imGeodesicDiameter(img, [1 2]));
-assertElementsAlmostEqual(exp, imGeodesicDiameter(img, [3 4]));
+assertEqual(testCase, exp, imGeodesicDiameter(img), 'AbsTol', 0.01);
+assertEqual(testCase, exp, imGeodesicDiameter(img, [1 1]), 'AbsTol', 0.01);
+assertEqual(testCase, exp, imGeodesicDiameter(img, [1 2]), 'AbsTol', 0.01);
+assertEqual(testCase, exp, imGeodesicDiameter(img, [3 4]), 'AbsTol', 0.01);
 assertEqual(testCase, uint16(exp), imGeodesicDiameter(img, uint16([3 4])));
+
 
 function test_SeveralParticles(testCase)
 
@@ -93,9 +95,10 @@ exp12 = [4 5 5 6]' + 1;
 exp34 = [8/3 11/3 11/3 12/3]' + 1;
 
 % test on label image
-assertElementsAlmostEqual(exp11, imGeodesicDiameter(img, [1 1]));
-assertElementsAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
-assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
+assertEqual(testCase, exp11, imGeodesicDiameter(img, [1 1]), 'AbsTol', 0.01);
+assertEqual(testCase, exp12, imGeodesicDiameter(img, [1 2]), 'AbsTol', 0.01);
+assertEqual(testCase, exp34, imGeodesicDiameter(img, [3 4]), 'AbsTol', 0.01);
+
 
 function test_SeveralParticles_UInt16(testCase)
 
@@ -110,9 +113,9 @@ exp12 = uint16([4 5 5 6]' + 1);
 exp34 = uint16([8/3 11/3 11/3 12/3]' + 1);
 
 % test on label image
-assertEqual(testCase, exp11, imGeodesicDiameter(img, uint16([1 1])));
-assertEqual(testCase, exp12, imGeodesicDiameter(img, uint16([1 2])));
-assertEqual(testCase, exp34, imGeodesicDiameter(img, uint16([3 4])));
+assertEqual(testCase, exp11, imGeodesicDiameter(img, uint16([1 1])), 'AbsTol', 0.01);
+assertEqual(testCase, exp12, imGeodesicDiameter(img, uint16([1 2])), 'AbsTol', 0.01);
+assertEqual(testCase, exp34, imGeodesicDiameter(img, uint16([3 4])), 'AbsTol', 0.01);
 
 
 function test_TouchingParticles(testCase)
@@ -133,9 +136,9 @@ exp12 = [6 2 6 2 2]' + 1;
 exp34 = [16 4 16 4 4]'/3 + 1;
 
 % test on label image
-assertElementsAlmostEqual(exp11, imGeodesicDiameter(img, [1 1]));
-assertElementsAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
-assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
+assertEqual(testCase, exp11, imGeodesicDiameter(img, [1 1]), 'AbsTol', 0.01);
+assertEqual(testCase, exp12, imGeodesicDiameter(img, [1 2]), 'AbsTol', 0.01);
+assertEqual(testCase, exp34, imGeodesicDiameter(img, [3 4]), 'AbsTol', 0.01);
 
 
 function test_Verbosity(testCase)
@@ -161,15 +164,15 @@ nd = 2 + 2 + 3 + 1;
 % assertElementsAlmostEqual(exp1s2, imGeodesicDiameter(img, 'verbose', true));
 evalc('res11 = imGeodesicDiameter(img, [1 1], ''verbose'', true)');
 exp11 = no + nd + 1;
-assertElementsAlmostEqual(exp11, res11);
+assertEqual(testCase, exp11, res11, 'AbsTol', 0.01);
 
 evalc('res12 = imGeodesicDiameter(img, [1 2], ''verbose'', true)');
 exp12 = no + nd*2 + 1;
-assertElementsAlmostEqual(exp12, res12);
+assertEqual(testCase, exp12, res12, 'AbsTol', 0.01);
 
 evalc('res34 = imGeodesicDiameter(img, [3 4], ''verbose'', true)');
 exp34 = (no*3 + nd*4)/3 + 1;
-assertElementsAlmostEqual(exp34, res34);
+assertEqual(testCase, exp34, res34, 'AbsTol', 0.01);
 
 
 function test_Verbosity_With_Labeling(testCase)
@@ -192,7 +195,8 @@ no = 5 + 1 + 3 + 2;
 nd = 2 + 2 + 3 + 1;
 evalc('res34 = imGeodesicDiameter(img, [3 4], ''verbose'', true)');
 exp34 = (no*3 + nd*4)/3 + 1;
-assertElementsAlmostEqual(exp34, res34);
+assertEqual(testCase, exp34, res34, 'AbsTol', 0.01);
+
 
 function test_MissingLabels(testCase)
 
@@ -214,9 +218,10 @@ exp12 = [8 2 8 2 2]' + 1;
 exp34 = [22 4 22 4 4]'/3 + 1;
 
 % test on label image
-assertElementsAlmostEqual(exp11, imGeodesicDiameter(img, [1 1]));
-assertElementsAlmostEqual(exp12, imGeodesicDiameter(img, [1 2]));
-assertElementsAlmostEqual(exp34, imGeodesicDiameter(img, [3 4]));
+assertEqual(testCase, exp11, imGeodesicDiameter(img, [1 1]), 'AbsTol', 0.01);
+assertEqual(testCase, exp12, imGeodesicDiameter(img, [1 2]), 'AbsTol', 0.01);
+assertEqual(testCase, exp34, imGeodesicDiameter(img, [3 4]), 'AbsTol', 0.01);
+
 
 function test_OutputLabels(testCase)
 
@@ -238,5 +243,5 @@ exp2 = [1 2 3 7 9]';
 
 % test on label image
 [res, labels] = imGeodesicDiameter(img, [3 4]);
-assertElementsAlmostEqual(exp1, res);
-assertElementsAlmostEqual(exp2, labels);
+assertEqual(testCase, exp1, res, 'AbsTol', 0.01);
+assertEqual(testCase, exp2, labels, 'AbsTol', 0.01);

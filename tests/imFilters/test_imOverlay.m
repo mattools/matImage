@@ -102,6 +102,7 @@ assertEqual(testCase, uint8(200), res(2, 4, 1));
 assertEqual(testCase, uint8(200), res(2, 4, 2));
 assertEqual(testCase, uint8(200), res(2, 4, 3));
 
+
 function test_overlayColorImage_gray2d(testCase)
 
 img = createGrayImage2d;
@@ -184,7 +185,7 @@ mask = createMask2d;
 res = imOverlay(img, mask, 'm');
 
 % check size
-assertEqual([10 10 3], size(res));
+assertEqual(testCase, [10 10 3], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(80),  res(1, 1, 1));
@@ -211,7 +212,7 @@ ovr = createGrayOverlay2d;
 res = imOverlay(img, mask, ovr);
 
 % check size
-assertEqual([10 10 3], size(res));
+assertEqual(testCase, [10 10 3], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(80),  res(1, 1, 1));
@@ -227,6 +228,7 @@ assertEqual(testCase, uint8(200), res(2, 4, 1));
 assertEqual(testCase, uint8(200), res(2, 4, 2));
 assertEqual(testCase, uint8(200), res(2, 4, 3));
 
+
 function test_overlayColorImage_color2d(testCase)
 
 img = createColorImage2d;
@@ -237,7 +239,7 @@ ovr = createColorOverlay2d;
 res = imOverlay(img, mask, ovr);
 
 % check size
-assertEqual([10 10 3], size(res));
+assertEqual(testCase, [10 10 3], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(80),  res(1, 1, 1));
@@ -263,7 +265,7 @@ mask    = createMask3d;
 res     = imOverlay(img, mask);
 
 % check size
-assertEqual([10 10 3 10], size(res));
+assertEqual(testCase, [10 10 3 10], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(100), res(1, 1, 1, 1));
@@ -288,7 +290,7 @@ mask    = createMask3d;
 res = imOverlay(img, mask, [1 0 1]);
 
 % check size
-assertEqual([10 10 3 10], size(res));
+assertEqual(testCase, [10 10 3 10], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(100), res(1, 1, 1, 1));
@@ -313,7 +315,7 @@ mask    = createMask3d;
 res = imOverlay(img, mask, 'm');
 
 % check size
-assertEqual([10 10 3 10], size(res));
+assertEqual(testCase, [10 10 3 10], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(100), res(1, 1, 1, 1));
@@ -339,7 +341,7 @@ ovr     = createGrayOverlay3d;
 res = imOverlay(img, mask, ovr);
 
 % check size
-assertEqual([10 10 3 10], size(res));
+assertEqual(testCase, [10 10 3 10], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(100), res(1, 1, 1, 1));
@@ -354,6 +356,7 @@ assertEqual(testCase, uint8(200), res(2, 4, 1, 7));
 assertEqual(testCase, uint8(200), res(2, 4, 2, 7));
 assertEqual(testCase, uint8(200), res(2, 4, 3, 7));
 
+
 function test_overlayColorImage_gray3d(testCase)
 
 img     = createGrayImage3d;
@@ -364,7 +367,7 @@ ovr     = createColorOverlay3d;
 res = imOverlay(img, mask, ovr);
 
 % check size
-assertEqual([10 10 3 10], size(res));
+assertEqual(testCase, [10 10 3 10], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(100), res(1, 1, 1, 1));
@@ -389,7 +392,7 @@ mask    = createMask3d;
 res     = imOverlay(img, mask);
 
 % check size
-assertEqual([10 10 3 10], size(res));
+assertEqual(testCase, [10 10 3 10], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(80),  res(1, 1, 1, 1));
@@ -414,7 +417,7 @@ mask    = createMask3d;
 res = imOverlay(img, mask, [1 0 1]);
 
 % check size
-assertEqual([10 10 3 10], size(res));
+assertEqual(testCase, [10 10 3 10], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(80),  res(1, 1, 1, 1));
@@ -440,7 +443,7 @@ mask    = createMask3d;
 res = imOverlay(img, mask, 'm');
 
 % check size
-assertEqual([10 10 3 10], size(res));
+assertEqual(testCase, [10 10 3 10], size(res));
 
 % pixels outside mask do not change
 assertEqual(testCase, uint8(80),  res(1, 1, 1, 1));

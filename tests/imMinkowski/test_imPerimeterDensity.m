@@ -31,7 +31,7 @@ img = [ ...
 
 pd = imPerimeterDensity(img);
 assertEqual(testCase, [1 1], size(pd));
-assertTrue(pd < 1);
+assertTrue(testCase, pd < 1);
 
 
 function test_Ndirs(testCase)
@@ -48,11 +48,11 @@ img = [ ...
 
 pd2 = imPerimeterDensity(img, 2);
 assertEqual(testCase, [1 1], size(pd2));
-assertTrue(pd2 < 1);
+assertTrue(testCase, pd2 < 1);
 
 pd4 = imPerimeterDensity(img, 4);
 assertEqual(testCase, [1 1], size(pd4));
-assertTrue(pd4 < 1);
+assertTrue(testCase, pd4 < 1);
 
 
 

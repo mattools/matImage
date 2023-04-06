@@ -49,5 +49,5 @@ img(4, 6) = 0;
 
 [chi, labels] = imEuler2dEstimate(img);
 
-assertElementsAlmostEqual(chi, [1 1 0]');
-assertElementsAlmostEqual(labels, [3 5 9]');
+assertEqual(testCase, chi, [1 1 0]');
+assertEqual(testCase, labels, [3 5 9]');

@@ -72,7 +72,7 @@ img = metaImageRead(fullfile('ratBrainMriSlices', filename));
 exp = [96 96 96];
 assertEqual(testCase, size(img), exp, 'image does not have the right size');
 
-assertTrue(max(img(:))>0);
+assertTrue(testCase, max(img(:))>0);
 
 
 function test_read_slices_pattern(testCase)
@@ -83,7 +83,7 @@ img = metaImageRead(fullfile('ratBrainMriSlices', filename));
 exp = [96 96 96];
 assertEqual(testCase, size(img), exp, 'image does not have the right size');
 
-assertTrue(max(img(:))>0);
+assertTrue(testCase, max(img(:))>0);
 
 
 function test_UInt16_3D_RampXYZ_msb(testCase)

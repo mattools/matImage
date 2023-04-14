@@ -1,10 +1,36 @@
 function [orientMap, resMax, rgb] = imGranuloOrientationMap(img, nOrients, grType, LMax)
 % Orientation map of directional granulometry.
 %
+%   Usage:
 %   ORIMAP = imGranuloOrientationMap(IMG, NORIENT, GRTYPE, LMAX)
+%   [ORIMAP, RESMAX, RGB] = imGranuloOrientationMap(IMG, NORIENT, GRTYPE, LMAX)
 %
-%   [ORIMAP, RGB] = imGranuloOrientationMap(IMG, NORIENT, GRTYPE, LMAX)
-%   Also returns an RGB version for display
+%   Computes the orientation map ORIMAP by applying grey level granulometry
+%   methods on the input image IMG. The orientation map is obtained by
+%   performing grey level granulometries with orietned line segments of
+%   increasing sizes, and retaining for each pixel the orientation whose
+%   granulometriccurve provides that largest mean size.
+%
+%   Input arguments:
+%   IMG:     the input image. Must be 2D and grayscale.
+%   NORIENT: the number of orientations to consider. Orientations are
+%     distributed within the [0 180] interval.
+%   GRTYPE:  the type of granulometry to perform. Must be either 'opening'
+%     (in the case of bright fibers over dark background) or 'closing (in
+%     the case of dark fibers over bright background). 
+%   LMAX:    the size of the largest structuring element to use.
+%
+%   Output arguments:
+%   ORIMAP is a numeric array the same size as IMG, with values between 0
+%   and 180 corresponding to the orientation (in degrees). Orientation 0
+%   corresponds to horizontal, orientation 90 corresponds to vertical.
+%   
+%   Also returns an RESMAX and RGB as follow:
+%   RESMAX:  an array the same saize as IMG that corresponds to the size
+%     that was computed for retained orientation. 
+%   RGB:     a color representation of the orientation map, that combines
+%     the values in the orientation map and the intensities of the original
+%     image.  
 %
 %   Example
 %   imGranuloOrientationMap
@@ -36,9 +62,12 @@ dyMoy = sum(bsxfun(@times, res, dyList), 3) ./ sum(res, 3);
 orientMap = mod(rad2deg(atan2(dyMoy, dxMoy) / 2) + 180, 180);
 
 % optionnaly create an rgb version
-if nargout > 1
+if nargout > 2
     hue = orientMap / 180;
     sat = double(img) / double(max(img(:)));
+    if strcmp(grType, 'closing')
+        sat = 1 - sat;
+    end
     val = ones(size(img));
     rgb = hsv2rgb(cat(3, hue, sat, val));
 end

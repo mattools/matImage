@@ -59,6 +59,7 @@
 
 % right section with number
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\renewcommand*{\chapterpagestyle}{empty}
 
 % Added by lyx2lyx
 \usepackage[charter]{mathdesign}
@@ -219,24 +220,6 @@ TODO:
 quick tour ?
 \end_layout
 
-\begin_layout Itemize
-Refactor the 
-\begin_inset Quotes eld
-\end_inset
-
-imMeasure
-\begin_inset Quotes erd
-\end_inset
-
- package 
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-(imStacks + imMeasures) -> (imExplore + imQuantify)
-\end_layout
-
-\end_deeper
 \end_inset
 
 
@@ -525,9 +508,9 @@ from global to technical
 \begin_inset Quotes erd
 \end_inset
 
- order: first the modules for classical image processing and for exploration/vis
-ualization, then the modules for analysis/quantification, and finally some
- more specialized modules.
+ order: first the module for generic exploration/visualization of images,
+ then the modules for classical image processing (i.e.
+ filtering and quantification), and finally some more specialized modules.
 \end_layout
 
 \begin_layout Description
@@ -918,551 +901,14 @@ Computes gradient vector for chosen locations within image.
 \end_layout
 
 \begin_layout Section
-Slicer application
-\end_layout
-
-\begin_layout Subsection
-Overview
+3D images slicing
 \end_layout
 
 \begin_layout Standard
-The 
-\begin_inset Quotes eld
-\end_inset
-
-Slicer
-\begin_inset Quotes erd
-\end_inset
-
- application is a graphical application that allows for quick interactive
- exploration of 3D grayscale or color images, including the computation
- of histograms, isosurfaces, or cross-sections (Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Slicer-app"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imStacks/imgSlicerBrainsRGB.png
-	lyxscale 50
-	width 80text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Slicer-app"
-
-\end_inset
-
-Several views of the Slicer application on a sample 3D color image.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-The main interface is a slice-by-slice viewer that integrates slice changing
- slider, status bar, and an action menu.
- The menu provides several actions to import/export 3D images, to apply
- various operations on the 3D image (crop, rotation...), and to generate new
- visualizations of the 3D data: isosurfaces, 3D orhoslices, histograms...
- It is possible to specifiy the spatial calibration, facilitating the visualisat
-ion of 3D structures with non-cubic voxels.
-\end_layout
-
-\begin_layout Standard
-All the features of the Slicer application are available as Matlab functions
- of the 
-\begin_inset Quotes eld
-\end_inset
-
-stacks
-\begin_inset Quotes erd
-\end_inset
-
- module.
-\end_layout
-
-\begin_layout Subsection
-Menu description
-\end_layout
-
-\begin_layout Subsubsection
-File menu
-\end_layout
-
-\begin_layout Standard
-Contains several options to import/export 3D images.
- See also the section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Read-3D-image"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Minisec
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imStacks/Slicer/menusSlicer.png
-	lyxscale 50
-	width 100text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Slicer-Menu"
-
-\end_inset
-
-The menu bar of the Slicer application.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-Open...
-\end_layout
-
-\begin_layout Standard
-Opens a 3D image.
- Several common file formats are supported (TIFF, Analyze, MHD, VGI...).
- 
-\end_layout
-
-\begin_layout Minisec
-Import Raw Data....
-\end_layout
-
-\begin_layout Standard
-Imports image data from a binary data file.
-\end_layout
-
-\begin_layout Minisec
-Import From Workspace
-\end_layout
-
-\begin_layout Standard
-Displays a 3D array from Matlab workspace into a new Slicer frame.
-\end_layout
-
-\begin_layout Minisec
-Demo images
-\end_layout
-
-\begin_layout Standard
-Opens a selection of demonstration images.
-\end_layout
-
-\begin_layout Minisec
-Save image
-\end_layout
-
-\begin_layout Standard
-Saves current 3D image.
-\end_layout
-
-\begin_layout Minisec
-Export To Workspace
-\end_layout
-
-\begin_layout Standard
-Exports current image into workspace as a 3D or 4D numeric array.
-\end_layout
-
-\begin_layout Minisec
-Close
-\end_layout
-
-\begin_layout Standard
-Closes the current viewer.
-\end_layout
-
-\begin_layout Subsubsection
-Image Menu
-\end_layout
-
-\begin_layout Standard
-Allows for calibrating the image, and converting data types.
-\end_layout
-
-\begin_layout Minisec
-Image Info
-\end_layout
-
-\begin_layout Standard
-Display a short description of image properties.
-\end_layout
-
-\begin_layout Minisec
-Spatial Calibration
-\end_layout
-
-\begin_layout Standard
-Updates sptial calibration (voxel size and unit name) of image.
-\end_layout
-
-\begin_layout Minisec
-Image Origin
-\end_layout
-
-\begin_layout Standard
-Updates the coordinates of first voxel in user coordinates.
-\end_layout
-
-\begin_layout Minisec
-Change Image Type
-\end_layout
-
-\begin_layout Standard
-Changes the type associated to the current image.
- The 
-\begin_inset Quotes eld
-\end_inset
-
-Type
-\begin_inset Quotes erd
-\end_inset
-
- can be one of 
-\begin_inset Quotes eld
-\end_inset
-
-Grayscale
-\begin_inset Quotes erd
-\end_inset
-
-, 
-\begin_inset Quotes eld
-\end_inset
-
-Intensity
-\begin_inset Quotes erd
-\end_inset
-
-, 
-\begin_inset Quotes eld
-\end_inset
-
-Binary
-\begin_inset Quotes erd
-\end_inset
-
-, 
-\begin_inset Quotes eld
-\end_inset
-
-Label
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Minisec
-Change Gray Levels
-\end_layout
-
-\begin_layout Standard
-Changes the number of levels used to represent grayscale image data.
-\end_layout
-
-\begin_layout Minisec
-Convert Intensity to Color
-\end_layout
-
-\begin_layout Standard
-Converts a scalar image into a color image by choosing a colormap.
- See also section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Color-Images"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- (function double2rgb).
-\end_layout
-
-\begin_layout Minisec
-Convert Labels to Color
-\end_layout
-
-\begin_layout Standard
-Converts a label image into a color image by choosing a colormap.
- See also section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fun:label2rgb3d"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- (function label2rgb3d).
-\end_layout
-
-\begin_layout Minisec
-RGB To Gray
-\end_layout
-
-\begin_layout Standard
-Converts a RGB color image into a grayscale image.
-\end_layout
-
-\begin_layout Minisec
-Split RGB
-\end_layout
-
-\begin_layout Standard
-Splits the color components of a 3D color image into three distinct images.
- Each component is displayed into a new Slicer frame.
-\end_layout
-
-\begin_layout Subsubsection
-View Menu
-\end_layout
-
-\begin_layout Standard
-Allows for tuning display settings, and computing 3D representations.
-\end_layout
-
-\begin_layout Minisec
-Display Range
-\end_layout
-
-\begin_layout Standard
-Chooses the range of values used to display grayscale or intensity images.
- Can be chosen automatically from image data values, inferred from image
- data type, or manually selected.
-\end_layout
-
-\begin_layout Minisec
-Look-Up Table
-\end_layout
-
-\begin_layout Standard
-Chooses the look-up table to use for representing intensity or label images.
-\end_layout
-
-\begin_layout Minisec
-Show Ortho Slices
-\end_layout
-
-\begin_layout Standard
-Displays the 3D image as three 2D images representing XY, YZ and XZ slices
- (See Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Visualization-3D-Image"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
--a).
- Each slice is displayed as a 2D image.
- The slice position can be updated by clicking on the images.
-\end_layout
-
-\begin_layout Minisec
-Show 3D Ortho Slices
-\end_layout
-
-\begin_layout Standard
-Displays the 3D image as three 2D images mutually intersecting in 3D (See
- Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Visualization-3D-Image"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
--b).
- Each slice is represented in 3D.
- The slice position can be updated by dragging the 3D images.
-\end_layout
-
-\begin_layout Minisec
-Isosurface rendering
-\end_layout
-
-\begin_layout Standard
-Computes and renders a 3D isosurface from image data and user-defined value.
- Can be slow for large images.
-\end_layout
-
-\begin_layout Minisec
-Binary/Labels surface rendering
-\end_layout
-
-\begin_layout Standard
-Computes and renders a 3D isosurface from binary and label images.
- Similar to isosurface rendering, but a specific processing is added to
- iterate over the set of distinct labels within image.
-\end_layout
-
-\begin_layout Minisec
-Zoom In/Out/1:1/Best...
-\end_layout
-
-\begin_layout Standard
-Changes the zoom level of the current image view.
-\end_layout
-
-\begin_layout Subsubsection
-Process Menu
-\end_layout
-
-\begin_layout Standard
-Provides basic image processing tools.
-\end_layout
-
-\begin_layout Minisec
-Geometric Transforms
-\end_layout
-
-\begin_layout Standard
-Performs elementary shape transformation on the 3D image: flip along one
- of the main axes, rotation by 90 degrees around one of the main axes.
-\end_layout
-
-\begin_layout Minisec
-Crop Image
-\end_layout
-
-\begin_layout Standard
-Extracts a 3D rectangular selection from the image.
-\end_layout
-
-\begin_layout Minisec
-Crop Label
-\end_layout
-
-\begin_layout Standard
-Extracts the 3D region containing the specified label.
- Returns a new label image with only one label.
-\end_layout
-
-\begin_layout Minisec
-View Histogram
-\end_layout
-
-\begin_layout Standard
-Displays the histogram of the grayscale or color values within the image.
- See also the imHistogram function (p.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand pageref
-reference "fun:imHistogram"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Functions for 3D image exploration
-\end_layout
-
-\begin_layout Standard
-The imStacks modules provides several tools for interactive exploration
+The imExplore module provides several tools for interactive exploration
  of 3D images.
  Most functions work independently for both grayscale or color images, and
- allow to specifiy the spatial calibration of images.
+ allow to specify the spatial calibration of images.
  Several histograms functions are also provided in the measure module (see
  section
 \begin_inset space ~
@@ -1645,6 +1091,10 @@ Different representations of a 3D grayscale image.
 
 \end_layout
 
+\begin_layout Subsection
+Visualization 
+\end_layout
+
 \begin_layout Minisec
 orthoSlices
 \end_layout
@@ -1698,17 +1148,74 @@ noprefix "false"
  The slices can be dragged interactively.
 \end_layout
 
+\begin_layout Subsection
+Slicing functions
+\end_layout
+
+\begin_layout Minisec
+stackSlice
+\end_layout
+
+\begin_layout Standard
+Extracts a planar slice from a 3D image.
+\end_layout
+
+\begin_layout Subsection
+Visualization routines
+\end_layout
+
+\begin_layout Standard
+These low-level functions are used by other visualization functions, but
+ can also be used independently.
+\end_layout
+
+\begin_layout Minisec
+slice3d
+\end_layout
+
+\begin_layout Standard
+Shows a moving 3D slice of an image.
+\end_layout
+
+\begin_layout Minisec
+showXSlice
+\end_layout
+
+\begin_layout Standard
+Shows YZ slice of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+showYSlice
+\end_layout
+
+\begin_layout Standard
+Shows ZX slice of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+showZSlice
+\end_layout
+
+\begin_layout Standard
+Shows XY slice of a 3D image.
+\end_layout
+
 \begin_layout Section
 Get information on images
 \end_layout
 
+\begin_layout Standard
+Several functions provide basic information about image: size, type...
+\end_layout
+
 \begin_layout Subsection
-Image size and type
+Image size 
 \end_layout
 
 \begin_layout Standard
-Some functions to query the physical size or type of the image.
- 
+Provide information about the size of the image, either in pixels/voxels
+ coordinates, or in physical coordinates by providing calibration.
 \end_layout
 
 \begin_layout Minisec
@@ -1729,14 +1236,6 @@ Checks if an image is 3D.
 \end_layout
 
 \begin_layout Minisec
-isColorImage 
-\end_layout
-
-\begin_layout Standard
-Checks if an image is a color image.
-\end_layout
-
-\begin_layout Minisec
 imPhysicalExtent 
 \end_layout
 
@@ -1747,23 +1246,21 @@ Computes the physical extent of an image.
 \end_layout
 
 \begin_layout Minisec
-imGrayscaleExtent 
-\end_layout
-
-\begin_layout Standard
-Grayscale extent of an image.
-\end_layout
-
-\begin_layout Subsection
-Stacks
-\end_layout
-
-\begin_layout Minisec
 stackSize
 \end_layout
 
 \begin_layout Standard
 Computes the size of a 3D stack in [x y z] form.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+deprecated?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Minisec
@@ -1772,6 +1269,29 @@ stackExtent
 
 \begin_layout Standard
 Computes the physical extent of a 3D image.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+deprecated?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Image type
+\end_layout
+
+\begin_layout Minisec
+isColorImage 
+\end_layout
+
+\begin_layout Standard
+Checks if an image (2D or 3D) is a color image.
+ 
 \end_layout
 
 \begin_layout Minisec
@@ -1780,6 +1300,14 @@ isColorStack
 
 \begin_layout Standard
 Checks if a 3D stack is color or gray-scale.
+\end_layout
+
+\begin_layout Minisec
+imGrayscaleExtent 
+\end_layout
+
+\begin_layout Standard
+Grayscale extent of an image.
 \end_layout
 
 \begin_layout Section
@@ -1813,7 +1341,7 @@ readstack
 \begin_layout Standard
 Reads a 3D image stored either in a list of 2D images (slices), or in a
  3D image file.
- The function can parse some of the meta-data stored by ImageJ
+ The function can also parse some of the meta-data stored by ImageJ
 \begin_inset Index idx
 status collapsed
 
@@ -2018,14 +1546,6 @@ Concatenates 2 or 3 grayscale stacks to form a color stack.
 \end_layout
 
 \begin_layout Minisec
-stackSlice
-\end_layout
-
-\begin_layout Standard
-Extracts a planar slice from a 3D image.
-\end_layout
-
-\begin_layout Minisec
 stackRotate90
 \end_layout
 
@@ -2065,45 +1585,588 @@ imMiddleSlice
 Extracts the middle slice of a 3D stack.
 \end_layout
 
+\begin_layout Chapter
+The Slicer application
+\end_layout
+
+\begin_layout Section
+Overview
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+Slicer
+\begin_inset Quotes erd
+\end_inset
+
+ application is a graphical application that allows for quick interactive
+ exploration of 3D grayscale or color images, including the computation
+ of histograms, isosurfaces, or cross-sections (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Slicer-app"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/imgSlicerBrainsRGB.png
+	lyxscale 50
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Slicer-app"
+
+\end_inset
+
+Several views of the Slicer application on a sample 3D color image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The main interface is a slice-by-slice viewer that integrates slice changing
+ slider, status bar, and an action menu.
+ The menu provides several actions to import/export 3D images, to apply
+ various operations on the 3D image (crop, rotation...), and to generate new
+ visualizations of the 3D data: isosurfaces, 3D orhoslices, histograms...
+ It is possible to specifiy the spatial calibration, facilitating the visualizat
+ion of 3D structures with non-cubic voxels.
+\end_layout
+
+\begin_layout Standard
+All the features of the Slicer application are available as Matlab functions
+ from the MatImage library (mostly from the imExplore module).
+\end_layout
+
+\begin_layout Section
+Usage
+\end_layout
+
+\begin_layout Standard
+To start the the Slicer application, choose one of these syntaxes:
+\end_layout
+
+\begin_layout Itemize
+run 
+\begin_inset Quotes eld
+\end_inset
+
+Slicer
+\begin_inset Quotes erd
+\end_inset
+
+ from the matlab prompt.
+ This will open an empty Slicer frame, and image files can be open from
+ the File menu.
+\end_layout
+
+\begin_layout Itemize
+run Slicer with the image to display as argument.
+ The image is either a 3D (or 4D in case of color image) numeric array,
+ or the name of an image file.
+\end_layout
+
+\begin_layout Standard
+The next sections describe the options proposed in the frame menu (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Slicer-Menu"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/Slicer/menusSlicer.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Slicer-Menu"
+
+\end_inset
+
+The menu bar of the Slicer application.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+File menu
+\end_layout
+
+\begin_layout Standard
+Contains several options to import/export 3D images.
+ See also the section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Read-3D-image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection
-Visualisation routines
-\end_layout
-
-\begin_layout Standard
-These low-level functions are used by other visualization functions, but
- can be used independently.
+Import / read images
 \end_layout
 
 \begin_layout Minisec
-slice3d
+Open...
 \end_layout
 
 \begin_layout Standard
-Shows a moving 3D slice of an image.
+Opens a 3D image.
+ Several common file formats are supported (TIFF, Analyze, MHD, VGI...).
+ 
 \end_layout
 
 \begin_layout Minisec
-showXSlice
+Import Raw Data....
 \end_layout
 
 \begin_layout Standard
-Shows YZ slice of a 3D image.
+Imports image data from a binary data file.
 \end_layout
 
 \begin_layout Minisec
-showYSlice
+Import From Workspace
 \end_layout
 
 \begin_layout Standard
-Shows ZX slice of a 3D image.
+Displays a 3D array from Matlab workspace into a new Slicer frame.
 \end_layout
 
 \begin_layout Minisec
-showZSlice
+Demo images
 \end_layout
 
 \begin_layout Standard
-Shows XY slice of a 3D image.
+Opens a selection of demonstration images.
+\end_layout
+
+\begin_layout Subsection
+Export / write images
+\end_layout
+
+\begin_layout Minisec
+Save image
+\end_layout
+
+\begin_layout Standard
+Saves current 3D image.
+\end_layout
+
+\begin_layout Minisec
+Export To Workspace
+\end_layout
+
+\begin_layout Standard
+Exports current image into workspace as a 3D or 4D numeric array.
+\end_layout
+
+\begin_layout Minisec
+Close
+\end_layout
+
+\begin_layout Standard
+Closes the current viewer.
+\end_layout
+
+\begin_layout Section
+Image Menu
+\end_layout
+
+\begin_layout Standard
+Allows for calibrating the image, and converting data types.
+\end_layout
+
+\begin_layout Subsection
+Image info and calibration
+\end_layout
+
+\begin_layout Minisec
+Image Info
+\end_layout
+
+\begin_layout Standard
+Display a short description of image properties.
+\end_layout
+
+\begin_layout Minisec
+Spatial Calibration
+\end_layout
+
+\begin_layout Standard
+Updates sptial calibration (voxel size and unit name) of image.
+\end_layout
+
+\begin_layout Minisec
+Image Origin
+\end_layout
+
+\begin_layout Standard
+Updates the coordinates of first voxel in user coordinates.
+\end_layout
+
+\begin_layout Subsection
+Conversions
+\end_layout
+
+\begin_layout Minisec
+Change Image Type
+\end_layout
+
+\begin_layout Standard
+Changes the type associated to the current image.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+Type
+\begin_inset Quotes erd
+\end_inset
+
+ can be one of 
+\begin_inset Quotes eld
+\end_inset
+
+Grayscale
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Intensity
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Binary
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Label
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+Change Gray Levels
+\end_layout
+
+\begin_layout Standard
+Changes the number of levels used to represent grayscale image data.
+\end_layout
+
+\begin_layout Minisec
+Convert Intensity to Color
+\end_layout
+
+\begin_layout Standard
+Converts a scalar image into a color image by choosing a colormap.
+ See also section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Color-Images"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (function double2rgb).
+\end_layout
+
+\begin_layout Minisec
+Convert Labels to Color
+\end_layout
+
+\begin_layout Standard
+Converts a label image into a color image by choosing a colormap.
+ See also section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fun:label2rgb3d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (function label2rgb3d).
+\end_layout
+
+\begin_layout Minisec
+RGB To Gray
+\end_layout
+
+\begin_layout Standard
+Converts a RGB color image into a grayscale image.
+\end_layout
+
+\begin_layout Minisec
+Split RGB
+\end_layout
+
+\begin_layout Standard
+Splits the color components of a 3D color image into three distinct images.
+ Each component is displayed into a new Slicer frame.
+\end_layout
+
+\begin_layout Section
+View Menu
+\end_layout
+
+\begin_layout Standard
+Allows for tuning display settings, and computing 3D representations.
+\end_layout
+
+\begin_layout Minisec
+Display Range
+\end_layout
+
+\begin_layout Standard
+Chooses the range of values used to display grayscale or intensity images.
+ Can be chosen automatically from image data values, inferred from image
+ data type, or manually selected.
+\end_layout
+
+\begin_layout Minisec
+Look-Up Table
+\end_layout
+
+\begin_layout Standard
+Chooses the look-up table to use for representing intensity or label images.
+\end_layout
+
+\begin_layout Minisec
+Show Ortho Slices
+\end_layout
+
+\begin_layout Standard
+Displays the 3D image as three 2D images representing XY, YZ and XZ slices
+ (See Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-a).
+ Each slice is displayed as a 2D image.
+ The slice position can be updated by clicking on the images.
+\end_layout
+
+\begin_layout Minisec
+Show 3D Ortho Slices
+\end_layout
+
+\begin_layout Standard
+Displays the 3D image as three 2D images mutually intersecting in 3D (See
+ Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-b).
+ Each slice is represented in 3D.
+ The slice position can be updated by dragging the 3D images.
+\end_layout
+
+\begin_layout Minisec
+Isosurface rendering
+\end_layout
+
+\begin_layout Standard
+Computes and renders a 3D isosurface from image data and user-defined value.
+ Can be slow for large images.
+\end_layout
+
+\begin_layout Minisec
+Binary/Labels surface rendering
+\end_layout
+
+\begin_layout Standard
+Computes and renders a 3D isosurface from binary and label images.
+ Similar to isosurface rendering, but a specific processing is added to
+ iterate over the set of distinct labels within image.
+\end_layout
+
+\begin_layout Minisec
+Zoom In/Out/1:1/Best...
+\end_layout
+
+\begin_layout Standard
+Changes the zoom level of the current image view.
+\end_layout
+
+\begin_layout Section
+Process Menu
+\end_layout
+
+\begin_layout Standard
+Provides basic image processing tools.
+\end_layout
+
+\begin_layout Minisec
+Geometric Transforms
+\end_layout
+
+\begin_layout Standard
+Performs elementary shape transformation on the 3D image: flip along one
+ of the main axes, rotation by 90 degrees around one of the main axes.
+\end_layout
+
+\begin_layout Minisec
+Crop Image
+\end_layout
+
+\begin_layout Standard
+Extracts a 3D rectangular selection from the image.
+\end_layout
+
+\begin_layout Minisec
+Crop Label
+\end_layout
+
+\begin_layout Standard
+Extracts the 3D region containing the specified label.
+ Returns a new label image with only one label.
+\end_layout
+
+\begin_layout Minisec
+View Histogram
+\end_layout
+
+\begin_layout Standard
+Displays the histogram of the grayscale or color values within the image.
+ See also the imHistogram function (p.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand pageref
+reference "fun:imHistogram"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Chapter
@@ -2151,74 +2214,21 @@ minitoc
 \end_layout
 
 \begin_layout Section
-Image shape operators
+Shape operators
 \end_layout
 
 \begin_layout Standard
 Several operators that change the shape of the image: flip, rotate, resize...
  They are often used as first pre-processing before more advanced operations.
- For most functions, axes are indexed in the x, y, z order (contrary to
- native Matlab functions, indexed in i,j order).
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-% read data
-\end_layout
-
-\begin_layout Plain Layout
-
-img = imread('cameraman.tif');
-\end_layout
-
-\begin_layout Plain Layout
-
-% flip in horizontal direction (here, x=1)
-\end_layout
-
-\begin_layout Plain Layout
-
-imgFlip = imFlip(img, 1);
-\end_layout
-
-\begin_layout Plain Layout
-
-% rotate by 90 degrees
-\end_layout
-
-\begin_layout Plain Layout
-
-imgRot90 = imRotate90(img);
-\end_layout
-
-\begin_layout Plain Layout
-
-% crop borders with various widths
-\end_layout
-
-\begin_layout Plain Layout
-
-imgCropBorder = imCropBorder(img, [20 40 30 50]);
-\end_layout
-
-\begin_layout Plain Layout
-
-% add border
-\end_layout
-
-\begin_layout Plain Layout
-
-imgAddBorder = imAddBorder(img, [20 40 30 50]);
-\end_layout
-
+ For most functions, axes are indexed in the 
+\begin_inset Formula $(x,y,z)$
 \end_inset
 
+ order, contrary to native Matlab functions that are indexed in the 
+\begin_inset Formula $(i,j)$
+\end_inset
 
+ order.
 \end_layout
 
 \begin_layout Standard
@@ -2400,6 +2410,26 @@ noprefix "false"
 ).
 \end_layout
 
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% flip in horizontal direction (here, x=1)
+\end_layout
+
+\begin_layout Plain Layout
+
+imgFlip = imFlip(img, 1);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Minisec
 imRotate90 
 \end_layout
@@ -2421,6 +2451,26 @@ noprefix "false"
 
 ).
  Can be applied on 3D images as well.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% rotate by 90 degrees
+\end_layout
+
+\begin_layout Plain Layout
+
+imgRot90 = imRotate90(img);
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Minisec
@@ -2445,6 +2495,26 @@ noprefix "false"
 ).
 \end_layout
 
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% add borders with different width in each direction
+\end_layout
+
+\begin_layout Plain Layout
+
+imgAddBorder = imAddBorder(img, [20 40 30 50]);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Minisec
 imCropBorder
 \end_layout
@@ -2465,6 +2535,26 @@ noprefix "false"
 \end_inset
 
 ).
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% crop borders with various widths
+\end_layout
+
+\begin_layout Plain Layout
+
+imgCropBorder = imCropBorder(img, [20 40 30 50]);
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Minisec
@@ -2551,7 +2641,7 @@ Aligns a binary 3D image along the principal axes of the matrix of second-order
 \end_layout
 
 \begin_layout Section
-Image filtering
+Filtering
 \end_layout
 
 \begin_layout Standard
@@ -3341,6 +3431,8 @@ Binary and label image operators
 Binary and label images are a convenient way of representing the result
  of segmentation algorithms.
  The MatImage library provides several functions for processing them.
+ Some functions aim at processing regions, and may be applied indifferently
+ on binary or label images.
 \end_layout
 
 \begin_layout Subsection
@@ -3547,14 +3639,6 @@ Labels skeleton pixels according to local topology.
 \end_layout
 
 \begin_layout Minisec
-imChainPixels
-\end_layout
-
-\begin_layout Standard
-Chains neighbor pixels in an image to form a contour.
-\end_layout
-
-\begin_layout Minisec
 imConvexImage
 \end_layout
 
@@ -3686,7 +3770,15 @@ A binary image, and the results of distance map and local thickness map.
 \end_layout
 
 \begin_layout Standard
-The image processing toolbox in Matlab provides the bwist function.
+The image processing toolbox in Matlab provides the 
+\begin_inset Quotes eld
+\end_inset
+
+bwdist
+\begin_inset Quotes erd
+\end_inset
+
+ function.
  As a complement, the MatImage toolbox provides the imDistanceMap function,
  that is based on Chamfer distances 
 \begin_inset CommandInset citation
@@ -3791,55 +3883,12 @@ Creates a 3D distance map from a set of 3D points.
 \end_layout
 
 \begin_layout Subsection
-Filters for binary/label images
+Region processing
 \end_layout
 
 \begin_layout Standard
-Several functions are devoted to the processing of label images representing
- a collection of regions.
-\end_layout
-
-\begin_layout Minisec
-imFindLabels 
-\end_layout
-
-\begin_layout Standard
-Finds the unique labels in a label image.
- This function is used by several functions from the imMeasures module (chapter
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "chap:imQuantify"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Minisec
-label2rgb3d 
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "fun:label2rgb3d"
-
-\end_inset
-
-Converts a 3D label image to a 3D RGB image.
-\end_layout
-
-\begin_layout Minisec
-imLabelToValue 
-\end_layout
-
-\begin_layout Standard
-Converts a label image to a parametric map using an array of feature values
- computed for each label.
+Several functions are devoted to the processing regions represented either
+ as binary images (single region) or as label maps (a collection of regions).
 \end_layout
 
 \begin_layout Minisec
@@ -3921,6 +3970,76 @@ imLabelEdges
 
 \begin_layout Standard
 Labels edges between adjacent regions of labeled image.
+\end_layout
+
+\begin_layout Subsection
+Filters for binary/label images
+\end_layout
+
+\begin_layout Standard
+Utility functions for the management of label maps.
+\end_layout
+
+\begin_layout Minisec
+imFindLabels 
+\end_layout
+
+\begin_layout Standard
+Finds the unique labels in a label image.
+ This function is used by several functions from the imQuantify module (chapter
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imQuantify"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+label2rgb3d 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:label2rgb3d"
+
+\end_inset
+
+Converts a 3D label image to a 3D RGB image.
+ This is an equivalent of the 
+\begin_inset Quotes eld
+\end_inset
+
+label2rgb
+\begin_inset Quotes erd
+\end_inset
+
+ function from the Image Processing Toolbox.
+\end_layout
+
+\begin_layout Minisec
+imLabelToValue 
+\end_layout
+
+\begin_layout Standard
+Converts a label image to a parametric map using an array of feature values
+ computed for each label.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+example?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4244,18 +4363,7 @@ status open
 
 
 \backslash
-hyperref[chap:imGranulometry]{
-\end_layout
-
-\end_inset
-
-imGranulometry
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
+hyperref[chap:imGranulometry]{imGranulometry}
 \end_layout
 
 \end_inset
@@ -4539,7 +4647,7 @@ https://en.wikipedia.org/wiki/Mutual_information
 \end_layout
 
 \begin_layout Section
-Analysis of regions 
+Region morphometry
 \end_layout
 
 \begin_layout Standard
@@ -4643,10 +4751,10 @@ noprefix "false"
 \end_inset
 
 ).
- The functions used for describing regions are recalled here for convience.
+ The functions used for describing regions are recalled here for convenience.
  It is possible to specify options (connectivity for Euler Number, number
- of directions for perimeter or surface area), as well as image spatial
- calibration.
+ of directions for perimeter or surface area), as well as spatial calibration
+ of images.
  
 \end_layout
 
@@ -5617,20 +5725,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-Extraction of geometric primitives
-\end_layout
-
-\begin_layout Standard
-This sections gathers additional functions for converting binary or label
- images to geometric primitives.
-\end_layout
-
-\begin_layout Minisec
-imFind
-\end_layout
-
-\begin_layout Standard
-Returns the coordinates of non-zero pixels in an image.
+Spatial organization
 \end_layout
 
 \begin_layout Minisec
@@ -5655,42 +5750,6 @@ noprefix "false"
 \end_inset
 
 )
-\end_layout
-
-\begin_layout Minisec
-imBoundaryContours 
-\end_layout
-
-\begin_layout Standard
-Extract polygonal boundary contours from a binary image.
-\end_layout
-
-\begin_layout Minisec
-imContourLines 
-\end_layout
-
-\begin_layout Standard
-Extracts iso contours from an intensity or grayscale image as a collection
- of polylines.
-\end_layout
-
-\begin_layout Minisec
-imContours (deprecated)
-\end_layout
-
-\begin_layout Standard
-Extracts polygonal contours of a binary image.
- The result is provided as a cell array, with one polygon per cell.
-\end_layout
-
-\begin_layout Minisec
-imBinaryToGraph 
-\end_layout
-
-\begin_layout Standard
-Transforms a binary image into a graph structure.
- The result is provided as a graph, with vertices corresponding to pixels,
- and edges corresponding to neighbor pixels.
 \end_layout
 
 \begin_layout Standard
@@ -5733,6 +5792,67 @@ Computation of the Region Adjacency Graph on a label image.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Extraction of geometric primitives
+\end_layout
+
+\begin_layout Standard
+This sections gathers additional functions for converting binary or label
+ images to geometric primitives.
+\end_layout
+
+\begin_layout Minisec
+imFind
+\end_layout
+
+\begin_layout Standard
+Returns the coordinates of non-zero pixels in an image.
+\end_layout
+
+\begin_layout Minisec
+imBoundaryContours 
+\end_layout
+
+\begin_layout Standard
+Extract polygonal boundary contours from a binary image.
+\end_layout
+
+\begin_layout Minisec
+imChainPixels
+\end_layout
+
+\begin_layout Standard
+Chains neighbor pixels in an image to form a contour.
+\end_layout
+
+\begin_layout Minisec
+imContourLines 
+\end_layout
+
+\begin_layout Standard
+Extracts iso contours from an intensity or grayscale image as a collection
+ of polylines.
+\end_layout
+
+\begin_layout Minisec
+imContours (deprecated)
+\end_layout
+
+\begin_layout Standard
+Extracts polygonal contours of a binary image.
+ The result is provided as a cell array, with one polygon per cell.
+\end_layout
+
+\begin_layout Minisec
+imBinaryToGraph 
+\end_layout
+
+\begin_layout Standard
+Transforms a binary image into a graph structure.
+ The result is provided as a graph, with vertices corresponding to pixels,
+ and edges corresponding to neighbor pixels.
 \end_layout
 
 \begin_layout Chapter
@@ -7202,7 +7322,7 @@ name "fig:Gray-Level-Granulometry-coins"
 \end_inset
 
 Exemple of gray-level granulometry by opening.
- (b) Sum of gray levels for differents sizes of square structuring element.
+ (b) Sum of gray levels for differents sizes of disk structuring element.
  (c) Granulometry curve, corresponding to size distribution.
 \end_layout
 
@@ -7608,8 +7728,11 @@ name "chap:imGeodesics"
 \end_layout
 
 \begin_layout Standard
-The functions in this module are devoted to the computation of geodesic
- distances within images.
+The functions in this module are devoted to the computation of 
+\series bold
+geodesic distances
+\series default
+ within images.
  The geodesic distances can be ued for the extraction of specific features
  such as geodesic diameters, geodesic centers of geodesic extremities.
 \end_layout

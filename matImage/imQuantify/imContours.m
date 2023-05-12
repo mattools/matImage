@@ -1,7 +1,7 @@
 function [B, L, N, A] = imContours(bin, varargin)
 %IMCONTOURS Extract polygonal contours of a binary image
 %
-%   Warning: function "imContour" is deprecated; use the function
+%   Warning: function "imContours" is deprecated; use the function
 %   "imBoundaryContours" (for binary images) or "imContourLines" (for
 %   grayscale or intensity images) instead. 
 %
@@ -27,17 +27,17 @@ function [B, L, N, A] = imContours(bin, varargin)
 %     drawPolygon(polys, 'r')
 %
 %   See also
-%     bwboundaries, imcontour, imOtsuThreshold, 
+%     imBoundaryContours, imContourLines, bwboundaries, imcontour
 %     contourMatrixToPolylines (MatGeom toolbox)
 %
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2012-07-27,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
-warning('function "imContour" is deprecated: use "imBoundaryContours" or "imContourLines" instead');
+warning('function "imContours" is deprecated: use "imBoundaryContours" or "imContourLines" instead');
 
 % ensure input image is binary, eventually using specified threshold value
 if ~isempty(varargin)

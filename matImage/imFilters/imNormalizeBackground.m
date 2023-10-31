@@ -26,7 +26,7 @@ function [res, bg, rmse] = imNormalizeBackground(img, varargin)
 %     subplot(2,1,1); imHistogram(img); title('Original');
 %     subplot(2,1,2); imHistogram(img2); title('Corrected');
 %     % binarise corrected image
-%     bin = imOtsuThreshold(img2);
+%     bin = img2 > imOtsuThreshold(img2);
 %     figure;
 %     imshow(imOverlay(img, imBoundary(bin)));
 %
@@ -49,7 +49,7 @@ function [res, bg, rmse] = imNormalizeBackground(img, varargin)
 %     subplot(1, 2, 1); imshow(img); title('Original');
 %     subplot(1, 2, 2); imshow(img2); title('Corrected');
 %     % binarise corrected image
-%     bin = imOtsuThreshold(img2);
+%     bin = mg2 > imOtsuThreshold(img2);
 %     figure;
 %     imshow(imOverlay(img, imBoundary(bin)));
 %
@@ -59,7 +59,7 @@ function [res, bg, rmse] = imNormalizeBackground(img, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2012-08-01,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
@@ -85,7 +85,7 @@ else
     bin = varargin{1};
 end
 
-% keep a small gard area around structure
+% keep a small guard area around structure
 se = ones(3, 3);
 bin2 = imdilate(bin, se);
 

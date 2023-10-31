@@ -2907,7 +2907,7 @@ Image enhancement and noise reduction
 \end_layout
 
 \begin_layout Standard
-Some function mostly used for removing imaging artifacts.
+Some functions mostly used for removing imaging artifacts.
 \end_layout
 
 \begin_layout Minisec
@@ -2916,6 +2916,38 @@ imAdjustDynamic
 
 \begin_layout Standard
 Rescales gray levels of image to get better dynamic.
+ Input arguments can specify the fraction of pixels or voxels to saturate,
+ or the range of values to map to the [0 255] interval.
+ It is also possible to return the conversion coefficients between input
+ image and result image.
+ 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+res = imAdjustDynamic(img);
+\end_layout
+
+\begin_layout Plain Layout
+
+res = imAdjustDynamic(img, alphaValue);
+\end_layout
+
+\begin_layout Plain Layout
+
+res = imAdjustDynamic(img, [minVal maxVal]);
+\end_layout
+
+\begin_layout Plain Layout
+
+[res, coeffs] = imAdjustDynamic(img);
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Minisec
@@ -2924,6 +2956,154 @@ imNormalizeBackground
 
 \begin_layout Standard
 Normalizes image by removing background estimate.
+ The function first computes an estimate of the background over the whole
+ image, then subtracts this estimate from the original image, and returns
+ the result.
+ Estimate of background is obtained through a polynomial fit, that may be
+ computationally intensive.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+img = imread('rice.png');
+\end_layout
+
+\begin_layout Plain Layout
+
+[img2, bg] = imNormalizeBackground(img, img>150);
+\end_layout
+
+\begin_layout Plain Layout
+
+figure; imshow(img2);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/samples/rice.png
+	height 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Original.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/enhance/rice_backgroundCorrection.png
+	height 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Corrected.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/enhance/rice_backgroundCorrection_histograms.png
+	lyxscale 50
+	height 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Histograms.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Normalization of background.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -2933,6 +3113,102 @@ Noise reduction
 \begin_layout Standard
 Several functions for spatial filtering of images, with the objective of
  reducing the noise within image.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+decision tree?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imBoxFilter
+\end_layout
+
+\begin_layout Standard
+Box filter on 2D/3D image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Noise-Reduction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-b).
+\end_layout
+
+\begin_layout Minisec
+imMeanFilter
+\end_layout
+
+\begin_layout Standard
+Computes mean value in the neighborhood of each pixel.
+\end_layout
+
+\begin_layout Minisec
+imMedianFilter
+\end_layout
+
+\begin_layout Standard
+Computes median value in the neighborhood of each pixel (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Noise-Reduction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-d).
+\end_layout
+
+\begin_layout Minisec
+imGaussianFilter
+\end_layout
+
+\begin_layout Standard
+Applies gaussian filter to 2D/3D image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Noise-Reduction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-c).
+ The functions uses separability of the kernel to accelerate the processing.
+\end_layout
+
+\begin_layout Minisec
+imDirectionalFilter
+\end_layout
+
+\begin_layout Standard
+Applies and combines several directional filters.
 \end_layout
 
 \begin_layout Standard
@@ -3092,62 +3368,67 @@ Noise reduction algorithms applied on a portion of a grayscale image.
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-decision tree?
+\begin_layout Subsection
+Gradient and Laplacian filters
 \end_layout
 
-\end_inset
-
-
+\begin_layout Standard
+Extraction of various gradients from the images, that can be used for edge
+ detection.
 \end_layout
 
 \begin_layout Minisec
-imBoxFilter
+imGradientFilter
 \end_layout
 
 \begin_layout Standard
-Box filter on 2D/3D image (Fig.
+Computes gradient components of a grayscale image.
+ The result can be provided as a single image (corresponding to the the
+ gradient norm, see Fig.
 \begin_inset space ~
 \end_inset
 
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Noise-Reduction"
+reference "fig:Edge-Detection"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
--b).
-\end_layout
-
-\begin_layout Minisec
-imMeanFilter
-\end_layout
-
-\begin_layout Standard
-Computes mean value in the neighborhood of each pixel.
-\end_layout
-
-\begin_layout Minisec
-imMedianFilter
-\end_layout
-
-\begin_layout Standard
-Computes median value in the neighborhood of each pixel (Fig.
+-a), or as two (or three) images, corresponding to the gradient in each
+ elementary direction (Fig.
 \begin_inset space ~
 \end_inset
 
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Noise-Reduction"
+reference "fig:Edge-Detection"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+-b,c).
+\end_layout
+
+\begin_layout Minisec
+imLaplacian
+\end_layout
+
+\begin_layout Standard
+Discrete Laplacian of an image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Edge-Detection"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3158,43 +3439,62 @@ noprefix "false"
 \end_layout
 
 \begin_layout Minisec
-imGaussianFilter
+imRobinsonFilter
 \end_layout
 
 \begin_layout Standard
-Applies gaussian filter to 2D/3D image (Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Noise-Reduction"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
--c).
- The functions uses separability of the kernel to accelerate the processing.
+Extracts image edges using Robinson directional filters.
 \end_layout
 
 \begin_layout Minisec
-imDirectionalFilter
+imKirschFilter 
 \end_layout
 
 \begin_layout Standard
-Applies and combines several directional filters.
+Extracts image edges using Kirsch directional filters.
 \end_layout
 
-\begin_layout Subsection
-Gradient and Laplacian filters
+\begin_layout Minisec
+imHessian 
 \end_layout
 
 \begin_layout Standard
-Extraction of various gradients from the images, that can be used for edge
- detection.
+Computes the coefficients of the Hessian matrix (containing all second derivativ
+es) for each pixel.
+\end_layout
+
+\begin_layout Minisec
+imEigenValues 
+\end_layout
+
+\begin_layout Standard
+Image eigen values from second derivatives.
+\end_layout
+
+\begin_layout Minisec
+imEigenValues3d 
+\end_layout
+
+\begin_layout Standard
+Image eigen values from second derivatives.
+\end_layout
+
+\begin_layout Minisec
+imVesselness2d
+\end_layout
+
+\begin_layout Standard
+Computes the local vesselness of curvilinear structures, from Frangi's paper
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Frangi1998"
+literal "false"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3354,124 +3654,11 @@ Edge detection filters.
 
 \end_layout
 
-\begin_layout Minisec
-imGradientFilter
-\end_layout
-
 \begin_layout Standard
-Computes gradient components of a grayscale image.
- The result can be provided as a single image (corresponding to the the
- gradient norm, see Fig.
-\begin_inset space ~
+\begin_inset Newpage newpage
 \end_inset
 
 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Edge-Detection"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
--a), or as two (or three) images, corresponding to the gradient in each
- elementary direction (Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Edge-Detection"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
--b,c).
-\end_layout
-
-\begin_layout Minisec
-imLaplacian
-\end_layout
-
-\begin_layout Standard
-Discrete Laplacian of an image (Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Edge-Detection"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
--d).
-\end_layout
-
-\begin_layout Minisec
-imRobinsonFilter
-\end_layout
-
-\begin_layout Standard
-Extracts image edges using Robinson directional filters.
-\end_layout
-
-\begin_layout Minisec
-imKirschFilter 
-\end_layout
-
-\begin_layout Standard
-Extracts image edges using Kirsch directional filters.
-\end_layout
-
-\begin_layout Minisec
-imHessian 
-\end_layout
-
-\begin_layout Standard
-Computes the coefficients of the Hessian matrix (containing all second derivativ
-es) for each pixel.
-\end_layout
-
-\begin_layout Minisec
-imEigenValues 
-\end_layout
-
-\begin_layout Standard
-Image eigen values from second derivatives.
-\end_layout
-
-\begin_layout Minisec
-imEigenValues3d 
-\end_layout
-
-\begin_layout Standard
-Image eigen values from second derivatives.
-\end_layout
-
-\begin_layout Minisec
-imVesselness2d
-\end_layout
-
-\begin_layout Standard
-Computes the local vesselness of curvilinear structures, from Frangi's paper
- 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Frangi1998"
-literal "false"
-
-\end_inset
-
-.
- 
 \end_layout
 
 \begin_layout Subsection
@@ -3530,6 +3717,13 @@ imHConvex
 
 \begin_layout Standard
 H-convex transformation of an image.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

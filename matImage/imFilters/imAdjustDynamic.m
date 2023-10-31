@@ -1,4 +1,4 @@
-function res = imAdjustDynamic(img, varargin)
+function [res, coeffs] = imAdjustDynamic(img, varargin)
 %IMADJUSTDYNAMIC Rescale gray levels of image to get better dynamic
 %
 %   RES = imAdjustDynamic(IMG, [GMIN GMAX]);
@@ -19,6 +19,9 @@ function res = imAdjustDynamic(img, varargin)
 %   Specifies another type for output image. TYPE can be 'double', 'int16',
 %   'uint16'... 
 %
+%   [RES, COEFFS] = imAdjustDynamic(IMG, ...);
+%   Also returns the 1-by-2 row vector containing the coeffs such that:
+%   RES = COEFFS(1) + IMG * COEFFS(2);
 %
 %   Example
 %     % read "pout" image and adjust its contrast
@@ -93,6 +96,7 @@ res = (img - mini) * a + outMin;
 % cast to output type
 res = cast(res, outputClass);
 
+coeffs = [(-mini*a + outMin) a];
 
     
 function [mini, maxi] = computeExtremeValues(img) %#ok<DEFNU>

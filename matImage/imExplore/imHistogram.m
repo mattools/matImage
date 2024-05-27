@@ -109,7 +109,7 @@ while ~isempty(varargin)
         minimg = min(img(:));
         maximg = max(img(:));
         
-    elseif isnumeric(var) && length(var) == 1
+    elseif isnumeric(var) && isscalar(var)
         % argument is number of bins
         N = var;
         
@@ -219,14 +219,19 @@ end
 
 %% Utilitary functions
 
-function h = calcHistogram(img, x, roi)
+function h = calcHistogram(img, centers, roi)
 % Compute image histogram using specified bins, and eventually a region of
 % interest
 
+% convert bin centers to bin edges
+d = diff(centers) / 2;
+edges = [centers(1)-d(1), centers(1:end-1)+d, centers(end)+d(end)];
+
+% check if a ROI is specified
 if isempty(roi)
     % histogram of whole image
-    h = hist(double(img(:)), x)';
+    h = histcounts(double(img(:)), edges)';
 else
     % histogram constrained to ROI
-    h = hist(double(img(roi)), x)';
+    h = histcounts(double(img(roi)), edges)';
 end    

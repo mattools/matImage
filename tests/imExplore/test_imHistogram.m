@@ -49,7 +49,7 @@ h = imHistogram(img, linspace(0, 255, 256));
 assertEqual(testCase, h0, h);
 
 
-function test_cameraman_display(testCase)
+function test_cameraman_display(testCase) %#ok<INUSD>
 
 img = imread('cameraman.tif');
 figure;
@@ -90,7 +90,7 @@ assertEqual(testCase, [256 3], size(h));
 assertEqual(testCase, numel(img), sum(h(:)));
 
 
-function test_peppers_display(testCase)
+function test_peppers_display(testCase) %#ok<INUSD>
 
 img = imread('peppers.png');
 figure;
@@ -119,10 +119,12 @@ X = analyze75read(info);
 h = imHistogram(X);
 assertEqual(testCase, numel(X), sum(h(:)));
 
+
 function test_brainMRI_roi_bins(testCase)
 
 info = analyze75info('brainMRI.hdr');
 X = analyze75read(info);
+
 h = imHistogram(X, X>0, 1:88);
 
 assertEqual(testCase, 88, length(h));

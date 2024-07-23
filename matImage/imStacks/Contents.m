@@ -15,7 +15,6 @@
 %
 % Read/Write 3D images
 %   readstack           - Read either a list of 2D images (slices), or a 3D image.
-%   imFileInfo          - Generalization of the imfinfo function
 %   imReadRawData       - Read image data from raw data file.
 %   imReadRegion3d      - Read a specific 3D region of a 3D image
 %   imReadDownSampled3d - Read a down-sampled version of a 3D image

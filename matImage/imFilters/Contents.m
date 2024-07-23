@@ -29,7 +29,7 @@
 %
 %   Geometric filters:
 %   imFlip                  - Flip an image along one of its dimensions
-%   imRotate90              - Rotate a 3D image by 90 degrees around one image axis
+%   imRotate90              - Rotate a 3D image by 90 degrees around one image axis.
 %   imAddBorder             - Add a border around a 2D or 3D image
 %   imCropBorder            - Crop the border around a 2D or 3D image
 %   imTranspose             - Transpose an image (grayscale or RGB).

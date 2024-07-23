@@ -8,26 +8,27 @@
 %
 %   General use modules
 %   imFilters       - Image filtering (smooth, enhance, gradient...)
-%   imMeasures      - Measurement of various parameters in digital images
-%   imShapes        - Generation of images representing geometric shapes
-%   imStacks        - Functions for manipulation and display of 3D images
+%   imStacks        - Functions for management and display of 3D images
+%   imAnalysis      - Explore image contents (histograms, line profiles...)
+%   imRegions       - Computation of features for regions within image
 %
-%   More specialized modules
-%   imMinkowski     - Geometric measures (Surface, Perimeter...) in 2D or 3D
+%   More specialized analysis modules
+%   imMinkowski     - Geometric measures (Surface Area, Perimeter...)
 %   imGeodesics     - Propagation of geodesic distances in images
 %   imGranulometry  - Compute granulometry curves on grayscale images
 %
 %   utilities
+%   imShapes        - Generation of images representing geometric shapes
 %   util            - General purpose functions
 %
 %
 %   To install the library, with all sub-directories, run the script
 %   'installMatImage'.
 %
+
 % -----
 % Author: David Legland
 % e-mail: david.legland@inra.fr
 % created the  07/11/2005.
 % Copyright INRA - Cepia Software Platform.
-% http://github.com/dlegland/matImage
-% http://www.pfl-cepia.inra.fr/index.php?page=imael  (in french)
+% http://github.com/mattools/matImage

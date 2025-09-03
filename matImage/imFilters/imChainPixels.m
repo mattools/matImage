@@ -1,5 +1,5 @@
 function varargout = imChainPixels(img, varargin)
-%IMCHAINPIXELS Chain neighbor pixels in an image to form a contour
+%IMCHAINPIXELS Chain neighbor pixels in an image to form a contour.
 %
 %   POINTS = imChainPixels(IMG)
 %   [PX, PY] = imChainPixels(IMG)

@@ -1,5 +1,5 @@
 function ind = imBoundaryIndices(img, c1, c2)
-%IMBOUNDARYINDICES Find indices of boundary between 2 cells
+%IMBOUNDARYINDICES Find indices of boundary pixels between 2 regions.
 %
 %   Usage:
 %   IND = imBoundaryIndices(LBL, C1, C2)

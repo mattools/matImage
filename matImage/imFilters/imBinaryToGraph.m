@@ -1,5 +1,5 @@
 function varargout = imBinaryToGraph(img)
-%IMBINARYTOGRAPH Transform a binary image into a graph structure
+%IMBINARYTOGRAPH Transform a binary image into a graph structure.
 %
 %   [NODES, EDGES] = imBinaryToGraph(IMG);
 %   IMG is a binary image, with structure of width 1 pixel (such as the

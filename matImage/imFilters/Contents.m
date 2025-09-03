@@ -1,7 +1,7 @@
 % IMFILTERS Generic filters for image processing
 % Version 1.1 01-Jul-2011 .
 %
-%   Image enhancement, noise removal:
+%   Image enhancement, noise removal
 %   imAdjustDynamic         - Rescale gray levels of image to get better dynamic
 %   imMeanFilter            - Compute mean value in the neighboorhood of each pixel
 %   imMedianFilter          - Compute median value in the neighboorhood of each pixel
@@ -10,7 +10,7 @@
 %   imDirectionalFilter     - Apply and combine several directional filters
 %   imNormalizeBackground   - Normalize image by removing background estimate
 %
-%   Gradient and Laplacian filters:
+%   Gradient and Laplacian filters
 %   imGradientFilter        - Compute gradient components of a grayscale image
 %   imLaplacian             - Discrete Laplacian of an image
 %   imHessian               - Compute coefficients of Hessian matrix for each pixel.
@@ -20,7 +20,7 @@
 %   imRobinsonFilter        - Extract image edges using Robinson directional filters
 %   imKirschFilter          - Extract image edges using Kirsch directional filters
 %
-%   Morphological filters:
+%   Morphological filters
 %   imMorphoGradient        - Morphological gradient of an image
 %   imMorphoLaplacian       - Morphological laplacian of an image
 %   imrecerode              - Perform a morphological reconstruction by erosion
@@ -42,7 +42,7 @@
 %   subsamplergb            - Return a sub-sampled version of an rgb image.
 %   imPrincipalAxesAlign    - Align a binary image along principal axes of inertia matrix.
 %
-%   Segmentation:
+%   Segmentation
 %   imOtsuThreshold         - Threshold an image using Otsu method
 %   imMultiOtsuThreshold    - Multilevel Thresholding using Otsu Method.
 %   imMaxEntropyThreshold   - Compute image threshold using maximisation of entropies
@@ -58,7 +58,7 @@
 %   imGetHue                - Extract hue from a color image, using rgb2hsv.
 %   imGray12ToGray8         - Convert a 12 bits gray scale image to 8 bits gray scale.
 %
-%   Filters for binary images:
+%   Filters for binary images
 %   imBoundary              - Compute the boundary image of a binary image
 %   imFillHoles             - Fill holes in a binary image
 %   imDistanceMap           - Compute chamfer distance using scanning algorithm
@@ -66,7 +66,6 @@
 %   imThicknessMap          - Compute thickness map of a binary image
 %   imSkeleton              - Homothopic skeleton of a binary image.
 %   imLabelSkeleton         - Label skeleton pixels according to local topology
-%   imChainPixels           - Chain neighbor pixels in an image to form a contour
 %   imConvexImage           - Compute smallest convex image containing the original pixels
 %   imDistance              - Distance map computed from a set of points
 %   imDistance3d            - Create distance image from a set of 3D points
@@ -81,6 +80,13 @@
 %   imDrawText              - Draw some text in an image
 %   imTpsWarp               - Warp an image using Thin-Plate Splines transform
 %
+%   Extract geometric primitives
+%   imFind                  - Return coordinates of non-zero pixels in an image
+%   imBoundaryContours      - Extract polygonal contours of a binary image.
+%   imContourLines          - Extract iso contours of an image as polylines.
+%   imChainPixels           - Chain neighbor pixels in an image to form a contour.
+%   imBinaryToGraph         - Transform a binary image into a graph structure.
+%
 %   Indexed images:
 %   imLUT                   - Apply a look-up table (LUT) to a gray-scale image.
 %   grayFilter              - Compute configuration map of a binary image
@@ -90,7 +96,7 @@
 %   createTile3d            - Create a 3D 2-by-2-by-2 binary configuration tile from its index.
 %   tileIndex3d             - Return the index of a 2-by-2-by-2 3D binary configuration tile.
 %
-%   Kernels and structuring elements:
+%   Kernels and structuring elements
 %   ball                    - Generate a ball in a matrix in 2 or 3 dimensions
 %   gaussianKernel3d        - Create a 3D Gaussian kernel for image filtering
 %   gradientKernels         - Create kernels for computing gradient within 2D images.
@@ -128,6 +134,7 @@ help Contents
 %   subsample               - Subsample an array by applying operation on blocs
 %   imMergeLabels           - Merge regions in a labeled image
 %   mergeRegions            - Merge regions of labeled image, using inclusion criteria
+%   imContours            - Extract polygonal contours of a binary image
 
 %   Not supported functions
 %   imMergeCells            - merge labeled cell of an image

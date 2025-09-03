@@ -3983,7 +3983,7 @@ H-convex transformation of an image.
 \end_layout
 
 \begin_layout Section
-Segmentation
+Segmentation operators
 \end_layout
 
 \begin_layout Standard
@@ -4602,166 +4602,76 @@ imDistance3d
 Creates a 3D distance map from a set of 3D points.
 \end_layout
 
-\begin_layout Subsection
-Region processing
-\end_layout
-
 \begin_layout Standard
-Several functions are devoted to the processing regions represented either as binary images (single region) or as label maps (a collection of regions).
-\end_layout
-
-\begin_layout Minisec
-imKillBorderRegions
-\end_layout
-
-\begin_layout Standard
-Removes regions on the border of an image.
-\end_layout
-
-\begin_layout Minisec
-imAreaOpening 
-\end_layout
-
-\begin_layout Standard
-Removes all regions smaller than a given area.
-\end_layout
-
-\begin_layout Minisec
-imAttributeOpening 
-\end_layout
-
-\begin_layout Standard
-Filters regions on a size or shape criterium.
-\end_layout
-
-\begin_layout Minisec
-imSeparateParticles 
-\end_layout
-
-\begin_layout Standard
-Separates touching particles using watershed algorithm applied on the inverse of the distance function.
-\end_layout
-
-\begin_layout Minisec
-imLargestRegion 
-\end_layout
-
-\begin_layout Standard
-Keeps the largest region in a binary or label image.
-\end_layout
-
-\begin_layout Minisec
-imCropLabel 
-\end_layout
-
-\begin_layout Standard
-Extracts the portion of image that contains the specified label.
-\end_layout
-
-\begin_layout Minisec
-imMergeLabels 
-\end_layout
-
-\begin_layout Standard
-Merges regions in a labeled image.
-\end_layout
-
-\begin_layout Minisec
-mergeRegions 
-\end_layout
-
-\begin_layout Standard
-Merges regions of labeled image,
- using inclusion criteria.
-\end_layout
-
-\begin_layout Minisec
-imBoundaryIndices 
-\end_layout
-
-\begin_layout Standard
-Finds the indices of the boundary between 2 regions.
-\end_layout
-
-\begin_layout Minisec
-imLabelEdges 
-\end_layout
-
-\begin_layout Standard
-Labels edges between adjacent regions of labeled image.
-\end_layout
-
-\begin_layout Subsection
-Filters for binary/label images
-\end_layout
-
-\begin_layout Standard
-Utility functions for the management of label maps.
-\end_layout
-
-\begin_layout Minisec
-imFindLabels 
-\end_layout
-
-\begin_layout Standard
-Finds the unique labels in a label image.
- This function is used by several functions from the imQuantify module (chapter 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "chap:imRegions"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Minisec
-label2rgb3d 
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "fun:label2rgb3d"
-
-\end_inset
-
-Converts a 3D label image to a 3D RGB image.
- This is an equivalent of the 
-\begin_inset Quotes eld
-\end_inset
-
-label2rgb
-\begin_inset Quotes erd
-\end_inset
-
- function from the Image Processing Toolbox.
-\end_layout
-
-\begin_layout Minisec
-imLabelToValue 
-\end_layout
-
-\begin_layout Standard
-Converts a label image to a parametric map using an array of feature values computed for each label.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-example?
-\end_layout
-
+\begin_inset Newpage newpage
 \end_inset
 
 
 \end_layout
 
+\begin_layout Section
+Extraction of geometric primitives
+\end_layout
+
 \begin_layout Standard
-\begin_inset Newpage clearpage
+This sections gathers additional functions for converting binary or label images to geometric primitives.
+\end_layout
+
+\begin_layout Minisec
+imFind
+\end_layout
+
+\begin_layout Standard
+Returns the coordinates of non-zero pixels in an image.
+\end_layout
+
+\begin_layout Minisec
+imBoundaryContours 
+\end_layout
+
+\begin_layout Standard
+Extract polygonal boundary contours from a binary image.
+\end_layout
+
+\begin_layout Minisec
+imChainPixels
+\end_layout
+
+\begin_layout Standard
+Chains neighbor pixels in an image to form a contour.
+\end_layout
+
+\begin_layout Minisec
+imContourLines 
+\end_layout
+
+\begin_layout Standard
+Extracts iso contours from an intensity or grayscale image as a collection of polylines.
+\end_layout
+
+\begin_layout Minisec
+imContours (deprecated)
+\end_layout
+
+\begin_layout Standard
+Extracts polygonal contours of a binary image.
+ The result is provided as a cell array,
+ with one polygon per cell.
+\end_layout
+
+\begin_layout Minisec
+imBinaryToGraph 
+\end_layout
+
+\begin_layout Standard
+Transforms a binary image into a graph structure.
+ The result is provided as a graph,
+ with vertices corresponding to pixels,
+ and edges corresponding to neighbor pixels.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -5051,7 +4961,8 @@ name "chap:imRegions"
 \end_layout
 
 \begin_layout Standard
-Provides several functions for measurements on digital images.
+Provides several functions for the processing of label maps,
+ ans quantification of morphometric features for regions.
  Most functions concern the quantification of the morphology (size,
  shape...) of regions within binary or label images.
  The extraction of geometric features from images is also provided.
@@ -5101,6 +5012,200 @@ status open
 
 \backslash
 minitoc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Label map
+\end_layout
+
+\begin_layout Standard
+It is often convenient to represent a collection of disjoint regions as a label map,
+ i.e.
+ an image containing integer values,
+ where the value of each element corresponds to the label of the region it belongs to.
+ By convention,
+ the value 0 corresponds to the background.
+ Binary images can be seen as a special case of label map,
+ containing only one region.
+\end_layout
+
+\begin_layout Standard
+The number of regions that can be represented within a label map depends on the data type of the array:
+ 255 values for uint8 arrays,
+ 65535 values for uint16 arrays,
+ more than two million values for int32 arrays.
+\end_layout
+
+\begin_layout Section
+Label image processing
+\end_layout
+
+\begin_layout Standard
+Several functions are devoted to the processing regions represented either as binary images (single region) or as label maps (a collection of regions).
+\end_layout
+
+\begin_layout Subsection
+Label map edition
+\end_layout
+
+\begin_layout Standard
+Process the input label map to retrieve or remove a specific selection of regions.
+\end_layout
+
+\begin_layout Minisec
+imKillBorderRegions
+\end_layout
+
+\begin_layout Standard
+Removes regions on the border of an image.
+\end_layout
+
+\begin_layout Minisec
+imAreaOpening 
+\end_layout
+
+\begin_layout Standard
+Removes all regions smaller than a given area.
+\end_layout
+
+\begin_layout Minisec
+imAttributeOpening 
+\end_layout
+
+\begin_layout Standard
+Filters regions on a size or shape criterium.
+\end_layout
+
+\begin_layout Minisec
+imLargestRegion 
+\end_layout
+
+\begin_layout Standard
+Keeps the largest region in a binary or label image.
+\end_layout
+
+\begin_layout Minisec
+imCropLabel 
+\end_layout
+
+\begin_layout Standard
+Extracts the portion of image that contains the specified label.
+\end_layout
+
+\begin_layout Subsection
+Region processing
+\end_layout
+
+\begin_layout Minisec
+imMergeLabels 
+\end_layout
+
+\begin_layout Standard
+Merges regions in a labeled image.
+\end_layout
+
+\begin_layout Minisec
+mergeRegions 
+\end_layout
+
+\begin_layout Standard
+Merges regions of labeled image,
+ using inclusion criteria.
+\end_layout
+
+\begin_layout Minisec
+imSeparateParticles 
+\end_layout
+
+\begin_layout Standard
+Separates touching particles using watershed algorithm applied on the inverse of the distance function.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+example?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Utilities
+\end_layout
+
+\begin_layout Standard
+Utility functions for the management of label maps.
+\end_layout
+
+\begin_layout Minisec
+imFindLabels 
+\end_layout
+
+\begin_layout Standard
+Finds the unique labels in a label image.
+ This function is used by several functions from the imQuantify module (chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imRegions"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+label2rgb3d 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:label2rgb3d"
+
+\end_inset
+
+Converts a 3D label image to a 3D RGB image.
+ This is an equivalent of the 
+\begin_inset Quotes eld
+\end_inset
+
+label2rgb
+\begin_inset Quotes erd
+\end_inset
+
+ function from the Image Processing Toolbox.
+\end_layout
+
+\begin_layout Minisec
+imLabelToValue 
+\end_layout
+
+\begin_layout Standard
+Converts a label image to a parametric map using an array of feature values computed for each label.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+example?
 \end_layout
 
 \end_inset
@@ -6253,6 +6358,22 @@ nolink "false"
 )
 \end_layout
 
+\begin_layout Minisec
+imBoundaryIndices 
+\end_layout
+
+\begin_layout Standard
+Finds the indices of the boundary pixels between 2 regions.
+\end_layout
+
+\begin_layout Minisec
+imLabelEdges 
+\end_layout
+
+\begin_layout Standard
+Labels edges between adjacent regions of labeled image.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Float figure
 placement document
@@ -6295,67 +6416,6 @@ Computation of the Region Adjacency Graph on a label image.
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section
-Extraction of geometric primitives
-\end_layout
-
-\begin_layout Standard
-This sections gathers additional functions for converting binary or label images to geometric primitives.
-\end_layout
-
-\begin_layout Minisec
-imFind
-\end_layout
-
-\begin_layout Standard
-Returns the coordinates of non-zero pixels in an image.
-\end_layout
-
-\begin_layout Minisec
-imBoundaryContours 
-\end_layout
-
-\begin_layout Standard
-Extract polygonal boundary contours from a binary image.
-\end_layout
-
-\begin_layout Minisec
-imChainPixels
-\end_layout
-
-\begin_layout Standard
-Chains neighbor pixels in an image to form a contour.
-\end_layout
-
-\begin_layout Minisec
-imContourLines 
-\end_layout
-
-\begin_layout Standard
-Extracts iso contours from an intensity or grayscale image as a collection of polylines.
-\end_layout
-
-\begin_layout Minisec
-imContours (deprecated)
-\end_layout
-
-\begin_layout Standard
-Extracts polygonal contours of a binary image.
- The result is provided as a cell array,
- with one polygon per cell.
-\end_layout
-
-\begin_layout Minisec
-imBinaryToGraph 
-\end_layout
-
-\begin_layout Standard
-Transforms a binary image into a graph structure.
- The result is provided as a graph,
- with vertices corresponding to pixels,
- and edges corresponding to neighbor pixels.
 \end_layout
 
 \begin_layout Chapter

@@ -180,8 +180,8 @@ MatImage library user manual
 \end_layout
 
 \begin_layout Abstract
-The MatImage library provides a collection of functions for image processing and analysis within the Matab environment.
- 
+The MatImage library provides a collection of functions for image processing and analysis within the Matlab environment.
+ It is build as a complement of the Image Processing Toolbox from Matlab.
 \end_layout
 
 \begin_layout Standard
@@ -514,19 +514,40 @@ Library organization
 
 \begin_layout Standard
 The library is organised into several modules.
- They are presented in a 
+ The first two modules provide functions for the generic exploration and visualization of images,
+ including a simple graphical user interface for interactive visualisation of 3D images.
+ The 
 \begin_inset Quotes eld
 \end_inset
 
-from global to technical
+imFilters
 \begin_inset Quotes erd
 \end_inset
 
- order:
- first the module for generic exploration/visualization of images,
- then the modules for classical image processing (i.e.
- filtering and quantification),
- and finally some more specialized modules.
+ modules gathers function for generic image processing.
+ The chapters 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imRegions"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ to 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:imGranulometry"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ present the modules devoted to image analysis and quantification.
 \end_layout
 
 \begin_layout Description
@@ -537,12 +558,12 @@ status open
 
 
 \backslash
-hyperref[chap:imFilters]{imFilters}
+hyperref[chap:imAnalysis]{imAnalysis}
 \end_layout
 
 \end_inset
 
- generic filters and utilities for image processing.
+ statistical and semi-interactive exploration of images.
 \end_layout
 
 \begin_layout Description
@@ -578,12 +599,12 @@ status open
 
 
 \backslash
-hyperref[chap:imAnalysis]{imAnalysis}
+hyperref[chap:imFilters]{imFilters}
 \end_layout
 
 \end_inset
 
- statistical and semi-interactive exploration of images.
+ generic filters and utilities for image processing.
 \end_layout
 
 \begin_layout Description
@@ -670,6 +691,1930 @@ hyperref[chap:imShapes]{imShapes}
  generation of 2D and 3D binary images containing geometric shapes (ellipse,
  cube,
  cylinder...).
+\end_layout
+
+\begin_layout Chapter
+Module imAnalysis
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:imAnalysis"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The imAnalysis module provides several functions and graphical user interfaces for the exploration of values within images.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+minitoc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Statistics for pixel values
+\end_layout
+
+\begin_layout Standard
+Functions in this section allow for global exploration of all elements within an image or a pair of images,
+ without taking into account the spatial position of image pixels or voxels.
+\end_layout
+
+\begin_layout Subsection
+Image histograms
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Image-histograms"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Several functions allow for computing histogram of grayscale or color images.
+ They can be applied to 2D/3D images.
+ The following example demonstrates the exploration of the values within a color image,
+ either by computing the histogram of each channel,
+ or by computing joint histogram of two channels (see result in Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Histograms-Color-Image"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+img = imread('peppers.png');
+\end_layout
+
+\begin_layout Plain Layout
+
+% Histogram of each channel
+\end_layout
+
+\begin_layout Plain Layout
+
+figure;
+ imHistogram(img);
+\end_layout
+
+\begin_layout Plain Layout
+
+ylim([0 8000])
+\end_layout
+
+\begin_layout Plain Layout
+
+% Joint histogram of red and green channels
+\end_layout
+
+\begin_layout Plain Layout
+
+h = imJointHistogram(img(:,:,1),
+ img(:,:,2));
+\end_layout
+
+\begin_layout Plain Layout
+
+figure;
+ imshow(log(h+1),
+ []);
+ colormap([1 1 1;
+ parula(256)]);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imHistogram
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imHistogram"
+
+\end_inset
+
+Computes the histogram of the input image.
+ In case of a color images,
+ returns or display the histogram of each channel.
+\end_layout
+
+\begin_layout Minisec
+imHistogramDialog 
+\end_layout
+
+\begin_layout Standard
+Opens a dialog to setup image histogram display options.
+\end_layout
+
+\begin_layout Minisec
+imJointHistogram
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imJointHistogram"
+
+\end_inset
+
+Computes the joint histogram of two images.
+\end_layout
+
+\begin_layout Minisec
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imMeasures/imHistogram_peppers.png
+	lyxscale 50
+	special height=4cm
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imMeasures/imJointHistogram_peppersRG_log.png
+	special height=4cm
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imMeasures/imColorHistogram_peppers.png
+	special height=4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Histograms-Color-Image"
+
+\end_inset
+
+Exploration of color distribution within images.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imColorHistogram 
+\end_layout
+
+\begin_layout Standard
+Plots 3D histogram of a color image.
+\end_layout
+
+\begin_layout Minisec
+imWeightedHistogram
+\end_layout
+
+\begin_layout Standard
+Computes the weighted histogram of the values within the image,
+ using an additional array/image as weights.
+\end_layout
+
+\begin_layout Subsection
+Summary statistics on pixel values
+\end_layout
+
+\begin_layout Standard
+These functions compute summary statistics of the values within an image.
+ Input images are usually grayscale or intensity images.
+ Some functions also accept color images as input,
+ and compute the desired summary statistic along each channel.
+ The library also provides functions for computing and displaying histograms of multi-dimensional images (Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Image-histograms"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imSum 
+\end_layout
+
+\begin_layout Standard
+Sum of a grayscale image,
+ or sum of each color component.
+\end_layout
+
+\begin_layout Minisec
+imMean 
+\end_layout
+
+\begin_layout Standard
+Mean of a grayscale image,
+ or mean of each color component.
+\end_layout
+
+\begin_layout Minisec
+imStd 
+\end_layout
+
+\begin_layout Standard
+Standard deviation of pixel values.
+\end_layout
+
+\begin_layout Minisec
+imVar 
+\end_layout
+
+\begin_layout Standard
+Variance of a grayscale image,
+ or of each color component.
+\end_layout
+
+\begin_layout Minisec
+imMin 
+\end_layout
+
+\begin_layout Standard
+Minimum value of a grayscale image,
+ or of each color component.
+\end_layout
+
+\begin_layout Minisec
+imMax
+\end_layout
+
+\begin_layout Standard
+Maximum value of a grayscale image,
+ or of each color component.
+\end_layout
+
+\begin_layout Minisec
+imMedian
+\end_layout
+
+\begin_layout Standard
+Median value of a grayscale image,
+ or of each color component.
+\end_layout
+
+\begin_layout Minisec
+imQuantile 
+\end_layout
+
+\begin_layout Standard
+Computes value that threshold a given proportion of pixels.
+\end_layout
+
+\begin_layout Minisec
+imMode 
+\end_layout
+
+\begin_layout Standard
+Mode of pixel values in an image.
+\end_layout
+
+\begin_layout Minisec
+imRegionFun 
+\end_layout
+
+\begin_layout Standard
+Applies a summary function to each region of a label image.
+\end_layout
+
+\begin_layout Subsection
+Entropy and mutual information
+\end_layout
+
+\begin_layout Standard
+Entropy can be used for image segmentation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fun:imMaxEntropyThreshold"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+ Mutual information is based on joint histogram 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fun:imJointHistogram"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+imEntropy 
+\end_layout
+
+\begin_layout Standard
+Computes the entropy of an image.
+ Ininformation theory,
+ the entropy is a measure of disorder or uncertainty
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://en.wikipedia.org/wiki/Entropy_(information_theory)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ The higher the entropy value,
+ the more difficult it is to describe or compress the content of the image.
+\end_layout
+
+\begin_layout Minisec
+imJointEntropy 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imJointEntropy"
+
+\end_inset
+
+Computes the joint entropy between two images.
+ The joint entropy is computed from the joint histogram of the image pair (see section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Image-histograms"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imMutualInformation 
+\end_layout
+
+\begin_layout Standard
+Computes the mutual information between two images.
+ The mutual information is a measure of similarity between the content of the two images that is well suited when images are generated with different modalities
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://en.wikipedia.org/wiki/Mutual_information
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Image values
+\end_layout
+
+\begin_layout Standard
+Functions for semi-interactive image exploration,
+ such as computation of line profiles.
+\end_layout
+
+\begin_layout Minisec
+imEvaluate 
+\end_layout
+
+\begin_layout Standard
+Evaluates image value at given position(s).
+\end_layout
+
+\begin_layout Minisec
+imLineProfile 
+\end_layout
+
+\begin_layout Standard
+Evaluates image value along a line segment.
+\end_layout
+
+\begin_layout Minisec
+imLocalGradient 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imLocalGradient"
+
+\end_inset
+
+Computes 2D/3D gradient vector(s) within image at specified position(s) without requiring to compute the whole gradient image.
+ This reduces memory usage when image is large and number of position is small.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Retrieve image information
+\end_layout
+
+\begin_layout Standard
+Several functions provide basic information about image:
+ size,
+ type...
+\end_layout
+
+\begin_layout Subsection
+Image size 
+\end_layout
+
+\begin_layout Standard
+Provide information about the size of the image,
+ either in pixels/voxels coordinates,
+ or in physical coordinates by providing calibration.
+\end_layout
+
+\begin_layout Minisec
+imSize 
+\end_layout
+
+\begin_layout Standard
+Computes the size of an image in [x y z] order.
+ For color images,
+ returns only the spatial components.
+\end_layout
+
+\begin_layout Minisec
+is3DImage
+\end_layout
+
+\begin_layout Standard
+Checks if an image is 3D.
+\end_layout
+
+\begin_layout Minisec
+imPhysicalExtent 
+\end_layout
+
+\begin_layout Standard
+Computes the physical extent of an image.
+ Returns a 1-by-4 row array for 2D images,
+ and a 1-by-6 row array for 3D images.
+\end_layout
+
+\begin_layout Subsection
+Image type
+\end_layout
+
+\begin_layout Minisec
+isColorImage 
+\end_layout
+
+\begin_layout Standard
+Checks if an image (2D or 3D) is a color image.
+ 
+\end_layout
+
+\begin_layout Minisec
+imGrayscaleExtent 
+\end_layout
+
+\begin_layout Standard
+Grayscale extent of an image.
+\end_layout
+
+\begin_layout Minisec
+imFileInfo
+\end_layout
+
+\begin_layout Standard
+Generalization of the imfinfo function that also taks into account specialized image file formats.
+\end_layout
+
+\begin_layout Chapter
+Module imStacks
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:imStacks"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The module imStacks is specifically devoted to the processing of 3D images (grayscale,
+ color,
+ binary...).
+ It provides the Slicer application,
+ a GUI for exploration and processing of 3D images.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+minitoc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Slicer application
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+Slicer
+\begin_inset Quotes erd
+\end_inset
+
+ application is a graphical application that allows for quick interactive exploration of 3D grayscale or color images,
+ including the computation of histograms,
+ isosurfaces,
+ or cross-sections (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Slicer-app"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/imgSlicerBrainsRGB.png
+	lyxscale 50
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Slicer-app"
+
+\end_inset
+
+Several views of the Slicer application on a sample 3D color image.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The main interface is a slice-by-slice viewer that integrates slice changing slider,
+ status bar,
+ and an action menu.
+ The menu provides several actions to import/export 3D images,
+ to apply various operations on the 3D image (crop,
+ rotation...),
+ and to generate new visualizations of the 3D data:
+ isosurfaces,
+ 3D orhoslices,
+ histograms...
+ It is possible to specifiy the spatial calibration,
+ facilitating the visualization of 3D structures with non-cubic voxels.
+\end_layout
+
+\begin_layout Standard
+All the features of the Slicer application are available as Matlab functions from the MatImage library (mostly from the imExplore module).
+\end_layout
+
+\begin_layout Subsection
+Usage
+\end_layout
+
+\begin_layout Standard
+To start the the Slicer application,
+ choose one of these syntaxes:
+\end_layout
+
+\begin_layout Itemize
+run 
+\begin_inset Quotes eld
+\end_inset
+
+Slicer
+\begin_inset Quotes erd
+\end_inset
+
+ from the matlab prompt.
+ This will open an empty Slicer frame,
+ and image files can be open from the File menu.
+\end_layout
+
+\begin_layout Itemize
+run Slicer with the image to display as argument.
+ The image is either a 3D (or 4D in case of color image) numeric array,
+ or the name of an image file.
+\end_layout
+
+\begin_layout Standard
+The next sections describe the options proposed in the frame menu (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Slicer-Menu"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/Slicer/menusSlicer.png
+	lyxscale 50
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Slicer-Menu"
+
+\end_inset
+
+The menu bar of the Slicer application.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+File menu
+\end_layout
+
+\begin_layout Standard
+Contains several options to import/export 3D images.
+ See also the section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Read-3D-image"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Import / read images
+\end_layout
+
+\begin_layout Minisec
+Open...
+\end_layout
+
+\begin_layout Standard
+Opens a 3D image.
+ Several common file formats are supported (TIFF,
+ Analyze,
+ MHD,
+ VGI...).
+ 
+\end_layout
+
+\begin_layout Minisec
+Import Raw Data....
+\end_layout
+
+\begin_layout Standard
+Imports image data from a binary data file.
+\end_layout
+
+\begin_layout Minisec
+Import From Workspace
+\end_layout
+
+\begin_layout Standard
+Displays a 3D array from Matlab workspace into a new Slicer frame.
+\end_layout
+
+\begin_layout Minisec
+Demo images
+\end_layout
+
+\begin_layout Standard
+Opens a selection of demonstration images.
+\end_layout
+
+\begin_layout Subsubsection
+Export / write images
+\end_layout
+
+\begin_layout Minisec
+Save image
+\end_layout
+
+\begin_layout Standard
+Saves current 3D image.
+\end_layout
+
+\begin_layout Minisec
+Export To Workspace
+\end_layout
+
+\begin_layout Standard
+Exports current image into workspace as a 3D or 4D numeric array.
+\end_layout
+
+\begin_layout Minisec
+Close
+\end_layout
+
+\begin_layout Standard
+Closes the current viewer.
+\end_layout
+
+\begin_layout Subsection
+Image Menu
+\end_layout
+
+\begin_layout Standard
+Allows for calibrating the image,
+ and converting data types.
+\end_layout
+
+\begin_layout Subsubsection
+Image info and calibration
+\end_layout
+
+\begin_layout Minisec
+Image Info
+\end_layout
+
+\begin_layout Standard
+Display a short description of image properties.
+\end_layout
+
+\begin_layout Minisec
+Spatial Calibration
+\end_layout
+
+\begin_layout Standard
+Updates sptial calibration (voxel size and unit name) of image.
+\end_layout
+
+\begin_layout Minisec
+Image Origin
+\end_layout
+
+\begin_layout Standard
+Updates the coordinates of first voxel in user coordinates.
+\end_layout
+
+\begin_layout Subsubsection
+Conversions
+\end_layout
+
+\begin_layout Minisec
+Change Image Type
+\end_layout
+
+\begin_layout Standard
+Changes the type associated to the current image.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+Type
+\begin_inset Quotes erd
+\end_inset
+
+ can be one of 
+\begin_inset Quotes eld
+\end_inset
+
+Grayscale
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Intensity
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Binary
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Label
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+Change Gray Levels
+\end_layout
+
+\begin_layout Standard
+Changes the number of levels used to represent grayscale image data.
+\end_layout
+
+\begin_layout Minisec
+Convert Intensity to Color
+\end_layout
+
+\begin_layout Standard
+Converts a scalar image into a color image by choosing a colormap.
+ See also section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Color-Images"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ (function double2rgb).
+\end_layout
+
+\begin_layout Minisec
+Convert Labels to Color
+\end_layout
+
+\begin_layout Standard
+Converts a label image into a color image by choosing a colormap.
+ See also section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fun:label2rgb3d"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ (function label2rgb3d).
+\end_layout
+
+\begin_layout Minisec
+RGB To Gray
+\end_layout
+
+\begin_layout Standard
+Converts a RGB color image into a grayscale image.
+\end_layout
+
+\begin_layout Minisec
+Split RGB
+\end_layout
+
+\begin_layout Standard
+Splits the color components of a 3D color image into three distinct images.
+ Each component is displayed into a new Slicer frame.
+\end_layout
+
+\begin_layout Subsection
+View Menu
+\end_layout
+
+\begin_layout Standard
+Allows for tuning display settings,
+ and computing 3D representations.
+\end_layout
+
+\begin_layout Minisec
+Display Range
+\end_layout
+
+\begin_layout Standard
+Chooses the range of values used to display grayscale or intensity images.
+ Can be chosen automatically from image data values,
+ inferred from image data type,
+ or manually selected.
+\end_layout
+
+\begin_layout Minisec
+Look-Up Table
+\end_layout
+
+\begin_layout Standard
+Chooses the look-up table to use for representing intensity or label images.
+\end_layout
+
+\begin_layout Minisec
+Show Ortho Slices
+\end_layout
+
+\begin_layout Standard
+Displays the 3D image as three 2D images representing XY,
+ YZ and XZ slices (See Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+-a).
+ Each slice is displayed as a 2D image.
+ The slice position can be updated by clicking on the images.
+\end_layout
+
+\begin_layout Minisec
+Show 3D Ortho Slices
+\end_layout
+
+\begin_layout Standard
+Displays the 3D image as three 2D images mutually intersecting in 3D (See Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+-b).
+ Each slice is represented in 3D.
+ The slice position can be updated by dragging the 3D images.
+\end_layout
+
+\begin_layout Minisec
+Isosurface rendering
+\end_layout
+
+\begin_layout Standard
+Computes and renders a 3D isosurface from image data and user-defined value.
+ Can be slow for large images.
+\end_layout
+
+\begin_layout Minisec
+Binary/Labels surface rendering
+\end_layout
+
+\begin_layout Standard
+Computes and renders a 3D isosurface from binary and label images.
+ Similar to isosurface rendering,
+ but a specific processing is added to iterate over the set of distinct labels within image.
+\end_layout
+
+\begin_layout Minisec
+Zoom In/Out/1:1/Best...
+\end_layout
+
+\begin_layout Standard
+Changes the zoom level of the current image view.
+\end_layout
+
+\begin_layout Subsection
+Process Menu
+\end_layout
+
+\begin_layout Standard
+Provides basic image processing tools.
+\end_layout
+
+\begin_layout Minisec
+Geometric Transforms
+\end_layout
+
+\begin_layout Standard
+Performs elementary shape transformation on the 3D image:
+ flip along one of the main axes,
+ rotation by 90 degrees around one of the main axes.
+\end_layout
+
+\begin_layout Minisec
+Crop Image
+\end_layout
+
+\begin_layout Standard
+Extracts a 3D rectangular selection from the image.
+\end_layout
+
+\begin_layout Minisec
+Crop Label
+\end_layout
+
+\begin_layout Standard
+Extracts the 3D region containing the specified label.
+ Returns a new label image with only one label.
+\end_layout
+
+\begin_layout Minisec
+View Histogram
+\end_layout
+
+\begin_layout Standard
+Displays the histogram of the grayscale or color values within the image.
+ See also the imHistogram function (p.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand pageref
+reference "fun:imHistogram"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Visualization of 3D images
+\end_layout
+
+\begin_layout Standard
+The imStacks module provides several tools for interactive exploration of 3D images.
+ Most functions work independently for both grayscale or color images,
+ and allow to specify the spatial calibration of images.
+ Several histograms functions are also provided in the imAnalysis module (see section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Image-histograms"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Matlab"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% read data and adjust dynamic
+\end_layout
+
+\begin_layout Plain Layout
+
+img = imAdjustDynamic(analyze75read('brainMRI.hdr'));
+\end_layout
+
+\begin_layout Plain Layout
+
+% Display orthogonal slices
+\end_layout
+
+\begin_layout Plain Layout
+
+figure(1);
+ clf;
+ axis equal;
+ hold on;
+\end_layout
+
+\begin_layout Plain Layout
+
+orthoSlices(img,
+ [60 80 13],
+ 'Spacing',
+ [1 1 2.5]);
+\end_layout
+
+\begin_layout Plain Layout
+
+% Display 3D orthogonal slices
+\end_layout
+
+\begin_layout Plain Layout
+
+figure(2);
+ clf;
+ axis equal;
+ hold on;
+\end_layout
+
+\begin_layout Plain Layout
+
+orthoSlices3d(img,
+ [60 80 13],
+ [1 1 2.5]);
+\end_layout
+
+\begin_layout Plain Layout
+
+% setup axis limits
+\end_layout
+
+\begin_layout Plain Layout
+
+axis(imPhysicalExtent(img,
+ [1 1 2.5]));
+ view(3);
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/brainMRI_orthoSlices.png
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+showOrthoPlanes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imStacks/brainMRI_orthoSlices3d.png
+	lyxscale 50
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+showOrthoSlices3d
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Visualization-3D-Image"
+
+\end_inset
+
+Different representations of a 3D grayscale image.
+ Results of the showOrthoPlanes and showOrthoSlices3d functions.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Visualization functions
+\end_layout
+
+\begin_layout Minisec
+orthoSlices
+\end_layout
+
+\begin_layout Standard
+Displays three orthogonal slices in the same figure (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+-a).
+\end_layout
+
+\begin_layout Minisec
+OrthoSlicer3d
+\end_layout
+
+\begin_layout Standard
+Displays 3D interactive orthoslicer.
+\end_layout
+
+\begin_layout Minisec
+orthoSlices3d
+\end_layout
+
+\begin_layout Standard
+Shows three orthogonal 3D slices of a 3D image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Visualization-3D-Image"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+-b).
+ The slices can be dragged interactively.
+\end_layout
+
+\begin_layout Subsection
+Slicing functions
+\end_layout
+
+\begin_layout Minisec
+stackSlice
+\end_layout
+
+\begin_layout Standard
+Extracts a planar slice from a 3D image.
+\end_layout
+
+\begin_layout Subsection
+Visualization routines
+\end_layout
+
+\begin_layout Standard
+These low-level functions are used by other visualization functions,
+ but can also be used independently.
+\end_layout
+
+\begin_layout Minisec
+slice3d
+\end_layout
+
+\begin_layout Standard
+Shows a moving 3D slice of an image.
+\end_layout
+
+\begin_layout Minisec
+showXSlice
+\end_layout
+
+\begin_layout Standard
+Shows YZ slice of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+showYSlice
+\end_layout
+
+\begin_layout Standard
+Shows ZX slice of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+showZSlice
+\end_layout
+
+\begin_layout Standard
+Shows XY slice of a 3D image.
+\end_layout
+
+\begin_layout Section
+Read/Write 3D images
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Read-3D-image"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Several functions are provided for importing and exporting 3D images in various file formats,
+ or for reading only a specific portion of a large 3D image.
+\end_layout
+
+\begin_layout Subsection
+General use functions
+\end_layout
+
+\begin_layout Minisec
+readstack
+\end_layout
+
+\begin_layout Standard
+Reads a 3D image stored either in a list of 2D images (slices),
+ or in a 3D image file.
+ The function can also parse some of the meta-data stored by ImageJ
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+ImageJ
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+savestack
+\end_layout
+
+\begin_layout Standard
+Saves an image stack to a file or a series of files.
+\end_layout
+
+\begin_layout Minisec
+savebinstack
+\end_layout
+
+\begin_layout Standard
+Saves an binary stack to a file,
+ as RGB Image.
+\end_layout
+
+\begin_layout Minisec
+imReadRawData
+\end_layout
+
+\begin_layout Standard
+Reads image data from raw data file.
+\end_layout
+
+\begin_layout Minisec
+imFileInfo
+\end_layout
+
+\begin_layout Standard
+Generalization of the imfinfo function that manages 3D image file formats.
+\end_layout
+
+\begin_layout Subsection
+Read image portion
+\end_layout
+
+\begin_layout Standard
+When the size of the image is very large,
+ it may be useful to be able to read only a specific rectangular region within the image,
+ or to read a down-sampled version of the image.
+ Note that the 
+\family typewriter
+\color gray
+tiffreadVolume
+\family default
+\color inherit
+ from the Image Processing Toolbox also provides similar functionnalities.
+\end_layout
+
+\begin_layout Minisec
+imReadRegion3d
+\end_layout
+
+\begin_layout Standard
+Reads a specific 3D region of a 3D image.
+\end_layout
+
+\begin_layout Minisec
+imReadDownSampled3d
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imReadDownSampled3d"
+
+\end_inset
+
+Reads a down-sampled version of a 3D image.
+\end_layout
+
+\begin_layout Subsection
+Management of specific file formats
+\end_layout
+
+\begin_layout Standard
+In addition to the image file formats available with Matlab,
+ MatImage also provides partial support of additional image file formats.
+\end_layout
+
+\begin_layout Minisec
+metaImageInfo
+\end_layout
+
+\begin_layout Standard
+Reads information header of meta image data.
+\end_layout
+
+\begin_layout Minisec
+metaImageRead
+\end_layout
+
+\begin_layout Standard
+Reads an image in MetaImage file format
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://itk.org/Wiki/ITK/MetaIO/Documentation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Minisec
+metaImageWrite
+\end_layout
+
+\begin_layout Standard
+Writes header and data files of an image in MetaImage format.
+ This results in a header file with extension 
+\begin_inset Quotes eld
+\end_inset
+
+.mhd
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and a binary data file with extension 
+\begin_inset Quotes eld
+\end_inset
+
+.raw
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
+readVgiStack
+\end_layout
+
+\begin_layout Standard
+Reads a 3D stack stored in VGI format.
+\end_layout
+
+\begin_layout Minisec
+vgiStackInfo
+\end_layout
+
+\begin_layout Standard
+Reads information necessary to load a 3D stack in VGI format.
+\end_layout
+
+\begin_layout Minisec
+readVoxelMatrix
+\end_layout
+
+\begin_layout Standard
+Reads a 3D image in VoxelMatrix (.vm) format,
+ used by the Free-D library 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Andrey2005"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+3D images processing
+\end_layout
+
+\begin_layout Standard
+Some specific utility functions for processing 3D images.
+\end_layout
+
+\begin_layout Subsection
+Stack processing
+\end_layout
+
+\begin_layout Minisec
+createRGBStack
+\end_layout
+
+\begin_layout Standard
+Concatenates 2 or 3 grayscale stacks to form a color stack.
+\end_layout
+
+\begin_layout Minisec
+stackRotate90
+\end_layout
+
+\begin_layout Standard
+Rotates a 3D image by 90 degrees around one image axis.
+\end_layout
+
+\begin_layout Minisec
+rotateStack90
+\end_layout
+
+\begin_layout Standard
+Rotates a 3D image by 90 degrees around one image axis.
+\end_layout
+
+\begin_layout Minisec
+flipStack
+\end_layout
+
+\begin_layout Standard
+Flips a 3D image along specified X,
+ Y,
+ or Z dimension.
+\end_layout
+
+\begin_layout Minisec
+cropStack
+\end_layout
+
+\begin_layout Standard
+Crops a 3D image with the specified box limits.
+\end_layout
+
+\begin_layout Minisec
+imMiddleSlice
+\end_layout
+
+\begin_layout Standard
+Extracts the middle slice of a 3D stack.
+\end_layout
+
+\begin_layout Subsection
+Stack information
+\end_layout
+
+\begin_layout Minisec
+stackSize
+\end_layout
+
+\begin_layout Standard
+Computes the size of a 3D stack in [x y z] form.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+deprecated?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+stackExtent
+\end_layout
+
+\begin_layout Standard
+Computes the physical extent of a 3D image.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+deprecated?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+isColorStack
+\end_layout
+
+\begin_layout Standard
+Checks if a 3D stack is color or gray-scale.
 \end_layout
 
 \begin_layout Chapter
@@ -3089,1886 +5034,6 @@ tileIndex3d
 
 \begin_layout Standard
 Returns the index of a 2x2x2 binary tile.
-\end_layout
-
-\begin_layout Chapter
-Module imStacks
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "chap:imStacks"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The module imStacks is specifically devoted to the processing of 3D images (grayscale,
- color,
- binary...).
- It provides the Slicer application,
- a GUI for exploration and processing of 3D images.
-\end_layout
-
-\begin_layout Section
-Slicer application
-\end_layout
-
-\begin_layout Standard
-The 
-\begin_inset Quotes eld
-\end_inset
-
-Slicer
-\begin_inset Quotes erd
-\end_inset
-
- application is a graphical application that allows for quick interactive exploration of 3D grayscale or color images,
- including the computation of histograms,
- isosurfaces,
- or cross-sections (Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Slicer-app"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imStacks/imgSlicerBrainsRGB.png
-	lyxscale 50
-	width 80text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Slicer-app"
-
-\end_inset
-
-Several views of the Slicer application on a sample 3D color image.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-The main interface is a slice-by-slice viewer that integrates slice changing slider,
- status bar,
- and an action menu.
- The menu provides several actions to import/export 3D images,
- to apply various operations on the 3D image (crop,
- rotation...),
- and to generate new visualizations of the 3D data:
- isosurfaces,
- 3D orhoslices,
- histograms...
- It is possible to specifiy the spatial calibration,
- facilitating the visualization of 3D structures with non-cubic voxels.
-\end_layout
-
-\begin_layout Standard
-All the features of the Slicer application are available as Matlab functions from the MatImage library (mostly from the imExplore module).
-\end_layout
-
-\begin_layout Subsection
-Usage
-\end_layout
-
-\begin_layout Standard
-To start the the Slicer application,
- choose one of these syntaxes:
-\end_layout
-
-\begin_layout Itemize
-run 
-\begin_inset Quotes eld
-\end_inset
-
-Slicer
-\begin_inset Quotes erd
-\end_inset
-
- from the matlab prompt.
- This will open an empty Slicer frame,
- and image files can be open from the File menu.
-\end_layout
-
-\begin_layout Itemize
-run Slicer with the image to display as argument.
- The image is either a 3D (or 4D in case of color image) numeric array,
- or the name of an image file.
-\end_layout
-
-\begin_layout Standard
-The next sections describe the options proposed in the frame menu (Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Slicer-Menu"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imStacks/Slicer/menusSlicer.png
-	lyxscale 50
-	width 100text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Slicer-Menu"
-
-\end_inset
-
-The menu bar of the Slicer application.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-File menu
-\end_layout
-
-\begin_layout Standard
-Contains several options to import/export 3D images.
- See also the section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Read-3D-image"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsubsection
-Import / read images
-\end_layout
-
-\begin_layout Minisec
-Open...
-\end_layout
-
-\begin_layout Standard
-Opens a 3D image.
- Several common file formats are supported (TIFF,
- Analyze,
- MHD,
- VGI...).
- 
-\end_layout
-
-\begin_layout Minisec
-Import Raw Data....
-\end_layout
-
-\begin_layout Standard
-Imports image data from a binary data file.
-\end_layout
-
-\begin_layout Minisec
-Import From Workspace
-\end_layout
-
-\begin_layout Standard
-Displays a 3D array from Matlab workspace into a new Slicer frame.
-\end_layout
-
-\begin_layout Minisec
-Demo images
-\end_layout
-
-\begin_layout Standard
-Opens a selection of demonstration images.
-\end_layout
-
-\begin_layout Subsubsection
-Export / write images
-\end_layout
-
-\begin_layout Minisec
-Save image
-\end_layout
-
-\begin_layout Standard
-Saves current 3D image.
-\end_layout
-
-\begin_layout Minisec
-Export To Workspace
-\end_layout
-
-\begin_layout Standard
-Exports current image into workspace as a 3D or 4D numeric array.
-\end_layout
-
-\begin_layout Minisec
-Close
-\end_layout
-
-\begin_layout Standard
-Closes the current viewer.
-\end_layout
-
-\begin_layout Subsection
-Image Menu
-\end_layout
-
-\begin_layout Standard
-Allows for calibrating the image,
- and converting data types.
-\end_layout
-
-\begin_layout Subsubsection
-Image info and calibration
-\end_layout
-
-\begin_layout Minisec
-Image Info
-\end_layout
-
-\begin_layout Standard
-Display a short description of image properties.
-\end_layout
-
-\begin_layout Minisec
-Spatial Calibration
-\end_layout
-
-\begin_layout Standard
-Updates sptial calibration (voxel size and unit name) of image.
-\end_layout
-
-\begin_layout Minisec
-Image Origin
-\end_layout
-
-\begin_layout Standard
-Updates the coordinates of first voxel in user coordinates.
-\end_layout
-
-\begin_layout Subsubsection
-Conversions
-\end_layout
-
-\begin_layout Minisec
-Change Image Type
-\end_layout
-
-\begin_layout Standard
-Changes the type associated to the current image.
- The 
-\begin_inset Quotes eld
-\end_inset
-
-Type
-\begin_inset Quotes erd
-\end_inset
-
- can be one of 
-\begin_inset Quotes eld
-\end_inset
-
-Grayscale
-\begin_inset Quotes erd
-\end_inset
-
-,
- 
-\begin_inset Quotes eld
-\end_inset
-
-Intensity
-\begin_inset Quotes erd
-\end_inset
-
-,
- 
-\begin_inset Quotes eld
-\end_inset
-
-Binary
-\begin_inset Quotes erd
-\end_inset
-
-,
- 
-\begin_inset Quotes eld
-\end_inset
-
-Label
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Minisec
-Change Gray Levels
-\end_layout
-
-\begin_layout Standard
-Changes the number of levels used to represent grayscale image data.
-\end_layout
-
-\begin_layout Minisec
-Convert Intensity to Color
-\end_layout
-
-\begin_layout Standard
-Converts a scalar image into a color image by choosing a colormap.
- See also section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Color-Images"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
- (function double2rgb).
-\end_layout
-
-\begin_layout Minisec
-Convert Labels to Color
-\end_layout
-
-\begin_layout Standard
-Converts a label image into a color image by choosing a colormap.
- See also section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fun:label2rgb3d"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
- (function label2rgb3d).
-\end_layout
-
-\begin_layout Minisec
-RGB To Gray
-\end_layout
-
-\begin_layout Standard
-Converts a RGB color image into a grayscale image.
-\end_layout
-
-\begin_layout Minisec
-Split RGB
-\end_layout
-
-\begin_layout Standard
-Splits the color components of a 3D color image into three distinct images.
- Each component is displayed into a new Slicer frame.
-\end_layout
-
-\begin_layout Subsection
-View Menu
-\end_layout
-
-\begin_layout Standard
-Allows for tuning display settings,
- and computing 3D representations.
-\end_layout
-
-\begin_layout Minisec
-Display Range
-\end_layout
-
-\begin_layout Standard
-Chooses the range of values used to display grayscale or intensity images.
- Can be chosen automatically from image data values,
- inferred from image data type,
- or manually selected.
-\end_layout
-
-\begin_layout Minisec
-Look-Up Table
-\end_layout
-
-\begin_layout Standard
-Chooses the look-up table to use for representing intensity or label images.
-\end_layout
-
-\begin_layout Minisec
-Show Ortho Slices
-\end_layout
-
-\begin_layout Standard
-Displays the 3D image as three 2D images representing XY,
- YZ and XZ slices (See Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Visualization-3D-Image"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
--a).
- Each slice is displayed as a 2D image.
- The slice position can be updated by clicking on the images.
-\end_layout
-
-\begin_layout Minisec
-Show 3D Ortho Slices
-\end_layout
-
-\begin_layout Standard
-Displays the 3D image as three 2D images mutually intersecting in 3D (See Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Visualization-3D-Image"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
--b).
- Each slice is represented in 3D.
- The slice position can be updated by dragging the 3D images.
-\end_layout
-
-\begin_layout Minisec
-Isosurface rendering
-\end_layout
-
-\begin_layout Standard
-Computes and renders a 3D isosurface from image data and user-defined value.
- Can be slow for large images.
-\end_layout
-
-\begin_layout Minisec
-Binary/Labels surface rendering
-\end_layout
-
-\begin_layout Standard
-Computes and renders a 3D isosurface from binary and label images.
- Similar to isosurface rendering,
- but a specific processing is added to iterate over the set of distinct labels within image.
-\end_layout
-
-\begin_layout Minisec
-Zoom In/Out/1:1/Best...
-\end_layout
-
-\begin_layout Standard
-Changes the zoom level of the current image view.
-\end_layout
-
-\begin_layout Subsection
-Process Menu
-\end_layout
-
-\begin_layout Standard
-Provides basic image processing tools.
-\end_layout
-
-\begin_layout Minisec
-Geometric Transforms
-\end_layout
-
-\begin_layout Standard
-Performs elementary shape transformation on the 3D image:
- flip along one of the main axes,
- rotation by 90 degrees around one of the main axes.
-\end_layout
-
-\begin_layout Minisec
-Crop Image
-\end_layout
-
-\begin_layout Standard
-Extracts a 3D rectangular selection from the image.
-\end_layout
-
-\begin_layout Minisec
-Crop Label
-\end_layout
-
-\begin_layout Standard
-Extracts the 3D region containing the specified label.
- Returns a new label image with only one label.
-\end_layout
-
-\begin_layout Minisec
-View Histogram
-\end_layout
-
-\begin_layout Standard
-Displays the histogram of the grayscale or color values within the image.
- See also the imHistogram function (p.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand pageref
-reference "fun:imHistogram"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Section
-3D images visualization
-\end_layout
-
-\begin_layout Standard
-The imStacks module provides several tools for interactive exploration of 3D images.
- Most functions work independently for both grayscale or color images,
- and allow to specify the spatial calibration of images.
- Several histograms functions are also provided in the measure module (see section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Image-histograms"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "language=Matlab"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-% read data and adjust dynamic
-\end_layout
-
-\begin_layout Plain Layout
-
-img = imAdjustDynamic(analyze75read('brainMRI.hdr'));
-\end_layout
-
-\begin_layout Plain Layout
-
-% Display orthogonal slices
-\end_layout
-
-\begin_layout Plain Layout
-
-figure(1);
- clf;
- axis equal;
- hold on;
-\end_layout
-
-\begin_layout Plain Layout
-
-orthoSlices(img,
- [60 80 13],
- 'Spacing',
- [1 1 2.5]);
-\end_layout
-
-\begin_layout Plain Layout
-
-% Display 3D orthogonal slices
-\end_layout
-
-\begin_layout Plain Layout
-
-figure(2);
- clf;
- axis equal;
- hold on;
-\end_layout
-
-\begin_layout Plain Layout
-
-orthoSlices3d(img,
- [60 80 13],
- [1 1 2.5]);
-\end_layout
-
-\begin_layout Plain Layout
-
-% setup axis limits
-\end_layout
-
-\begin_layout Plain Layout
-
-axis(imPhysicalExtent(img,
- [1 1 2.5]));
- view(3);
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imStacks/brainMRI_orthoSlices.png
-	lyxscale 50
-	width 45text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-showOrthoPlanes
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imStacks/brainMRI_orthoSlices3d.png
-	lyxscale 50
-	width 45text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-showOrthoSlices3d
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Visualization-3D-Image"
-
-\end_inset
-
-Different representations of a 3D grayscale image.
- Results of the showOrthoPlanes and showOrthoSlices3d functions.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Visualization functions
-\end_layout
-
-\begin_layout Minisec
-orthoSlices
-\end_layout
-
-\begin_layout Standard
-Displays three orthogonal slices in the same figure (Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Visualization-3D-Image"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
--a).
-\end_layout
-
-\begin_layout Minisec
-OrthoSlicer3d
-\end_layout
-
-\begin_layout Standard
-Displays 3D interactive orthoslicer.
-\end_layout
-
-\begin_layout Minisec
-orthoSlices3d
-\end_layout
-
-\begin_layout Standard
-Shows three orthogonal 3D slices of a 3D image (Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Visualization-3D-Image"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
--b).
- The slices can be dragged interactively.
-\end_layout
-
-\begin_layout Subsection
-Slicing functions
-\end_layout
-
-\begin_layout Minisec
-stackSlice
-\end_layout
-
-\begin_layout Standard
-Extracts a planar slice from a 3D image.
-\end_layout
-
-\begin_layout Subsection
-Visualization routines
-\end_layout
-
-\begin_layout Standard
-These low-level functions are used by other visualization functions,
- but can also be used independently.
-\end_layout
-
-\begin_layout Minisec
-slice3d
-\end_layout
-
-\begin_layout Standard
-Shows a moving 3D slice of an image.
-\end_layout
-
-\begin_layout Minisec
-showXSlice
-\end_layout
-
-\begin_layout Standard
-Shows YZ slice of a 3D image.
-\end_layout
-
-\begin_layout Minisec
-showYSlice
-\end_layout
-
-\begin_layout Standard
-Shows ZX slice of a 3D image.
-\end_layout
-
-\begin_layout Minisec
-showZSlice
-\end_layout
-
-\begin_layout Standard
-Shows XY slice of a 3D image.
-\end_layout
-
-\begin_layout Section
-Read/Write 3D images
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Read-3D-image"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Several functions are provided for importing and exporting 3D images in various file formats,
- or for reading only a specific portion of a large 3D image.
-\end_layout
-
-\begin_layout Subsection
-General use functions
-\end_layout
-
-\begin_layout Minisec
-readstack
-\end_layout
-
-\begin_layout Standard
-Reads a 3D image stored either in a list of 2D images (slices),
- or in a 3D image file.
- The function can also parse some of the meta-data stored by ImageJ
-\begin_inset Index idx
-range none
-pageformat default
-status collapsed
-
-\begin_layout Plain Layout
-ImageJ
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Minisec
-savestack
-\end_layout
-
-\begin_layout Standard
-Saves an image stack to a file or a series of files.
-\end_layout
-
-\begin_layout Minisec
-savebinstack
-\end_layout
-
-\begin_layout Standard
-Saves an binary stack to a file,
- as RGB Image.
-\end_layout
-
-\begin_layout Minisec
-imReadRawData
-\end_layout
-
-\begin_layout Standard
-Reads image data from raw data file.
-\end_layout
-
-\begin_layout Minisec
-imFileInfo
-\end_layout
-
-\begin_layout Standard
-Generalization of the imfinfo function that manages 3D image file formats.
-\end_layout
-
-\begin_layout Subsection
-Read image portion
-\end_layout
-
-\begin_layout Standard
-When the size of the image is very large,
- it may be useful to be able to read only a specific rectangular region within the image,
- or to read a down-sampled version of the image.
- Note that the 
-\family typewriter
-\color gray
-tiffreadVolume
-\family default
-\color inherit
- from the Image Processing Toolbox also provides similar functionnalities.
-\end_layout
-
-\begin_layout Minisec
-imReadRegion3d
-\end_layout
-
-\begin_layout Standard
-Reads a specific 3D region of a 3D image.
-\end_layout
-
-\begin_layout Minisec
-imReadDownSampled3d
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "fun:imReadDownSampled3d"
-
-\end_inset
-
-Reads a down-sampled version of a 3D image.
-\end_layout
-
-\begin_layout Subsection
-Management of specific file formats
-\end_layout
-
-\begin_layout Standard
-In addition to the image file formats available with Matlab,
- MatImage also provides partial support of additional image file formats.
-\end_layout
-
-\begin_layout Minisec
-metaImageInfo
-\end_layout
-
-\begin_layout Standard
-Reads information header of meta image data.
-\end_layout
-
-\begin_layout Minisec
-metaImageRead
-\end_layout
-
-\begin_layout Standard
-Reads an image in MetaImage file format
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-https://itk.org/Wiki/ITK/MetaIO/Documentation
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Minisec
-metaImageWrite
-\end_layout
-
-\begin_layout Standard
-Writes header and data files of an image in MetaImage format.
- This results in a header file with extension 
-\begin_inset Quotes eld
-\end_inset
-
-.mhd
-\begin_inset Quotes erd
-\end_inset
-
-,
- and a binary data file with extension 
-\begin_inset Quotes eld
-\end_inset
-
-.raw
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Minisec
-readVgiStack
-\end_layout
-
-\begin_layout Standard
-Reads a 3D stack stored in VGI format.
-\end_layout
-
-\begin_layout Minisec
-vgiStackInfo
-\end_layout
-
-\begin_layout Standard
-Reads information necessary to load a 3D stack in VGI format.
-\end_layout
-
-\begin_layout Minisec
-readVoxelMatrix
-\end_layout
-
-\begin_layout Standard
-Reads a 3D image in VoxelMatrix (.vm) format,
- used by the Free-D library 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Andrey2005"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Section
-3D images processing
-\end_layout
-
-\begin_layout Standard
-Some specific utility functions for processing 3D images.
-\end_layout
-
-\begin_layout Subsection
-Stack processing
-\end_layout
-
-\begin_layout Minisec
-createRGBStack
-\end_layout
-
-\begin_layout Standard
-Concatenates 2 or 3 grayscale stacks to form a color stack.
-\end_layout
-
-\begin_layout Minisec
-stackRotate90
-\end_layout
-
-\begin_layout Standard
-Rotates a 3D image by 90 degrees around one image axis.
-\end_layout
-
-\begin_layout Minisec
-rotateStack90
-\end_layout
-
-\begin_layout Standard
-Rotates a 3D image by 90 degrees around one image axis.
-\end_layout
-
-\begin_layout Minisec
-flipStack
-\end_layout
-
-\begin_layout Standard
-Flips a 3D image along specified X,
- Y,
- or Z dimension.
-\end_layout
-
-\begin_layout Minisec
-cropStack
-\end_layout
-
-\begin_layout Standard
-Crops a 3D image with the specified box limits.
-\end_layout
-
-\begin_layout Minisec
-imMiddleSlice
-\end_layout
-
-\begin_layout Standard
-Extracts the middle slice of a 3D stack.
-\end_layout
-
-\begin_layout Subsection
-Stack information
-\end_layout
-
-\begin_layout Minisec
-stackSize
-\end_layout
-
-\begin_layout Standard
-Computes the size of a 3D stack in [x y z] form.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-deprecated?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Minisec
-stackExtent
-\end_layout
-
-\begin_layout Standard
-Computes the physical extent of a 3D image.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-deprecated?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Minisec
-isColorStack
-\end_layout
-
-\begin_layout Standard
-Checks if a 3D stack is color or gray-scale.
-\end_layout
-
-\begin_layout Chapter
-Module imAnalysis
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "chap:imAnalysis"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The imAnalysis module provides several functions and graphical user interfaces for the exploration of values within images.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-minitoc
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Statistics for pixel values
-\end_layout
-
-\begin_layout Standard
-Functions in this section allow for global exploration of all elements within an image or a pair of images,
- without taking into account the spatial position of image pixels or voxels.
-\end_layout
-
-\begin_layout Subsection
-Image histograms
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Image-histograms"
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Standard
-Several functions allow for computing histogram of grayscale or color images.
- They can be applied to 2D/3D images.
- The following example demonstrates the exploration of the values within a color image,
- either by computing the histogram of each channel,
- or by computing joint histogram of two channels (see result in Figure
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Histograms-Color-Image"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-img = imread('peppers.png');
-\end_layout
-
-\begin_layout Plain Layout
-
-% Histogram of each channel
-\end_layout
-
-\begin_layout Plain Layout
-
-figure;
- imHistogram(img);
-\end_layout
-
-\begin_layout Plain Layout
-
-ylim([0 8000])
-\end_layout
-
-\begin_layout Plain Layout
-
-% Joint histogram of red and green channels
-\end_layout
-
-\begin_layout Plain Layout
-
-h = imJointHistogram(img(:,:,1),
- img(:,:,2));
-\end_layout
-
-\begin_layout Plain Layout
-
-figure;
- imshow(log(h+1),
- []);
- colormap([1 1 1;
- parula(256)]);
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Minisec
-imHistogram
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "fun:imHistogram"
-
-\end_inset
-
-Computes the histogram of the input image.
- In case of a color images,
- returns or display the histogram of each channel.
-\end_layout
-
-\begin_layout Minisec
-imHistogramDialog 
-\end_layout
-
-\begin_layout Standard
-Opens a dialog to setup image histogram display options.
-\end_layout
-
-\begin_layout Minisec
-imJointHistogram
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "fun:imJointHistogram"
-
-\end_inset
-
-Computes the joint histogram of two images.
-\end_layout
-
-\begin_layout Minisec
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imMeasures/imHistogram_peppers.png
-	lyxscale 50
-	special height=4cm
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename images/imMeasures/imJointHistogram_peppersRG_log.png
-	special height=4cm
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename images/imMeasures/imColorHistogram_peppers.png
-	special height=4cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Histograms-Color-Image"
-
-\end_inset
-
-Exploration of color distribution within images.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Minisec
-imColorHistogram 
-\end_layout
-
-\begin_layout Standard
-Plots 3D histogram of a color image.
-\end_layout
-
-\begin_layout Minisec
-imWeightedHistogram
-\end_layout
-
-\begin_layout Standard
-Computes the weighted histogram of the values within the image,
- using an additional array/image as weights.
-\end_layout
-
-\begin_layout Subsection
-Summary statistics on pixel values
-\end_layout
-
-\begin_layout Standard
-These functions compute summary statistics of the values within an image.
- Input images are usually grayscale or intensity images.
- Some functions also accept color images as input,
- and compute the desired summary statistic along each channel.
- The library also provides functions for computing and displaying histograms of multi-dimensional images (Section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Image-histograms"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Minisec
-imSum 
-\end_layout
-
-\begin_layout Standard
-Sum of a grayscale image,
- or sum of each color component.
-\end_layout
-
-\begin_layout Minisec
-imMean 
-\end_layout
-
-\begin_layout Standard
-Mean of a grayscale image,
- or mean of each color component.
-\end_layout
-
-\begin_layout Minisec
-imStd 
-\end_layout
-
-\begin_layout Standard
-Standard deviation of pixel values.
-\end_layout
-
-\begin_layout Minisec
-imVar 
-\end_layout
-
-\begin_layout Standard
-Variance of a grayscale image,
- or of each color component.
-\end_layout
-
-\begin_layout Minisec
-imMin 
-\end_layout
-
-\begin_layout Standard
-Minimum value of a grayscale image,
- or of each color component.
-\end_layout
-
-\begin_layout Minisec
-imMax
-\end_layout
-
-\begin_layout Standard
-Maximum value of a grayscale image,
- or of each color component.
-\end_layout
-
-\begin_layout Minisec
-imMedian
-\end_layout
-
-\begin_layout Standard
-Median value of a grayscale image,
- or of each color component.
-\end_layout
-
-\begin_layout Minisec
-imQuantile 
-\end_layout
-
-\begin_layout Standard
-Computes value that threshold a given proportion of pixels.
-\end_layout
-
-\begin_layout Minisec
-imMode 
-\end_layout
-
-\begin_layout Standard
-Mode of pixel values in an image.
-\end_layout
-
-\begin_layout Minisec
-imRegionFun 
-\end_layout
-
-\begin_layout Standard
-Applies a summary function to each region of a label image.
-\end_layout
-
-\begin_layout Subsection
-Entropy and mutual information
-\end_layout
-
-\begin_layout Standard
-Entropy can be used for image segmentation 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "fun:imMaxEntropyThreshold"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-.
- Mutual information is based on joint histogram 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "fun:imJointHistogram"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Minisec
-imEntropy 
-\end_layout
-
-\begin_layout Standard
-Computes the entropy of an image.
- Ininformation theory,
- the entropy is a measure of disorder or uncertainty
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-https://en.wikipedia.org/wiki/Entropy_(information_theory)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-.
- The higher the entropy value,
- the more difficult it is to describe or compress the content of the image.
-\end_layout
-
-\begin_layout Minisec
-imJointEntropy 
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "fun:imJointEntropy"
-
-\end_inset
-
-Computes the joint entropy between two images.
- The joint entropy is computed from the joint histogram of the image pair (see section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Image-histograms"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Minisec
-imMutualInformation 
-\end_layout
-
-\begin_layout Standard
-Computes the mutual information between two images.
- The mutual information is a measure of similarity between the content of the two images that is well suited when images are generated with different modalities
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-https://en.wikipedia.org/wiki/Mutual_information
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Section
-Image values
-\end_layout
-
-\begin_layout Standard
-Functions for semi-interactive image exploration,
- such as computation of line profiles.
-\end_layout
-
-\begin_layout Minisec
-imEvaluate 
-\end_layout
-
-\begin_layout Standard
-Evaluates image value at given position(s).
-\end_layout
-
-\begin_layout Minisec
-imLineProfile 
-\end_layout
-
-\begin_layout Standard
-Evaluates image value along a line segment.
-\end_layout
-
-\begin_layout Minisec
-imLocalGradient 
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "fun:imLocalGradient"
-
-\end_inset
-
-Computes 2D/3D gradient vector(s) within image at specified position(s) without requiring to compute the whole gradient image.
- This reduces memory usage when image is large and number of position is small.
-\end_layout
-
-\begin_layout Section
-Get information on images
-\end_layout
-
-\begin_layout Standard
-Several functions provide basic information about image:
- size,
- type...
-\end_layout
-
-\begin_layout Subsection
-Image size 
-\end_layout
-
-\begin_layout Standard
-Provide information about the size of the image,
- either in pixels/voxels coordinates,
- or in physical coordinates by providing calibration.
-\end_layout
-
-\begin_layout Minisec
-imSize 
-\end_layout
-
-\begin_layout Standard
-Computes the size of an image in [x y z] order.
- For color images,
- returns only the spatial components.
-\end_layout
-
-\begin_layout Minisec
-is3DImage
-\end_layout
-
-\begin_layout Standard
-Checks if an image is 3D.
-\end_layout
-
-\begin_layout Minisec
-imPhysicalExtent 
-\end_layout
-
-\begin_layout Standard
-Computes the physical extent of an image.
- Returns a 1-by-4 row array for 2D images,
- and a 1-by-6 row array for 3D images.
-\end_layout
-
-\begin_layout Subsection
-Image type
-\end_layout
-
-\begin_layout Minisec
-isColorImage 
-\end_layout
-
-\begin_layout Standard
-Checks if an image (2D or 3D) is a color image.
- 
-\end_layout
-
-\begin_layout Minisec
-imGrayscaleExtent 
-\end_layout
-
-\begin_layout Standard
-Grayscale extent of an image.
-\end_layout
-
-\begin_layout Minisec
-imFileInfo
-\end_layout
-
-\begin_layout Standard
-Generalization of the imfinfo function that also taks into account specialized image file formats.
 \end_layout
 
 \begin_layout Chapter

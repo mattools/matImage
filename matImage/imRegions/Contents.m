@@ -28,6 +28,20 @@
 %   imCSMoment            - Compute centered and scaled moments of an image.
 %   imHuInvariants        - Compute Hu's invariant for a 2D image.
 %
+%   Operators for label images:
+%   label2rgb3d             - Convert a 3D label image to a 3D RGB image.
+%   imLabelToValue          - Convert label image to parametric map
+%   imKillBorderRegions     - Remove regions on the border of an image
+%   imAreaOpening           - Remove all regions smaller than a given area
+%   imAttributeOpening      - Filter regions on a size or shape criterium
+%   imSeparateParticles     - Separate touching particles using watershed algorithm
+%   imLargestRegion         - Keep the largest region within a binary or label image.
+%   imCropLabel             - Extract the portion of image that contains the specified label
+%   imMergeRegions          - Merge adajcent regions in a label image.
+%   imMergeEnclosedRegions  - Merge regions within a label image, based on an inclusion criteria.
+%   imBoundaryIndices       - Find indices of boundary between 2 cells
+%   imLabelEdges            - Label edges between adjacent regions of labeled image.
+%
 % Extract geometric primitives
 %   imFind                - Return coordinates of non-zero pixels in an image
 %   imRAG                 - Region adjacency graph (RAG) of a label image.

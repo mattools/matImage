@@ -159,3 +159,35 @@ for i = 1:length(list)
     delete(list(i).name);
 end
 
+
+
+function test_updateTimeStampWhenOverwrite(testCase)
+% Test call of function without argument
+
+D = load ('mri');
+D = squeeze(D.D);
+
+fName = 'testOverwrite.tif';
+if exist(fName, 'file')
+    delete(fName);
+end
+
+% write a first time, and store file info
+savestack(D, fName);
+info0 = dir(fName);
+
+% wait a little bit to avoid have same date time
+pause(1.1);
+
+% write a over existing file
+savestack(flip(D,3), fName);
+info = dir(fName);
+
+% compute time stamp before and after second write
+dt0 = datetime(info0.date, 'Locale', 'system');
+dt = datetime(info.date, 'Locale', 'system');
+
+assertTrue(testCase, dt > dt0);
+
+% cleanup
+delete(fName);

@@ -1,4 +1,4 @@
-function savestack(img, fname, varargin)
+function savestack(img, fileName, varargin)
 % Save a 3D image into a file or a series of files.
 %
 %   savestack(IMG, FNAME)
@@ -34,27 +34,16 @@ function savestack(img, fname, varargin)
 %     savestack(img, 'imgBundle###.tif');     % save as image series
 %     savestack(img, 'imgBundle%03d.tif');    % save as image series
 %   
-%
 %   See also:
 %     readstack, imwrite
+%     https://www.mathworks.com/matlabcentral/fileexchange/35684-multipage-tiff-stack
 %
 
 %   ---------
-%   author: David Legland, david.legland@inra.fr
+%   author: David Legland, david.legland@inrae.fr
 %   INRA - Cepia Software Platform
 %   created the 10/09/2003.
-%   http://www.pfl-cepia.inra.fr/index.php?page=slicer
 
-%   HISTORY
-%   17/02/2004 change indices of slices, to start at -00 and not at -01
-%   18/10/2004 adapt to save in other formats than tif, and keeping
-%       possibility to specify options
-%   02/01/2005 correct bug: if save a bundle TIF on existing file,
-%       remove previous file.
-%   01/06/2006 allow wildcard '###', ensure more portability with
-%       windows, add verbosity options
-%   28/11/2008 update doc, remove unused variable 'slice'
-%   30/10/2019 uses TIFF lib to accelerate write time
 
 %% Default values
 
@@ -74,12 +63,12 @@ dim = size(img);
 
 % check if colormap is specified
 map = [];
-if isnumeric(fname)
-    map = fname;
+if isnumeric(fileName)
+    map = fileName;
     if nargin < 3 
         error('Should specify file name as third input');
     end
-    fname = varargin{1};
+    fileName = varargin{1};
     varargin(1) = [];
 end
 
@@ -120,22 +109,22 @@ end
 %% Compute file name pattern
 
 % replace wildcard '??' or '???' by wildcard '%02d' or '%03d'
-pos = strfind(fname, '?');
+pos = strfind(fileName, '?');
 npos = length(pos);
 if npos > 0
-    fname = strrep(fname, repmat('?', [1 npos]), ['%0' num2str(npos) 'd']);
+    fileName = strrep(fileName, repmat('?', [1 npos]), ['%0' num2str(npos) 'd']);
 end
 
 % replace wildcard '##' or '###' by wildcard '%02d' or '%03d'
-pos = strfind(fname, '#');
+pos = strfind(fileName, '#');
 npos = length(pos);
 if npos > 0
-    fname = strrep(fname, repmat('#', [1 npos]), ['%0' num2str(npos) 'd']);
+    fileName = strrep(fileName, repmat('#', [1 npos]), ['%0' num2str(npos) 'd']);
 end
 
 % binary flag indicating if the stack shouldbe save as a single file, or as
 % a collection of 2D slices.
-saveAsStack = ~contains(fname, '%0');
+saveAsStack = ~contains(fileName, '%0');
 
 
 %% Save image file(s)
@@ -143,7 +132,7 @@ saveAsStack = ~contains(fname, '%0');
 if saveAsStack
     % save one file containing all slices of image
     if verbose
-        disp('save a stack');
+        disp('save 3D image as stack');
     end
     
     % setup TIFF tags shared by all images
@@ -173,8 +162,13 @@ if saveAsStack
     tagStruct.PlanarConfiguration = Tiff.PlanarConfiguration.Chunky;
     tagStruct.Software = 'MATLAB_MatImage';
     
+    % remove file if it alreay exists
+    if exist(fileName, "file")
+        delete(fileName);
+    end
+
     % create a TIFF file, and setup necessary tags
-    t = Tiff(fname, 'w');
+    t = Tiff(fileName, 'w');
     setTag(t, tagStruct);
     
     if isGrayscale
@@ -209,20 +203,20 @@ if saveAsStack
 else
     % save a series of file, one file per slice of images
     if verbose
-        disp('save slices');
+        disp('save 3D image as image series');
     end
     
     % indentify the position of output file name that will contain indices
-    pos = strfind(fname, '%0');
+    pos = strfind(fileName, '%0');
     pos = pos(end);
     
     % extract different parts of the file name
-    basename = fname(1:pos-1);
-    endname = fname(pos+4:end);
+    basename = fileName(1:pos-1);
+    endname = fileName(pos+4:end);
     
     % string format to compute image name
     % -> basename + indSlice + endName
-    format = ['%s%0' fname(pos+2) 'd%s'];
+    format = ['%s%0' fileName(pos+2) 'd%s'];
     
     % save each slice of the image (gray-scale->3D or color->4D)
     if isGrayscale

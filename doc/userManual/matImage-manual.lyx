@@ -109,6 +109,7 @@
 \bibtex_command default
 \index_command default
 \float_placement h
+\float_alignment class
 \paperfontsize default
 \spacing single
 \use_hyperref true
@@ -137,7 +138,7 @@
 \cite_engine_type authoryear
 \biblio_style plainnat
 \use_bibtopic false
-\use_indices false
+\use_indices true
 \paperorientation portrait
 \suppress_date false
 \justification true
@@ -145,8 +146,12 @@
 \use_formatted_ref 0
 \use_minted 0
 \use_lineno 0
-\index Index
+\index General Index
 \shortcut idx
+\color #008000
+\end_index
+\index Index of functions
+\shortcut ind
 \color #008000
 \end_index
 \secnumdepth 3
@@ -249,7 +254,7 @@ MatImage is a library for image processing and analysis,
 \end_layout
 
 \begin_layout Standard
-The library was develop to facilitate the manipulation and the analysis of images with various dimensionalities (2D/3D) and various contents (grayscale,
+The library was developped to facilitate the manipulation and the analysis of images with various dimensionalities (2D/3D) and various contents (grayscale,
  color,
  binary,
  label maps).
@@ -276,7 +281,7 @@ generic operators,
 \begin_layout Standard
 The official homepage for the project is hosted on GitHub
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Flex URL
@@ -708,7 +713,51 @@ name "chap:imAnalysis"
 \end_layout
 
 \begin_layout Standard
-The imAnalysis module provides several functions and graphical user interfaces for the exploration of values within images.
+The imAnalysis module provides several functions and graphical user interfaces for the exploration of values within images,
+ and retrieving general information (size,
+ meta-data...) about images.
+ More specialized analysis functions can be found in the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imRegions]{imRegions}
+\end_layout
+
+\end_inset
+
+,
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imMinkowski]{imMinkowski}
+\end_layout
+
+\end_inset
+
+,
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[chap:imGranulometry]{imGranulometry}
+\end_layout
+
+\end_inset
+
+ modules.
 \end_layout
 
 \begin_layout Standard
@@ -833,6 +882,32 @@ figure;
 
 \begin_layout Minisec
 imHistogram
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+histogram@imHistogram
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -848,7 +923,33 @@ Computes the histogram of the input image.
 \end_layout
 
 \begin_layout Minisec
-imHistogramDialog 
+imHistogramDialog
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+histogramDialog@imHistogramDialog
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -857,6 +958,32 @@ Opens a dialog to setup image histogram display options.
 
 \begin_layout Minisec
 imJointHistogram
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+jointHistogram@imJointHistogram
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -927,7 +1054,33 @@ Exploration of color distribution within images.
 \end_layout
 
 \begin_layout Minisec
-imColorHistogram 
+imColorHistogram
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+colorHistogram@imColorHistogram
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -936,6 +1089,32 @@ Plots 3D histogram of a color image.
 
 \begin_layout Minisec
 imWeightedHistogram
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+weightedHistogram@imWeightedHistogram
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -971,7 +1150,33 @@ nolink "false"
 \end_layout
 
 \begin_layout Minisec
-imSum 
+imSum
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+sum@imSum
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -980,7 +1185,33 @@ Sum of a grayscale image,
 \end_layout
 
 \begin_layout Minisec
-imMean 
+imMean
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mean@imMean
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -989,7 +1220,33 @@ Mean of a grayscale image,
 \end_layout
 
 \begin_layout Minisec
-imStd 
+imStd
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+std@imStd
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -997,7 +1254,33 @@ Standard deviation of pixel values.
 \end_layout
 
 \begin_layout Minisec
-imVar 
+imVar
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+var@imVar
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1006,7 +1289,33 @@ Variance of a grayscale image,
 \end_layout
 
 \begin_layout Minisec
-imMin 
+imMin
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+min@imMin
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1016,6 +1325,32 @@ Minimum value of a grayscale image,
 
 \begin_layout Minisec
 imMax
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+max@imMax
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1025,6 +1360,32 @@ Maximum value of a grayscale image,
 
 \begin_layout Minisec
 imMedian
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+median@imMedian
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1033,7 +1394,33 @@ Median value of a grayscale image,
 \end_layout
 
 \begin_layout Minisec
-imQuantile 
+imQuantile
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+quantile@imQuantile
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1041,7 +1428,33 @@ Computes value that threshold a given proportion of pixels.
 \end_layout
 
 \begin_layout Minisec
-imMode 
+imMode
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mode@imMode
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1049,11 +1462,50 @@ Mode of pixel values in an image.
 \end_layout
 
 \begin_layout Minisec
-imRegionFun 
+imRegionFun
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+regionFun@imRegionFun
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imRegionFun"
+
+\end_inset
+
 Applies a summary function to each region of a label image.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1061,7 +1513,8 @@ Entropy and mutual information
 \end_layout
 
 \begin_layout Standard
-Entropy can be used for image segmentation 
+Entropy and mutual information are concepts from information theory that are often useful in image processing and analysis.
+ Entropy can be used for image segmentation 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "fun:imMaxEntropyThreshold"
@@ -1088,7 +1541,33 @@ nolink "false"
 \end_layout
 
 \begin_layout Minisec
-imEntropy 
+imEntropy
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+entropy@imEntropy
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1120,7 +1599,33 @@ https://en.wikipedia.org/wiki/Entropy_(information_theory)
 \end_layout
 
 \begin_layout Minisec
-imJointEntropy 
+imJointEntropy
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+jointEntropy@imJointEntropy
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1150,7 +1655,33 @@ nolink "false"
 \end_layout
 
 \begin_layout Minisec
-imMutualInformation 
+imMutualInformation
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mutualInformation@imMutualInformation
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1188,7 +1719,33 @@ Functions for semi-interactive image exploration,
 \end_layout
 
 \begin_layout Minisec
-imEvaluate 
+imEvaluate
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+evaluate@imEvaluate
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1196,7 +1753,33 @@ Evaluates image value at given position(s).
 \end_layout
 
 \begin_layout Minisec
-imLineProfile 
+imLineProfile
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+lineProfile@imLineProfile
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1204,7 +1787,33 @@ Evaluates image value along a line segment.
 \end_layout
 
 \begin_layout Minisec
-imLocalGradient 
+imLocalGradient
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+localGradient@imLocalGradient
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1214,7 +1823,20 @@ name "fun:imLocalGradient"
 
 \end_inset
 
-Computes 2D/3D gradient vector(s) within image at specified position(s) without requiring to compute the whole gradient image.
+Computes 2D/3D gradient vector(s) within image at specified position(s) without requiring to compute the whole gradient image (using for example the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[fun:imGradientFilter]{imGradientFilter}
+\end_layout
+
+\end_inset
+
+ function).
  This reduces memory usage when image is large and number of position is small.
 \end_layout
 
@@ -1246,7 +1868,33 @@ Provide information about the size of the image,
 \end_layout
 
 \begin_layout Minisec
-imSize 
+imSize
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+size@imSize
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1257,6 +1905,32 @@ Computes the size of an image in [x y z] order.
 
 \begin_layout Minisec
 is3DImage
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+is3DImage
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1264,7 +1938,33 @@ Checks if an image is 3D.
 \end_layout
 
 \begin_layout Minisec
-imPhysicalExtent 
+imPhysicalExtent
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+physicalExtent@imPhysicalExtent
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1278,7 +1978,33 @@ Image type
 \end_layout
 
 \begin_layout Minisec
-isColorImage 
+isColorImage
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+isColorImage
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1287,7 +2013,33 @@ Checks if an image (2D or 3D) is a color image.
 \end_layout
 
 \begin_layout Minisec
-imGrayscaleExtent 
+imGrayscaleExtent
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+grayscaleExtent@imGrayscaleExtent
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1296,10 +2048,44 @@ Grayscale extent of an image.
 
 \begin_layout Minisec
 imFileInfo
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+fileInfo@imFileInfo
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Generalization of the imfinfo function that also taks into account specialized image file formats.
+Generalization of the 
+\begin_inset Quotes eld
+\end_inset
+
+imfinfo
+\begin_inset Quotes erd
+\end_inset
+
+ function that also takes into account specialized image file formats.
 \end_layout
 
 \begin_layout Chapter
@@ -1317,11 +2103,15 @@ name "chap:imStacks"
 \end_layout
 
 \begin_layout Standard
-The module imStacks is specifically devoted to the processing of 3D images (grayscale,
- color,
- binary...).
- It provides the Slicer application,
- a GUI for exploration and processing of 3D images.
+The module imStacks is specifically devoted to the processing of 3D images.
+ Various image types are supported:
+ grayscale,
+ intensity,
+ binary,
+ color.
+ It also provides the Slicer application,
+ a GUI for exploration and processing of 3D images,
+ that provides intuitive access to a number of functions within the package.
 \end_layout
 
 \begin_layout Standard
@@ -1454,6 +2244,32 @@ run
 \end_inset
 
 Slicer
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Slicer
+\end_layout
+
+\end_inset
+
+
 \begin_inset Quotes erd
 \end_inset
 
@@ -2172,6 +2988,32 @@ Visualization functions
 
 \begin_layout Minisec
 orthoSlices
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+orthoSlices
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2195,6 +3037,32 @@ nolink "false"
 
 \begin_layout Minisec
 OrthoSlicer3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+OrthoSlicer3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2203,6 +3071,32 @@ Displays 3D interactive orthoslicer.
 
 \begin_layout Minisec
 orthoSlices3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+orthoSlices3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2231,6 +3125,32 @@ Slicing functions
 
 \begin_layout Minisec
 stackSlice
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+stackSlice
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2248,6 +3168,32 @@ These low-level functions are used by other visualization functions,
 
 \begin_layout Minisec
 slice3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+slice3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2256,6 +3202,32 @@ Shows a moving 3D slice of an image.
 
 \begin_layout Minisec
 showXSlice
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+showXSlice
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2264,6 +3236,32 @@ Shows YZ slice of a 3D image.
 
 \begin_layout Minisec
 showYSlice
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+showYSlice
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2272,6 +3270,32 @@ Shows ZX slice of a 3D image.
 
 \begin_layout Minisec
 showZSlice
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+showZSlice
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2303,6 +3327,32 @@ General use functions
 
 \begin_layout Minisec
 readstack
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+readstack
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2325,6 +3375,32 @@ ImageJ
 
 \begin_layout Minisec
 savestack
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+savestack
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2333,6 +3409,32 @@ Saves an image stack to a file or a series of files.
 
 \begin_layout Minisec
 savebinstack
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+savebinstack
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2342,6 +3444,32 @@ Saves an binary stack to a file,
 
 \begin_layout Minisec
 imReadRawData
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+readRawData@imReadRawData
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2350,6 +3478,32 @@ Reads image data from raw data file.
 
 \begin_layout Minisec
 imFileInfo
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+fileInfo@imFileInfo
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2375,14 +3529,66 @@ tiffreadVolume
 
 \begin_layout Minisec
 imReadRegion3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+readRegion3d@imReadRegion3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Reads a specific 3D region of a 3D image.
+Reads a specific 3D region from a 3D image file.
 \end_layout
 
 \begin_layout Minisec
 imReadDownSampled3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+readDownSampled3d@imReadDownSampled3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2406,6 +3612,32 @@ In addition to the image file formats available with Matlab,
 
 \begin_layout Minisec
 metaImageInfo
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+metaImageInfo
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2414,6 +3646,32 @@ Reads information header of meta image data.
 
 \begin_layout Minisec
 metaImageRead
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+metaImageRead
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2443,6 +3701,32 @@ https://itk.org/Wiki/ITK/MetaIO/Documentation
 
 \begin_layout Minisec
 metaImageWrite
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+metaImageWrite
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2469,6 +3753,32 @@ Writes header and data files of an image in MetaImage format.
 
 \begin_layout Minisec
 readVgiStack
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+readVgiStack
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2477,6 +3787,32 @@ Reads a 3D stack stored in VGI format.
 
 \begin_layout Minisec
 vgiStackInfo
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+vgiStackInfo
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2485,6 +3821,32 @@ Reads information necessary to load a 3D stack in VGI format.
 
 \begin_layout Minisec
 readVoxelMatrix
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+readVoxelMatrix
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2521,6 +3883,32 @@ Stack processing
 
 \begin_layout Minisec
 createRGBStack
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+createRGBStack
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2529,6 +3917,32 @@ Concatenates 2 or 3 grayscale stacks to form a color stack.
 
 \begin_layout Minisec
 stackRotate90
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+stackRotate90
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2537,6 +3951,32 @@ Rotates a 3D image by 90 degrees around one image axis.
 
 \begin_layout Minisec
 rotateStack90
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+rotateStack90
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2545,6 +3985,32 @@ Rotates a 3D image by 90 degrees around one image axis.
 
 \begin_layout Minisec
 flipStack
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+flipStack
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2555,6 +4021,32 @@ Flips a 3D image along specified X,
 
 \begin_layout Minisec
 cropStack
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+cropStack
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2563,6 +4055,32 @@ Crops a 3D image with the specified box limits.
 
 \begin_layout Minisec
 imMiddleSlice
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+middleSlice@imMiddleSlice
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2853,6 +4371,32 @@ Several shape operations on images.
 
 \begin_layout Minisec
 imFlip
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+flip@imFlip
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2897,7 +4441,33 @@ imgFlip = imFlip(img,
 \end_layout
 
 \begin_layout Minisec
-imRotate90 
+imRotate90
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+rotate90@imRotate90
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2942,6 +4512,32 @@ imgRot90 = imRotate90(img);
 
 \begin_layout Minisec
 imAddBorder
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+addBorder@imAddBorder
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2986,6 +4582,32 @@ imgAddBorder = imAddBorder(img,
 
 \begin_layout Minisec
 imCropBorder
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+cropBorder@imCropBorder
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3029,7 +4651,33 @@ imgCropBorder = imCropBorder(img,
 \end_layout
 
 \begin_layout Minisec
-imTranspose 
+imTranspose
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+transpose@imTranspose
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3038,6 +4686,32 @@ Transposes an image (grayscale or RGB).
 
 \begin_layout Minisec
 imCropBox
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+cropBox@imCropBox
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3046,6 +4720,32 @@ Crops an image with a box.
 
 \begin_layout Minisec
 imResize
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+resize@imResize
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3060,6 +4760,32 @@ Resizes 2D or 3D image.
 
 \begin_layout Minisec
 imDownSample
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+downSample@imDownSample
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3097,6 +4823,32 @@ hyperref[fun:imReadDownSampled3d]{imReadDownSampled3d}
 
 \begin_layout Minisec
 subsamplergb
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+subsamplergb
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3104,7 +4856,33 @@ Returns a sub-sampled version of a color RGB image.
 \end_layout
 
 \begin_layout Minisec
-imPrincipalAxesAlign 
+imPrincipalAxesAlign
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+principalAxesAlign@imPrincipalAxesAlign
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3129,6 +4907,32 @@ Some functions mostly used for removing imaging artifacts.
 
 \begin_layout Minisec
 imAdjustDynamic
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+adjustDynamic@imAdjustDynamic
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3171,6 +4975,32 @@ res = imAdjustDynamic(img,
 
 \begin_layout Minisec
 imNormalizeBackground
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+normalizeBackground@imNormalizeBackground
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3360,6 +5190,32 @@ decision tree?
 
 \begin_layout Minisec
 imBoxFilter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+boxFilter@imBoxFilter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3383,6 +5239,32 @@ nolink "false"
 
 \begin_layout Minisec
 imMeanFilter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+meanFilter@imMeanFilter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3391,6 +5273,32 @@ Computes mean value in the neighborhood of each pixel.
 
 \begin_layout Minisec
 imMedianFilter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+medianFilter@imMedianFilter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3414,6 +5322,32 @@ nolink "false"
 
 \begin_layout Minisec
 imGaussianFilter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+gaussianFilter@imGaussianFilter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3438,10 +5372,49 @@ nolink "false"
 
 \begin_layout Minisec
 imDirectionalFilter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+directionalFilter@imDirectionalFilter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 Applies and combines several directional filters.
+ This type of filter may be of particular interest in the case of thin or curvilinear structures.
+ Alternatives may be the use of Hessian-based filters (see section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fun:imHessian"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -3618,14 +5591,47 @@ Gradient and Laplacian filters
 \begin_layout Standard
 Extraction of various gradients from the images,
  that can be used for edge detection.
+ Hessian-based filters may also be used for enhancement or detection of curvilinear structures.
 \end_layout
 
 \begin_layout Minisec
 imGradientFilter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+gradientFilter@imGradientFilter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Computes gradient components of a grayscale image.
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imGradientFilter"
+
+\end_inset
+
+Computes the gradient components of a grayscale image.
  The result can be provided as a single image (corresponding to the the gradient norm,
  see Fig.
 \begin_inset space ~
@@ -3660,10 +5666,65 @@ nolink "false"
 \end_inset
 
 -b,c).
+ See also the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[fun:imLocalGradient]{imLocalGradient}
+\end_layout
+
+\end_inset
+
+ function (section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fun:imLocalGradient"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Minisec
 imLaplacian
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+laplacian@imLaplacian
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3687,6 +5748,32 @@ nolink "false"
 
 \begin_layout Minisec
 imRobinsonFilter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+robinsonFilter@imRobinsonFilter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3694,7 +5781,33 @@ Extracts image edges using Robinson directional filters.
 \end_layout
 
 \begin_layout Minisec
-imKirschFilter 
+imKirschFilter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+kirschFilter@imKirschFilter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3702,15 +5815,73 @@ Extracts image edges using Kirsch directional filters.
 \end_layout
 
 \begin_layout Minisec
-imHessian 
+imHessian
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+hessian@imHessian
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imHessian"
+
+\end_inset
+
 Computes the coefficients of the Hessian matrix (containing all second derivatives) for each pixel.
 \end_layout
 
 \begin_layout Minisec
-imEigenValues 
+imEigenValues
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+eigenValues@imEigenValues
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3718,7 +5889,33 @@ Image eigen values from second derivatives.
 \end_layout
 
 \begin_layout Minisec
-imEigenValues3d 
+imEigenValues3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+eigenValues3d@imEigenValues3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3727,6 +5924,32 @@ Image eigen values from second derivatives.
 
 \begin_layout Minisec
 imVesselness2d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+vesselness2d@imVesselness2d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3897,7 +6120,7 @@ name "fig:Edge-Detection"
 
 \end_inset
 
-Edge detection filters.
+Illustration of several filters commonly used for edge detection.
 \end_layout
 
 \end_inset
@@ -3937,6 +6160,32 @@ literal "false"
 
 \begin_layout Minisec
 imMorphoGradient
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+morphoGradient@imMorphoGradient
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3945,6 +6194,32 @@ Morphological gradient of an image.
 
 \begin_layout Minisec
 imMorphoLaplacian
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+morphoLaplacian@imMorphoLaplacian
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3952,7 +6227,33 @@ Morphological laplacian of an image.
 \end_layout
 
 \begin_layout Minisec
-imrecerode 
+imrecerode
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+recerode@imrecerode
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3960,7 +6261,33 @@ Performs a morphological reconstruction by erosion.
 \end_layout
 
 \begin_layout Minisec
-imHConcave 
+imHConcave
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+HConcave@imHConcave
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3968,7 +6295,33 @@ H-concave transformation of an image.
 \end_layout
 
 \begin_layout Minisec
-imHConvex 
+imHConvex
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+HConvex@imHConvex
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3987,11 +6340,37 @@ Segmentation operators
 \end_layout
 
 \begin_layout Standard
-Several functions for facilitating segmentation of images.
+Several functions for facilitating the segmentation of images.
 \end_layout
 
 \begin_layout Minisec
 imOtsuThreshold
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+otsuThreshold@imOtsuThreshold
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4000,6 +6379,32 @@ Thresholds an image using Otsu method.
 
 \begin_layout Minisec
 imMaxEntropyThreshold
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+maxEntropyThreshold@imMaxEntropyThreshold
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4014,6 +6419,32 @@ Computes image threshold using maximisation of entropies.
 
 \begin_layout Minisec
 imMultiOtsuThreshold
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+multiOtsuThreshold@imMultiOtsuThreshold
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4022,7 +6453,33 @@ Computes a segmentation of the input grayscale image into an arbitrary number of
 \end_layout
 
 \begin_layout Minisec
-imImposedWatershed 
+imImposedWatershed
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+imposedWatershed@imImposedWatershed
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4030,7 +6487,33 @@ Computes watershed after imposition of extended minima.
 \end_layout
 
 \begin_layout Minisec
-imCannyEdgeDetector 
+imCannyEdgeDetector
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+cannyEdgeDetector@imCannyEdgeDetector
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4057,7 +6540,33 @@ Several functions allows for converting images into color images,
 \end_layout
 
 \begin_layout Minisec
-imOverlay 
+imOverlay
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+overlay@imOverlay
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4067,6 +6576,32 @@ Generates a new color image by adding a binary overlay over another image (2D or
 
 \begin_layout Minisec
 imSplitChannels
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+splitChannels@imSplitChannels
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4074,7 +6609,33 @@ Splits the 3 channels of a 2D or 3D image.
 \end_layout
 
 \begin_layout Minisec
-imMergeChannels 
+imMergeChannels
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mergeChannels@imMergeChannels
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4082,7 +6643,33 @@ Merges 3 channels to create a 2D or 3D color image.
 \end_layout
 
 \begin_layout Minisec
-double2rgb 
+double2rgb
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+double2rgb
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4096,7 +6683,33 @@ Creates a RGB image from double values.
 \end_layout
 
 \begin_layout Minisec
-angle2rgb 
+angle2rgb
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+angle2rgb
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4104,7 +6717,33 @@ Converts an image of angles to color image.
 \end_layout
 
 \begin_layout Minisec
-imGetHue 
+imGetHue
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+getHue@imGetHue
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4113,7 +6752,33 @@ Extracts hue of a color image,
 \end_layout
 
 \begin_layout Minisec
-imGray12ToGray8 
+imGray12ToGray8
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+gray12ToGray@imGray12ToGray8
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4274,7 +6939,33 @@ circles.png
 \end_layout
 
 \begin_layout Minisec
-imBoundary 
+imBoundary
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+boundary@imBoundary
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4299,6 +6990,32 @@ nolink "false"
 
 \begin_layout Minisec
 imFillHoles
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+fillHoles@imFillHoles
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4322,6 +7039,32 @@ nolink "false"
 
 \begin_layout Minisec
 imSkeleton
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+skeleton@imSkeleton
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4345,6 +7088,32 @@ nolink "false"
 
 \begin_layout Minisec
 imLabelSkeleton
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+labelSkeleton@imLabelSkeleton
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4353,6 +7122,32 @@ Labels skeleton pixels according to local topology.
 
 \begin_layout Minisec
 imConvexImage
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+convexImage@imConvexImage
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4530,6 +7325,32 @@ nolink "false"
 
 \begin_layout Minisec
 imDistanceMap
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+distanceMap@imDistanceMap
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4555,6 +7376,32 @@ nolink "false"
 
 \begin_layout Minisec
 imDistanceClasses
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+distanceClasses@imDistanceClasses
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4564,6 +7411,32 @@ Converts a distance map into a label image of regions,
 
 \begin_layout Minisec
 imThicknessMap
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+thicknessMap@imThicknessMap
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4588,6 +7461,32 @@ nolink "false"
 
 \begin_layout Minisec
 imDistance
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+distance@imDistance
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4619,6 +7518,32 @@ This sections gathers additional functions for converting binary or label images
 
 \begin_layout Minisec
 imFind
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+imFind
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4626,7 +7551,33 @@ Returns the coordinates of non-zero pixels in an image.
 \end_layout
 
 \begin_layout Minisec
-imBoundaryContours 
+imBoundaryContours
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+boundaryContours@imBoundaryContours
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4635,6 +7586,32 @@ Extract polygonal boundary contours from a binary image.
 
 \begin_layout Minisec
 imChainPixels
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+chainPixels@imChainPixels
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4642,7 +7619,33 @@ Chains neighbor pixels in an image to form a contour.
 \end_layout
 
 \begin_layout Minisec
-imContourLines 
+imContourLines
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+contourLines@imContourLines
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4650,7 +7653,33 @@ Extracts iso contours from an intensity or grayscale image as a collection of po
 \end_layout
 
 \begin_layout Minisec
-imContours (deprecated)
+imContours
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+contours@imContours
+\end_layout
+
+\end_inset
+
+ (deprecated)
 \end_layout
 
 \begin_layout Standard
@@ -4660,7 +7689,33 @@ Extracts polygonal contours of a binary image.
 \end_layout
 
 \begin_layout Minisec
-imBinaryToGraph 
+imBinaryToGraph
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+binaryToGraph@imBinaryToGraph
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4690,7 +7745,33 @@ The functions in this section aim at facilitating the representation and compari
 \end_layout
 
 \begin_layout Minisec
-imCreate 
+imCreate
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+imCreate
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4699,6 +7780,32 @@ Creates a new image with given the size and type.
 
 \begin_layout Minisec
 imCheckerBoard
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+checkerBoard@imCheckerBoard
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4707,6 +7814,32 @@ Creates a checkerboard image from 2 images.
 
 \begin_layout Minisec
 imCheckerboardLabels
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+checkerboardLabels@imCheckerboardLabels
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4714,7 +7847,33 @@ Creates a checkerboard label image.
 \end_layout
 
 \begin_layout Minisec
-imThumbnail 
+imThumbnail
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+thumbnail@imThumbnail
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4722,7 +7881,33 @@ Resizes an image to bound the size in each direction.
 \end_layout
 
 \begin_layout Minisec
-imDrawLine 
+imDrawLine
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+drawLine@imDrawLine
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4731,6 +7916,32 @@ Draws a line between two points in the image.
 
 \begin_layout Minisec
 bresenhamLine
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+bresenhamLine
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4738,7 +7949,33 @@ Integer coordinates of a bresenham line.
 \end_layout
 
 \begin_layout Minisec
-imDrawText 
+imDrawText
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+drawText@imDrawText
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4746,7 +7983,33 @@ Draws some text in an image.
 \end_layout
 
 \begin_layout Minisec
-imTpsWarp 
+imTpsWarp
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+tpsWarp@imTpsWarp
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4763,7 +8026,33 @@ Utility functions that are either used by other functions,
 \end_layout
 
 \begin_layout Minisec
-ball 
+ball
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ball
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4771,7 +8060,33 @@ Generates a ball in a matrix in 2 or 3 dimensions.
 \end_layout
 
 \begin_layout Minisec
-gaussianKernel3d 
+gaussianKernel3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+gaussianKernel3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4779,7 +8094,33 @@ Creates a 3D Gaussian kernel for image filtering.
 \end_layout
 
 \begin_layout Minisec
-orientedGaussianKernel 
+orientedGaussianKernel
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+orientedGaussianKernel
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4787,7 +8128,33 @@ Oriented Gaussian kernel for directional filtering.
 \end_layout
 
 \begin_layout Minisec
-orientedLaplacianKernel 
+orientedLaplacianKernel
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+orientedLaplacianKernel
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4795,7 +8162,33 @@ Oriented Laplacian kernel for directional filtering.
 \end_layout
 
 \begin_layout Minisec
-cross3d 
+cross3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+cross3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4803,7 +8196,33 @@ Returns a 3D structuring element with cross shape.
 \end_layout
 
 \begin_layout Minisec
-intline 
+intline
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+intline
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4811,7 +8230,33 @@ Integer-coordinate line drawing algorithm.
 \end_layout
 
 \begin_layout Minisec
-strelDisk 
+strelDisk
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+strelDisk
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4819,7 +8264,33 @@ Discrete disk structuring element.
 \end_layout
 
 \begin_layout Minisec
-imNeighborhood 
+imNeighborhood
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+neighborhood@imNeighborhood
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4891,7 +8362,33 @@ explanation about tile image ?
 \end_layout
 
 \begin_layout Minisec
-grayFilter 
+grayFilter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+grayFilter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4899,7 +8396,33 @@ Computes configuration map of a binary image.
 \end_layout
 
 \begin_layout Minisec
-grayHist 
+grayHist
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+grayHist
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4907,7 +8430,33 @@ Computes frequencies of configurations in binary images.
 \end_layout
 
 \begin_layout Minisec
-imLUT 
+imLUT
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+LUT@imLUT
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4915,7 +8464,33 @@ Applies a look-up table (LUT) to a gray-scale image.
 \end_layout
 
 \begin_layout Minisec
-createTile 
+createTile
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+createTile
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4923,7 +8498,33 @@ Creates a binary tile (2x2) from its index.
 \end_layout
 
 \begin_layout Minisec
-tileIndex 
+tileIndex
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+tileIndex
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4932,6 +8533,32 @@ Returns the index of a 2x2 binary tile.
 
 \begin_layout Minisec
 createTile3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+createTile3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4939,7 +8566,33 @@ Creates a 3D binary tile (2x2x2) from its index.
 \end_layout
 
 \begin_layout Minisec
-tileIndex3d 
+tileIndex3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+tileIndex3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5039,6 +8692,7 @@ It is often convenient to represent a collection of disjoint regions as a label 
  the value 0 corresponds to the background.
  Binary images can be seen as a special case of label map,
  containing only one region.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -5066,6 +8720,32 @@ Process the input label map to retrieve or remove a specific selection of region
 
 \begin_layout Minisec
 imKillBorderRegions
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+killBorderRegions@imKillBorderRegions
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5073,7 +8753,33 @@ Removes regions on the border of an image.
 \end_layout
 
 \begin_layout Minisec
-imAreaOpening 
+imAreaOpening
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+areaOpening@imAreaOpening
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5081,7 +8787,33 @@ Removes all regions smaller than a given area.
 \end_layout
 
 \begin_layout Minisec
-imAttributeOpening 
+imAttributeOpening
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+attributeOpening@imAttributeOpening
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5089,7 +8821,33 @@ Filters regions on a size or shape criterium.
 \end_layout
 
 \begin_layout Minisec
-imLargestRegion 
+imLargestRegion
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+largestRegion@imLargestRegion
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5097,7 +8855,33 @@ Keeps the largest region in a binary or label image.
 \end_layout
 
 \begin_layout Minisec
-imCropLabel 
+imCropLabel
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+cropLabel@imCropLabel
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5109,7 +8893,33 @@ Region processing
 \end_layout
 
 \begin_layout Minisec
-imMergeLabels 
+imMergeLabels
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mergeLabels@imMergeLabels
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5117,7 +8927,33 @@ Merges regions in a labeled image.
 \end_layout
 
 \begin_layout Minisec
-mergeRegions 
+mergeRegions
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mergeRegions@mergeRegions
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5126,17 +8962,95 @@ Merges regions of labeled image,
 \end_layout
 
 \begin_layout Minisec
-imSeparateParticles 
+imSeparateParticles
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+separateParticles@imSeparateParticles
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 Separates touching particles using watershed algorithm applied on the inverse of the distance function.
  
-\begin_inset Note Note
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-example?
+\align center
+\begin_inset Graphics
+	filename images/imFilters/binary/circlers_separateParticles.png
+	width 6cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:imSeparateParticles"
+
+\end_inset
+
+Application of the function 
+\begin_inset Quotes eld
+\end_inset
+
+imSeparateParticles
+\begin_inset Quotes erd
+\end_inset
+
+ on the image 
+\begin_inset Quotes eld
+\end_inset
+
+circles
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -5153,7 +9067,33 @@ Utility functions for the management of label maps.
 \end_layout
 
 \begin_layout Minisec
-imFindLabels 
+imFindLabels
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+findLabels@imFindLabels
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5173,7 +9113,33 @@ nolink "false"
 \end_layout
 
 \begin_layout Minisec
-label2rgb3d 
+label2rgb3d
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+label2rgb3d
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5196,7 +9162,33 @@ label2rgb
 \end_layout
 
 \begin_layout Minisec
-imLabelToValue 
+imLabelToValue
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+labelToValue@imLabelToValue
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8573,7 +12565,7 @@ Computation of granulometry curves
 \end_layout
 
 \begin_layout Minisec
-imGranulo 
+imGranulo
 \end_layout
 
 \begin_layout Standard
@@ -8607,7 +12599,33 @@ GR = imGranulo(IMG,
 \end_layout
 
 \begin_layout Minisec
-imGranuloByRegion 
+imGranuloByRegion
+\begin_inset Index ind
+range none
+pageformat default
+status open
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+granuloByRegion@imGranuloByRegion
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8615,6 +12633,31 @@ Computes granulometry curve for each region of a label image.
  The result is an array with as many rows as the number of regions.
  The regions can also be specified by a cell array containing pixel indices for each regions.
  The latter possibility makes it possible to specify overlapping regions.
+ See also the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hyperref[fun:imRegionFun]{imRegionFun}
+\end_layout
+
+\end_inset
+
+ function (section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fun:imRegionFun"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Subsection
@@ -8622,7 +12665,33 @@ Summary statistics
 \end_layout
 
 \begin_layout Minisec
-granuloMeanSize 
+granuloMeanSize
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+granuloMeanSize
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8631,7 +12700,33 @@ Computes the geometric mean of a granulometric curve,
 \end_layout
 
 \begin_layout Minisec
-granuloMean 
+granuloMean
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+granuloMean
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8639,7 +12734,33 @@ Computes the arithmetic mean of granulometric curve(s).
 \end_layout
 
 \begin_layout Minisec
-granuloStd 
+granuloStd
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+granuloStd
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8651,7 +12772,33 @@ Oriented granulometry
 \end_layout
 
 \begin_layout Minisec
-imDirectionalGranulo 
+imDirectionalGranulo
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+directionalGranulo@imDirectionalGranulo
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Standard
@@ -8659,7 +12806,33 @@ Directional granulometries for several orientations.
 \end_layout
 
 \begin_layout Minisec
-imGranuloOrientationMap 
+imGranuloOrientationMap
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+granuloOrientationMap@imGranuloOrientationMap
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8667,7 +12840,33 @@ Orientation map of directional granulometry.
 \end_layout
 
 \begin_layout Minisec
-orientedLineStrel 
+orientedLineStrel
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+orientedLineStrel
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8675,7 +12874,33 @@ Creates an oriented line structuring element.
 \end_layout
 
 \begin_layout Minisec
-imOrientedGranulo 
+imOrientedGranulo
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+orientedGranulo@imOrientedGranulo
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -9536,7 +13761,7 @@ Tessellations
 \end_layout
 
 \begin_layout Standard
-The functions in this section allows to quickly generate images of cellular patterns.
+The functions in this section allow to quickly generate images of cellular patterns.
  Outputs are usually label images.
 \end_layout
 
@@ -9553,7 +13778,7 @@ imvoronoi2d
 \end_layout
 
 \begin_layout Standard
-Generate a 2D voronoi image from a set of points.
+Generates a 2D voronoi image from a set of points.
 \end_layout
 
 \begin_layout Minisec
@@ -9561,7 +13786,7 @@ imvoronoi3d
 \end_layout
 
 \begin_layout Standard
-generate a 3D voronoi image from a set of points.
+Generates a 3D voronoi image from a set of points.
 \end_layout
 
 \begin_layout Minisec
@@ -9569,7 +13794,7 @@ dilatedVoronoi
 \end_layout
 
 \begin_layout Standard
-Simulate a 'thick' voronoi tesselation.
+Simulates a 'thick' voronoi tesselation.
 \end_layout
 
 \begin_layout Minisec
@@ -9577,7 +13802,7 @@ imAWVoronoi
 \end_layout
 
 \begin_layout Standard
-generate Additively Weighted Voronoi Diagram image.
+Generates Additively Weighted Voronoi Diagram image.
 \end_layout
 
 \begin_layout Minisec
@@ -9586,6 +13811,17 @@ imPowerDiagram
 
 \begin_layout Standard
 Power diagram of a set of points.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset index_print
+LatexCommand printindex
+type "ind"
+name "Index of functions"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

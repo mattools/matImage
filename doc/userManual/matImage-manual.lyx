@@ -6793,14 +6793,28 @@ Converts a 12 bits gray scale image to 8 bits gray scale.
 \end_layout
 
 \begin_layout Section
-Binary and label image operators
+Binary image operators
 \end_layout
 
 \begin_layout Standard
-Binary and label images are a convenient way of representing the result of segmentation algorithms.
- The MatImage library provides several functions for processing them.
+The MatImage library provides several functions for processing binary images.
  Some functions aim at processing regions,
- and may be applied indifferently on binary or label images.
+ and may be applied indifferently on binary or label images (see section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Label-map"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Subsection
@@ -7175,6 +7189,121 @@ nolink "false"
 -d).
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Minisec
+imSeparateParticles
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+separateParticles@imSeparateParticles
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Separates touching particles using watershed algorithm applied on the inverse of the distance function (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:imSeparateParticles"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imFilters/binary/circles_separateParticles.png
+	width 24text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:imSeparateParticles"
+
+\end_inset
+
+Application of the function 
+\begin_inset Quotes eld
+\end_inset
+
+imSeparateParticles
+\begin_inset Quotes erd
+\end_inset
+
+ on the image 
+\begin_inset Quotes eld
+\end_inset
+
+circles
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Distance maps
 \end_layout
@@ -7513,7 +7642,7 @@ Extraction of geometric primitives
 \end_layout
 
 \begin_layout Standard
-This sections gathers additional functions for converting binary or label images to geometric primitives.
+This sections gathers additional functions for converting binary images to geometric primitives.
 \end_layout
 
 \begin_layout Minisec
@@ -7547,7 +7676,7 @@ imFind
 \end_layout
 
 \begin_layout Standard
-Returns the coordinates of non-zero pixels in an image.
+Returns the coordinates of non-zero pixels within an image.
 \end_layout
 
 \begin_layout Minisec
@@ -8680,7 +8809,17 @@ minitoc
 \end_layout
 
 \begin_layout Section
-Label map
+Label map images
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Label-map"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8692,7 +8831,85 @@ It is often convenient to represent a collection of disjoint regions as a label 
  the value 0 corresponds to the background.
  Binary images can be seen as a special case of label map,
  containing only one region.
+ Label map images are often displayed using a colormap,
+ to better distinguish adjacent labels (Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Label-Map"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imRegions/rice_binary.png
+	width 4.5cm
+
+\end_inset
+
  
+\begin_inset Graphics
+	filename images/imRegions/rice_labelsGray.png
+	width 4.5cm
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename images/imRegions/rice_labelsRGB.png
+	width 4.5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Label-Map"
+
+\end_inset
+
+Computation of a label map image from a binary image.
+ The binary image (left) is converted to a label map image that can be displayed with intensity corresponding to label (middle),
+ or by converting to a color image (right).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8959,103 +9176,6 @@ mergeRegions@mergeRegions
 \begin_layout Standard
 Merges regions of labeled image,
  using inclusion criteria.
-\end_layout
-
-\begin_layout Minisec
-imSeparateParticles
-\begin_inset Index ind
-range none
-pageformat default
-status collapsed
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\nospellcheck off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-separateParticles@imSeparateParticles
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Separates touching particles using watershed algorithm applied on the inverse of the distance function.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename images/imFilters/binary/circlers_separateParticles.png
-	width 6cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:imSeparateParticles"
-
-\end_inset
-
-Application of the function 
-\begin_inset Quotes eld
-\end_inset
-
-imSeparateParticles
-\begin_inset Quotes erd
-\end_inset
-
- on the image 
-\begin_inset Quotes eld
-\end_inset
-
-circles
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection

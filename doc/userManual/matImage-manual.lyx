@@ -424,7 +424,15 @@ Other external libraries are required to run some of the functions:
 \end_layout
 
 \begin_layout Itemize
-the MatGeom library
+the MatGeom library 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Legland_2025_SoftwareX"
+literal "false"
+
+\end_inset
+
+
 \begin_inset Foot
 status collapsed
 
@@ -9209,7 +9217,15 @@ findLabels@imFindLabels
 
 \begin_layout Standard
 Finds the unique labels in a label image.
- This function is used by several functions from the imQuantify module (chapter 
+ This function is used by several functions within the 
+\begin_inset Quotes eld
+\end_inset
+
+imRegions
+\begin_inset Quotes erd
+\end_inset
+
+ module (chapter 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "chap:imRegions"
@@ -9799,7 +9815,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/imMeasures/demoShape-boundingBox.png
+	filename images/imRegions/morpho/demoShape-boundingBox.png
 	lyxscale 50
 	width 32text%
 
@@ -9807,7 +9823,7 @@ status open
 
 
 \begin_inset Graphics
-	filename images/imMeasures/demoShape-orientedBox.png
+	filename images/imRegions/morpho/demoShape-orientedBox.png
 	lyxscale 50
 	width 32text%
 
@@ -9815,7 +9831,7 @@ status open
 
 
 \begin_inset Graphics
-	filename images/imMeasures/demoShape-circumCircle.png
+	filename images/imRegions/morpho/demoShape-circumCircle.png
 	lyxscale 50
 	width 32text%
 
@@ -10259,7 +10275,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/imMeasures/demoShape-ellipse.png
+	filename images/imRegions/morpho/demoShape-ellipse.png
 	lyxscale 50
 	width 32text%
 
@@ -10476,7 +10492,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/imMeasures/ellipsoid-angles.png
+	filename images/imRegions/morpho/ellipsoid-angles.png
 	width 60text%
 
 \end_inset
@@ -10547,6 +10563,15 @@ Computes the equivalent ellipse of the region(s) within a 2D binary or label ima
  containing the coordinates of the ellipse center,
  the length of the semi-axes,
  and the orientation (in degrees).
+ The result can be displayed using the 
+\begin_inset Quotes eld
+\end_inset
+
+drawEllipse
+\begin_inset Quotes erd
+\end_inset
+
+ function from the MatGeom toolbox.
 \end_layout
 
 \begin_layout Minisec
@@ -10585,6 +10610,15 @@ Computes the equivalent ellipsoid of the region(s) within a 3D binary or label i
  containing the coordinates of the ellipsoid center,
  the length of the semi-axes,
  and the orientation given as thress rotation angles (in degrees).
+ The result can be displayed using the 
+\begin_inset Quotes eld
+\end_inset
+
+drawEllipsoid
+\begin_inset Quotes erd
+\end_inset
+
+ function from the MatGeom toolbox.
 \end_layout
 
 \begin_layout Minisec
@@ -10732,6 +10766,13 @@ literal "false"
  They can be used for indexing regions based on their morphology.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Feret and geodesic diameter
 \end_layout
@@ -10790,7 +10831,15 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/imMeasures/demoShape-maxFeret.png
+	filename images/imRegions/morpho/demoShape-maxFeret.png
+	lyxscale 50
+	width 32text%
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename images/imRegions/morpho/demoShape-geodDiam.png
 	lyxscale 50
 	width 32text%
 
@@ -10809,7 +10858,7 @@ name "fig:Feret-Diameter"
 
 \end_inset
 
-Computation of the maximum Feret diameter of a binary region.
+Maximum Feret diameter and geodesic diameter of a binary region.
 \end_layout
 
 \end_inset
@@ -11027,7 +11076,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename images/imMeasures/demoShape-convexity.png
+	filename images/imRegions/morpho/demoShape-convexity.png
 	lyxscale 50
 	width 32text%
 
@@ -15181,7 +15230,7 @@ nolink "false"
 \begin_layout Standard
 Most functions from this module requires the MatGeom library
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Flex URL
@@ -15196,6 +15245,14 @@ https://github.com/mattools/matGeom
 
 
 \end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Legland_2025_SoftwareX"
+literal "false"
 
 \end_inset
 
@@ -15354,7 +15411,7 @@ discreteDisc
 \end_layout
 
 \begin_layout Standard
-Discretize a disc,
+Generetes a 2D binary image representing a disc,
  defined by its center and radius (Fig.
 \begin_inset space ~
 \end_inset
@@ -15404,8 +15461,8 @@ discreteEllipse
 \end_layout
 
 \begin_layout Standard
-Discretize a planar ellipse,
- defiend by its center,
+Generetes a 2D binary image representing a planar ellipse,
+ defined by its center,
  two radius,
  and an orientation (Fig.
 \begin_inset space ~
@@ -15456,7 +15513,8 @@ discreteSquare
 \end_layout
 
 \begin_layout Standard
-Discretize a planar square (Fig.
+Generetes a 2D binary image representing a square,
+ with an optional rotation (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -15505,7 +15563,8 @@ discreteRectangle
 \end_layout
 
 \begin_layout Standard
-Discretize a planar rectangle (Fig.
+Generetes a 2D binary image representing a planar rectangle,
+ with an optional rotation (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -15617,7 +15676,7 @@ discreteCapsule
 \end_layout
 
 \begin_layout Standard
-Discretize a planar capsule (Fig.
+Generetes a 2D binary image representing a planar capsule (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -15666,7 +15725,7 @@ discretePolygon
 \end_layout
 
 \begin_layout Standard
-Discretize a planar polygon,
+Generetes a 2D binary image representing a planar polygon,
  defined by a series of vertex coordinates.
 \end_layout
 
@@ -15701,7 +15760,7 @@ discreteHalfPlane
 \end_layout
 
 \begin_layout Standard
-Discretize a half plane.
+Generetes a 2D binary image representing a half plane.
 \end_layout
 
 \begin_layout Minisec
@@ -15735,7 +15794,7 @@ discreteParabola
 \end_layout
 
 \begin_layout Standard
-Discretize a planar parabola.
+Generetes a 2D binary image representing a planar parabola.
 \end_layout
 
 \begin_layout Minisec
@@ -15769,7 +15828,7 @@ discreteEgg
 \end_layout
 
 \begin_layout Standard
-Discretize a planar egg (Fig.
+Generetes a 2D binary image representing a planar egg (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -15818,7 +15877,7 @@ discreteTrefoil
 \end_layout
 
 \begin_layout Standard
-Discretize a trefoil curve (Fig.
+Generetes a 2D binary image representing a trefoil curve (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -15867,7 +15926,7 @@ discreteStarfish
 \end_layout
 
 \begin_layout Standard
-Discretize a starfish curve (Fig.
+Generetes a 2D binary image representing a starfish curve (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -15983,7 +16042,7 @@ discretePoints
 \end_layout
 
 \begin_layout Standard
-Discretize a set of points,
+Generetes a 2D binary image representing a set of points,
  defined by a series of coordinates.
 \end_layout
 
@@ -16018,7 +16077,7 @@ discretePolyline
 \end_layout
 
 \begin_layout Standard
-Discretize a planar polyline,
+Generetes a 2D binary image representing a planar polyline,
  defined by a series of vertex coordinates.
 \end_layout
 
@@ -16053,8 +16112,15 @@ discreteCurve
 \end_layout
 
 \begin_layout Standard
-Discretize a planar curve,
+Generetes a 2D binary image representing a planar curve,
  defined by a series of vertex coordinates.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -16760,6 +16826,13 @@ More examples of discrete shapes in 3D.
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Tessellations
 \end_layout
@@ -16834,7 +16907,15 @@ voronoi2d@imvoronoi2d
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing the Voronoi diagram from a set of 2D points.
+Generetes a 2D binary image representing the Voronoi diagram from a set of 2D points 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Aurenhammer_1991_ACMCS"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Minisec

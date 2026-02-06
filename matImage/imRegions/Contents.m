@@ -19,6 +19,7 @@
 %   imFeretDiameter         - Feret diameter of region(s) for a given direction(s).
 %   imMaxFeretDiameter      - Maximum Feret diameter of a binary or label image.
 %   imConvexity             - Convexity of regions within a 2D or 3D label image.
+%   imTortuosity            - Tortuosity of the region(s) within binary or label image.
 %   imRegionFun             - Apply a function to each region of a label image
 %
 %   Region moments

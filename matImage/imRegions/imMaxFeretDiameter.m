@@ -22,7 +22,7 @@ function [diam, varargout] = imMaxFeretDiameter(img, varargin)
 %         272.7144
 %
 %   See also
-%     imFeretDiameter, imOrientedBox
+%     imFeretDiameter, imOrientedBox, imTortuosity
 %
 
 % ------

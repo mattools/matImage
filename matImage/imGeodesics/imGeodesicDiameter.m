@@ -61,7 +61,7 @@ function [gd, labels] = imGeodesicDiameter(img, varargin)
 %
 %
 %   See Also
-%   imGeodesics, imChamferDistance, imGeodesicExtremities
+%   imGeodesics, imChamferDistance, imGeodesicExtremities, imTortuosity
 %   imGeodesicRadius, imGeodesicCenter, imMaxGeodesicPath
 %
 

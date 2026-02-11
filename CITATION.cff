@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Legland"
+  given-names: "David"
+  orcid: "https://orcid.org/0000-0001-7456-4632"
+title: "MatImage"
+version: 1.2.5
+date-released: 2026-02-06
+url: "https://github.com/mattools/matImage"

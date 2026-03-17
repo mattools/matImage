@@ -24,6 +24,11 @@ function savestack(img, fileName, varargin)
 %   savestack(..., OPTIONS)
 %   Uses options to write each slice. See imwrite to details.
 %
+%   savestack(..., PNAME, PVALUE)
+%   When saving a whole stack TIFF file, provides additional options to
+%   specify the value of specific tags. Possible options are:
+%   * 'Compression': The compression scheme {'PackBits' (default), 'None'}
+%
 %   savestack(..., VERBOSITY)
 %   Also specifies verbosity. VERBOSITY can be either 'verbose' or 'quiet'.
 %
@@ -104,6 +109,17 @@ if ~isempty(varargin) && isnumeric(varargin{1})
     varargin(1) = [];
 end
 
+% default options for Tiff writer
+compressionMode = 'PackBits';
+while length(varargin) > 1
+    pname = varargin{1};
+    if strcmpi(pname, 'compression')
+        compressionMode = varargin{2};
+    else
+        warning('Unknown option ignored: %s', pname);
+    end
+    varargin(1:2) = [];
+end
 
 
 %% Compute file name pattern
@@ -158,7 +174,17 @@ if saveAsStack
         tagStruct.SamplesPerPixel = 3;
         tagStruct.Photometric = Tiff.Photometric.RGB;
     end
-    tagStruct.Compression = Tiff.Compression.PackBits;
+
+    % setup additional options
+    switch compressionMode
+        case 'PackBits'
+            tagStruct.Compression = Tiff.Compression.PackBits;
+        case 'None'
+            tagStruct.Compression = Tiff.Compression.None;
+        otherwise 
+            error('Unknown value for compression mode: %s', compressionMode);
+    end
+    % tagStruct.Compression = Tiff.Compression.PackBits;
     tagStruct.PlanarConfiguration = Tiff.PlanarConfiguration.Chunky;
     tagStruct.Software = 'MATLAB_MatImage';
     

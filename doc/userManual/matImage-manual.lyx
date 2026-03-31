@@ -1,5 +1,5 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -7,78 +7,55 @@
 \textclass scrreprt
 \begin_preamble
 \PassOptionsToPackage{usenames,dvipsnames}{xcolor}
-
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage[T1]{fontenc}
-
 \usepackage{hyperref}
-
-\definecolor{bl}{rgb}{0.0,0.2,0.6} 
-
+\definecolor{bl}{rgb}{0.0,0.2,0.6}
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{lightgray}{rgb}{0.95,0.95,0.95}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
-
 \hypersetup{colorlinks=true, citecolor=blue, linkcolor=blue}
-
 % package that modifies style of section headers
 \addtokomafont{chapter}{\color{bl}\scshape \selectfont}
 \addtokomafont{section}{\color{bl}\scshape \selectfont}
 \addtokomafont{subsection}{\color{bl}\scshape \selectfont}
 \addtokomafont{subsubsection}{\color{bl}\scshape \selectfont}
-
 % setup font style for different title elements
 \setkomafont{title}{\color{bl} \bfseries \scshape}
 \setkomafont{author}{\centering \small}
 \setkomafont{date}{\centering \small}
-
-
 % Change the abstract environment
 \usepackage[runin]{abstract}		% runin option for a run-in title
 \setlength\absleftindent{30pt}		% left margin
 \setlength\absrightindent{30pt}		% right margin
-\abslabeldelim{\quad }			
+\abslabeldelim{\quad }
 \setlength{\abstitleskip}{-10pt}
 \renewcommand{\abstractname}{}
 \renewcommand{\abstracttextfont}{\color{bl} \small \slshape }	% slanted text
-
-
 % Custom headers and adapted to KOMA-Script
 \usepackage{scrlayer-scrpage}
-\usepackage{lastpage}	
-
+\usepackage{lastpage}
 % header
 \lehead*{\slshape\rightmark}
 \rohead*{\slshape\rightmark}
-
 % footer
 \ofoot{\footnotesize page \thepage\ / \pageref{LastPage}}
 \ifoot{\footnotesize MatImage user manual}
-
-
 % right section with number
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 \renewcommand*{\chapterpagestyle}{empty}
-
 % Added by lyx2lyx
 \usepackage[charter]{mathdesign}
-
-% setup of figure captions 
+% setup of figure captions
 \usepackage[format=plain,font=it,labelfont=bf]{caption}
-
-
 % To add mini-TOC in the beginning of each chapter
-% The 'nohints' option is to prevent a conflict with the lastpage package, 
+% The 'nohints' option is to prevent a conflict with the lastpage package,
 % resulting in an extra empty page at the end of the document.
 \usepackage[nohints]{minitoc}
-
-
 % "Prettification" of Matlab listings
 %\renewcommand{\textasteriskcentered}{\ensuremath{*}}
 \usepackage{matlab-prettifier}
-
-
 % some info for populating document title page
 \author{D. Legland}
 \date{\today}
@@ -141,11 +118,19 @@
 \use_indices true
 \paperorientation portrait
 \suppress_date false
-\justification true
-\use_refstyle 0
+\justification default
+\crossref_package prettyref
 \use_formatted_ref 0
 \use_minted 0
 \use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
 \index General Index
 \shortcut idx
 \color #008000
@@ -176,6 +161,7 @@
 \html_be_strict false
 \docbook_table_output 0
 \docbook_mathml_prefix 1
+\docbook_mathml_version 0
 \end_header
 
 \begin_body
@@ -194,7 +180,6 @@ The MatImage library provides a collection of functions for image processing and
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 dominitoc
@@ -288,7 +273,6 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-
 http://github.com/mattools/matImage
 \end_layout
 
@@ -326,7 +310,6 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-
 https://github.com/mattools/matImage/releases/latest
 \end_layout
 
@@ -441,7 +424,6 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-
 https://github.com/mattools/matGeom
 \end_layout
 
@@ -498,7 +480,6 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-
 https://fr.mathworks.com/matlabcentral/fileexchange/27758-gui-layout-toolbox
 \end_layout
 
@@ -569,7 +550,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[chap:imAnalysis]{imAnalysis}
 \end_layout
@@ -584,7 +564,6 @@ hyperref[chap:imAnalysis]{imAnalysis}
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 hyperref[chap:imStacks]{imStacks}
@@ -610,7 +589,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[chap:imFilters]{imFilters}
 \end_layout
@@ -625,7 +603,6 @@ hyperref[chap:imFilters]{imFilters}
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 hyperref[chap:imRegions]{imRegions}
@@ -642,7 +619,6 @@ hyperref[chap:imRegions]{imRegions}
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 hyperref[chap:imMinkowski]{imMinkowski}
@@ -662,7 +638,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[chap:imGeodesics]{imGeodesics}
 \end_layout
@@ -678,7 +653,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[chap:imGranulometry]{imGranulometry}
 \end_layout
@@ -693,7 +667,6 @@ hyperref[chap:imGranulometry]{imGranulometry}
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 hyperref[chap:imShapes]{imShapes}
@@ -730,7 +703,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[chap:imRegions]{imRegions}
 \end_layout
@@ -744,7 +716,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[chap:imMinkowski]{imMinkowski}
 \end_layout
@@ -757,7 +728,6 @@ hyperref[chap:imMinkowski]{imMinkowski}
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 hyperref[chap:imGranulometry]{imGranulometry}
@@ -773,7 +743,6 @@ hyperref[chap:imGranulometry]{imGranulometry}
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 minitoc
@@ -843,39 +812,32 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 img = imread('peppers.png');
 \end_layout
 
 \begin_layout Plain Layout
-
 % Histogram of each channel
 \end_layout
 
 \begin_layout Plain Layout
-
 figure;
  imHistogram(img);
 \end_layout
 
 \begin_layout Plain Layout
-
 ylim([0 8000])
 \end_layout
 
 \begin_layout Plain Layout
-
 % Joint histogram of red and green channels
 \end_layout
 
 \begin_layout Plain Layout
-
 h = imJointHistogram(img(:,:,1),
  img(:,:,2));
 \end_layout
 
 \begin_layout Plain Layout
-
 figure;
  imshow(log(h+1),
  []);
@@ -910,7 +872,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-histogram@imHistogram
+histogram
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imHistogram
 \end_layout
 
 \end_inset
@@ -952,7 +924,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-histogramDialog@imHistogramDialog
+histogramDialog
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imHistogramDialog
 \end_layout
 
 \end_inset
@@ -986,7 +968,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-jointHistogram@imJointHistogram
+jointHistogram
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imJointHistogram
 \end_layout
 
 \end_inset
@@ -1083,7 +1075,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-colorHistogram@imColorHistogram
+colorHistogram
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imColorHistogram
 \end_layout
 
 \end_inset
@@ -1117,7 +1119,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-weightedHistogram@imWeightedHistogram
+weightedHistogram
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imWeightedHistogram
 \end_layout
 
 \end_inset
@@ -1179,7 +1191,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-sum@imSum
+sum
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSum
 \end_layout
 
 \end_inset
@@ -1214,7 +1236,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-mean@imMean
+mean
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMean
 \end_layout
 
 \end_inset
@@ -1249,7 +1281,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-std@imStd
+std
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imStd
 \end_layout
 
 \end_inset
@@ -1283,7 +1325,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-var@imVar
+var
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imVar
 \end_layout
 
 \end_inset
@@ -1318,7 +1370,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-min@imMin
+min
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMin
 \end_layout
 
 \end_inset
@@ -1353,7 +1415,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-max@imMax
+max
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMax
 \end_layout
 
 \end_inset
@@ -1388,7 +1460,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-median@imMedian
+median
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMedian
 \end_layout
 
 \end_inset
@@ -1423,7 +1505,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-quantile@imQuantile
+quantile
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imQuantile
 \end_layout
 
 \end_inset
@@ -1457,7 +1549,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-mode@imMode
+mode
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMode
 \end_layout
 
 \end_inset
@@ -1491,7 +1593,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-regionFun@imRegionFun
+regionFun
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imRegionFun
 \end_layout
 
 \end_inset
@@ -1570,7 +1682,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-entropy@imEntropy
+entropy
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEntropy
 \end_layout
 
 \end_inset
@@ -1590,7 +1712,6 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-
 https://en.wikipedia.org/wiki/Entropy_(information_theory)
 \end_layout
 
@@ -1628,7 +1749,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-jointEntropy@imJointEntropy
+jointEntropy
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imJointEntropy
 \end_layout
 
 \end_inset
@@ -1684,7 +1815,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-mutualInformation@imMutualInformation
+mutualInformation
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMutualInformation
 \end_layout
 
 \end_inset
@@ -1703,7 +1844,6 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-
 https://en.wikipedia.org/wiki/Mutual_information
 \end_layout
 
@@ -1748,7 +1888,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-evaluate@imEvaluate
+evaluate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEvaluate
 \end_layout
 
 \end_inset
@@ -1782,7 +1932,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-lineProfile@imLineProfile
+lineProfile
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLineProfile
 \end_layout
 
 \end_inset
@@ -1816,7 +1976,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-localGradient@imLocalGradient
+localGradient
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLocalGradient
 \end_layout
 
 \end_inset
@@ -1836,7 +2006,6 @@ Computes 2D/3D gradient vector(s) within image at specified position(s) without 
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 hyperref[fun:imGradientFilter]{imGradientFilter}
@@ -1897,7 +2066,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-size@imSize
+size
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSize
 \end_layout
 
 \end_inset
@@ -1967,7 +2146,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-physicalExtent@imPhysicalExtent
+physicalExtent
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPhysicalExtent
 \end_layout
 
 \end_inset
@@ -2042,7 +2231,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-grayscaleExtent@imGrayscaleExtent
+grayscaleExtent
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGrayscaleExtent
 \end_layout
 
 \end_inset
@@ -2085,7 +2284,6 @@ The module imStacks is specifically devoted to the processing of 3D images.
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 minitoc
@@ -2785,22 +2983,18 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 % read data and adjust dynamic
 \end_layout
 
 \begin_layout Plain Layout
-
 img = imAdjustDynamic(analyze75read('brainMRI.hdr'));
 \end_layout
 
 \begin_layout Plain Layout
-
 % Display orthogonal slices
 \end_layout
 
 \begin_layout Plain Layout
-
 figure(1);
  clf;
  axis equal;
@@ -2808,7 +3002,6 @@ figure(1);
 \end_layout
 
 \begin_layout Plain Layout
-
 orthoSlices(img,
  [60 80 13],
  'Spacing',
@@ -2816,12 +3009,10 @@ orthoSlices(img,
 \end_layout
 
 \begin_layout Plain Layout
-
 % Display 3D orthogonal slices
 \end_layout
 
 \begin_layout Plain Layout
-
 figure(2);
  clf;
  axis equal;
@@ -2829,19 +3020,16 @@ figure(2);
 \end_layout
 
 \begin_layout Plain Layout
-
 orthoSlices3d(img,
  [60 80 13],
  [1 1 2.5]);
 \end_layout
 
 \begin_layout Plain Layout
-
 % setup axis limits
 \end_layout
 
 \begin_layout Plain Layout
-
 axis(imPhysicalExtent(img,
  [1 1 2.5]));
  view(3);
@@ -3439,7 +3627,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-readRawData@imReadRawData
+readRawData
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imReadRawData
 \end_layout
 
 \end_inset
@@ -3473,7 +3671,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-fileInfo@imFileInfo
+fileInfo
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imFileInfo
 \end_layout
 
 \end_inset
@@ -3525,7 +3733,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-readRegion3d@imReadRegion3d
+readRegion3d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imReadRegion3d
 \end_layout
 
 \end_inset
@@ -3559,7 +3777,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-readDownSampled3d@imReadDownSampled3d
+readDownSampled3d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imReadDownSampled3d
 \end_layout
 
 \end_inset
@@ -3660,7 +3888,6 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-
 https://itk.org/Wiki/ITK/MetaIO/Documentation
 \end_layout
 
@@ -4051,7 +4278,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-middleSlice@imMiddleSlice
+middleSlice
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMiddleSlice
 \end_layout
 
 \end_inset
@@ -4137,7 +4374,6 @@ Generic filters for image processing,
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 minitoc
@@ -4367,7 +4603,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-flip@imFlip
+flip
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imFlip
 \end_layout
 
 \end_inset
@@ -4400,13 +4646,11 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 % flip in horizontal direction (here,
  x=1)
 \end_layout
 
 \begin_layout Plain Layout
-
 imgFlip = imFlip(img,
  1);
 \end_layout
@@ -4438,7 +4682,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-rotate90@imRotate90
+rotate90
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imRotate90
 \end_layout
 
 \end_inset
@@ -4472,12 +4726,10 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 % rotate by 90 degrees
 \end_layout
 
 \begin_layout Plain Layout
-
 imgRot90 = imRotate90(img);
 \end_layout
 
@@ -4508,7 +4760,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-addBorder@imAddBorder
+addBorder
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imAddBorder
 \end_layout
 
 \end_inset
@@ -4541,12 +4803,10 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 % add borders with different width in each direction
 \end_layout
 
 \begin_layout Plain Layout
-
 imgAddBorder = imAddBorder(img,
  [20 40 30 50]);
 \end_layout
@@ -4578,7 +4838,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-cropBorder@imCropBorder
+cropBorder
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imCropBorder
 \end_layout
 
 \end_inset
@@ -4611,12 +4881,10 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 % crop borders with various widths
 \end_layout
 
 \begin_layout Plain Layout
-
 imgCropBorder = imCropBorder(img,
  [20 40 30 50]);
 \end_layout
@@ -4648,7 +4916,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-transpose@imTranspose
+transpose
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imTranspose
 \end_layout
 
 \end_inset
@@ -4682,7 +4960,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-cropBox@imCropBox
+cropBox
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imCropBox
 \end_layout
 
 \end_inset
@@ -4716,7 +5004,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-resize@imResize
+resize
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imResize
 \end_layout
 
 \end_inset
@@ -4756,7 +5054,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-downSample@imDownSample
+downSample
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imDownSample
 \end_layout
 
 \end_inset
@@ -4773,7 +5081,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[fun:imResize]{imResize}
 \end_layout
@@ -4786,7 +5093,6 @@ hyperref[fun:imResize]{imResize}
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 hyperref[fun:imReadDownSampled3d]{imReadDownSampled3d}
@@ -4853,7 +5159,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-principalAxesAlign@imPrincipalAxesAlign
+principalAxesAlign
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPrincipalAxesAlign
 \end_layout
 
 \end_inset
@@ -4912,7 +5228,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-adjustDynamic@imAdjustDynamic
+adjustDynamic
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imAdjustDynamic
 \end_layout
 
 \end_inset
@@ -4931,24 +5257,20 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 res = imAdjustDynamic(img);
 \end_layout
 
 \begin_layout Plain Layout
-
 res = imAdjustDynamic(img,
  alphaValue);
 \end_layout
 
 \begin_layout Plain Layout
-
 res = imAdjustDynamic(img,
  [minVal maxVal]);
 \end_layout
 
 \begin_layout Plain Layout
-
 [res,
  coeffs] = imAdjustDynamic(img);
 \end_layout
@@ -4980,7 +5302,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-normalizeBackground@imNormalizeBackground
+normalizeBackground
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imNormalizeBackground
 \end_layout
 
 \end_inset
@@ -5000,19 +5332,16 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 img = imread('rice.png');
 \end_layout
 
 \begin_layout Plain Layout
-
 [img2,
  bg] = imNormalizeBackground(img,
  img>150);
 \end_layout
 
 \begin_layout Plain Layout
-
 figure;
  imshow(img2);
 \end_layout
@@ -5195,7 +5524,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-boxFilter@imBoxFilter
+boxFilter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imBoxFilter
 \end_layout
 
 \end_inset
@@ -5244,7 +5583,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-meanFilter@imMeanFilter
+meanFilter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMeanFilter
 \end_layout
 
 \end_inset
@@ -5278,7 +5627,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-medianFilter@imMedianFilter
+medianFilter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMedianFilter
 \end_layout
 
 \end_inset
@@ -5327,7 +5686,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-gaussianFilter@imGaussianFilter
+gaussianFilter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGaussianFilter
 \end_layout
 
 \end_inset
@@ -5377,7 +5746,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-directionalFilter@imDirectionalFilter
+directionalFilter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imDirectionalFilter
 \end_layout
 
 \end_inset
@@ -5608,7 +5987,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-gradientFilter@imGradientFilter
+gradientFilter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGradientFilter
 \end_layout
 
 \end_inset
@@ -5664,7 +6053,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[fun:imLocalGradient]{imLocalGradient}
 \end_layout
@@ -5711,7 +6099,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-laplacian@imLaplacian
+laplacian
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLaplacian
 \end_layout
 
 \end_inset
@@ -5760,7 +6158,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-robinsonFilter@imRobinsonFilter
+robinsonFilter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imRobinsonFilter
 \end_layout
 
 \end_inset
@@ -5794,7 +6202,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-kirschFilter@imKirschFilter
+kirschFilter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imKirschFilter
 \end_layout
 
 \end_inset
@@ -5828,7 +6246,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-hessian@imHessian
+hessian
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imHessian
 \end_layout
 
 \end_inset
@@ -5868,7 +6296,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-eigenValues@imEigenValues
+eigenValues
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEigenValues
 \end_layout
 
 \end_inset
@@ -5902,7 +6340,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-eigenValues3d@imEigenValues3d
+eigenValues3d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEigenValues3d
 \end_layout
 
 \end_inset
@@ -5936,7 +6384,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-vesselness2d@imVesselness2d
+vesselness2d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imVesselness2d
 \end_layout
 
 \end_inset
@@ -6172,7 +6630,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-morphoGradient@imMorphoGradient
+morphoGradient
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMorphoGradient
 \end_layout
 
 \end_inset
@@ -6206,7 +6674,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-morphoLaplacian@imMorphoLaplacian
+morphoLaplacian
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMorphoLaplacian
 \end_layout
 
 \end_inset
@@ -6240,7 +6718,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-recerode@imrecerode
+recerode
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imrecerode
 \end_layout
 
 \end_inset
@@ -6274,7 +6762,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-HConcave@imHConcave
+HConcave
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imHConcave
 \end_layout
 
 \end_inset
@@ -6308,7 +6806,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-HConvex@imHConvex
+HConvex
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imHConvex
 \end_layout
 
 \end_inset
@@ -6357,7 +6865,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-otsuThreshold@imOtsuThreshold
+otsuThreshold
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imOtsuThreshold
 \end_layout
 
 \end_inset
@@ -6391,7 +6909,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-maxEntropyThreshold@imMaxEntropyThreshold
+maxEntropyThreshold
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMaxEntropyThreshold
 \end_layout
 
 \end_inset
@@ -6431,7 +6959,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-multiOtsuThreshold@imMultiOtsuThreshold
+multiOtsuThreshold
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMultiOtsuThreshold
 \end_layout
 
 \end_inset
@@ -6466,7 +7004,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-imposedWatershed@imImposedWatershed
+imposedWatershed
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imImposedWatershed
 \end_layout
 
 \end_inset
@@ -6500,7 +7048,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-cannyEdgeDetector@imCannyEdgeDetector
+cannyEdgeDetector
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imCannyEdgeDetector
 \end_layout
 
 \end_inset
@@ -6553,7 +7111,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-overlay@imOverlay
+overlay
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imOverlay
 \end_layout
 
 \end_inset
@@ -6588,7 +7156,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-splitChannels@imSplitChannels
+splitChannels
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSplitChannels
 \end_layout
 
 \end_inset
@@ -6622,7 +7200,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-mergeChannels@imMergeChannels
+mergeChannels
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMergeChannels
 \end_layout
 
 \end_inset
@@ -6730,7 +7318,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-getHue@imGetHue
+getHue
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGetHue
 \end_layout
 
 \end_inset
@@ -6765,7 +7363,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-gray12ToGray@imGray12ToGray8
+gray12ToGray
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGray12ToGray8
 \end_layout
 
 \end_inset
@@ -6839,27 +7447,22 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 img = imread('circles.png');
 \end_layout
 
 \begin_layout Plain Layout
-
 bnd = imBoundary(img);
 \end_layout
 
 \begin_layout Plain Layout
-
 imgFH = imFillHoles(img);
 \end_layout
 
 \begin_layout Plain Layout
-
 skel = imSkeleton(img);
 \end_layout
 
 \begin_layout Plain Layout
-
 cvx = imConvexImage(img);
 \end_layout
 
@@ -6966,7 +7569,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-boundary@imBoundary
+boundary
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imBoundary
 \end_layout
 
 \end_inset
@@ -7016,7 +7629,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-fillHoles@imFillHoles
+fillHoles
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imFillHoles
 \end_layout
 
 \end_inset
@@ -7065,7 +7688,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-skeleton@imSkeleton
+skeleton
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSkeleton
 \end_layout
 
 \end_inset
@@ -7114,7 +7747,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-labelSkeleton@imLabelSkeleton
+labelSkeleton
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLabelSkeleton
 \end_layout
 
 \end_inset
@@ -7148,7 +7791,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-convexImage@imConvexImage
+convexImage
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imConvexImage
 \end_layout
 
 \end_inset
@@ -7210,7 +7863,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-separateParticles@imSeparateParticles
+separateParticles
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSeparateParticles
 \end_layout
 
 \end_inset
@@ -7466,7 +8129,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-distanceMap@imDistanceMap
+distanceMap
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imDistanceMap
 \end_layout
 
 \end_inset
@@ -7517,7 +8190,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-distanceClasses@imDistanceClasses
+distanceClasses
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imDistanceClasses
 \end_layout
 
 \end_inset
@@ -7552,7 +8235,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-thicknessMap@imThicknessMap
+thicknessMap
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imThicknessMap
 \end_layout
 
 \end_inset
@@ -7602,7 +8295,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-distance@imDistance
+distance
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imDistance
 \end_layout
 
 \end_inset
@@ -7693,7 +8396,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-boundaryContours@imBoundaryContours
+boundaryContours
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imBoundaryContours
 \end_layout
 
 \end_inset
@@ -7727,7 +8440,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-chainPixels@imChainPixels
+chainPixels
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imChainPixels
 \end_layout
 
 \end_inset
@@ -7761,7 +8484,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-contourLines@imContourLines
+contourLines
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imContourLines
 \end_layout
 
 \end_inset
@@ -7795,7 +8528,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-contours@imContours
+contours
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imContours
 \end_layout
 
 \end_inset
@@ -7831,7 +8574,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-binaryToGraph@imBinaryToGraph
+binaryToGraph
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imBinaryToGraph
 \end_layout
 
 \end_inset
@@ -7921,7 +8674,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-checkerBoard@imCheckerBoard
+checkerBoard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imCheckerBoard
 \end_layout
 
 \end_inset
@@ -7955,7 +8718,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-checkerboardLabels@imCheckerboardLabels
+checkerboardLabels
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imCheckerboardLabels
 \end_layout
 
 \end_inset
@@ -7989,7 +8762,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-thumbnail@imThumbnail
+thumbnail
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imThumbnail
 \end_layout
 
 \end_inset
@@ -8023,7 +8806,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-drawLine@imDrawLine
+drawLine
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imDrawLine
 \end_layout
 
 \end_inset
@@ -8091,7 +8884,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-drawText@imDrawText
+drawText
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imDrawText
 \end_layout
 
 \end_inset
@@ -8125,7 +8928,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-tpsWarp@imTpsWarp
+tpsWarp
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imTpsWarp
 \end_layout
 
 \end_inset
@@ -8406,7 +9219,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-neighborhood@imNeighborhood
+neighborhood
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imNeighborhood
 \end_layout
 
 \end_inset
@@ -8572,7 +9395,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-LUT@imLUT
+LUT
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLUT
 \end_layout
 
 \end_inset
@@ -8749,7 +9582,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[chap:imMinkowski]{imMinkowski}
 \end_layout
@@ -8767,7 +9599,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[chap:imGranulometry]{imGranulometry}
 \end_layout
@@ -8782,7 +9613,6 @@ hyperref[chap:imGranulometry]{imGranulometry}
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 minitoc
@@ -8956,7 +9786,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-killBorderRegions@imKillBorderRegions
+killBorderRegions
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imKillBorderRegions
 \end_layout
 
 \end_inset
@@ -8990,7 +9830,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-areaOpening@imAreaOpening
+areaOpening
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imAreaOpening
 \end_layout
 
 \end_inset
@@ -9024,7 +9874,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-attributeOpening@imAttributeOpening
+attributeOpening
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imAttributeOpening
 \end_layout
 
 \end_inset
@@ -9058,7 +9918,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-largestRegion@imLargestRegion
+largestRegion
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLargestRegion
 \end_layout
 
 \end_inset
@@ -9092,7 +9962,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-cropLabel@imCropLabel
+cropLabel
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imCropLabel
 \end_layout
 
 \end_inset
@@ -9130,7 +10010,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-mergeLabels@imMergeLabels
+mergeLabels
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMergeLabels
 \end_layout
 
 \end_inset
@@ -9164,7 +10054,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-mergeRegions@mergeRegions
+mergeRegions
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+mergeRegions
 \end_layout
 
 \end_inset
@@ -9207,7 +10107,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-findLabels@imFindLabels
+findLabels
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imFindLabels
 \end_layout
 
 \end_inset
@@ -9310,7 +10220,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-labelToValue@imLabelToValue
+labelToValue
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLabelToValue
 \end_layout
 
 \end_inset
@@ -9428,7 +10348,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 hyperref[chap:imMinkowski]{imMinkowski}
 \end_layout
@@ -9468,28 +10387,23 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 >> img = imread('circles.png');
  
 \end_layout
 
 \begin_layout Plain Layout
-
 >> [imArea(img) imPerimeter(img) imEuler2d(img)]
 \end_layout
 
 \begin_layout Plain Layout
-
 ans =
 \end_layout
 
 \begin_layout Plain Layout
-
    1.0e+04 *
 \end_layout
 
 \begin_layout Plain Layout
-
     1.4134    0.1046   -0.0003 
 \end_layout
 
@@ -9508,34 +10422,28 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 >> % Surface area measured in 3D binary image (result in pixel^2)
 \end_layout
 
 \begin_layout Plain Layout
-
 >> img = analyze75read(analyze75info('brainMRI.hdr'));
 \end_layout
 
 \begin_layout Plain Layout
-
 >> bin = imclose(img>0,
  ones([5 5 3]));
 \end_layout
 
 \begin_layout Plain Layout
-
 >> S = imSurface(bin,
  [1 1 2.5])      % specify resolution
 \end_layout
 
 \begin_layout Plain Layout
-
  ans = 
 \end_layout
 
 \begin_layout Plain Layout
-
      2.7291e+004
 \end_layout
 
@@ -9570,7 +10478,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-area@imArea
+area
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imArea
 \end_layout
 
 \end_inset
@@ -9604,7 +10522,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-perimeter@imPerimeter
+perimeter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPerimeter
 \end_layout
 
 \end_inset
@@ -9638,7 +10566,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler2d@imEuler2d
+euler2d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler2d
 \end_layout
 
 \end_inset
@@ -9672,7 +10610,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-volume@imVolume
+volume
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imVolume
 \end_layout
 
 \end_inset
@@ -9706,7 +10654,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-surfaceArea@imSurfaceArea
+surfaceArea
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSurfaceArea
 \end_layout
 
 \end_inset
@@ -9740,7 +10698,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-meanBreadth@imMeanBreadth
+meanBreadth
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMeanBreadth
 \end_layout
 
 \end_inset
@@ -9777,7 +10745,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler3d@imEuler3d
+euler3d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler3d
 \end_layout
 
 \end_inset
@@ -9892,7 +10870,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-centroid@imCentroid
+centroid
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imCentroid
 \end_layout
 
 \end_inset
@@ -9926,7 +10914,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-boundingBox@imBoundingBox
+boundingBox
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imBoundingBox
 \end_layout
 
 \end_inset
@@ -9984,7 +10982,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-orientedBox@imOrientedBox
+orientedBox
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imOrientedBox
 \end_layout
 
 \end_inset
@@ -10033,7 +11041,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-inscribedCircle@imInscribedCircle
+inscribedCircle
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imInscribedCircle
 \end_layout
 
 \end_inset
@@ -10082,7 +11100,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-inscribedBall@imInscribedBall
+inscribedBall
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imInscribedBall
 \end_layout
 
 \end_inset
@@ -10131,7 +11159,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-enclosingCircle@imEnclosingCircle
+enclosingCircle
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEnclosingCircle
 \end_layout
 
 \end_inset
@@ -10549,7 +11587,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-equivalentEllipse@imEquivalentEllipse
+equivalentEllipse
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEquivalentEllipse
 \end_layout
 
 \end_inset
@@ -10596,7 +11644,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-equivalentEllipsoid@imEquivalentEllipsoid
+equivalentEllipsoid
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEquivalentEllipsoid
 \end_layout
 
 \end_inset
@@ -10643,7 +11701,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-moment@imMoment
+moment
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMoment
 \end_layout
 
 \end_inset
@@ -10677,7 +11745,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-CMoment@imCMoment
+CMoment
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imCMoment
 \end_layout
 
 \end_inset
@@ -10711,7 +11789,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-CSMoment@imCSMoment
+CSMoment
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imCSMoment
 \end_layout
 
 \end_inset
@@ -10745,7 +11833,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-huInvariants@imHuInvariants
+huInvariants
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imHuInvariants
 \end_layout
 
 \end_inset
@@ -10894,7 +11992,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-maxFeretDiameter@imMaxFeretDiameter
+maxFeretDiameter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMaxFeretDiameter
 \end_layout
 
 \end_inset
@@ -10943,7 +12051,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-feretDiameter@imFeretDiameter
+feretDiameter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imFeretDiameter
 \end_layout
 
 \end_inset
@@ -10999,7 +12117,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicDiameter@imGeodesicDiameter
+geodesicDiameter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicDiameter
 \end_layout
 
 \end_inset
@@ -11048,7 +12176,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicDiameter3d@imGeodesicDiameter3d
+geodesicDiameter3d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicDiameter3d
 \end_layout
 
 \end_inset
@@ -11143,7 +12281,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-convexity@imConvexity
+convexity
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imConvexity
 \end_layout
 
 \end_inset
@@ -11192,7 +12340,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-tortuosity@imTortuosity
+tortuosity
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imTortuosity
 \end_layout
 
 \end_inset
@@ -11244,7 +12402,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-RAG (Region Adjacency Graph)@imRAG
+RAG (Region Adjacency Graph)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imRAG
 \end_layout
 
 \end_inset
@@ -11296,7 +12464,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-boundaryIndices@imBoundaryIndices
+boundaryIndices
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imBoundaryIndices
 \end_layout
 
 \end_inset
@@ -11330,7 +12508,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-labelEdges@imLabelEdges
+labelEdges
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLabelEdges
 \end_layout
 
 \end_inset
@@ -11423,7 +12611,6 @@ For 2D images,
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 minitoc
@@ -11519,109 +12706,88 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 >> % compute perimeter of several coins 
 \end_layout
 
 \begin_layout Plain Layout
-
 >> lbl = bwlabel(imread('coins.png') > 100);
 \end_layout
 
 \begin_layout Plain Layout
-
 >> imPerimeter(lbl)
 \end_layout
 
 \begin_layout Plain Layout
-
  ans = 
 \end_layout
 
 \begin_layout Plain Layout
-
    184.8668
 \end_layout
 
 \begin_layout Plain Layout
-
    154.9495
 \end_layout
 
 \begin_layout Plain Layout
-
    185.1921
 \end_layout
 
 \begin_layout Plain Layout
-
    267.1690
 \end_layout
 
 \begin_layout Plain Layout
-
    187.3183
 \end_layout
 
 \begin_layout Plain Layout
-
    179.5038
 \end_layout
 
 \begin_layout Plain Layout
-
    182.7406
 \end_layout
 
 \begin_layout Plain Layout
-
    180.8445
 \end_layout
 
 \begin_layout Plain Layout
-
    155.5049
 \end_layout
 
 \begin_layout Plain Layout
-
    155.5049
 \end_layout
 
 \begin_layout Plain Layout
-
   
 \end_layout
 
 \begin_layout Plain Layout
-
 >> % Surface area measured in 3D binary image (result in pixel^2)
 \end_layout
 
 \begin_layout Plain Layout
-
 >> img = analyze75read(analyze75info('brainMRI.hdr'));
 \end_layout
 
 \begin_layout Plain Layout
-
 >> bin = imclose(img>0,
  ones([5 5 3]));
 \end_layout
 
 \begin_layout Plain Layout
-
 >> S = imSurfaceArea(bin,
  [1 1 2.5])      % specify resolution
 \end_layout
 
 \begin_layout Plain Layout
-
  ans = 
 \end_layout
 
 \begin_layout Plain Layout
-
      2.7291e+004
 \end_layout
 
@@ -11850,7 +13016,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-area@imArea
+area
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imArea
 \end_layout
 
 \end_inset
@@ -11884,7 +13060,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-perimeter@imPerimeter
+perimeter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPerimeter
 \end_layout
 
 \end_inset
@@ -11952,7 +13138,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler2d@imEuler2d
+euler2d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler2d
 \end_layout
 
 \end_inset
@@ -11990,7 +13186,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-areaDensity@imAreaDensity
+areaDensity
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imAreaDensity
 \end_layout
 
 \end_inset
@@ -12024,7 +13230,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-areaEstimate@imAreaEstimate
+areaEstimate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imAreaEstimate
 \end_layout
 
 \end_inset
@@ -12058,7 +13274,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-perimeterDensity@imPerimeterDensity
+perimeterDensity
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPerimeterDensity
 \end_layout
 
 \end_inset
@@ -12093,7 +13319,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-perimeterEstimate@imPerimeterEstimate
+perimeterEstimate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPerimeterEstimate
 \end_layout
 
 \end_inset
@@ -12127,7 +13363,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler2dDensity@imEuler2dDensity
+euler2dDensity
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler2dDensity
 \end_layout
 
 \end_inset
@@ -12161,7 +13407,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler2dEstimate@imEuler2dEstimate
+euler2dEstimate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler2dEstimate
 \end_layout
 
 \end_inset
@@ -12199,7 +13455,17 @@ status open
 \uwave off
 \noun off
 \color none
-perimeterLut@imPerimeterLut
+perimeterLut
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPerimeterLut
 \end_layout
 
 \end_inset
@@ -12474,7 +13740,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-volume@imVolume
+volume
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imVolume
 \end_layout
 
 \end_inset
@@ -12508,7 +13784,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-surfaceArea@imSurfaceArea
+surfaceArea
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSurfaceArea
 \end_layout
 
 \end_inset
@@ -12542,7 +13828,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-jointSurfaceArea@imJointSurfaceArea
+jointSurfaceArea
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imJointSurfaceArea
 \end_layout
 
 \end_inset
@@ -12576,7 +13872,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-meanBreadth@imMeanBreadth
+meanBreadth
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMeanBreadth
 \end_layout
 
 \end_inset
@@ -12613,7 +13919,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler3d@imEuler3d
+euler3d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler3d
 \end_layout
 
 \end_inset
@@ -12660,7 +13976,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-volumeDensity@imVolumeDensity
+volumeDensity
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imVolumeDensity
 \end_layout
 
 \end_inset
@@ -12694,7 +14020,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-volumeEstimate@imVolumeEstimate
+volumeEstimate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imVolumeEstimate
 \end_layout
 
 \end_inset
@@ -12762,7 +14098,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-surfaceAreaEstimate@imSurfaceAreaEstimate
+surfaceAreaEstimate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSurfaceAreaEstimate
 \end_layout
 
 \end_inset
@@ -12830,7 +14176,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-meanBreadthDensity@imMeanBreadthDensity
+meanBreadthDensity
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMeanBreadthDensity
 \end_layout
 
 \end_inset
@@ -12864,7 +14220,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-meanBreadthEstimate@imMeanBreadthEstimate
+meanBreadthEstimate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMeanBreadthEstimate
 \end_layout
 
 \end_inset
@@ -12898,7 +14264,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler3dDensity@imEuler3dDensity
+euler3dDensity
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler3dDensity
 \end_layout
 
 \end_inset
@@ -12932,7 +14308,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler3dEstimate@imEuler3dEstimate
+euler3dEstimate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler3dEstimate
 \end_layout
 
 \end_inset
@@ -12970,7 +14356,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-surfaceAreaLut@imSurfaceAreaLut
+surfaceAreaLut
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSurfaceAreaLut
 \end_layout
 
 \end_inset
@@ -13004,7 +14400,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-meanBreadthLut@imMeanBreadthLut
+meanBreadthLut
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMeanBreadthLut
 \end_layout
 
 \end_inset
@@ -13137,7 +14543,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-length@imLength
+length
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLength
 \end_layout
 
 \end_inset
@@ -13171,7 +14587,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler1d@imEuler1d
+euler1d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler1d
 \end_layout
 
 \end_inset
@@ -13209,7 +14635,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-lengthDensity@imLengthDensity
+lengthDensity
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLengthDensity
 \end_layout
 
 \end_inset
@@ -13243,7 +14679,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-lengthEstimate@imLengthEstimate
+lengthEstimate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imLengthEstimate
 \end_layout
 
 \end_inset
@@ -13277,7 +14723,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-euler1dEstimate@imEuler1dEstimate
+euler1dEstimate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imEuler1dEstimate
 \end_layout
 
 \end_inset
@@ -13315,7 +14771,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-binaryConfigHisto@imBinaryConfigHisto
+binaryConfigHisto
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imBinaryConfigHisto
 \end_layout
 
 \end_inset
@@ -13367,7 +14833,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-projectedDiameter@imProjectedDiameter
+projectedDiameter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imProjectedDiameter
 \end_layout
 
 \end_inset
@@ -13401,7 +14877,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-projectedArea@imProjectedArea
+projectedArea
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imProjectedArea
 \end_layout
 
 \end_inset
@@ -13735,7 +15221,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicDistanceMap@imGeodesicDistanceMap
+geodesicDistanceMap
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicDistanceMap
 \end_layout
 
 \end_inset
@@ -13769,7 +15265,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicDistanceMap3d@imGeodesicDistanceMap3d
+geodesicDistanceMap3d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicDistanceMap3d
 \end_layout
 
 \end_inset
@@ -13803,7 +15309,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicPath@imGeodesicPath
+geodesicPath
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicPath
 \end_layout
 
 \end_inset
@@ -13837,7 +15353,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-maxGeodesicPath@imMaxGeodesicPath
+maxGeodesicPath
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imMaxGeodesicPath
 \end_layout
 
 \end_inset
@@ -13871,7 +15397,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicDistance@imGeodesicDistance
+geodesicDistance
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicDistance
 \end_layout
 
 \end_inset
@@ -13924,7 +15460,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicDiameter@imGeodesicDiameter
+geodesicDiameter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicDiameter
 \end_layout
 
 \end_inset
@@ -13958,7 +15504,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicDiameter3d@imGeodesicDiameter3d
+geodesicDiameter3d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicDiameter3d
 \end_layout
 
 \end_inset
@@ -13992,7 +15548,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicCenter@imGeodesicCenter
+geodesicCenter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicCenter
 \end_layout
 
 \end_inset
@@ -14026,7 +15592,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicExtremities@imGeodesicExtremities
+geodesicExtremities
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicExtremities
 \end_layout
 
 \end_inset
@@ -14060,7 +15636,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicRadius@imGeodesicRadius
+geodesicRadius
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicRadius
 \end_layout
 
 \end_inset
@@ -14094,7 +15680,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesicPropagation@imGeodesicPropagation
+geodesicPropagation
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGeodesicPropagation
 \end_layout
 
 \end_inset
@@ -14201,7 +15797,6 @@ either bright or dark structures
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 minitoc
@@ -14635,28 +16230,23 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 % read image
 \end_layout
 
 \begin_layout Plain Layout
-
 img = imread('coins.png');
 \end_layout
 
 \begin_layout Plain Layout
-
 % compute granulometry curve by opening using square strel
 \end_layout
 
 \begin_layout Plain Layout
-
 xi = 1:50;
  
 \end_layout
 
 \begin_layout Plain Layout
-
 [gr,
  diams,
  vols] = imGranulo(img,
@@ -14666,12 +16256,10 @@ xi = 1:50;
 \end_layout
 
 \begin_layout Plain Layout
-
 % display volume curve
 \end_layout
 
 \begin_layout Plain Layout
-
 figure;
  plot([0 diams],
  vols);
@@ -14679,28 +16267,23 @@ figure;
 \end_layout
 
 \begin_layout Plain Layout
-
 xlabel('Diameter of structuring element (pixels)');
  
 \end_layout
 
 \begin_layout Plain Layout
-
 ylabel('Sum of gray levels');
 \end_layout
 
 \begin_layout Plain Layout
-
 title('Variation of volume curve');
 \end_layout
 
 \begin_layout Plain Layout
-
 % display granulo
 \end_layout
 
 \begin_layout Plain Layout
-
 figure;
  plot(diams,
  gr);
@@ -14708,18 +16291,15 @@ figure;
 \end_layout
 
 \begin_layout Plain Layout
-
 xlabel('Diameter of structuring element (pixels)');
  
 \end_layout
 
 \begin_layout Plain Layout
-
 ylabel('Variation of gray levels (%)');
 \end_layout
 
 \begin_layout Plain Layout
-
 title('Gray level granulometry by opening');
 \end_layout
 
@@ -14900,7 +16480,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-granulo@imGranulo
+granulo
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGranulo
 \end_layout
 
 \end_inset
@@ -14916,7 +16506,6 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 GR = imGranulo(IMG,
  TYPE,
  SHAPE,
@@ -14924,7 +16513,6 @@ GR = imGranulo(IMG,
 \end_layout
 
 \begin_layout Plain Layout
-
 [GR,
  DIAMS,
  VOLS] = imGranulo(IMG,
@@ -14960,7 +16548,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-granuloByRegion@imGranuloByRegion
+granuloByRegion
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGranuloByRegion
 \end_layout
 
 \end_inset
@@ -14978,7 +16576,6 @@ Computes granulometry curve for each region of a label image.
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 hyperref[fun:imRegionFun]{imRegionFun}
@@ -15133,7 +16730,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-directionalGranulo@imDirectionalGranulo
+directionalGranulo
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imDirectionalGranulo
 \end_layout
 
 \end_inset
@@ -15167,7 +16774,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-granuloOrientationMap@imGranuloOrientationMap
+granuloOrientationMap
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imGranuloOrientationMap
 \end_layout
 
 \end_inset
@@ -15235,7 +16852,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-orientedGranulo@imOrientedGranulo
+orientedGranulo
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imOrientedGranulo
 \end_layout
 
 \end_inset
@@ -15301,7 +16928,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-Most functions from this module requires the MatGeom library
+Most functions from this module require the MatGeom library
 \begin_inset Foot
 status collapsed
 
@@ -15310,7 +16937,6 @@ status collapsed
 status open
 
 \begin_layout Plain Layout
-
 https://github.com/mattools/matGeom
 \end_layout
 
@@ -15337,7 +16963,6 @@ literal "false"
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 minitoc
@@ -15366,50 +16991,41 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 % generate coordinate system for square images
 \end_layout
 
 \begin_layout Plain Layout
-
 lx = 1:100;
 \end_layout
 
 \begin_layout Plain Layout
-
 ly = 1:100;
 \end_layout
 
 \begin_layout Plain Layout
-
 % define ellipse by center,
  two radius and one orientation
 \end_layout
 
 \begin_layout Plain Layout
-
 ellipse = [50 50  40 20  theta];
 \end_layout
 
 \begin_layout Plain Layout
-
 % generation of binary image
 \end_layout
 
 \begin_layout Plain Layout
-
 img = discreteEllipse(lx,
  ly,
  ellipse);
 \end_layout
 
 \begin_layout Plain Layout
-
 % display
 \end_layout
 
 \begin_layout Plain Layout
-
 figure;
  imshow(img);
 \end_layout
@@ -15966,6 +17582,42 @@ nolink "false"
 \end_inset
 
 ).
+ The trefoil is defined by the five parameters 
+\begin_inset Formula $[x_{c},y_{c},r_{out},r_{int},\theta_{0}]$
+\end_inset
+
+ where 
+\begin_inset Formula $(x_{c},y_{c})$
+\end_inset
+
+ is the center of the shape,
+ 
+\begin_inset Formula $r_{out}$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{in}$
+\end_inset
+
+ correspond to the outer and inner radius respectively,
+ and 
+\begin_inset Formula $\theta_{0}$
+\end_inset
+
+ is the relative orientation of the shape with resepct to the horizontal.
+ The polar equation of the shape around the center 
+\begin_inset Formula $(x_{c},y_{c})$
+\end_inset
+
+ is given by:
+\begin_inset Formula 
+\begin{equation}
+\rho(\theta)=\frac{(r_{out}+r_{in})}{2}+\frac{(r_{out}-r_{in})}{2}\cos\left(3\theta-\theta_{0}\right)
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Minisec
@@ -16015,6 +17667,20 @@ nolink "false"
 \end_inset
 
 ).
+ The starfish is defined by the same five parameters 
+\begin_inset Formula $[x_{c},y_{c},r_{out},r_{int},\theta_{0}]$
+\end_inset
+
+ as the trefoil.
+ Its polar equation is given by:
+\begin_inset Formula 
+\begin{equation}
+\rho(\theta)=\frac{(r_{out}+r_{in})}{2}+\frac{(r_{out}-r_{in})}{2}\cos\left(5\theta-\theta_{0}\right)
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -16042,14 +17708,14 @@ status open
 
 
 \begin_inset Graphics
-	filename images/imShapes/starfish_theta30.png
+	filename images/imShapes/trefoil_theta30.png
 	width 24text%
 
 \end_inset
 
 
 \begin_inset Graphics
-	filename images/imShapes/trefoil_theta30.png
+	filename images/imShapes/starfish_theta30.png
 	width 24text%
 
 \end_inset
@@ -16075,6 +17741,13 @@ More examples of discrete shapes in 2D.
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -16207,12 +17880,10 @@ inline false
 status open
 
 \begin_layout Plain Layout
-
 elli = [50 50 50  30 20 10  40 30 20];
 \end_layout
 
 \begin_layout Plain Layout
-
 img = discreteEllipsoid(1:100,
  1:100,
  1:100,
@@ -16220,18 +17891,15 @@ img = discreteEllipsoid(1:100,
 \end_layout
 
 \begin_layout Plain Layout
-
 figure;
 \end_layout
 
 \begin_layout Plain Layout
-
 isosurface(img,
  .5);
 \end_layout
 
 \begin_layout Plain Layout
-
 hold on;
  axis square;
  view(3);
@@ -16937,7 +18605,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-pointsInfluenceZones@imPointsInfluenceZones
+pointsInfluenceZones
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPointsInfluenceZones
 \end_layout
 
 \end_inset
@@ -16971,7 +18649,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-voronoi2d@imvoronoi2d
+voronoi2d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imvoronoi2d
 \end_layout
 
 \end_inset
@@ -17013,7 +18701,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-voronoi3d@imvoronoi3d
+voronoi3d
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imvoronoi3d
 \end_layout
 
 \end_inset
@@ -17081,7 +18779,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-AWVoronoi@imAWVoronoi
+AWVoronoi
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imAWVoronoi
 \end_layout
 
 \end_inset
@@ -17115,7 +18823,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-powerDiagram@imPowerDiagram
+powerDiagram
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPowerDiagram
 \end_layout
 
 \end_inset

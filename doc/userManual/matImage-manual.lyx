@@ -60,6 +60,7 @@
 \author{D. Legland}
 \date{\today}
 \end_preamble
+\options idxtotoc
 \use_default_options true
 \maintain_unincluded_children no
 \language english
@@ -897,7 +898,33 @@ name "fun:imHistogram"
 
 \end_inset
 
-Computes the histogram of the input image.
+Computes the histogram
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+histogram
+\end_layout
+
+\end_inset
+
+ of the input image.
  In case of a color images,
  returns or display the histogram of each channel.
 \end_layout
@@ -993,7 +1020,43 @@ name "fun:imJointHistogram"
 
 \end_inset
 
-Computes the joint histogram of two images.
+Computes the joint histogram
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+histogram
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+joint histogram
+\end_layout
+
+\end_inset
+
+ of two images.
 \end_layout
 
 \begin_layout Minisec
@@ -1094,7 +1157,43 @@ imColorHistogram
 \end_layout
 
 \begin_layout Standard
-Plots 3D histogram of a color image.
+Plots 3D histogram
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+histogram
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+color image
+\end_layout
+
+\end_inset
+
+ of a color image.
 \end_layout
 
 \begin_layout Minisec
@@ -1138,7 +1237,43 @@ imWeightedHistogram
 \end_layout
 
 \begin_layout Standard
-Computes the weighted histogram of the values within the image,
+Computes the weighted histogram
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+histogram
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+weighted histogram
+\end_layout
+
+\end_inset
+
+ of the values within the image,
  using an additional array/image as weights.
 \end_layout
 
@@ -1701,7 +1836,33 @@ imEntropy
 \end_layout
 
 \begin_layout Standard
-Computes the entropy of an image.
+Computes the entropy
+\begin_inset Index idx
+range none
+pageformat default
+status open
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+entropy
+\end_layout
+
+\end_inset
+
+ of an image.
  Ininformation theory,
  the entropy is a measure of disorder or uncertainty
 \begin_inset Foot
@@ -1775,7 +1936,33 @@ name "fun:imJointEntropy"
 \end_inset
 
 Computes the joint entropy between two images.
- The joint entropy is computed from the joint histogram of the image pair (see section
+ The joint entropy is computed from the joint histogram
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+joint histogram
+\end_layout
+
+\end_inset
+
+ of the image pair (see section
 \begin_inset space ~
 \end_inset
 
@@ -1834,7 +2021,33 @@ imMutualInformation
 \end_layout
 
 \begin_layout Standard
-Computes the mutual information between two images.
+Computes the mutual information
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mutual information
+\end_layout
+
+\end_inset
+
+ between two images.
  The mutual information is a measure of similarity between the content of the two images that is well suited when images are generated with different modalities
 \begin_inset Foot
 status collapsed
@@ -2001,7 +2214,43 @@ name "fun:imLocalGradient"
 
 \end_inset
 
-Computes 2D/3D gradient vector(s) within image at specified position(s) without requiring to compute the whole gradient image (using for example the 
+Computes 2D/3D gradient
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+gradient
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+local gradient
+\end_layout
+
+\end_inset
+
+ vector(s) within image at specified position(s) without requiring to compute the whole gradient image (using for example the 
 \begin_inset ERT
 status open
 
@@ -2862,7 +3111,33 @@ Isosurface rendering
 \end_layout
 
 \begin_layout Standard
-Computes and renders a 3D isosurface from image data and user-defined value.
+Computes and renders a 3D isosurface
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+isosurface
+\end_layout
+
+\end_inset
+
+ from image data and user-defined value.
  Can be slow for large images.
 \end_layout
 
@@ -3180,7 +3455,33 @@ orthoSlices
 \end_layout
 
 \begin_layout Standard
-Displays three orthogonal slices in the same figure (Fig.
+Displays three orthogonal slices
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+orthogonal slices
+\end_layout
+
+\end_inset
+
+ in the same figure (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -5543,7 +5844,19 @@ imBoxFilter
 \end_layout
 
 \begin_layout Standard
-Box filter on 2D/3D image (Fig.
+Box filter
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+box filter
+\end_layout
+
+\end_inset
+
+ on 2D/3D image (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -5643,6 +5956,18 @@ imMedianFilter
 \end_inset
 
 
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+median filter
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5705,7 +6030,33 @@ imGaussianFilter
 \end_layout
 
 \begin_layout Standard
-Applies gaussian filter to 2D/3D image (Fig.
+Applies gaussian filter
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+gaussian filter
+\end_layout
+
+\end_inset
+
+ to 2D/3D image (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -5766,7 +6117,33 @@ imDirectionalFilter
 
 \begin_layout Standard
 Applies and combines several directional filters.
- This type of filter may be of particular interest in the case of thin or curvilinear structures.
+ This type of filter may be of particular interest in the case of thin or curvilinear structures
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+curvilinear structures
+\end_layout
+
+\end_inset
+
+.
  Alternatives may be the use of Hessian-based filters (see section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -6012,7 +6389,33 @@ name "fun:imGradientFilter"
 
 \end_inset
 
-Computes the gradient components of a grayscale image.
+Computes the gradient
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+gradient
+\end_layout
+
+\end_inset
+
+ components of a grayscale image.
  The result can be provided as a single image (corresponding to the the gradient norm,
  see Fig.
 \begin_inset space ~
@@ -6118,7 +6521,33 @@ imLaplacian
 \end_layout
 
 \begin_layout Standard
-Discrete Laplacian of an image (Fig.
+Discrete Laplacian
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Laplacian
+\end_layout
+
+\end_inset
+
+ of an image (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -6403,7 +6832,59 @@ imVesselness2d
 \end_layout
 
 \begin_layout Standard
-Computes the local vesselness of curvilinear structures,
+Computes the local vesselness
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+vesselness
+\end_layout
+
+\end_inset
+
+ of curvilinear structures
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+curvilinear structures
+\end_layout
+
+\end_inset
+
+,
  from Frangi's paper 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -6649,7 +7130,43 @@ imMorphoGradient
 \end_layout
 
 \begin_layout Standard
-Morphological gradient of an image.
+Morphological gradient
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+gradient
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+morphological gradient
+\end_layout
+
+\end_inset
+
+ of an image.
 \end_layout
 
 \begin_layout Minisec
@@ -6840,7 +7357,7 @@ Segmentation operators
 \end_layout
 
 \begin_layout Standard
-Several functions for facilitating the segmentation of images.
+Several functions for facilitating the segmentation of grayscal or intensity images.
 \end_layout
 
 \begin_layout Minisec
@@ -6884,7 +7401,45 @@ imOtsuThreshold
 \end_layout
 
 \begin_layout Standard
-Thresholds an image using Otsu method.
+Thresholds
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+threshold
+\end_layout
+
+\end_inset
+
+ an image using Otsu method
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+Otsu threshold
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Minisec
@@ -7067,7 +7622,33 @@ imCannyEdgeDetector
 \end_layout
 
 \begin_layout Standard
-Edge detection using Canny-Deriche method.
+Edge detection
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+edge detection
+\end_layout
+
+\end_inset
+
+ using Canny-Deriche method.
 \end_layout
 
 \begin_layout Section
@@ -7588,7 +8169,33 @@ imBoundary
 \end_layout
 
 \begin_layout Standard
-Computes the boundary of a binary image.
+Computes the boundary
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+boundary
+\end_layout
+
+\end_inset
+
+ of a binary image.
  The result is given as another binary image (Fig.
 \begin_inset space ~
 \end_inset
@@ -7707,7 +8314,33 @@ imSkeleton
 \end_layout
 
 \begin_layout Standard
-Homothopic skeleton of a binary image (Fig.
+Homothopic skeleton
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+skeleton
+\end_layout
+
+\end_inset
+
+ of a binary image (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -7816,7 +8449,19 @@ name "fun:imConvexImage"
 
 \end_inset
 
-Computes smallest convex image containing the original pixels (Fig.
+Computes smallest convex image
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+convex image
+\end_layout
+
+\end_inset
+
+ containing the original pixels (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -8148,7 +8793,33 @@ imDistanceMap
 \end_layout
 
 \begin_layout Standard
-Computes distance from a binary image using chamfer distances (Fig.
+Computes distance map
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+distance map
+\end_layout
+
+\end_inset
+
+ from a binary image using chamfer distances (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -8503,7 +9174,33 @@ imContourLines
 \end_layout
 
 \begin_layout Standard
-Extracts iso contours from an intensity or grayscale image as a collection of polylines.
+Extracts iso contours
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+isocontour
+\end_layout
+
+\end_inset
+
+ from an intensity or grayscale image as a collection of polylines.
 \end_layout
 
 \begin_layout Minisec
@@ -9846,6 +10543,18 @@ imAreaOpening
 \end_inset
 
 
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+area opening
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -10889,7 +11598,33 @@ imCentroid
 \end_layout
 
 \begin_layout Standard
-Computes the centroid of regions within a binary or label image.
+Computes the centroid
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+centroid
+\end_layout
+
+\end_inset
+
+ of regions within a binary or label image.
 \end_layout
 
 \begin_layout Minisec
@@ -10933,7 +11668,19 @@ imBoundingBox
 \end_layout
 
 \begin_layout Standard
-Computes the minimum and maximum of 
+Computes the minimum and maximum
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+bounding box
+\end_layout
+
+\end_inset
+
+ of 
 \begin_inset Formula $x$
 \end_inset
 
@@ -11360,7 +12107,43 @@ The orientation of the region can be retrieved from its (centered) second-order 
 \end_inset
 
 .
- The moments are often used to compute an equivalent ellipse with the same centroid and second order moments as the original region (Fig.
+ The moments are often used to compute an equivalent ellipse
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ellipse
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+equivalent ellipse
+\end_layout
+
+\end_inset
+
+ with the same centroid and second order moments as the original region (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -11409,7 +12192,43 @@ The first moment
 \series bold
 equivalent ellipsoid
 \series default
-,
+
+\begin_inset Index idx
+range none
+pageformat default
+status open
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ellipsoid
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+equivalent ellipsoid
+\end_layout
+
+\end_inset
+
+ ,
  defined as the ellipsoid with the same moments up to the second order as the region of interest.
 \end_layout
 
@@ -12070,7 +12889,69 @@ imFeretDiameter
 \end_layout
 
 \begin_layout Standard
-Computes the Feret diameter of the region(s) for a given direction(s).
+Computes the Feret diameter 
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Feret diameter
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+diameter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+Feret
+\end_layout
+
+\end_inset
+
+ of the region(s) for a given direction(s).
  The result is a numeric array with as many rows as the number of regions,
  and as many columns as the number of directions.
 \end_layout
@@ -12136,7 +13017,69 @@ imGeodesicDiameter
 \end_layout
 
 \begin_layout Standard
-Computes the geodesic diameter of region(s) within a 2D binary or label image (Fig.
+Computes the geodesic diameter
+\begin_inset Index idx
+range none
+pageformat default
+status open
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+geodesic diameter
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+diameter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+geodesic
+\end_layout
+
+\end_inset
+
+of region(s) within a 2D binary or label image (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -12300,7 +13243,33 @@ imConvexity
 \end_layout
 
 \begin_layout Standard
-Computes the convexity of the region(s) within a binary or label image (Fig.
+Computes the convexity
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+convexity
+\end_layout
+
+\end_inset
+
+ of the region(s) within a binary or label image (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -12359,7 +13328,33 @@ imTortuosity
 \end_layout
 
 \begin_layout Standard
-Computes the tortuosity of region(s) within a binary or label image.
+Computes the tortuosity
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+tortuosity
+\end_layout
+
+\end_inset
+
+ of region(s) within a binary or label image.
  Tortuosity is defined as the ratio of the geodesic diameter over the maximum Feret diameter.
  Values are expected to be greater than or equal to 1.
 \end_layout
@@ -13157,7 +14152,33 @@ imEuler2d
 \end_layout
 
 \begin_layout Standard
-Euler number of a binary or label 2D image.
+Euler number
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Euler number
+\end_layout
+
+\end_inset
+
+ of a binary or label 2D image.
 \end_layout
 
 \begin_layout Subsection
@@ -13803,7 +14824,33 @@ imSurfaceArea
 \end_layout
 
 \begin_layout Standard
-Computes the surface area of the region(s) within a binary or label 3D image.
+Computes the surface area
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+surface area
+\end_layout
+
+\end_inset
+
+ of the region(s) within a binary or label 3D image.
 \end_layout
 
 \begin_layout Minisec
@@ -13891,8 +14938,60 @@ imMeanBreadth
 \end_layout
 
 \begin_layout Standard
-Computes the mean breadth of the region(s) within a binary or label 3D image.
- Mean breadth is proportionnal to the integral of mean curvature.
+Computes the mean breadth
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mean breadth
+\end_layout
+
+\end_inset
+
+ of the region(s) within a binary or label 3D image.
+ Mean breadth is proportionnal to the integral of mean curvature
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+integral of mean curvature
+\end_layout
+
+\end_inset
+
+.
  For convex regions,
  it corresponds to the average of the feret diameter computed over all directions.
 \end_layout
@@ -13938,7 +15037,33 @@ imEuler3d
 \end_layout
 
 \begin_layout Standard
-Computes the 3D Euler number of the region(s) within a binary or label 3D image.
+Computes the 3D Euler number
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Euler number (3D)
+\end_layout
+
+\end_inset
+
+ of the region(s) within a binary or label 3D image.
 \end_layout
 
 \begin_layout Subsection
@@ -14796,7 +15921,33 @@ name "imBinaryConfigHisto"
 
 \end_inset
 
-Computes the histogram of the binary configurations within a 2D or 3D image.
+Computes the histogram of the binary configurations
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+binary configuration
+\end_layout
+
+\end_inset
+
+ within a 2D or 3D image.
  Other utilities for configuration maps are described in Section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -14852,7 +16003,69 @@ imProjectedDiameter
 \end_layout
 
 \begin_layout Standard
-Projected diameter in a given direction.
+Computes the projected diameter
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+projected diameter
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+diameter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+projected diameter
+\end_layout
+
+\end_inset
+
+ in a given direction.
 \end_layout
 
 \begin_layout Minisec
@@ -14896,7 +16109,33 @@ imProjectedArea
 \end_layout
 
 \begin_layout Standard
-Total projected area in a given direction.
+Computes the total projected area
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+total projected area
+\end_layout
+
+\end_inset
+
+ in a given direction.
 \end_layout
 
 \begin_layout Minisec
@@ -14930,7 +16169,9 @@ epc
 \end_layout
 
 \begin_layout Standard
-Computes Euler-Poincare Characteristic (EPC) of a structure.
+Computes the Euler-Poincare Characteristic (EPC),
+ or Euler number,
+ of a structure.
 \end_layout
 
 \begin_layout Minisec
@@ -15328,7 +16569,33 @@ imGeodesicPath
 \end_layout
 
 \begin_layout Standard
-Computes a geodesic path between two markers in an image.
+Computes a geodesic path
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+geodesic path
+\end_layout
+
+\end_inset
+
+ between two markers within an image.
 \end_layout
 
 \begin_layout Minisec
@@ -15479,7 +16746,33 @@ imGeodesicDiameter
 \end_layout
 
 \begin_layout Standard
-Computes the geodesic diameter of region(s) within a 2D binary or label image.
+Computes the geodesic diameter
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+geodesic diameter
+\end_layout
+
+\end_inset
+
+ of region(s) within a 2D binary or label image.
 \end_layout
 
 \begin_layout Minisec
@@ -16058,6 +17351,32 @@ The difference between two successive opening or closing steps is obtained by co
  can be interpreted as a 
 \series bold
 size distribution
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+size distribution
+\end_layout
+
+\end_inset
+
+
 \series default
  of the bright [resp.
  dark] structures within the image,
@@ -16417,7 +17736,33 @@ Oriented granulometry
 \begin_layout Standard
 Granulometry curves strongly depends on the shape of the structuring elements.
  Using disks,
- the size can be related to the thickness of the structures,
+ the size can be related to the thickness
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+thickness
+\end_layout
+
+\end_inset
+
+ of the structures,
  as the disks can erode from any direction.
 \end_layout
 
@@ -17150,7 +18495,33 @@ discreteEllipse
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a planar ellipse,
+Generetes a 2D binary image representing a planar ellipse
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ellipse
+\end_layout
+
+\end_inset
+
+,
  defined by its center,
  two radius,
  and an orientation (Fig.
@@ -17414,7 +18785,33 @@ discretePolygon
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a planar polygon,
+Generetes a 2D binary image representing a planar polygon
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+polygon
+\end_layout
+
+\end_inset
+
+,
  defined by a series of vertex coordinates.
 \end_layout
 
@@ -17566,7 +18963,33 @@ discreteTrefoil
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a trefoil curve (Fig.
+Generetes a 2D binary image representing a trefoil curve
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+trefoil curve
+\end_layout
+
+\end_inset
+
+ (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -17651,7 +19074,33 @@ discreteStarfish
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a starfish curve (Fig.
+Generetes a 2D binary image representing a starfish curve
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+starfish curve
+\end_layout
+
+\end_inset
+
+ (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -18114,7 +19563,33 @@ discreteEllipsoid
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D ellipsoid (Fig.
+Generetes a 3D binary image representing a 3D ellipsoid
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ellipsoid
+\end_layout
+
+\end_inset
+
+ (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -18163,7 +19638,33 @@ discreteCube
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D cube (Fig.
+Generetes a 3D binary image representing a 3D cube
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+cube
+\end_layout
+
+\end_inset
+
+ (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -18261,7 +19762,33 @@ discreteTorus
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D Torus (Fig.
+Generetes a 3D binary image representing a 3D torus
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+torus
+\end_layout
+
+\end_inset
+
+ (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -18310,8 +19837,34 @@ discreteCylinder
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D cylinder,
- defined by two extreimty points and a radius (Fig.
+Generetes a 3D binary image representing a 3D cylinder
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+cylinder
+\end_layout
+
+\end_inset
+
+,
+ defined by two extremity points and a radius (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -18409,7 +19962,33 @@ discreteReuleauxRevol
 \end_layout
 
 \begin_layout Standard
-Discretize the revolution of a Reuleaux triangle.
+Discretize the revolution of a Reuleaux triangle
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Reuleaux triangle
+\end_layout
+
+\end_inset
+
+.
  Such shape has the property that the Feret diameter remains constant whatever the direction.
  It can be useful to check measurement of mean breadth (Fig.
 \begin_inset space ~
@@ -18668,7 +20247,33 @@ imvoronoi2d
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing the Voronoi diagram from a set of 2D points 
+Generetes a 2D binary image representing the Voronoi diagram
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Voronoi diagram
+\end_layout
+
+\end_inset
+
+ from a set of 2D points 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Aurenhammer_1991_ACMCS"
@@ -18798,7 +20403,7 @@ imAWVoronoi
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing the Additively Weighted Voronoi Diagram of a set of points.
+Generates a 3D binary image representing the Additively Weighted Voronoi Diagram of a set of points.
 \end_layout
 
 \begin_layout Minisec
@@ -18842,7 +20447,45 @@ imPowerDiagram
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing the Power diagram of a set of points.
+Generates a 3D binary image representing the Power diagram
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Power diagram
+\end_layout
+
+\end_inset
+
+ of a set of points.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset index_print
+LatexCommand printindex
+type "idx"
+name "General Index"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -18850,6 +20493,7 @@ Generetes a 3D binary image representing the Power diagram of a set of points.
 LatexCommand printindex
 type "ind"
 name "Index of functions"
+literal "false"
 
 \end_inset
 

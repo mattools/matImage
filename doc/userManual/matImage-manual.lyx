@@ -19027,7 +19027,7 @@ nolink "false"
 \begin_inset Formula $\theta_{0}$
 \end_inset
 
- is the relative orientation of the shape with resepct to the horizontal.
+ is the relative orientation of the shape with respect to the horizontal.
  The polar equation of the shape around the center 
 \begin_inset Formula $(x_{c},y_{c})$
 \end_inset
@@ -19035,7 +19035,7 @@ nolink "false"
  is given by:
 \begin_inset Formula 
 \begin{equation}
-\rho(\theta)=\frac{(r_{out}+r_{in})}{2}+\frac{(r_{out}-r_{in})}{2}\cos\left(3\theta-\theta_{0}\right)
+\rho(\theta)=\frac{(r_{out}+r_{in})}{2}+\frac{(r_{out}-r_{in})}{2}\cos\left(3\left(\theta-\theta_{0}\right)\right)
 \end{equation}
 
 \end_inset
@@ -19124,7 +19124,7 @@ nolink "false"
  Its polar equation is given by:
 \begin_inset Formula 
 \begin{equation}
-\rho(\theta)=\frac{(r_{out}+r_{in})}{2}+\frac{(r_{out}-r_{in})}{2}\cos\left(5\theta-\theta_{0}\right)
+\rho(\theta)=\frac{(r_{out}+r_{in})}{2}+\frac{(r_{out}-r_{in})}{2}\cos\left(5\left(\theta-\theta_{0}\right)\right)
 \end{equation}
 
 \end_inset

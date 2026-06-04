@@ -1,6 +1,8 @@
 function img = discreteDisc(varargin)
 %DISCRETEDISC Discretize a disc
 %
+%   Note: Deprecated! Use equivalentEllipse instead.
+%
 %   IMG = discreteDisc(LX, LY, DISC);
 %   Compute the discretized image of the disc DISC. LX and LY are two
 %   vectors that contain pixel ccordinate in the reference space. DISC is
@@ -48,6 +50,9 @@ function img = discreteDisc(varargin)
 %   22/01/2010: fix auto center with odd image size
 %   16/06/2010: add possibility to give several discs as argument
 
+% deprecation warning
+warning('matImage:deprecated', ...
+    '''discreteDisc'' is deprecated, use ''discreteDisk'' instead');
 
 % compute coordinate of image pixels
 [lx, ly, varargin] = parseGridArgs(varargin{:});
@@ -58,7 +63,7 @@ center = [lx(ceil(end/2)) ly(ceil(end/2))];
 radius = center;
 
 % process input parameters
-if length(varargin) == 1
+if isscalar(varargin)
     % all parameters bundled in first argument
     var = varargin{1};
     center = var(:,1:2);

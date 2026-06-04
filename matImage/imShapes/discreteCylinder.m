@@ -1,5 +1,5 @@
 function img = discreteCylinder(varargin)
-%DISCRETECYLINDER Discretize a 3D cylinder
+%DISCRETECYLINDER Create binary image of a 3D cylinder.
 %
 %   IMG = discreteCylinder(LX, LY, LZ, P1, P2, RADIUS)
 %   LX, LY and LZ are row vectors specifying position of vertex centers

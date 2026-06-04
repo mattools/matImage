@@ -1,5 +1,5 @@
 function img = discreteEgg(varargin)
-%DISCRETEEGG Discretize a planar egg
+%DISCRETEEGG Create binary image of a planar egg shape.
 %
 %   IMG = discreteEgg(LX, LY, EGG)
 %   EGG has format: [XC YC R THETA].
@@ -9,7 +9,7 @@ function img = discreteEgg(varargin)
 %     imshow(img);
 %
 %   See also
-%   imShapes, discreteEllipse, discreteTrefoil, discreteStarfish
+%   imShapes, discreteDisk, discreteEllipse
 %
 
 % ------

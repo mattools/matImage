@@ -24,7 +24,7 @@ function img = discreteSquare(varargin)
 %   img = discreteSquare([1 1 100;1 1 100], [50 50 30 30]);
 %
 %   See Also
-%   imShapes, discreteDisc, discreteRectangle
+%   imShapes, discreteDisk, discreteRectangle
 %
 
 % ------

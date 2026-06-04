@@ -1,5 +1,5 @@
 function img = discreteBall(varargin)
-%DISCRETEBALL Discretize a 3D Ball
+%DISCRETEBALL Create binary image of a 3D Ball
 %
 %   IMG = discreteBall(DIM, CENTER, RADIUS)
 %   DIM is the size of image, with the format [x0 dx x1;y0 dy y1;z0 dz z1]
@@ -21,7 +21,7 @@ function img = discreteBall(varargin)
 %   img = discreteBall(1:100, 1:100, 1:100, [50 50 50 30]);
 %
 %   See also:
-%   imShapes, discreteDisc, discreteEllipsoid
+%   imShapes, discreteDisk, discreteEllipsoid, discreteCylinder
 %
 
 % ------

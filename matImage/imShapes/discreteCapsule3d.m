@@ -1,5 +1,5 @@
 function img = discreteCapsule3d(varargin)
-%DISCRETECAPSULE3D Create binary image of a 3D capsule
+%DISCRETECAPSULE3D Create binary image of a 3D capsule.
 %
 %   IMG = discreteCapsule3d(LX, LY, LZ, capsule)
 %   LX, LY and LZ are row vectors specifying position of vertex centers
@@ -25,7 +25,7 @@ function img = discreteCapsule3d(varargin)
 %     l = light; view([120 20]);
 %
 %   See also
-%   imShapes, discreteCube, discretecylinder
+%   imShapes, discreteBall, discreteCube, discreteCylinder
 %
 
 % ------

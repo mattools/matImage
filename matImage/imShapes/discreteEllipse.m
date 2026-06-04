@@ -25,7 +25,7 @@ function img = discreteEllipse(varargin)
 %   img = discreteEllipse(1:100, 1:100, [50 50 30 10 30]);
 %
 %   See also
-%   imShapes, discreteDisc, discteteEllipsoid, drawEllipse
+%   imShapes, discreteDisk, discteteEllipsoid, drawEllipse
 %
 
 % ------

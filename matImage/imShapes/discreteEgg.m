@@ -9,7 +9,7 @@ function img = discreteEgg(varargin)
 %     imshow(img);
 %
 %   See also
-%   imShapes, discreteDisk, discreteEllipse
+%   imShapes, discreteDisk, discreteEllipse, discreteLune
 %
 
 % ------

@@ -29,7 +29,7 @@ function img = discreteDisk(varargin)
 %   img = discreteDisk([1 1 100;1 1 100], [50 50], 30);
 %
 %   See also:
-%   imShapes, discreteEllipse, discreteSquare, discreteBall
+%   imShapes, discreteEllipse, discreteSquare, discreteLune, discreteBall
 %
 
 % ------

@@ -30,16 +30,6 @@ function img = discreteBall(varargin)
 % Created: 2006-02-27
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
-%   HISTORY
-%   26/10/2006 concatenate transforms before applying them.
-%   04/03/2009 add possibility for ellipsoid, use meshgrid
-%   30/04/2009 update transforms
-%   29/05/2009 use more possibilities for specifying grid
-%   22/01/2010 fix auto center with odd image size
-%   27/07/2010 add support for multiple balls, split discreteEllipsoid
-%   29/09/2010 remove code corresponding to discreteEllipsoid
-
-
 %% Extract image dimension
 
 % compute coordinate of image voxels
@@ -59,7 +49,7 @@ radius  = center;
 %% Extract ball parameters
 
 % process input parameters
-if length(varargin) == 1
+if isscalar(varargin)
     var = varargin{1};
     
     if size(var, 2) == 4
@@ -92,7 +82,7 @@ nBalls = size(center, 1);
 if nBalls == 1
     % case of a single ball
     
-    % transforms voxels according to ball orientation
+    % transforms voxels according to ball position and size
     trans = composeTransforms3d(...
         createTranslation3d(-center),...
         createScaling3d(1./radius) );
@@ -108,7 +98,7 @@ end
 img = false(size(x));
 
 for i = 1:nBalls
-    % transforms voxels according to ball orientation
+    % transforms voxels according to ball position and size
     trans = composeTransforms3d(...
         createTranslation3d(-center(i,:)),...
         createScaling3d(1./radius(i,:)) );

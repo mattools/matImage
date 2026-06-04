@@ -21,15 +21,13 @@ function img = imvoronoi3d(varargin)
 %     imShapes, imVoronoi2d
 %
 
-%   ---------
-%   author : David Legland 
-%   INRA - TPV URPOI - BIA IMASTE
-%   created the 28/04/2004.
+% ---------
+% Author: David Legland
+% e-mail: david.legland@inrae.fr
+% INRA - TPV URPOI - BIA IMASTE
+% created the 28/04/2004.
 %
 
-%   HISTORY
-%   09/06/2004 : correct bug for counting points
-%   29/05/2009 use more possibilities for specifying grid
 
 
 %% extract input arguments

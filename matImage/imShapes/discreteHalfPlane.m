@@ -28,7 +28,7 @@ function img = discreteHalfPlane(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2006-10-12
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -48,7 +48,7 @@ center = [lx(ceil(end/2)) ly(ceil(end/2))];
 theta   = 0;
 
 % process input parameters
-if length(varargin)==1
+if isscalar(varargin)
     % first argument contains all parameters
     var = varargin{1};
     center = var(1:2);

@@ -29,19 +29,9 @@ function img = discreteSquare(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2006-05-16
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
-
-%   HISTORY
-%   12/10/2006: typo in the doc
-%   04/01/2007: concatenate transforms before applying them
-%   19/06/2007: update doc
-%   04/03/2009: use meshgrid
-%   29/04/2009: update transforms
-%   29/05/2009: use more possibilities for specifying grid
-%   22/01/2010: fix auto center with odd image size
-%   2011-03-30 use degrees
 
 % compute coordinate of image voxels
 [lx, ly, varargin] = parseGridArgs(varargin{:});
@@ -53,7 +43,7 @@ side    = center;
 theta   = 0;
 
 % process input parameters
-if length(varargin)==1
+if isscalar(varargin)
     % all paramater in the first argument
     var = varargin{1};
     center = var(:,1:2);

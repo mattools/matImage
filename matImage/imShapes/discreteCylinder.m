@@ -34,7 +34,7 @@ function img = discreteCylinder(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-10-21
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -49,7 +49,7 @@ function img = discreteCylinder(varargin)
 [x, y, z] = meshgrid(lx, ly, lz);
 
 % process input parameters
-if length(varargin) == 1
+if isscalar(varargin)
     % input is a 1-by-7 row vector
     var = varargin{1};
     if length(var) ~= 7

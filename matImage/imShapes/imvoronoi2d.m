@@ -33,17 +33,12 @@ function img = imvoronoi2d(varargin)
 %
 
 %   ---------
-%   author : David Legland 
-%   INRA - TPV URPOI - BIA IMASTE
-%   created the 28/04/2004.
+% ---------
+% Author: David Legland
+% e-mail: david.legland@inrae.fr
+% INRA - TPV URPOI - BIA IMASTE
+% created the 28/04/2004.
 %
-
-%   HISTORY 
-%   use faster algorithm for distance function (loop on points and not on
-%   pixels).
-%   2008/10/10 update doc, code clean up
-%   2009/03/04 switch coordinate to comply with (x,y) of germs
-%   29/05/2009 use more possibilities for specifying grid
 
 
 %% extract input arguments

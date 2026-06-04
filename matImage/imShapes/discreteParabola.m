@@ -47,7 +47,7 @@ function img = discreteParabola(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2006-05-16
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -68,7 +68,7 @@ a       = 1;
 theta   = 0;
 
 % process input parameters
-if length(varargin)==1
+if isscalar(varargin)
     % all parameters bundled in first argument
     var = varargin{1};
     vertex = var(:,1:2);

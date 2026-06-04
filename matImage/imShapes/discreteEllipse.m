@@ -30,7 +30,7 @@ function img = discreteEllipse(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2006-05-16
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -53,7 +53,7 @@ side    = center;
 theta   = 0;
 
 % process input parameters
-if length(varargin)==1
+if isscalar(varargin)
     % parameters are bundled in the first argument
     var = varargin{1};
     center = var(:,1:2);
@@ -76,7 +76,7 @@ elseif ~isempty(varargin)
 end
 
 % case of circular ellipses
-if length(side)==1
+if isscalar(side)
     side = [side side];
 end
 

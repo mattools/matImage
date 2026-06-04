@@ -35,7 +35,7 @@ function img = discreteCapsule(varargin)
 [x, y] = meshgrid(lx, ly);
 
 % process input parameters
-if length(varargin) == 1
+if isscalar(varargin)
     % input is a 1-by-5 row vector
     var = varargin{1};
     if length(var) ~= 5

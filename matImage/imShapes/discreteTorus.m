@@ -32,17 +32,9 @@ function img = discreteTorus(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2006-02-27
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
-
-%   HISTORY
-%   04/03/2009: use meshgrid
-%   30/04/2009: update transforms
-%   29/05/2009: use more possibilities for specifying grid
-%   22/01/2010: fix auto center with odd image size
-%   2011-06-21 use angles in degrees
-
 
 % compute coordinate of image voxels
 [lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
@@ -56,7 +48,7 @@ theta   = 60;
 phi     = 60;
 
 % process input parameters
-if length(varargin)==1
+if isscalar(varargin)
     var = varargin{1};
     center = var(:,1:3);
     if size(var, 2)>3

@@ -30,7 +30,7 @@ function img = discreteCapsule3d(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-07-29
 % Copyright 2011 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -44,7 +44,7 @@ function img = discreteCapsule3d(varargin)
 [lx, ly, lz, varargin] = parseGridArgs3d(varargin{:});
 
 % process input parameters
-if length(varargin) == 1
+if isscalar(varargin)
     % input is a 1-by-7 row vector
     var = varargin{1};
     if length(var) ~= 7
@@ -99,7 +99,7 @@ try
     img((x.*x + y.*y + z.*z) < 1) = true;
     img((x.*x + y.*y + (z-height2).^2) < 1) = true;
     
-catch ME %#ok<NASGU>
+catch ME
     % in case of out of memory, use slower method
     dim = [length(ly) length(lx) length(lz)];
     img = false(dim);

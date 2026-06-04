@@ -35,7 +35,7 @@ function img = discreteHalfBall(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-10-21
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -52,7 +52,7 @@ radius  = center;
 theta   = 0; phi = 0;
 
 % process input parameters
-if length(varargin) == 1
+if isscalar(varargin)
     var = varargin{1};
     center = var(:,1:3);
     if size(var, 2) > 3
@@ -78,7 +78,7 @@ elseif ~isempty(varargin)
     end
 end
 
-if length(radius) == 1
+if isscalar(radius)
     radius = [radius radius radius];
 end
 

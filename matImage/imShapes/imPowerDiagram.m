@@ -26,10 +26,11 @@ function img = imPowerDiagram(varargin)
 %   http://citeseer.nj.nec.com/zuyev94poisson.html/zuyev94poisson.html
 %
 
-%   ---------
-%   author : David Legland 
-%   INRA - TPV URPOI - BIA IMASTE
-%   created the 19/05/2004.
+% ---------
+% Author: David Legland
+% e-mail: david.legland@inrae.fr
+% INRA - TPV URPOI - BIA IMASTE
+% created the 19/05/2004.
 %
 
 %   HISTORY

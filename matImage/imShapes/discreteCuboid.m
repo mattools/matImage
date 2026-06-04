@@ -30,7 +30,7 @@ function img = discreteCuboid(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-06-29
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -55,7 +55,7 @@ phi     = 0;
 psi     = 0;
 
 % process input parameters
-if length(varargin)==1
+if isscalar(varargin)
     var = varargin{1};
     % center of the ball
     center = var(:,1:3);

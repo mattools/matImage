@@ -34,10 +34,11 @@ function img = imAWVoronoi(varargin)
 %   Wiley series in Probability
 %
 
-%   ---------
-%   author : David Legland 
-%   INRA - TPV URPOI - BIA IMASTE
-%   created the 17/05/2004.
+% ---------
+% Author: David Legland
+% e-mail: david.legland@inrae.fr
+% INRA - TPV URPOI - BIA IMASTE
+% created the 17/05/2004.
 %
 
 %   HISTORY

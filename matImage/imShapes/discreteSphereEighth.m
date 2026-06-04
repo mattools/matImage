@@ -15,7 +15,7 @@ function img = discreteSphereEighth(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2015-03-31
 % Copyright 2015 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -31,7 +31,7 @@ side    = center;
 theta   = 0; phi = 0; psi=0;
 
 % process input parameters
-if length(varargin)==1
+if isscalar(varargin)
     var = varargin{1};
     center = var(:,1:3);
     if size(var, 2)>3
@@ -63,7 +63,7 @@ elseif ~isempty(varargin)
     end
 end
 
-if length(side) == 1
+if isscalar(side)
     side = [side side side];
 end
 

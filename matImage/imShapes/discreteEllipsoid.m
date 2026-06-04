@@ -35,7 +35,7 @@ function img = discreteEllipsoid(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2006-02-27
 % Copyright 2006 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -61,7 +61,7 @@ phi     = 0;
 psi     = 0;
 
 % process input parameters
-if length(varargin) == 1
+if isscalar(varargin)
     var = varargin{1};
     % center of the ball
     center = var(:,1:3);
@@ -119,7 +119,7 @@ end
 %% case of a single ellipsoid
 if size(center, 1) == 1
     
-    % transforms voxels according to ellipsoid orientation
+    % transforms voxels according to ellipsoid size and pose
     trans = composeTransforms3d(...
         createTranslation3d(-center),...
         createRotationOz(-deg2rad(phi)),...
@@ -140,7 +140,7 @@ img = false(size(x));
 
 % iterate over ellipsoids
 for i = 1:size(center, 1)
-    % transforms voxels according to ellipsoid orientation
+    % transforms voxels according to ellipsoid size and pose
     trans = composeTransforms3d(...
         createTranslation3d(-center(i,:)),...
         createRotationOz(-deg2rad(phi(i))),...

@@ -18423,7 +18423,7 @@ Planar domains
 \end_layout
 
 \begin_layout Minisec
-discreteDisc
+discreteDisk
 \begin_inset Index ind
 range none
 pageformat default
@@ -18444,7 +18444,7 @@ status collapsed
 \uwave off
 \noun off
 \color none
-discreteDisc
+discreteDisk
 \end_layout
 
 \end_inset
@@ -18453,7 +18453,7 @@ discreteDisc
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a disc,
+Generates a 2D binary image representing a disk,
  defined by its center and radius (Fig.
 \begin_inset space ~
 \end_inset
@@ -18503,7 +18503,7 @@ discreteEllipse
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a planar ellipse
+Generates a 2D binary image representing a planar ellipse
 \begin_inset Index idx
 range none
 pageformat default
@@ -18581,7 +18581,7 @@ discreteSquare
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a square,
+Generates a 2D binary image representing a square,
  with an optional rotation (Fig.
 \begin_inset space ~
 \end_inset
@@ -18631,7 +18631,7 @@ discreteRectangle
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a planar rectangle,
+Generates a 2D binary image representing a planar rectangle,
  with an optional rotation (Fig.
 \begin_inset space ~
 \end_inset
@@ -18744,7 +18744,7 @@ discreteCapsule
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a planar capsule (Fig.
+Generates a 2D binary image representing a planar capsule (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -18793,7 +18793,7 @@ discretePolygon
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a planar polygon
+Generates a 2D binary image representing a planar polygon
 \begin_inset Index idx
 range none
 pageformat default
@@ -18854,7 +18854,7 @@ discreteHalfPlane
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a half plane.
+Generates a 2D binary image representing a half plane.
 \end_layout
 
 \begin_layout Minisec
@@ -18888,7 +18888,7 @@ discreteParabola
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a planar parabola.
+Generates a 2D binary image representing a planar parabola.
 \end_layout
 
 \begin_layout Minisec
@@ -18922,7 +18922,7 @@ discreteEgg
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a planar egg (Fig.
+Generates a 2D binary image representing a planar egg (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -18941,6 +18941,46 @@ nolink "false"
 \end_layout
 
 \begin_layout Minisec
+discreteLune
+\begin_inset Index ind
+range none
+pageformat default
+status open
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+discreteLune
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Generates a 2D binary image representing a geoemtric lune,
+ obtained by the substraction of two disks with same radius.
+ Lune is defined by five parameters:
+ the center of the main disk,
+ the radius,
+ the distance between the centers of the two disks,
+ and the direction of second circle center.
+\end_layout
+
+\begin_layout Minisec
 discreteTrefoil
 \begin_inset Index ind
 range none
@@ -18971,7 +19011,7 @@ discreteTrefoil
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a trefoil curve
+Generates a 2D binary image representing a trefoil curve
 \begin_inset Index idx
 range none
 pageformat default
@@ -19082,7 +19122,7 @@ discreteStarfish
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing a starfish curve
+Generates a 2D binary image representing a starfish curve
 \begin_inset Index idx
 range none
 pageformat default
@@ -19587,7 +19627,7 @@ discreteBall
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D Ball,
+Generates a 3D binary image representing a 3D Ball,
  defined by a center and a radius (Fig.
 \begin_inset space ~
 \end_inset
@@ -19637,7 +19677,7 @@ discreteHalfBall
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representinga 3D half-ball,
+Generates a 3D binary image representinga 3D half-ball,
  defined by a center,
  a radius and a normal orientation.
 \end_layout
@@ -19673,7 +19713,7 @@ discreteEllipsoid
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D ellipsoid
+Generates a 3D binary image representing a 3D ellipsoid
 \begin_inset Index idx
 range none
 pageformat default
@@ -19748,7 +19788,7 @@ discreteCube
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D cube
+Generates a 3D binary image representing a 3D cube
 \begin_inset Index idx
 range none
 pageformat default
@@ -19823,7 +19863,7 @@ discreteCuboid
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D cuboid (Fig.
+Generates a 3D binary image representing a 3D cuboid (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -19872,7 +19912,7 @@ discreteTorus
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D torus
+Generates a 3D binary image representing a 3D torus
 \begin_inset Index idx
 range none
 pageformat default
@@ -19947,7 +19987,7 @@ discreteCylinder
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D cylinder
+Generates a 3D binary image representing a 3D cylinder
 \begin_inset Index idx
 range none
 pageformat default
@@ -20023,7 +20063,7 @@ discreteCapsule3d
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing a 3D capsule (Fig.
+Generates a 3D binary image representing a 3D capsule (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -20313,7 +20353,7 @@ imPointsInfluenceZones
 \end_layout
 
 \begin_layout Standard
-Maps influence zones of a set of 2D/3D points.
+Computes the influence zones of a set of 2D/3D points as a 2D or 3D binary image.
 \end_layout
 
 \begin_layout Minisec
@@ -20357,7 +20397,7 @@ imvoronoi2d
 \end_layout
 
 \begin_layout Standard
-Generetes a 2D binary image representing the Voronoi diagram
+Generates a 2D binary image representing the Voronoi diagram
 \begin_inset Index idx
 range none
 pageformat default
@@ -20435,7 +20475,7 @@ imvoronoi3d
 \end_layout
 
 \begin_layout Standard
-Generetes a 3D binary image representing the 3D Voronoi diagram from a set of points.
+Generates a 3D binary image representing the 3D Voronoi diagram from a set of points.
 \end_layout
 
 \begin_layout Minisec

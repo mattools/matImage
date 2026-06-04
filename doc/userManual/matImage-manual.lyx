@@ -17851,19 +17851,27 @@ inline false
 status open
 
 \begin_layout Plain Layout
-GR = imGranulo(IMG,
- TYPE,
- SHAPE,
- SIZES);
+% single output
 \end_layout
 
 \begin_layout Plain Layout
-[GR,
- DIAMS,
- VOLS] = imGranulo(IMG,
- TYPE,
- SHAPE,
- SIZES);
+gr = imGranulo(img,
+ type,
+ shape,
+ sizes);
+\end_layout
+
+\begin_layout Plain Layout
+% multiple outputs
+\end_layout
+
+\begin_layout Plain Layout
+[gr,
+ diams,
+ vols] = imGranulo(img,
+ type,
+ shape,
+ sizes);
 \end_layout
 
 \end_inset

@@ -1,9 +1,9 @@
 function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, varargin)
 % Directional granulometries for several orientations.
 %
-%   Compute typical size of bright or dark structures within images by
-%   performing gray-level granulometries with linear elements with various
-%   orientations. 
+%   Computes typical size of bright or dark structures in several
+%   directions within images by performing gray-level granulometries with
+%   linear elements with various orientations. 
 %   The function "imOrientedGranulo" is an alternative approach based on
 %   rotations of the original image.
 %
@@ -24,10 +24,14 @@ function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, v
 %               length of the line is as close as possible to the LMAX
 %               value. 
 %
+%   RES = imDirectionalGranulo(..., 'verbose', TF)
+%   Toggles display of iteration during computation. TF must be a logical.
+%   Default is TRUE.
+%
 %   [RES, ORIENTLIST] = imDirectionalGranulo(...)
 %   Also returns the array of orientations that was used for computing the
 %   granulometry. It ORIENTLIST was given as an input parameter, it is
-%   returns as second output argument.
+%   returned as second output argument.
 %
 %
 %   Example
@@ -83,6 +87,15 @@ else
     end
 end
 
+verbose = true;
+if length(varargin) > 1
+    if strcmpi(varargin{1}, 'verbose')
+        verbose = varargin{2};
+    else
+        error(['Unknown option name: ' varargin{1}]);
+    end
+end
+
 
 %% Initializations
 
@@ -108,7 +121,9 @@ refImage(img <= 0) = 1;
 
 % iterate over orientations
 for iOrient = 1:nOrients
-    disp(sprintf('Orient: %d/%d', iOrient, nOrients)); %#ok<DSPS>
+    if verbose
+        fprintf('Orient: %d/%d\n', iOrient, nOrients);
+    end
   
     % angles from horizontal, in degrees, in CW order 
     % (correspond to CCW when visualizing image results)

@@ -2,14 +2,14 @@ function [area, labels] = imArea(img, varargin)
 % Area of regions within a 2D binary or label image.
 %
 %   A = imArea(IMG);
-%   Compute the area of the regions in the image IMG. IMG can be either a
+%   Computes the area of the regions in the image IMG. IMG can be either a
 %   binary image, or a label image. If IMG is binary, a single area is
 %   returned. In the case of a label image, the area of each region is 
 %   returned in a column vector with as many elements as the number of
 %   regions.
 %
 %   A = imArea(..., SPACING);
-%   Also specify the spatial calibration of the image. SPACING is a 1-by-2
+%   Also specifies the spatial calibration of the image. SPACING is a 1-by-2
 %   row vector, containing the pixel size in each physical direction.
 %   Default is [1 1]. SPACING(1) coresponds to DX, and SPACING(2)
 %   coresponds to DY. 
@@ -77,7 +77,7 @@ if ~islogical(img)
     for i = 1:nLabels
         label = labels(i);
         
-        % convert bounding box to image extent, in x, y and z directions
+        % convert bounding box to image extent, in x and y directions
         i0 = ceil(boxes(i, [3 1]));
         i1 = floor(boxes(i, [4 2]));
         

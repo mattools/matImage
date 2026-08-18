@@ -11441,6 +11441,100 @@ Computes the area of the region(s) within a binary or label 2D image.
 \end_layout
 
 \begin_layout Minisec
+imConvexArea
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+convexArea
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imConvexArea
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "fun:imConvexArea"
+
+\end_inset
+
+Computes the convex area
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+convex area
+\end_layout
+
+\end_inset
+
+ of the region(s) within a binary or label 2D image.
+ Convex area is computed as the area of the convex image of the region (see p.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand pageref
+reference "fun:imConvexImage"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+tuple "list"
+
+\end_inset
+
+).
+ Convex area is used for computing the convexity of the region.
+\end_layout
+
+\begin_layout Minisec
 imPerimeter
 \begin_inset Index ind
 range none
@@ -13516,6 +13610,24 @@ nolink "false"
 \end_inset
 
 ).
+ Convexity is computed as the ratio of the area over the convex area (see p.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand pageref
+reference "fun:imConvexArea"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+tuple "list"
+
+\end_inset
+
+).
+ Values range between 0 and 1.
 \end_layout
 
 \begin_layout Minisec

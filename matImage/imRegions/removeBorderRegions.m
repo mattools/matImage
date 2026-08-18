@@ -1,6 +1,8 @@
 function lbl = removeBorderRegions(lbl, varargin)
 %REMOVEBORDERREGIONS Remove regions on the border of an image
 %
+%   DEPRECATED! Please use "imRemoveBorderRegions" as replacement.
+%
 %   LBL2 = removeBorderRegions(LBL);
 %   LBL is a labeled image, or a binary image. Image can be 2D or 3D.
 %   In the case of binary image, the image is labeled using 4-adjacency for
@@ -40,7 +42,7 @@ function lbl = removeBorderRegions(lbl, varargin)
 %   01/02/2008: return binImg image if input is binImg
 
 warning('matImage:deprecated', ...
-    'function "removeBorderRegion" has been replaced by "imKillBorders"');
+    'function "removeBorderRegion" has been replaced by "imRemoveBorderRegions"');
 
 % default values
 binImg  = false;

@@ -1,17 +1,16 @@
-function lbl = imKillBorderRegions(lbl, varargin)
-%IMKILLBORDERREGIONS Remove regions on the border of an image
+function lbl = imRemoveBorderRegions(lbl, varargin)
+%IMREMOVEBORDERREGIONS Remove regions on the border of an image.
 %
-%   DEPRECATED! Please use "imRemoveBorderRegions" as replacement.
-%
-%   LBL2 = imKillBorderRegions(LBL);
-%   LBL is a labeled image, or a binary image. Image can be 2D or 3D.
+%   LBL2 = imRemoveBorderRegions(LBL);
+%   LBL is either a label image or a binary image. Image can be 2D or 3D.
 %   In the case of binary image, the image is labeled using 4-adjacency for
 %   2D images, or 6-adjacency for 3D images.
-%   The regions which touch the border of the image are removed, and the
-%   remaining regions are re-labeled. Result has the same class than the
-%   original image.
+%   The regions which touch the border of the image are removed. Result
+%   image has the same size and same class as the original image.
+%   In the case of a label image, the resulting label image is re-labeled
+%   by default.
 %
-%   LBL2 = imKillBorderRegions(LBL, BORDERS);
+%   LBL2 = imRemoveBorderRegions(LBL, BORDERS);
 %   Specifies which borders need to be removed. BORDERS is a cell array of
 %   strings, with each string corresponding to a border:
 %   'left':     all pixels with x=1
@@ -23,14 +22,14 @@ function lbl = imKillBorderRegions(lbl, varargin)
 %   'front':    all pixels with z=1
 %   'back':     all pixels with z=last
 %
-%   LBL2 = imKillBorderRegions(LBL, BORDERS, RELABEL);
-%   where RELABEL is a logical, specifies wheter remaining regions should
-%   be relabeled or not (default is TRUE).
+%   LBL2 = imRemoveBorderRegions(LBL, BORDERS, 'relabel', TF);
+%   where TF is a logical, specifies whether the labels of the remaining
+%   regions should be re-computed or not (default is TRUE). 
 %
 %   Example
 %     img = imread('rice.png');
-%     bin = imOtsuThreshold(imtophat(img, ones(30, 30)));
-%     bin2 = imKillBorderRegions(bin);
+%     [~, bin] = imOtsuThreshold(imtophat(img, ones(30, 30)));
+%     bin2 = imRemoveBorderRegions(bin);
 %     imshow(bin2);
 % 
 %   See also:
@@ -43,22 +42,41 @@ function lbl = imKillBorderRegions(lbl, varargin)
 %   created the 23/04/2007
 %
 
-% HISTORY :
-%   19/07/2007 add possibility to specify borders
-%   07/08/2007 relabeling is now optional
-%   01/02/2008 return binImg image if input is binImg
-%   25/05/2011 rename from removeBorderRegions to imKillBorders, cleanup
-%   19/04/2017 rename from imKillBorders to imKillBorderRegions
-
-warning('matImage:deprecated', ...
-    'function "removeBorderRegion" has been replaced by "imRemoveBorderRegions"');
-
 
 %% Process inputs
 
 % default values
 binImg  = false;
 relabel = true;
+
+% find borders to remove
+borders = {'top', 'bottom', 'left', 'right'};
+if ~isempty(varargin) && iscell(varargin{1})
+    borders = varargin{1};
+    varargin(1) = [];
+end
+
+% check if relabel flag is present
+if ~isempty(varargin)
+    if islogical(varargin{end})
+        relabel = varargin{end};
+        varargin(end) = [];
+    end
+end
+
+% parse optional parameter name-value pair(s)
+while length(varargin) > 1
+    paramName = varargin{1};
+    if strcmpi(paramName, 'relabel')
+        relabel = varargin{2};
+    else
+        error(['Unknown parameter name: ' paramName]);
+    end
+    varargin(1:2) = [];
+end
+
+
+%% Pre-preocess binary images
 
 % If image is binImg, convert to labeled image
 if islogical(lbl)
@@ -71,26 +89,8 @@ if islogical(lbl)
     end
 end
 
-% check if relabel flag is present
-if ~isempty(varargin)
-    if islogical(varargin{end})
-        relabel = varargin{end};
-        varargin(end) = [];
-    end
-end
-
 
 %% Build binary mask
-
-% find borders to remove
-borders = {'top', 'bottom', 'left', 'right'};
-if ~isempty(varargin)
-    if iscell(varargin{1})
-        borders = varargin{1};
-    else
-        borders = varargin;
-    end
-end
 
 % create mask for borders
 mask = false(size(lbl));

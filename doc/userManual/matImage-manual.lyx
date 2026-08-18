@@ -9086,6 +9086,16 @@ status collapsed
 \uwave off
 \noun off
 \color none
+find
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
 imFind
 \end_layout
 
@@ -9390,6 +9400,16 @@ status collapsed
 \uwave off
 \noun off
 \color none
+create
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
 imCreate
 \end_layout
 
@@ -10475,10 +10495,6 @@ Computation of a label map image from a binary image.
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -10489,6 +10505,31 @@ The number of regions that can be represented within a label map depends on the 
  255 values for uint8 arrays,
  65535 values for uint16 arrays,
  more than two million values for int32 arrays.
+\end_layout
+
+\begin_layout Standard
+Label images can be obtained in several ways.
+ A classical workflow is to compute the connected components from a binary image (Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Label-Map"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+ The Image Processing Toolbox provides several functions:
+ bwlabel,
+ bwlabeln,
+ bwconncomp.
+ Label images can also be obtained as result of more sophisticated segmentation algorithms such as the watershed.
 \end_layout
 
 \begin_layout Standard
@@ -10515,7 +10556,7 @@ Process the input label map to retrieve or remove a specific selection of region
 \end_layout
 
 \begin_layout Minisec
-imKillBorderRegions
+imRemoveBorderRegions
 \begin_inset Index ind
 range none
 pageformat default
@@ -10536,7 +10577,7 @@ status collapsed
 \uwave off
 \noun off
 \color none
-killBorderRegions
+removeBorderRegions
 \begin_inset ERT
 status collapsed
 
@@ -10546,7 +10587,7 @@ status collapsed
 
 \end_inset
 
-imKillBorderRegions
+imRemoveBorderRegions
 \end_layout
 
 \end_inset
@@ -10555,7 +10596,21 @@ imKillBorderRegions
 \end_layout
 
 \begin_layout Standard
-Removes regions on the border of an image.
+Removes the regions on the border of a 2D/3D label image.
+ It is possible to specify which on which borders the regions will be removed:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+lbl2 = imRemoveBorderRegions(lbl,
+ {'Left',
+ 'Right'});
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Minisec
@@ -10948,7 +11003,7 @@ name "fun:label2rgb3d"
 
 \end_inset
 
-Converts a 3D label image to a 3D RGB image.
+Converts a 3D label image into a 3D RGB image.
  This is an equivalent of the 
 \begin_inset Quotes eld
 \end_inset
@@ -11001,12 +11056,135 @@ imLabelToValue
 \end_layout
 
 \begin_layout Standard
-Converts a label image to a parametric map using an array of feature values computed for each label.
-\begin_inset Note Note
+Converts a label image into a parametric map using an array of feature values computed for each label.
+ The following script results in the images presented in Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:imLabelToValue"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+tuple "list"
+
+\end_inset
+
+:
+\begin_inset listings
+inline false
 status open
 
 \begin_layout Plain Layout
-example?
+img = imread('rice.png');
+\end_layout
+
+\begin_layout Plain Layout
+img2 = imMedianFilter(imtophat(img,
+ ones(30,
+ 30)),
+ ones(3,3));
+\end_layout
+
+\begin_layout Plain Layout
+[~,bin]= imOtsuThreshold(img2);
+\end_layout
+
+\begin_layout Plain Layout
+lbl = bwlabel(bin);
+\end_layout
+
+\begin_layout Plain Layout
+meas = imMaxFeretDiameter(lbl);
+\end_layout
+
+\begin_layout Plain Layout
+map = imLabelToValue(lbl,
+ meas,
+ NaN);
+\end_layout
+
+\begin_layout Plain Layout
+figure;
+ imshow(map,
+ []);
+ title('parametric map')
+\end_layout
+
+\begin_layout Plain Layout
+rgb = double2rgb(map,
+ 'jet',
+ [10 35],
+ 'w');
+\end_layout
+
+\begin_layout Plain Layout
+figure;
+ imshow(rgb);
+ title('colorized parametric map')
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imRegions/rice_imLabel2Value.png
+	width 4.5cm
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename images/imRegions/rice_imLabel2Value_rgb.png
+	width 4.5cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:imLabelToValue"
+
+\end_inset
+
+Computation of a parametric map from a label image and a series of measurements for the regions within the label map.
+ Here,
+ the parametric map is computed from the maximum Feret diameter.
+ It is represented as intensity image and as color image (using the 
+\begin_inset Quotes eld
+\end_inset
+
+jet
+\begin_inset Quotes erd
+\end_inset
+
+ colormap).
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -16281,7 +16459,7 @@ The functions in this module are devoted to the computation of
 geodesic distances
 \series default
  within images.
- The geodesic distances can be ued for the extraction of specific features such as geodesic diameters,
+ The geodesic distances can be used for the extraction of specific features such as geodesic diameters,
  geodesic centers of geodesic extremities.
 \end_layout
 

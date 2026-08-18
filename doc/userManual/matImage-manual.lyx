@@ -140,6 +140,17 @@
 \shortcut ind
 \color #008000
 \end_index
+\spellchecker_ignore english Matlab
+\spellchecker_ignore english matImage
+\spellchecker_ignore english MatGeom
+\spellchecker_ignore english MatImage
+\spellchecker_ignore english grayscale
+\spellchecker_ignore english Grayscale
+\spellchecker_ignore english colormap
+\spellchecker_ignore english Feret
+\spellchecker_ignore english granulometry
+\spellchecker_ignore english Granulometry
+\spellchecker_ignore english granulometric
 \secnumdepth 3
 \tocdepth 1
 \paragraph_separation indent
@@ -174,6 +185,36 @@ MatImage library user manual
 \begin_layout Abstract
 The MatImage library provides a collection of functions for image processing and analysis within the Matlab environment.
  It is build as a complement of the Image Processing Toolbox from Matlab.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Conventions for this document:
+\end_layout
+
+\begin_layout Itemize
+American English language
+\end_layout
+
+\begin_layout Itemize
+conform to Matlab syntax (e.g.:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+grayscale
+\begin_inset Quotes erd
+\end_inset
+
+ image)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -240,7 +281,7 @@ MatImage is a library for image processing and analysis,
 \end_layout
 
 \begin_layout Standard
-The library was developped to facilitate the manipulation and the analysis of images with various dimensionalities (2D/3D) and various contents (grayscale,
+The library was developed to facilitate the manipulation and the analysis of images with various dimensionalities (2D/3D) and various contents (grayscale,
  color,
  binary,
  label maps).
@@ -508,9 +549,9 @@ Library organization
 \end_layout
 
 \begin_layout Standard
-The library is organised into several modules.
+The library is organized into several modules.
  The first two modules provide functions for the generic exploration and visualization of images,
- including a simple graphical user interface for interactive visualisation of 3D images.
+ including a simple graphical user interface for interactive visualization of 3D images.
  The 
 \begin_inset Quotes eld
 \end_inset
@@ -1836,11 +1877,15 @@ imEntropy
 \end_layout
 
 \begin_layout Standard
-Computes the entropy
+Computes the 
+\series bold
+entropy
+\series default
+
 \begin_inset Index idx
 range none
 pageformat default
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1863,7 +1908,7 @@ entropy
 \end_inset
 
  of an image.
- Ininformation theory,
+ In information theory,
  the entropy is a measure of disorder or uncertainty
 \begin_inset Foot
 status collapsed
@@ -2632,7 +2677,7 @@ The main interface is a slice-by-slice viewer that integrates slice changing sli
  rotation...),
  and to generate new visualizations of the 3D data:
  isosurfaces,
- 3D orhoslices,
+ 3D orthoslices,
  histograms...
  It is possible to specify the spatial calibration,
  facilitating the visualization of 3D structures with non-cubic voxels.
@@ -2695,7 +2740,7 @@ Slicer
 \begin_inset Quotes erd
 \end_inset
 
- from the matlab prompt.
+ from the Matlab prompt.
  This will open an empty Slicer frame,
  and image files can be open from the File menu.
 \end_layout
@@ -2887,7 +2932,7 @@ Spatial Calibration
 \end_layout
 
 \begin_layout Standard
-Updates sptial calibration (voxel size and unit name) of image.
+Updates the spatial calibration (voxel size and unit name) of an image.
 \end_layout
 
 \begin_layout Minisec
@@ -4009,7 +4054,7 @@ When the size of the image is very large,
 tiffreadVolume
 \family default
 \color inherit
- from the Image Processing Toolbox also provides similar functionnalities.
+ from the Image Processing Toolbox also provides similar functionalities.
 \end_layout
 
 \begin_layout Minisec
@@ -5374,7 +5419,7 @@ imDownSample
 \end_layout
 
 \begin_layout Standard
-Reduces size of an image array by downscaling with an integer scaling factor,
+Reduces size of an image array by down-scaling with an integer scaling factor,
  allowing to specify the operation applied on blocs.
  See also 
 \begin_inset ERT
@@ -5622,7 +5667,7 @@ imNormalizeBackground
 \end_layout
 
 \begin_layout Standard
-Normalizes image by removing background estimate.
+Normalizes a grayscale image by removing an estimate of the background.
  The function first computes an estimate of the background over the whole image,
  then subtracts this estimate from the original image,
  and returns the result.
@@ -7357,7 +7402,7 @@ Segmentation operators
 \end_layout
 
 \begin_layout Standard
-Several functions for facilitating the segmentation of grayscal or intensity images.
+Several functions for facilitating the segmentation of grayscale or intensity images.
 \end_layout
 
 \begin_layout Minisec
@@ -7489,7 +7534,7 @@ name "fun:imMaxEntropyThreshold"
 
 \end_inset
 
-Computes image threshold using maximisation of entropies.
+Computes image threshold using maximization of entropies.
 \end_layout
 
 \begin_layout Minisec
@@ -7534,7 +7579,7 @@ imMultiOtsuThreshold
 
 \begin_layout Standard
 Computes a segmentation of the input grayscale image into an arbitrary number of classes,
- using minimisation of intra-class variances.
+ using minimization of intra-class variances.
 \end_layout
 
 \begin_layout Minisec
@@ -7648,7 +7693,15 @@ edge detection
 
 \end_inset
 
- using Canny-Deriche method.
+ using Canny-Deriche method 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Canny_1986_PAMI,Deriche_1987_IJCV"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -7963,7 +8016,7 @@ imGray12ToGray8
 \end_layout
 
 \begin_layout Standard
-Converts a 12 bits gray scale image to 8 bits gray scale.
+Converts a 12 bits grayscale image to 8 bits gray scale.
 \end_layout
 
 \begin_layout Standard
@@ -13021,7 +13074,7 @@ Computes the geodesic diameter
 \begin_inset Index idx
 range none
 pageformat default
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -13371,7 +13424,7 @@ Spatial organization
 \end_layout
 
 \begin_layout Standard
-The functions is this section may be used to describe how regions are organised together,
+The functions is this section may be used to describe how regions are organized together,
  and identify neighbor relations between regions.
 \end_layout
 
@@ -13668,7 +13721,7 @@ im<Quantity>Density evaluates the quantity within the image,
 
 \begin_layout Description
 im<Quantity>Estimate same as im<Quantity>Estimate,
- but the result is normalised by the area or the volume of the observed window.
+ but the result is normalized by the area or the volume of the observed window.
 \end_layout
 
 \begin_layout Description
@@ -14459,7 +14512,7 @@ imPerimeterLut
 \begin_inset Index ind
 range none
 pageformat default
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -14587,7 +14640,7 @@ mean breadth
 \end_inset
 
 ,
- the mean breadth is proportionnal to the 
+ the mean breadth is proportional to the 
 \series bold
 integral of the mean curvature
 \series default
@@ -14714,9 +14767,9 @@ For a set
 \end_inset
 
 ,
- the 3D Euler number is proportionnal to the integral of the 
+ the 3D Euler number is proportional to the integral of the 
 \series bold
-gaussian curvature
+Gaussian curvature
 \series default
 ,
  corresponding to the product of the curvatures:
@@ -14965,7 +15018,7 @@ mean breadth
 \end_inset
 
  of the region(s) within a binary or label 3D image.
- Mean breadth is proportionnal to the integral of mean curvature
+ Mean breadth is proportional to the integral of mean curvature
 \begin_inset Index idx
 range none
 pageformat default
@@ -16270,7 +16323,15 @@ Distance propagation
 The functions in this sections compute geodesic distances,
  from a marker image constrained to a mask images.
  The computation of geodesic distance maps is based on chamfer distances,
- that are an approximation of the Euclidean distance (see also Section
+ that are an approximation of the Euclidean distance 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Borgefors_1984_CVGIP,Borgefors_1986_CVGIP"
+literal "false"
+
+\end_inset
+
+ (see also Section
 \begin_inset space ~
 \end_inset
 
@@ -16481,7 +16542,7 @@ imGeodesicDistanceMap
 \end_layout
 
 \begin_layout Standard
-Geodesic distance transform for binary or label images.
+Computes the geodesic distance transform for binary or label images.
 \end_layout
 
 \begin_layout Minisec
@@ -16525,7 +16586,7 @@ imGeodesicDistanceMap3d
 \end_layout
 
 \begin_layout Standard
-Geodesic distance transform for 3D binary or label images.
+Computes the geodesic distance transform for 3D binary or label images.
 \end_layout
 
 \begin_layout Minisec
@@ -16595,7 +16656,23 @@ geodesic path
 
 \end_inset
 
- between two markers within an image.
+ between two markers within an image (see Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Geodesic-paths-and-diameters"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+tuple "list"
+
+\end_inset
+
+-b).
 \end_layout
 
 \begin_layout Minisec
@@ -16639,7 +16716,24 @@ imMaxGeodesicPath
 \end_layout
 
 \begin_layout Standard
-Find a path in a region with maximal geodesic length.
+Finds a path within a region with maximal geodesic length (see Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Geodesic-paths-and-diameters"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+tuple "list"
+
+\end_inset
+
+-c).
+ The path may not be unique within the region.
 \end_layout
 
 \begin_layout Minisec
@@ -17132,7 +17226,7 @@ strel
 digital sieving
 \series default
  is therefore obtained.
- Similarily,
+ Similarly,
  applying morphological closings of increasing sizes makes dark structures progressively disappear.
  
 \end_layout
@@ -17347,7 +17441,7 @@ The difference between two successive opening or closing steps is obtained by co
  increases] monotonously,
  and reaches a plateau.
  The derivative of this curve,
- normalised by the initial and final values,
+ normalized by the initial and final values,
  can be interpreted as a 
 \series bold
 size distribution
@@ -17493,7 +17587,7 @@ name "fig:Gray-Level-Granulometry-coins"
 \end_inset
 
 Exemple of gray-level granulometry by opening.
- (b) Sum of gray levels for differents sizes of disk structuring element.
+ (b) Sum of gray levels for different sizes of disk structuring element.
  (c) Granulometry curve,
  corresponding to size distribution.
 \end_layout
@@ -18945,7 +19039,7 @@ discreteLune
 \begin_inset Index ind
 range none
 pageformat default
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -18971,8 +19065,8 @@ discreteLune
 \end_layout
 
 \begin_layout Standard
-Generates a 2D binary image representing a geoemtric lune,
- obtained by the substraction of two disks with same radius.
+Generates a 2D binary image representing a geometric lune,
+ obtained by the subtraction of two disks with same radius.
  Lune is defined by five parameters:
  the center of the main disk,
  the radius,
@@ -19677,7 +19771,7 @@ discreteHalfBall
 \end_layout
 
 \begin_layout Standard
-Generates a 3D binary image representinga 3D half-ball,
+Generates a 3D binary image representing a 3D half-ball,
  defined by a center,
  a radius and a normal orientation.
 \end_layout
@@ -20509,7 +20603,7 @@ dilatedVoronoi
 \end_layout
 
 \begin_layout Standard
-Simulates a 'thick' voronoi tesselation.
+Simulates a 'thick' Voronoi tessellation.
 \end_layout
 
 \begin_layout Minisec
@@ -20553,7 +20647,15 @@ imAWVoronoi
 \end_layout
 
 \begin_layout Standard
-Generates a 3D binary image representing the Additively Weighted Voronoi Diagram of a set of points.
+Generates a 3D binary image representing the 
+\begin_inset Quotes eld
+\end_inset
+
+Additively Weighted Voronoi Diagram
+\begin_inset Quotes erd
+\end_inset
+
+ of a set of points.
 \end_layout
 
 \begin_layout Minisec

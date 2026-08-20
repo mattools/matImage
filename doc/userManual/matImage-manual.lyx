@@ -5524,7 +5524,33 @@ imPrincipalAxesAlign
 \end_layout
 
 \begin_layout Standard
-Aligns a binary 3D image along the principal axes of the matrix of second-order moments.
+Aligns a binary 3D image along the principal axes
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+principal axes
+\end_layout
+
+\end_inset
+
+ of the matrix of second-order moments.
 \end_layout
 
 \begin_layout Standard
@@ -5540,7 +5566,7 @@ Image enhancement (filtering)
 
 \begin_layout Standard
 Operators described in this section aim at enhancing the information within image,
- typically by removing the noise via specific fitlers,
+ typically by removing the noise via specific filters,
  or by filtering structures with specific properties within the images.
 \end_layout
 
@@ -7299,7 +7325,33 @@ imrecerode
 \end_layout
 
 \begin_layout Standard
-Performs a morphological reconstruction by erosion.
+Performs a morphological reconstruction
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+morphological reconstruction
+\end_layout
+
+\end_inset
+
+ by erosion.
 \end_layout
 
 \begin_layout Minisec
@@ -7476,7 +7528,7 @@ threshold
 \begin_inset Index idx
 range none
 pageformat default
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Otsu threshold
@@ -7534,7 +7586,33 @@ name "fun:imMaxEntropyThreshold"
 
 \end_inset
 
-Computes image threshold using maximization of entropies.
+Computes image threshold using maximization of entropy
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+entropy
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Minisec
@@ -7579,7 +7657,29 @@ imMultiOtsuThreshold
 
 \begin_layout Standard
 Computes a segmentation of the input grayscale image into an arbitrary number of classes,
- using minimization of intra-class variances.
+ using minimization of intra-class variances
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+Otsu threshold
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+multi-Otsu
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Minisec
@@ -7623,7 +7723,33 @@ imImposedWatershed
 \end_layout
 
 \begin_layout Standard
-Computes watershed after imposition of extended minima.
+Computes watershed
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+watershed
+\end_layout
+
+\end_inset
+
+ after imposition of extended minima.
 \end_layout
 
 \begin_layout Minisec
@@ -7725,7 +7851,7 @@ Several functions allows for converting images into color images,
 
 \begin_layout Minisec
 imOverlay
-\begin_inset Index idx
+\begin_inset Index ind
 range none
 pageformat default
 status collapsed
@@ -7764,7 +7890,33 @@ imOverlay
 \end_layout
 
 \begin_layout Standard
-Generates a new color image by adding a binary overlay over another image (2D or 3D,
+Generates a new color image by adding a binary overlay
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+overlay
+\end_layout
+
+\end_inset
+
+ over another image (2D or 3D,
  grayscale or color).
 \end_layout
 
@@ -9150,6 +9302,8 @@ imBoundaryContours
 
 \begin_layout Standard
 Extract polygonal boundary contours from a binary image.
+ The result is a cell array,
+ each cell containing the N-by-2 numeric array corresponding to the vertex coordinated of a contour.
 \end_layout
 
 \begin_layout Minisec
@@ -9314,7 +9468,7 @@ Extracts polygonal contours of a binary image.
 
 \begin_layout Minisec
 imBinaryToGraph
-\begin_inset Index idx
+\begin_inset Index ind
 range none
 pageformat default
 status collapsed
@@ -13306,7 +13460,7 @@ imGeodesicDiameter
 \begin_inset Index ind
 range none
 pageformat default
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -13698,8 +13852,239 @@ tortuosity
 \end_inset
 
  of region(s) within a binary or label image.
- Tortuosity is defined as the ratio of the geodesic diameter over the maximum Feret diameter.
+ Tortuosity is defined as the ratio of the geodesic diameter
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+geodesic diameter
+\end_layout
+
+\end_inset
+
+ over the maximum Feret diameter
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Feret diameter
+\end_layout
+
+\end_inset
+
+.
  Values are expected to be greater than or equal to 1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Polar signature
+\end_layout
+
+\begin_layout Minisec
+imPolarSignature
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+polarSignature
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imPolarSignature
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Computes the 
+\series bold
+polar signature
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+polar signature
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+signature
+\end_layout
+
+\end_inset
+
+
+\series default
+ of a region.
+ The polar signature is defined as the distance of a region boundary point to the region centroid or to a user-specified reference point.
+ See the Figure
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Polar-Signature"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+tuple "list"
+
+\end_inset
+
+ for an example.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename images/imRegions/img_rect_rot.png
+	height 4cm
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename images/imRegions/polarSignature_rect.png
+	lyxscale 25
+	height 4cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Polar-Signature"
+
+\end_inset
+
+Polar signature of a simple rectangular shape.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

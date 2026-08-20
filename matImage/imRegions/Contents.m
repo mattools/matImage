@@ -18,8 +18,10 @@
 %   imOrientedBox           - Minimum-width oriented bounding box of regions in image.
 %   imFeretDiameter         - Feret diameter of region(s) for a given direction(s).
 %   imMaxFeretDiameter      - Maximum Feret diameter of a binary or label image.
+%   imConvexArea            - Convex area of regions within a 2D label image.
 %   imConvexity             - Convexity of regions within a 2D or 3D label image.
 %   imTortuosity            - Tortuosity of the region(s) within binary or label image.
+%   imPolarSignature        - Polar signature of region contour.
 %   imRegionFun             - Apply a function to each region of a label image
 %
 %   Region moments
@@ -30,16 +32,16 @@
 %   imHuInvariants          - Compute Hu's invariant for a 2D image.
 %
 %   Operators for label images
-%   imKillBorderRegions     - Remove regions on the border of an image.
+%   imRemoveBorderRegions   - Remove regions on the border of an image.
 %   imAreaOpening           - Remove all regions smaller than a given area.
 %   imAttributeOpening      - Filter regions on a size or shape criterium.
 %   imSeparateParticles     - Separate touching particles using watershed algorithm.
 %   imLargestRegion         - Keep the largest region within a binary or label image.
 %   imCropLabel             - Extract the portion of image that contains the specified label
-%   imMergeRegions          - Merge adajcent regions in a label image.
+%   imMergeRegions          - Merge adjacent regions in a label image.
 %   imMergeEnclosedRegions  - Merge regions within a label image, based on an inclusion criteria.
 %
-%   Spatial organisation of regions
+%   Spatial organization of regions
 %   imRAG                   - Region adjacency graph (RAG) of a label image.
 %   imBoundaryIndices       - Find indices of boundary pixels between 2 regions.
 %   imLabelEdges            - Label edges between adjacent regions of labeled image.

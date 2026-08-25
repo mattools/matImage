@@ -37,14 +37,19 @@
 \usepackage{scrlayer-scrpage}
 \usepackage{lastpage}
 % header
-\lehead*{\slshape\rightmark}
-\rohead*{\slshape\rightmark}
-% footer
+% Left header: chapter title on even pages
+\lehead{\slshape\leftmark}
+\lohead{}
+% Right header: section title on odd pages
+\rehead{}
+\rohead{\slshape\rightmark}% footer
 \ofoot{\footnotesize page \thepage\ / \pageref{LastPage}}
 \ifoot{\footnotesize MatImage user manual}
 % right section with number
+% left chapter no number, nothing on the right
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\ #1}{}}
+% right section with number
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
-\renewcommand*{\chapterpagestyle}{empty}
 % Added by lyx2lyx
 \usepackage[charter]{mathdesign}
 % setup of figure captions

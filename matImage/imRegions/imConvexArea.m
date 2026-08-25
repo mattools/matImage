@@ -23,7 +23,7 @@ function [cvx_area, labels] = imConvexArea(img, varargin)
 % Created: 2026-08-18,    using Matlab 25.1.0.2943329 (R2025a)
 % Copyright 2026 INRAE.
 
-%% Initialisations
+%% Initializations
 
 % check image dimension
 if ndims(img) ~= 2 %#ok<ISMAT>

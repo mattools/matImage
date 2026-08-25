@@ -20,6 +20,7 @@
 %   imMaxFeretDiameter      - Maximum Feret diameter of a binary or label image.
 %   imConvexArea            - Convex area of regions within a 2D label image.
 %   imConvexity             - Convexity of regions within a 2D or 3D label image.
+%   imConvexPerimeter       - Perimeter of the convex image of region(s) within image.
 %   imTortuosity            - Tortuosity of the region(s) within binary or label image.
 %   imPolarSignature        - Polar signature of region contour.
 %   imRegionFun             - Apply a function to each region of a label image

@@ -12,8 +12,8 @@ function [perim, labels] = imPerimeter(img, varargin)
 %   P = imPerimeter(..., SPACING);
 %   Also specify the spatial calibration of the image. SPACING is a 1-by-2
 %   row vector, containing the pixel size in each physical direction.
-%   Default is [1 1]. SPACING(1) coresponds to DX, and SPACING(2)
-%   coresponds to DY. 
+%   Default is [1 1]. SPACING(1) corresponds to DX, and SPACING(2)
+%   corresponds to DY. 
 %   
 %   [P, LABELS] = imPerimeter(LBL, ...)
 %   Process a label image, and return also the labels for which a value was
@@ -36,7 +36,7 @@ function [perim, labels] = imPerimeter(img, varargin)
 % Author: David Legland
 % e-mail: david.legland@inrae.fr
 % Created: 2010-01-15,    using Matlab 7.9.0.529 (R2009b)
-% Copyright 2010 INRAE - Cepia Software Platform.
+% Copyright 2026 INRAE.
 
 
 %% Parse input arguments

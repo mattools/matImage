@@ -5566,7 +5566,7 @@ principal axes
 \end_layout
 
 \begin_layout Section
-Image enhancement (filtering)
+Image enhancement and filtering
 \end_layout
 
 \begin_layout Standard
@@ -5576,7 +5576,7 @@ Operators described in this section aim at enhancing the information within imag
 \end_layout
 
 \begin_layout Subsection
-Image enhancement and noise reduction
+Image enhancement
 \end_layout
 
 \begin_layout Standard
@@ -5699,11 +5699,13 @@ imNormalizeBackground
 
 \begin_layout Standard
 Normalizes a grayscale image by removing an estimate of the background.
- The function first computes an estimate of the background over the whole image,
+ The function first computes an estimate of the background based on the pixel values within a specified region of interest (given as a binary mask),
  then subtracts this estimate from the original image,
  and returns the result.
  Estimate of background is obtained through a polynomial fit,
  that may be computationally intensive.
+ It is possible to specify the degree of the polynomial (up to degree 4).
+ 
 \begin_inset listings
 inline false
 status open
@@ -5714,13 +5716,16 @@ img = imread('rice.png');
 
 \begin_layout Plain Layout
 [img2,
- bg] = imNormalizeBackground(img,
+ bgFit] = imNormalizeBackground(img,
  img>150);
 \end_layout
 
 \begin_layout Plain Layout
 figure;
+ subplot(121);
  imshow(img2);
+ subplot(122);
+ imshow(bgFit)
 \end_layout
 
 \end_inset

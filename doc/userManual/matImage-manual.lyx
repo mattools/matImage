@@ -10677,7 +10677,33 @@ name "sec:Label-map"
 \end_layout
 
 \begin_layout Standard
-It is often convenient to represent a collection of disjoint regions as a label map,
+It is often convenient to represent a collection of disjoint regions as a label map
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+label map
+\end_layout
+
+\end_inset
+
+,
  i.e.
  an image containing integer values,
  where the value of each element corresponds to the label of the region it belongs to.
@@ -10876,6 +10902,105 @@ lbl2 = imRemoveBorderRegions(lbl,
 \end_layout
 
 \begin_layout Minisec
+imSizeOpening
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+sizeOpening
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imSizeOpening
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+size opening
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+opening
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+size
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Removes small regions with a binary or label map image by removing all regions with a number of pixels (or voxels) smaller than the specified value.
+ This operation is also known as 
+\begin_inset Quotes eld
+\end_inset
+
+area opening
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+area opening
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Minisec
 imAreaOpening
 \begin_inset Index ind
 range none
@@ -10928,7 +11053,15 @@ area opening
 \end_layout
 
 \begin_layout Standard
-Removes all regions smaller than a given area.
+(deprecated) Removes all regions smaller than a given area (old name for 
+\begin_inset Quotes eld
+\end_inset
+
+imSizeOpening
+\begin_inset Quotes erd
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Minisec
@@ -10972,7 +11105,29 @@ imAttributeOpening
 \end_layout
 
 \begin_layout Standard
-Filters regions on a size or shape criterium.
+Filters regions on a size or shape criterium
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+opening
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+attribute
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Minisec
@@ -11265,7 +11420,7 @@ name "fun:label2rgb3d"
 
 \end_inset
 
-Converts a 3D label image into a 3D RGB image.
+Converts a 3D label map into a 3D RGB image.
  This is an equivalent of the 
 \begin_inset Quotes eld
 \end_inset
@@ -11274,7 +11429,8 @@ label2rgb
 \begin_inset Quotes erd
 \end_inset
 
- function from the Image Processing Toolbox.
+ function from the Image Processing Toolbox,
+ but working also for 3D images.
 \end_layout
 
 \begin_layout Minisec
@@ -11318,7 +11474,7 @@ imLabelToValue
 \end_layout
 
 \begin_layout Standard
-Converts a label image into a parametric map using an array of feature values computed for each label.
+Converts a label map into a parametric map using an array of feature values computed for each region within the label map.
  The following script results in the images presented in Fig.
 \begin_inset space ~
 \end_inset
@@ -11474,14 +11630,40 @@ size
 \series bold
 shape
 \series default
- of regions identified within images.
+ of regions identified within images
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+region morphology
+\end_layout
+
+\end_inset
+
+.
  
 \end_layout
 
 \begin_layout Standard
 The functions in this section usually accept as input either binary images (a single result is returned,
  usually as a scalar or as a row vector),
- or label images (an array of results is returned).
+ or label map images (an array of results is returned).
  
 \end_layout
 
@@ -11699,7 +11881,7 @@ imArea
 \end_layout
 
 \begin_layout Standard
-Computes the area of the region(s) within a binary or label 2D image.
+Computes the area of the region(s) within a 2D binary or label map image.
 \end_layout
 
 \begin_layout Minisec
@@ -11753,7 +11935,7 @@ Computes the convex area
 \begin_inset Index idx
 range none
 pageformat default
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -11785,7 +11967,7 @@ area
 
 \end_inset
 
- of the region(s) within a binary or label 2D image.
+ of the region(s) within a 2D binary or label map image.
  Convex area is computed as the area of the convex image of the region (see Fig.
 \begin_inset space ~
 \end_inset
@@ -18080,7 +18262,33 @@ name "sec:Geodesic-Parameters"
 
 \begin_layout Standard
 Based on the geodesic distance distance map,
- it is possible to define several features describing the morphology of the particles.
+ it is possible to define several features describing the morphology of the regions
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+region morphology
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Minisec
@@ -18284,7 +18492,7 @@ imGeodesicCenter
 \end_layout
 
 \begin_layout Standard
-Computes geodesic center of a binary particle.
+Computes geodesic center of a binary region.
 \end_layout
 
 \begin_layout Minisec
@@ -18328,7 +18536,7 @@ imGeodesicExtremities
 \end_layout
 
 \begin_layout Standard
-Computes geodesic extremities of a binary particle.
+Computes geodesic extremities of a binary region.
 \end_layout
 
 \begin_layout Minisec
@@ -18372,7 +18580,7 @@ imGeodesicRadius
 \end_layout
 
 \begin_layout Standard
-Computes the geodesic radius of a binary particle.
+Computes the geodesic radius of a binary region.
 \end_layout
 
 \begin_layout Minisec
@@ -18472,7 +18680,33 @@ name "chap:imGranulometry"
 \end_layout
 
 \begin_layout Standard
-Gray-level granulometry is an image texture analysis approach based on mathematical morphology 
+Gray-level granulometry is an image texture
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+texture
+\end_layout
+
+\end_inset
+
+ analysis approach based on mathematical morphology 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Soille2003"
@@ -18481,7 +18715,59 @@ literal "false"
 \end_inset
 
 .
- It consists in applying morphological filters (typically opening or closing) using structuring elements of increasing size 
+ It consists in applying morphological filters (typically opening
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+opening
+\end_layout
+
+\end_inset
+
+ or closing
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+closing
+\end_layout
+
+\end_inset
+
+) using structuring elements of increasing size 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Chermant_1991_actaStereol,Soille2003"

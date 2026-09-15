@@ -1102,6 +1102,32 @@ joint histogram
 
 \end_inset
 
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+joint histogram
+\end_layout
+
+\end_inset
+
  of two images.
 \end_layout
 
@@ -5624,7 +5650,33 @@ imAdjustDynamic
 \end_layout
 
 \begin_layout Standard
-Rescales gray levels of image to get better dynamic.
+Rescales gray levels of image to get better dynamic and enhance contrast
+\begin_inset Index idx
+range none
+pageformat default
+status open
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+contrast adjustment
+\end_layout
+
+\end_inset
+
+.
  Input arguments can specify the fraction of pixels or voxels to saturate,
  or the range of values to map to the [0 255] interval.
  It is also possible to return the conversion coefficients between input image and result image.
@@ -5698,7 +5750,43 @@ imNormalizeBackground
 \end_layout
 
 \begin_layout Standard
-Normalizes a grayscale image by removing an estimate of the background.
+Normalizes a grayscale image by removing an estimate of the background
+\begin_inset Index idx
+range none
+pageformat default
+status open
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+background
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+normalization
+\end_layout
+
+\end_inset
+
+.
  The function first computes an estimate of the background based on the pixel values within a specified region of interest (given as a binary mask),
  then subtracts this estimate from the original image,
  and returns the result.
@@ -5739,7 +5827,7 @@ placement document
 alignment document
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -5748,7 +5836,7 @@ placement document
 alignment document
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5781,7 +5869,7 @@ placement document
 alignment document
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5814,7 +5902,7 @@ placement document
 alignment document
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -13526,66 +13614,7 @@ imMaxFeretDiameter
 \end_layout
 
 \begin_layout Standard
-Computes the maximum Feret diameter of the region(s) within a binary or label image (Fig.
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Feret-Diameter"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Minisec
-imFeretDiameter
-\begin_inset Index ind
-range none
-pageformat default
-status collapsed
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\nospellcheck off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-feretDiameter
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-@
-\end_layout
-
-\end_inset
-
-imFeretDiameter
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Computes the Feret diameter 
+Computes the maximum Feret diameter 
 \begin_inset Index idx
 range none
 pageformat default
@@ -13647,7 +13676,66 @@ Feret
 
 \end_inset
 
- of the region(s) for a given direction(s).
+ of the region(s) within a binary or label image (Fig.
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Feret-Diameter"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Minisec
+imFeretDiameter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+feretDiameter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imFeretDiameter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Computes the Feret diameter of the region(s) for a given direction(s).
  The result is a numeric array with as many rows as the number of regions,
  and as many columns as the number of directions.
 \end_layout
@@ -13734,7 +13822,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesic diameter
+geodesic
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+diameter
 \end_layout
 
 \end_inset
@@ -13849,7 +13947,19 @@ quantify the shape
 of regions independently of their location,
  orientation,
  or relative scaling.
- Several indices are commonly used to describe the shape of the particles,
+ Several indices
+\begin_inset Index idx
+range none
+pageformat default
+status open
+
+\begin_layout Plain Layout
+shape index
+\end_layout
+
+\end_inset
+
+ are commonly used to describe the shape of the particles,
  independently of their size.
  The ratio of the equivalent ellipse or ellipsoid is often a common choice.
 \end_layout
@@ -14126,7 +14236,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesic diameter
+geodesic
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+diameter
 \end_layout
 
 \end_inset
@@ -14397,7 +14517,33 @@ imRAG
 \end_layout
 
 \begin_layout Standard
-Computes the region adjacency graph of a label map image.
+Computes the region adjacency graph 
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+region adjacency graph
+\end_layout
+
+\end_inset
+
+ of the regions within a label map image.
  The result is provided as a graph,
  where vertices correspond to region centroids,
  and edges correspond to neighbor regions (Fig.
@@ -14653,7 +14799,43 @@ im<Quantity>Estimate same as im<Quantity>Estimate,
 \end_layout
 
 \begin_layout Description
-im<Quantity>Lut returns a look-up-table of values that can be used to estimate the parameter from the histogram of binary configuration in original image,
+im<Quantity>Lut returns a look-up-table of values that can be used to estimate the parameter from the histogram of binary configurations
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+histogram
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+binary configurations
+\end_layout
+
+\end_inset
+
+ in original image,
  as computed by the function "imBinaryConfigHisto" (page 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -15552,7 +15734,33 @@ S(X) & =\int_{\partial X}dx
 \begin_layout Standard
 The 
 \series bold
-mean breadth 
+mean breadth
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+mean breadth
+\end_layout
+
+\end_inset
+
+ 
 \series default
 
 \begin_inset Formula $\bar{b}$
@@ -15573,6 +15781,32 @@ mean breadth
 integral of the mean curvature
 \series default
  
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+integral of mean curvature
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Serra1982,Ohser2009"
@@ -15699,8 +15933,34 @@ For a set
 \series bold
 Gaussian curvature
 \series default
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Gaussian curvature
+\end_layout
+
+\end_inset
+
 ,
- corresponding to the product of the curvatures:
+ corresponding to the product of the principal curvatures:
 \begin_inset Formula 
 \begin{align}
 \chi(X) & =\frac{1}{4\pi}\int_{\partial X}\kappa_{1}(x)\cdot\kappa_{2}(x)dx
@@ -15946,33 +16206,7 @@ mean breadth
 \end_inset
 
  of the region(s) within a binary or label 3D image.
- Mean breadth is proportional to the integral of mean curvature
-\begin_inset Index idx
-range none
-pageformat default
-status collapsed
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\nospellcheck off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-integral of mean curvature
-\end_layout
-
-\end_inset
-
-.
+ Mean breadth is proportional to the integral of mean curvature.
  For convex regions,
  it corresponds to the average of the feret diameter computed over all directions.
 \end_layout
@@ -16054,7 +16288,33 @@ Analysis of microstrucures
 \begin_layout Standard
 Functions described here allow to quantify the morphology of binary microstructures,
  not necessarily defined as a collection of disjoint particles.
- Examples are porous media such as soil,
+ Examples are porous media
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+porous media
+\end_layout
+
+\end_inset
+
+ such as soil,
  sponges,
  bread...
  The quantification relies on intrinsic volumes normalized by the size of the observation window.
@@ -16257,7 +16517,15 @@ specificSurface
 \end_layout
 
 \begin_layout Standard
-Implementation of Ohser's algorithm for surface area computation.
+Implementation of Ohser's algorithm for surface area computation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Ohser2009"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Minisec
@@ -16902,7 +17170,43 @@ name "imBinaryConfigHisto"
 
 \end_inset
 
-Computes the histogram of the binary configurations
+Computes the histogram
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+histogram
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+binary configurations
+\end_layout
+
+\end_inset
+
+ of the binary configurations
 \begin_inset Index idx
 range none
 pageformat default
@@ -17275,6 +17579,16 @@ nolink "false"
 \end_inset
 
 ).
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+could add more explanations and examples
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -17411,7 +17725,7 @@ Geodesic paths and diameters.
  (a) Computation of the geodesic distance map from a marker located within the binary region.
  (b) Computation of a geodesic path between two points with a binary region.
  The geodesic path correspond to the shortest path with the chosen metric.
- (c) Geodesic diameter computed for each binarised grains,
+ (c) Geodesic diameter computed for each binarized grains,
  and superimposed on the original image.
 \end_layout
 
@@ -17466,7 +17780,43 @@ imGeodesicDistanceMap
 \end_layout
 
 \begin_layout Standard
-Computes the geodesic distance transform for binary or label images.
+Computes the geodesic distance transform
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+geodesic
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+distance map
+\end_layout
+
+\end_inset
+
+ for binary or label images.
 \end_layout
 
 \begin_layout Minisec
@@ -17575,7 +17925,17 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesic path
+geodesic
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+path
 \end_layout
 
 \end_inset
@@ -17785,7 +18145,53 @@ status collapsed
 \uwave off
 \noun off
 \color none
-geodesic diameter
+geodesic
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+diameter
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+diameter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+geodesic
 \end_layout
 
 \end_inset

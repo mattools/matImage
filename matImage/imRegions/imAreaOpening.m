@@ -1,14 +1,16 @@
 function [lbl, inds] = imAreaOpening(img, areaMin, varargin)
-%IMAREAOPENING Remove all regions smaller than a given area
+%IMAREAOPENING Remove all regions smaller than a given area.
+%
+%   Deprecated, use 'imSizeOpening' instead.
 %
 %   LBL2 = imAreaOpening(LBL, AREAMIN)
-%   Computes the area of each particle in label image LBL, and keep only
-%   the particles whose area is greater or equal to the given threshold.
+%   Computes the area of each region within the label map LBL, and keep
+%   only the regions whose area is greater or equal to the given threshold.
 %   Returns another label image.
 %
 %   BIN2 = imAreaOpening(BIN, AREAMIN)
 %   BIN2 = imAreaOpening(BIN, AREAMIN, CONN)
-%   If BIN is a binary image, connected components are labelised first.
+%   If BIN is a binary image, connected components are labeled first.
 %   The connectivity can be specified. The result is a binary image.
 %
 %
@@ -26,10 +28,13 @@ function [lbl, inds] = imAreaOpening(img, areaMin, varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2012-07-27,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2012 INRA - Cepia Software Platform.
 
+
+warning('MatImage:deprecated', ...
+    'function imAreaOpening is obsolete, use imSizeOpening instead');
 
 % in case of binary image, compute labels
 if islogical(img)
@@ -38,17 +43,15 @@ else
     lbl = img;
 end
 
-% initialisations
+% Initializations
 nLabels = max(lbl(:));
-areas = zeros(nLabels, 1);
 
-% compute area of each label
-for i = 1:nLabels
-    areas(i) = sum(sum(sum(lbl==i)));
-end
+% compute size of each region
+histo = histogram(lbl, 'BinLimits', [0 nLabels], 'BinMethod', 'integers');
+counts = histo.Values(2:end);
 
 % find index of small regions
-inds = find(areas < areaMin);
+inds = find(counts < areaMin);
 
 % remove small regions
 lbl(ismember(lbl, inds)) = 0;

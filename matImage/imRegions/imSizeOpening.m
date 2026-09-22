@@ -1,4 +1,4 @@
-function [lbl, inds] = imSizeOpening(img, minCount, varargin)
+function [res, inds] = imSizeOpening(img, minCount, varargin)
 %IMSIZEOPENING Remove small regions within binary or label image.
 %
 %   LBL2 = imSizeOpening(LBL, SIZEMIN)
@@ -12,6 +12,9 @@ function [lbl, inds] = imSizeOpening(img, minCount, varargin)
 %   prior to size opening, and converts the result into a binary image.
 %   The connectivity can be specified.
 %
+%   CC2 = imSizeOpening(CC, SIZEMIN)
+%   Performs size opening on a CC struct as returned by the 'bwconncomp'
+%   function, and returns a CC struct.
 %
 %   Example
 %   % Remove rice grains smaller than a given size
@@ -35,9 +38,31 @@ function [lbl, inds] = imSizeOpening(img, minCount, varargin)
 
 % in case of binary image, compute labels
 if islogical(img)
-    lbl = labelmatrix(bwconncomp(img, varargin{:}));
+    lbl = bwconncomp(img, varargin{:});
 else
     lbl = img;
+end
+
+% special case of image provided as "CC" struct
+if isstruct(lbl)
+    if ~isfield(lbl, "PixelIdxList")
+        error("MatImage:imSizeOpening", "If input is a struct, it must contain a 'PixelIdxList' field");
+    end
+
+    counts = cellfun(@length, lbl.PixelIdxList);
+    inds = find(counts >= minCount);
+    res = struct( ...
+        'Connectivity', lbl.Connectivity, ...
+        'ImageSize', lbl.ImageSize, ...
+        'NumObjects', length(inds), ...
+        'PixelIdxList', {lbl.PixelIdxList(inds)});
+
+    % keep same data type as input
+    if islogical(img)
+        res = cc2bw(res);
+    end
+
+    return;
 end
 
 % Initializations
@@ -51,9 +76,10 @@ counts = histo.Values(2:end);
 inds = find(counts < minCount);
 
 % remove small regions
-lbl(ismember(lbl, inds)) = 0;
+res = lbl;
+res(ismember(lbl, inds)) = 0;
 
 % keep same output type as input
 if islogical(img)
-    lbl = lbl > 0;
+    res = res > 0;
 end

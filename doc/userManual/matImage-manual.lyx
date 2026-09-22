@@ -6013,7 +6013,7 @@ imBoxFilter
 \end_layout
 
 \begin_layout Standard
-Box filter
+Applies a Box filter
 \begin_inset Index idx
 range none
 pageformat default
@@ -6025,7 +6025,7 @@ box filter
 
 \end_inset
 
- on 2D/3D image (Fig.
+ operator on 2D/3D image (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -6140,7 +6140,43 @@ median filter
 \end_layout
 
 \begin_layout Standard
-Computes median value in the neighborhood of each pixel (Fig.
+Computes median value
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+filter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+median
+\end_layout
+
+\end_inset
+
+ within the neighborhood of each pixel (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -6199,7 +6235,7 @@ imGaussianFilter
 \end_layout
 
 \begin_layout Standard
-Applies gaussian filter
+Applies a Gaussian filter
 \begin_inset Index idx
 range none
 pageformat default
@@ -6220,7 +6256,43 @@ status collapsed
 \uwave off
 \noun off
 \color none
-gaussian filter
+Gaussian filter
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+filter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+Gaussian
 \end_layout
 
 \end_inset
@@ -6241,7 +6313,8 @@ nolink "false"
 \end_inset
 
 -c).
- The functions uses separability of the kernel to accelerate the processing.
+ The functions uses separability of the kernel to decompose the 2D/3D processing into several 1D operations,
+ thus accelerating the processing.
 \end_layout
 
 \begin_layout Minisec
@@ -6285,7 +6358,43 @@ imDirectionalFilter
 \end_layout
 
 \begin_layout Standard
-Applies and combines several directional filters.
+Applies and combines several directional filters
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+filter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+directional
+\end_layout
+
+\end_inset
+
+.
  This type of filter may be of particular interest in the case of thin or curvilinear structures
 \begin_inset Index idx
 range none
@@ -6584,6 +6693,42 @@ gradient
 
 \end_inset
 
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+filter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+gradient
+\end_layout
+
+\end_inset
+
  components of a grayscale image.
  The result can be provided as a single image (corresponding to the the gradient norm,
  see Fig.
@@ -6775,7 +6920,69 @@ imRobinsonFilter
 \end_layout
 
 \begin_layout Standard
-Extracts image edges using Robinson directional filters.
+Extracts image edges using Robinson directional filters
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+directional filters
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+filter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+directional
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Minisec
@@ -6869,7 +7076,33 @@ name "fun:imHessian"
 
 \end_inset
 
-Computes the coefficients of the Hessian matrix (containing all second derivatives) for each pixel.
+Computes the coefficients of the Hessian matrix
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Hessian matrix
+\end_layout
+
+\end_inset
+
+ (containing all second derivatives) for each pixel.
 \end_layout
 
 \begin_layout Minisec
@@ -6913,7 +7146,7 @@ imEigenValues
 \end_layout
 
 \begin_layout Standard
-Image eigen values from second derivatives.
+Image eigen values from second derivatives computed in a 2D image.
 \end_layout
 
 \begin_layout Minisec
@@ -6957,7 +7190,7 @@ imEigenValues3d
 \end_layout
 
 \begin_layout Standard
-Image eigen values from second derivatives.
+Image eigen values from second derivatives computed in a 3D image.
 \end_layout
 
 \begin_layout Minisec
@@ -7330,7 +7563,7 @@ status open
 
 \end_inset
 
-morphological gradient
+morphological
 \end_layout
 
 \end_inset
@@ -7988,7 +8221,33 @@ imOverlay
 \end_layout
 
 \begin_layout Standard
-Generates a new color image by adding a binary overlay
+Generates a new color image
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+color image
+\end_layout
+
+\end_inset
+
+ by adding a binary overlay
 \begin_inset Index idx
 range none
 pageformat default
@@ -8840,7 +9099,59 @@ imSeparateParticles
 \end_layout
 
 \begin_layout Standard
-Separates touching particles using watershed algorithm applied on the inverse of the distance function (Fig.
+Separates touching particles using watershed
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+watershed
+\end_layout
+
+\end_inset
+
+ algorithm applied on the inverse of the distance map
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+distance map
+\end_layout
+
+\end_inset
+
+ (Fig.
 \begin_inset space ~
 \end_inset
 
@@ -9238,7 +9549,33 @@ imThicknessMap
 \end_layout
 
 \begin_layout Standard
-Computes thickness map of a binary image.
+Computes thickness
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+thickness
+\end_layout
+
+\end_inset
+
+ map of a binary image.
  Thickness corresponds to the size of the largest disk contained in the region and that contains the considered pixel (Fig.
 \begin_inset space ~
 \end_inset
@@ -10090,7 +10427,33 @@ orientedGaussianKernel
 \end_layout
 
 \begin_layout Standard
-Oriented Gaussian kernel for directional filtering.
+Oriented Gaussian kernel
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Gaussian kernel
+\end_layout
+
+\end_inset
+
+ for directional filtering.
 \end_layout
 
 \begin_layout Minisec
@@ -10820,6 +11183,36 @@ nolink "false"
  Label images can also be obtained as result of more sophisticated segmentation algorithms such as the watershed.
 \end_layout
 
+\begin_layout Section
+Data structures
+\end_layout
+
+\begin_layout Standard
+The simplest way to consider label map images is to consider a numeric array containing the index of the regions.
+ This may require a large amount of memory in the case of a large image,
+ that may be not efficient of most of the image corresponds to background.
+ 
+\end_layout
+
+\begin_layout Standard
+It is also possible to consider a more specialized data structures.
+ For example,
+ the result of the bwconncomp function (from the Image Processing Toolbox) returns the result as a 
+\begin_inset Quotes eld
+\end_inset
+
+CC structure
+\begin_inset Quotes erd
+\end_inset
+
+,
+ i.e.
+ a data structure containing the number of regions,
+ the size of the image,
+ and a cell array containing for each region the list of pixels for this region.
+ Some functions of the MatImage library can operate on such a data structure.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
@@ -10885,6 +11278,27 @@ imRemoveBorderRegions
 
 \begin_layout Standard
 Removes the regions on the border of a 2D/3D label image.
+ This operation is also known as 
+\begin_inset Quotes eld
+\end_inset
+
+kill borders
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+kill borders
+\end_layout
+
+\end_inset
+
+.
  It is possible to specify which on which borders the regions will be removed:
 \begin_inset listings
 inline false
@@ -10998,6 +11412,9 @@ area opening
 \end_inset
 
 .
+ The function can operate on binary images,
+ label maps,
+ or CC structures.
 \end_layout
 
 \begin_layout Minisec
@@ -11105,7 +11522,7 @@ imAttributeOpening
 \end_layout
 
 \begin_layout Standard
-Filters regions on a size or shape criterium
+Filters regions on a size or shape criterion
 \begin_inset Index idx
 range none
 pageformat default
@@ -11171,7 +11588,10 @@ imLargestRegion
 \end_layout
 
 \begin_layout Standard
-Keeps the largest region in a binary or label image.
+Keeps the largest region within a label map.
+ The function can operate on binary images,
+ label maps,
+ or CC structures.
 \end_layout
 
 \begin_layout Minisec
@@ -11215,11 +11635,11 @@ imCropLabel
 \end_layout
 
 \begin_layout Standard
-Extracts the portion of image that contains the specified label.
+Extracts the portion of image that contains the region corresponding to the specified label.
 \end_layout
 
 \begin_layout Subsection
-Region processing
+Region merge
 \end_layout
 
 \begin_layout Minisec
@@ -11263,7 +11683,7 @@ imMergeLabels
 \end_layout
 
 \begin_layout Standard
-Merges regions in a labeled image.
+Merges regions within a label map image.
 \end_layout
 
 \begin_layout Minisec
@@ -11307,8 +11727,8 @@ mergeRegions
 \end_layout
 
 \begin_layout Standard
-Merges regions of labeled image,
- using inclusion criteria.
+Merges regions within a label map image,
+ using an inclusion criterion.
 \end_layout
 
 \begin_layout Subsection
@@ -11369,18 +11789,7 @@ imRegions
 \begin_inset Quotes erd
 \end_inset
 
- module (chapter 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "chap:imRegions"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-).
+ module.
 \end_layout
 
 \begin_layout Minisec
@@ -15181,10 +15590,62 @@ Definitions
 The 
 \series bold
 area
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+area
+\end_layout
+
+\end_inset
+
+
 \series default
  and the 
 \series bold
 perimeter
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+perimeter
+\end_layout
+
+\end_inset
+
+
 \series default
  of a set 
 \begin_inset Formula $X$
@@ -15224,6 +15685,32 @@ of 2D particles simply consists in counting the number of pixels that constitute
 The 
 \series bold
 Euler number
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Euler number
+\end_layout
+
+\end_inset
+
+
 \series default
  is a feature that describes the 
 \series bold
@@ -15891,6 +16378,32 @@ volume
  and the 
 \series bold
 surface area
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+surface area
+\end_layout
+
+\end_inset
+
+
 \series default
  of a set 
 \begin_inset Formula $X$
@@ -15949,7 +16462,18 @@ mean breadth
 \end_inset
 
  of a convex set can be seen as the average of the caliper diameter over all directions.
- For a set 
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+for non convex,
+ consider total projected diameter
+\end_layout
+
+\end_inset
+
+For a set 
 \begin_inset Formula $X$
 \end_inset
 

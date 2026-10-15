@@ -262,7 +262,7 @@ for i=1:na
                 indp = find(faces{j}==ind(i));
                 
                 % compute face angle
-                thetaf = [thetaf polygon3dInnerAngle(face, indp)];
+                thetaf = [thetaf polygon3dInnerAngle(face, indp)]; %#ok<AGROW>
             end
         end
     else

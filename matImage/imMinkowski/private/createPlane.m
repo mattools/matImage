@@ -35,7 +35,7 @@ function plane = createPlane(varargin)
 %   21/08/2006 return normalized planes
 %   06/11/2006 update doc for planes created from normal
 
-if length(varargin) == 1
+if isscalar(varargin)
     var = varargin{1};
     
     if iscell(var)

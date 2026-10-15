@@ -91,7 +91,7 @@ end
 if nargin < 2
     kernelSize = 3;
 end
-if length(kernelSize) == 1
+if isscalar(kernelSize)
     kernelSize = repmat(kernelSize, 1, nd);
 end
 
@@ -99,7 +99,7 @@ end
 if nargin < 3
     sigma = kernelSize / 2;
 end
-if length(sigma) == 1
+if isscalar(sigma)
     sigma = repmat(sigma, 1, nd);
 end
 

@@ -90,9 +90,9 @@ if ~isempty(varargin) && sum(size(img1) ~= size(varargin{1})) == 0
 end
 
 % extract user-specified number of bins, or bin values
-if length(varargin)==1
+if isscalar(varargin)
     var = varargin{1};
-    if length(var)==1
+    if isscalar(var)
         q1 = var;
         q2 = var;
     else
@@ -102,7 +102,7 @@ if length(varargin)==1
 elseif length(varargin)==2
     var1 = varargin{1};
     var2 = varargin{2};
-    if length(var1)==1 && length(var2)==1
+    if isscalar(var1) && isscalar(var2)
         q1 = var1;
         q2 = var2;
     else

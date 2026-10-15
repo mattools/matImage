@@ -90,7 +90,7 @@ function res = imOverlay(img, varargin)
 % 19-07-2010 major rewriting, add tests
 
 
-if length(varargin)==1
+if isscalar(varargin)
     % If only one input => this is the mask, the color is assumed to be red
     res = imOverlay(img, varargin{1}, [1 0 0]);
     return;

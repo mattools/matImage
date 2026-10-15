@@ -35,7 +35,7 @@ nu=1;
 % extract input parameters
 if ~isempty(varargin)
     var = varargin{1};
-    if length(var)==1
+    if isscalar(var)
         nu = var;
     else
         coef = var;

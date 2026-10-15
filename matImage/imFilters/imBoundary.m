@@ -62,7 +62,7 @@ op = @imerode;
 while ~isempty(varargin)
     var = varargin{1};
     if isnumeric(var)
-        if length(var)==1
+        if isscalar(var)
             switch var
                 case 4
                     se = [0 1 0;1 1 1;0 1 0];

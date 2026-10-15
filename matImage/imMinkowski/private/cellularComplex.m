@@ -1,21 +1,21 @@
 function varargout = cellularComplex(img, varargin)
-%CELLULARCOMPLEX create cellular reconstruction of discrete image
+%CELLULARCOMPLEX create cellular reconstruction of discrete image.
 %
-%   [NODES EDGES FACES] = cellularComplex(IMG)
-%   with IMG being a 2D binary image, return the graph constitued by :
+%   [NODES, EDGES, FACES] = cellularComplex(IMG)
+%   with IMG being a 2D binary image, return the graph constituted by:
 %   NODES is the position of each pixel
 %   EDGES is a 2 columns array, containing two ends of each edge
-%   FACES is one of :
+%   FACES is one of:
 %   - a 4 column arrays, containing indices of each face. In this case, all
 %   faces are square.
 %   - a cell array, each cell containing an array of vertices indices.
 %
-%   [NODES EDGES FACES CELLS] = cellularComplex(IMG)
+%   [NODES, EDGES, FACES, CELLS] = cellularComplex(IMG)
 %   with IMG being a 3D binary image, return also the data CELLS, which is
 %   a cell array containing indices of faces for each face.
 %
 %   GRAPH = cellularComplex(IMG)
-%   return a structure GRAPH which contains following fields :
+%   return a structure GRAPH which contains following fields:
 %   - nodes
 %   - edges
 %   - faces
@@ -54,7 +54,7 @@ function varargout = cellularComplex(img, varargin)
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@jouy.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2005-11-24
 % Copyright 2005 INRA - CEPIA Nantes - MIAJ (Jouy-en-Josas).
 
@@ -79,7 +79,7 @@ elseif nd==3
 end
 
 % process input
-if length(varargin)>0
+if ~isempty(varargin)
     conn = varargin{1};
 end
 
@@ -103,7 +103,7 @@ if nd==2
     N2 = dim(2);
 
     % find vertices. 
-    [py px] = find(img);
+    [py, px] = find(img);
     nodes = [px py];
 
     if conn==4
@@ -116,32 +116,32 @@ if nd==2
         
         % find horizontal edges
         ind = find(img(1:N1, 1:N2-1) & img(1:N1, 2:N2));
-        for i=1:length(ind)
-            [y x] = ind2sub([N1 N2-1], ind(i));
+        for i = 1:length(ind)
+            [y, x] = ind2sub([N1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y], 'rows'));
             i2 = find(ismember(nodes, [x+1 y], 'rows'));
-            edges = [edges; i1 i2];
+            edges = [edges; i1 i2]; %#ok<AGROW>
         end
 
         % find vertical edges
         ind = find(img(1:N1-1, 1:N2) & img(2:N1, 1:N2));
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2], ind(i));
+            [y, x] = ind2sub([N1-1 N2], ind(i));
             i1 = find(ismember(nodes, [x y], 'rows'));
             i2 = find(ismember(nodes, [x y+1], 'rows'));
-            edges = [edges; i1 i2];
+            edges = [edges; i1 i2]; %#ok<AGROW>
         end
 
         % find faces
         ind = find(img(1:N1-1, 1:N2-1) & img(2:N1, 1:N2-1) & ...
                    img(1:N1-1, 2:N2) & img(2:N1, 2:N2) );
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y],    'rows'));
             i2 = find(ismember(nodes, [x y+1],  'rows'));
             i3 = find(ismember(nodes, [x+1 y+1], 'rows'));
             i4 = find(ismember(nodes, [x+1 y],  'rows'));
-            faces = [faces; i1 i2 i3 i4];
+            faces = [faces; i1 i2 i3 i4]; %#ok<AGROW>
         end
 
     elseif conn==8
@@ -157,19 +157,19 @@ if nd==2
         % find horizontal edges
         ind = find(img(1:N1, 1:N2-1) & img(1:N1, 2:N2));
         for i=1:length(ind)
-            [y x] = ind2sub([N1 N2-1], ind(i));
+            [y, x] = ind2sub([N1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y], 'rows'));
             i2 = find(ismember(nodes, [x+1 y], 'rows'));
-            edges = [edges; i1 i2];
+            edges = [edges; i1 i2]; %#ok<AGROW>
         end
 
         % find vertical edges
         ind = find(img(1:N1-1, 1:N2) & img(2:N1, 1:N2));
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2], ind(i));
+            [y, x] = ind2sub([N1-1 N2], ind(i));
             i1 = find(ismember(nodes, [x y], 'rows'));
             i2 = find(ismember(nodes, [x y+1], 'rows'));
-            edges = [edges; i1 i2];
+            edges = [edges; i1 i2]; %#ok<AGROW>
         end
 
         % shortcuts for computations
@@ -181,62 +181,62 @@ if nd==2
         % find square faces
         ind = find(im1 & im2 & im3 & im4);
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y],    'rows'));
             i2 = find(ismember(nodes, [x y+1],  'rows'));
             i3 = find(ismember(nodes, [x+1 y+1], 'rows'));
             i4 = find(ismember(nodes, [x+1 y],  'rows'));
-            faces = {faces{:}, [i1 i2 i3 i4]};
-            squares = [squares; i1 i2 i3 i4];
+            faces = [faces, {[i1 i2 i3 i4]}]; %#ok<AGROW>
+            squares = [squares; i1 i2 i3 i4]; %#ok<AGROW>
         end
         
         % find triangular face
         % T1
         ind = find(im1 & im2 & im3);
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y],    'rows'));
             i2 = find(ismember(nodes, [x y+1],  'rows'));
             i3 = find(ismember(nodes, [x+1 y],  'rows'));
             % check if already belong to a square face
             if sum(sum(ismember(squares, [i1 i2 i3]), 2)==3)==0
-                faces = {faces{:}, [i1 i2 i3]};
+                faces = [faces, {[i1 i2 i3]}]; %#ok<AGROW>
             end
         end       
         % T2
         ind = find(im1 & im2 & im4);
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y],    'rows'));
             i2 = find(ismember(nodes, [x+1 y],  'rows'));
             i3 = find(ismember(nodes, [x+1 y+1],  'rows'));
             % check if already belong to a square face
             if sum(sum(ismember(squares, [i1 i2 i3]), 2)==3)==0
-                faces = {faces{:}, [i1 i2 i3]};
+                faces = [faces, {[i1 i2 i3]}]; %#ok<AGROW>
             end
         end       
         % T3
         ind = find(im1 & im3 & im4);
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y],    'rows'));
             i2 = find(ismember(nodes, [x y+1],  'rows'));
             i3 = find(ismember(nodes, [x+1 y+1],  'rows'));
             % check if already belong to a square face
             if sum(sum(ismember(squares, [i1 i2 i3]), 2)==3)==0
-                faces = {faces{:}, [i1 i2 i3]};
+                faces = [faces, {[i1 i2 i3]}]; %#ok<AGROW>
             end
         end       
         % T4
         ind = find(im2 & im3 & im4);
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x+1 y],    'rows'));
             i2 = find(ismember(nodes, [x y+1],  'rows'));
             i3 = find(ismember(nodes, [x+1 y+1],  'rows'));
             % check if already belong to a square face
             if sum(sum(ismember(squares, [i1 i2 i3]), 2)==3)==0
-                faces = {faces{:}, [i1 i2 i3]};
+                faces = [faces, {[i1 i2 i3]}]; %#ok<AGROW>
             end
         end       
         
@@ -244,7 +244,7 @@ if nd==2
         % diagonal 1
         ind = find(img(1:N1-1, 1:N2-1) & img(2:N1, 2:N2));
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y], 'rows'));
             i2 = find(ismember(nodes, [x+1 y+1], 'rows'));
             % check if already belong to a square face
@@ -255,7 +255,7 @@ if nd==2
         % diagonal 2
         ind = find(img(2:N1, 1:N2-1) & img(1:N1-1, 2:N2));
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y+1], 'rows'));
             i2 = find(ismember(nodes, [x+1 y], 'rows'));
             % check if already belong to a square face
@@ -278,19 +278,19 @@ if nd==2
         % find horizontal edges
         ind = find(img(1:N1, 1:N2-1) & img(1:N1, 2:N2));
         for i=1:length(ind)
-            [y x] = ind2sub([N1 N2-1], ind(i));
+            [y, x] = ind2sub([N1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y], 'rows'));
             i2 = find(ismember(nodes, [x+1 y], 'rows'));
-            edges = [edges; i1 i2];
+            edges = [edges; i1 i2]; %#ok<AGROW>
         end
 
         % find vertical edges
         ind = find(img(1:N1-1, 1:N2) & img(2:N1, 1:N2));
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2], ind(i));
+            [y, x] = ind2sub([N1-1 N2], ind(i));
             i1 = find(ismember(nodes, [x y], 'rows'));
             i2 = find(ismember(nodes, [x y+1], 'rows'));
-            edges = [edges; i1 i2];
+            edges = [edges; i1 i2]; %#ok<AGROW>
         end
 
         % shortcuts for computations
@@ -302,13 +302,13 @@ if nd==2
         % find square faces
         ind = find(im1 & im2 & im3 & im4);
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y],    'rows'));
             i2 = find(ismember(nodes, [x y+1],  'rows'));
             i3 = find(ismember(nodes, [x+1 y+1], 'rows'));
             i4 = find(ismember(nodes, [x+1 y],  'rows'));
-            faces = {faces{:}, [i1 i2 i3 i4]};
-            squares = [squares; i1 i2 i3 i4];
+            faces = [faces, {[i1 i2 i3 i4]}]; %#ok<AGROW>
+            squares = [squares; i1 i2 i3 i4]; %#ok<AGROW>
         end
         
         % find triangular face
@@ -316,25 +316,25 @@ if nd==2
         % T2
         ind = find(im1 & im2 & im4);
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y],    'rows'));
             i2 = find(ismember(nodes, [x+1 y],  'rows'));
             i3 = find(ismember(nodes, [x+1 y+1],  'rows'));
             % check if already belong to a square face
             if sum(sum(ismember(squares, [i1 i2 i3]), 2)==3)==0
-                faces = {faces{:}, [i1 i2 i3]};
+                faces = [faces, {[i1 i2 i3]}]; %#ok<AGROW>
             end
         end       
         % T3
         ind = find(im1 & im3 & im4);
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y],    'rows'));
             i2 = find(ismember(nodes, [x y+1],  'rows'));
             i3 = find(ismember(nodes, [x+1 y+1],  'rows'));
             % check if already belong to a square face
             if sum(sum(ismember(squares, [i1 i2 i3]), 2)==3)==0
-                faces = {faces{:}, [i1 i2 i3]};
+                faces = [faces, {[i1 i2 i3]}]; %#ok<AGROW>
             end
         end       
         
@@ -343,7 +343,7 @@ if nd==2
         % diagonal 1
         ind = find(img(1:N1-1, 1:N2-1) & img(2:N1, 2:N2));
         for i=1:length(ind)
-            [y x] = ind2sub([N1-1 N2-1], ind(i));
+            [y, x] = ind2sub([N1-1 N2-1], ind(i));
             i1 = find(ismember(nodes, [x y], 'rows'));
             i2 = find(ismember(nodes, [x+1 y+1], 'rows'));
             % check if already belong to a square face
@@ -365,7 +365,7 @@ elseif nd==3
     
     % first find nodes, equivalent to pixels
     ind = find(img);
-    [y x z] = ind2sub([N1 N2 N3], ind);
+    [y, x, z] = ind2sub([N1 N2 N3], ind);
     nodes = sortrows([x y z], [3 2 1]);
     
     
@@ -378,64 +378,64 @@ elseif nd==3
         % find edges in direction 1
         ind = find(img(1:N1-1, 1:N2, 1:N3) & img(2:N1, 1:N2, 1:N3));
         for i=1:length(ind)
-            [y x z] = ind2sub([N1-1 N2 N3], ind(i));
+            [y, x, z] = ind2sub([N1-1 N2 N3], ind(i));
             i1 = find(ismember(nodes, [x y z], 'rows'));
             i2 = find(ismember(nodes, [x y+1 z], 'rows'));
-            edges = [edges ; i1 i2];
+            edges = [edges ; i1 i2]; %#ok<AGROW>
         end
 
         % find edges in direction 2
         ind = find(img(1:N1, 1:N2-1, 1:N3) & img(1:N1, 2:N2, 1:N3));
         for i=1:length(ind)
-            [y x z] = ind2sub([N1 N2-1 N3], ind(i));
+            [y, x, z] = ind2sub([N1 N2-1 N3], ind(i));
             i1 = find(ismember(nodes, [x y z], 'rows'));
             i2 = find(ismember(nodes, [x+1 y z], 'rows'));
-            edges = [edges ; i1 i2];
+            edges = [edges ; i1 i2]; %#ok<AGROW>
         end
         
         % find edges in direction 3
         ind = find(img(1:N1, 1:N2, 1:N3-1) & img(1:N1, 1:N2, 2:N3));
         for i=1:length(ind)
-            [y x z] = ind2sub([N1 N2 N3-1], ind(i));
+            [y, x, z] = ind2sub([N1 N2 N3-1], ind(i));
             i1 = find(ismember(nodes, [x y z], 'rows'));
             i2 = find(ismember(nodes, [x y z+1], 'rows'));
-            edges = [edges ; i1 i2];
+            edges = [edges ; i1 i2]; %#ok<AGROW>
         end
 
         % find faces in direction 1
         ind = find(img(1:N1, 1:N2-1, 1:N3-1) & img(1:N1, 1:N2-1, 2:N3) & ...
                    img(1:N1, 2:N2, 1:N3-1)   & img(1:N1, 2:N2, 2:N3) );
         for i=1:length(ind)
-            [y x z] = ind2sub([N1 N2-1 N3-1], ind(i));
+            [y, x, z] = ind2sub([N1 N2-1 N3-1], ind(i));
             i1 = find(ismember(nodes, [x y z],  'rows'));
             i2 = find(ismember(nodes, [x+1 y z], 'rows'));
             i3 = find(ismember(nodes, [x+1 y z+1], 'rows'));
             i4 = find(ismember(nodes, [x y z+1], 'rows'));
-            faces = [faces; i1 i2 i3 i4];
+            faces = [faces; i1 i2 i3 i4]; %#ok<AGROW>
         end
 
         % find faces in direction 2
         ind = find(img(1:N1-1, 1:N2, 1:N3-1) & img(1:N1-1, 1:N2, 2:N3) & ...
                    img(2:N1, 1:N2, 1:N3-1)   & img(2:N1, 1:N2, 2:N3) );
         for i=1:length(ind)
-            [y x z] = ind2sub([N1-1 N2 N3-1], ind(i));
+            [y, x, z] = ind2sub([N1-1 N2 N3-1], ind(i));
             i1 = find(ismember(nodes, [x y z], 'rows'));
             i2 = find(ismember(nodes, [x y+1 z], 'rows'));
             i3 = find(ismember(nodes, [x y+1 z+1], 'rows'));
             i4 = find(ismember(nodes, [x y z+1], 'rows'));
-            faces = [faces; i1 i2 i3 i4];
+            faces = [faces; i1 i2 i3 i4]; %#ok<AGROW>
         end
 
         % find faces in direction 3
         ind = find(img(1:N1-1, 1:N2-1, 1:N3) & img(1:N1-1, 2:N2, 1:N3) & ...
                    img(2:N1, 1:N2-1, 1:N3)   & img(2:N1, 2:N2, 1:N3) );
         for i=1:length(ind)
-            [y x z] = ind2sub([N1-1 N2-1 N3], ind(i));
+            [y, x, z] = ind2sub([N1-1 N2-1 N3], ind(i));
             i1 = find(ismember(nodes, [x y z], 'rows'));
             i2 = find(ismember(nodes, [x+1 y z], 'rows'));
             i3 = find(ismember(nodes, [x+1 y+1 z], 'rows'));
             i4 = find(ismember(nodes, [x y+1 z], 'rows'));
-            faces = [faces; i1 i2 i3 i4];
+            faces = [faces; i1 i2 i3 i4]; %#ok<AGROW>
         end
         
         %% Solids (for CONN=6, only cubes)
@@ -447,7 +447,7 @@ elseif nd==3
                    img(2:N1,     2:N2, 1:N3-1)  & img(2:N1,     2:N2, 2:N3) );
         for i=1:length(ind)
             % first find indices of nodes
-            [y x z] = ind2sub([N1-1 N2-1 N3], ind(i));
+            [y, x, z] = ind2sub([N1-1 N2-1 N3], ind(i));
             i1 = find(ismember(nodes, [x y z],      'rows'));
             i2 = find(ismember(nodes, [x+1 y z],    'rows'));
             i3 = find(ismember(nodes, [x y+1 z],    'rows'));
@@ -466,7 +466,7 @@ elseif nd==3
             if6 = find(sum(ismember(faces, [i5 i6 i7 i8]), 2)==4);
 
             % add the new cell to the list
-            cells = {cells{:}, sort([if1 if2 if3 if4 if5 if6])};
+            cells = [cells, {sort([if1 if2 if3 if4 if5 if6])}]; %#ok<AGROW>
         end
         
     elseif conn==26
@@ -476,7 +476,7 @@ elseif nd==3
         faces = {};                 % all faces (triangular + square)
         cells = {};
         
-        % position of tle vertices wrt initial vertex
+        % position of the vertices wrt initial vertex
         pos = [...
             0 0 0; ...
             0 1 0; ...
@@ -498,9 +498,9 @@ elseif nd==3
                         xi = x+pos(i, 2);
                         yi = y+pos(i, 1);
                         zi = z+pos(i, 3);
-                        if img(yi, xi, zi); 
+                        if img(yi, xi, zi)
                             ind = find(ismember(nodes, [xi yi zi], 'rows'));
-                            indNodes = [indNodes ind];
+                            indNodes = [indNodes ind]; %#ok<AGROW>
                         end
                     end
                     
@@ -544,7 +544,7 @@ elseif nd==3
                             
                             % if face does not exist, create it
                             if isempty(ind2)
-                                faces = {faces{:}, face};
+                                faces = [faces, {face}]; %#ok<AGROW>
                                 ind2 = length(faces);
                             end
                             
@@ -554,7 +554,7 @@ elseif nd==3
                         end
                         
                         % add the cell, defined by indices of faces
-                        cells = {cells{:}, indCell};
+                        cells = [cells, {indCell}]; %#ok<AGROW>
                         
                         % also add 12 edges
                         edges = [edges; ...
@@ -570,7 +570,7 @@ elseif nd==3
                             indNodes(5) indNodes(7); ...
                             indNodes(6) indNodes(8); ...
                             indNodes(7) indNodes(8); ...
-                        ];
+                        ]; %#ok<AGROW>
                         
                     elseif solid
                         % convex hull is a polyhedron, with triangle and
@@ -591,7 +591,7 @@ elseif nd==3
                            for j=i+1:size(normals, 1)
                                if norm(cross(normals(i, :), normals(j, :)))<1e-10 && ...
                                        length(unique([hull(i,:), hull(j,:)]))==4
-                                   indSquare = [indSquare; i j];
+                                   indSquare = [indSquare; i j]; %#ok<AGROW>
                                end
                            end
                         end
@@ -618,11 +618,11 @@ elseif nd==3
                             
                             % if face does not exist, create it
                             if isempty(ind2)
-                                faces = {faces{:}, face};
+                                faces = [faces, {face}]; %#ok<AGROW>
                                 ind2 = length(faces);
                                 % also add edges of this face (double edges
                                 % will be removed at the end)
-                                edges = [edges;face(1) face(2);face(2) face(3);face(3) face(1)];
+                                edges = [edges;face(1) face(2);face(2) face(3);face(3) face(1)]; %#ok<AGROW>
                             end
                             
                             % add created face to the face list of current
@@ -637,13 +637,13 @@ elseif nd==3
                             face2 = indNodes(hull(indSquare(i, 2), :));
                             indFace = unique([face1 face2]);
                             
-                            % sort vertices wrt angle
-                            [tmp I] = angleSort3d(nodes(indFace,:));
+                            % sort vertices according to angle
+                            [~, I] = angleSort3d(nodes(indFace,:));
                             face = indFace(I);
                         
                             % use convention : each face starts with the lowest
                             % index.
-                            [tmp ind] = min(face);
+                            [~, ind] = min(face);
                             face = circshift(face, [1 1-ind]);
                                                    
                             % try to find existing face with same vertices
@@ -657,11 +657,11 @@ elseif nd==3
                             
                             % if face does not exist, create it
                             if isempty(ind2)
-                                faces = {faces{:}, face};
+                                faces = [faces, {face}]; %#ok<AGROW>
                                 ind2 = length(faces);
                                 % also add edges of this face (double edges
                                 % will be removed at the end)
-                                edges = [edges;face(1) face(2);face(2) face(3);face(3) face(4);face(4) face(1)];
+                                edges = [edges;face(1) face(2);face(2) face(3);face(3) face(4);face(4) face(1)]; %#ok<AGROW>
                             end
                             
                             % add created face to the face list of current
@@ -670,17 +670,17 @@ elseif nd==3
                         end
                         
                         % add new cell, defined by pointers to faces
-                        cells = {cells{:}, indCell};
+                        cells = [cells, {indCell}]; %#ok<AGROW>
         
                     elseif n==4
                         % convex hull is a square/rectangular face
                         % create face
-                        [tmp I] = angleSort3d(nodes(indNodes,:));
+                        [~, I] = angleSort3d(nodes(indNodes,:));
                         face = indNodes(I);
 
                         % use convention : each face starts with the lowest
                         % index.                        
-                        [tmp ind] = min(face);
+                        [~, ind] = min(face);
                         face = circshift(face, [1 1-ind]);
                         
                         % try to find existing face with same vertices
@@ -694,7 +694,7 @@ elseif nd==3
 
                         % if face does not exist, create it
                         if isempty(ind2)
-                            faces = {faces{:}, face};
+                            faces = [faces, {face}]; %#ok<AGROW>
                         end
 
                     elseif n==3
@@ -702,9 +702,9 @@ elseif nd==3
                         face = sort(indNodes);
                         
                         % add the edges, even if they already exist
-                        edges = [edges; face(1) face(2)];
-                        edges = [edges; face(1) face(3)];
-                        edges = [edges; face(2) face(3)];
+                        edges = [edges; face(1) face(2)]; %#ok<AGROW>
+                        edges = [edges; face(1) face(3)]; %#ok<AGROW>
+                        edges = [edges; face(2) face(3)]; %#ok<AGROW>
                         
                         % try to find existing face with same vertices
                         ind2 = [];
@@ -717,19 +717,19 @@ elseif nd==3
 
                         % if face does not exist, create it
                         if isempty(ind2)
-                            faces = {faces{:}, face};
+                            faces = [faces, {face}]; %#ok<AGROW>
                         end
                         
                     elseif n==2 
                         % convex hull is just an edge
                         edge = sort(indNodes);                        
-                        edges = [edges; edge];
+                        edges = [edges; edge]; %#ok<AGROW>
                     end
                 end
             end
         end
     elseif conn==14.1 || conn==14.2
-        %%% 3D Image, 14 neighbours, first variant
+        %%% 3D Image, 14 neighbors, first variant
         
         edges = zeros(0, 2);
         faces = zeros(0, 3);  % all faces (only triangular)
@@ -860,9 +860,9 @@ elseif nd==3
                         xi = x+pos(i, 2);
                         yi = y+pos(i, 1);
                         zi = z+pos(i, 3);
-                        if img(yi, xi, zi);
+                        if img(yi, xi, zi)
                             ind = [ind i];
-                            indNodes = [indNodes find(ismember(nodes, [xi yi zi], 'rows'))];
+                            indNodes = [indNodes find(ismember(nodes, [xi yi zi], 'rows'))]; %#ok<AGROW>
                         end
                     end
                     
@@ -874,12 +874,12 @@ elseif nd==3
                     for e=1:size(tileEdges)
                         indt = ismember(ind, tileEdges(e,:));
                         if sum(indt)==2
-                            edges = [edges; indNodes(indt)];
+                            edges = [edges; indNodes(indt)]; %#ok<AGROW>
                         end
                     end
 
                     % check for a triangular faces
-                    % They are non necessarly unique, but they are sorted
+                    % They are non necessarily unique, but they are sorted
                     % later
                     for f=1:size(tileFaces)
                         indt = ismember(ind, tileFaces(f,:));
@@ -888,7 +888,7 @@ elseif nd==3
                             % add the face only if it does not already
                             % exists
                             if isempty(faces) || ~ismember(faces, face, 'rows')
-                                faces = [faces; face];
+                                faces = [faces; face]; %#ok<AGROW>
                             end
                         end
                     end
@@ -901,7 +901,7 @@ elseif nd==3
                             indF2 = find(ismember(faces, indNodes(indt([1 2 4])), 'rows'));
                             indF3 = find(ismember(faces, indNodes(indt([1 3 4])), 'rows'));
                             indF4 = find(ismember(faces, indNodes(indt([2 3 4])), 'rows'));
-                            cells = {cells{:}, [indF1, indF2, indF3, indF4]};
+                            cells = [cells, {[indF1, indF2, indF3, indF4]}]; %#ok<AGROW>
                         end
                     end
         
@@ -974,7 +974,7 @@ function varargout = angleSort3d(pts, varargin)
 pt0     = mean(pts, 1);
 pt1     = pts(1,:);
 
-if length(varargin)==1
+if isscalar(varargin)
     pt0 = varargin{1};
 elseif length(varargin)==2
     pt0 = varargin{1};
@@ -1002,7 +1002,7 @@ angle   = atan2(pts2d(:,2), pts2d(:,1));
 angle   = mod(angle - theta0 + 4*pi, 2*pi);
 
 % sort points according to angles
-[tmp, I] = sort(angle);
+[~, I] = sort(angle);
 
 
 % format output
@@ -1016,10 +1016,10 @@ end
 
 
 function plane = createPlane(varargin)
-%CREATEPLANE create a plane in parametrized form
+%CREATEPLANE create a plane in parameterized form
 %
-%   Create a plane in the following format : 
-%   PLANE = [X0 Y0 Z0  DX1 DY1 DZ1  DX2 DY2 DZ2], where :
+%   Create a plane in the following format: 
+%   PLANE = [X0 Y0 Z0  DX1 DY1 DZ1  DX2 DY2 DZ2], where:
 %   - (X0, Y0, Z0) is a point belonging to the plane
 %   - (DX1, DY1, DZ1) is a first direction vector
 %   - (DX2, DY2, DZ2) is a second direction vector
@@ -1046,7 +1046,7 @@ function plane = createPlane(varargin)
 %   HISTORY :
 %   24/11/2005 : add possibility to pack points for plane creation
 
-if length(varargin)==1
+if isscalar(varargin)
     var = varargin{1};
     
     if iscell(var)
@@ -1082,7 +1082,7 @@ elseif length(varargin)==2
         error ('wrong number of parameters in createPlane');
     end
     
-    % find a vector not colinear to the normal
+    % find a vector not co-linear to the normal
     v0 = repmat([1 0 0], [size(p0, 1) 1]);    
     if abs(cross(n, v0, 2))<1e-14
         v0 = repmat([0 1 0], [size(p0, 1) 1]);
@@ -1218,7 +1218,7 @@ function varargout = sph2cart2(varargin)
 %   22/03/2005 : make test for 2 args, and add radius if not specified for
 %       1 arg.
 
-if length(varargin)==1
+if isscalar(varargin)
     var = varargin{1};
     if size(var, 2)==2
         var = [var ones(size(var, 1), 1)];
@@ -1229,7 +1229,7 @@ elseif length(varargin)==3
     var = [varargin{1} varargin{2} varargin{3}];
 end
 
-[x y z] = sph2cart(var(:,1), pi/2-var(:,2), var(:,3));
+[x, y, z] = sph2cart(var(:,1), pi/2-var(:,2), var(:,3));
 
 if nargout == 1 || nargout == 0
     varargout{1} = [x, y, z];

@@ -2,7 +2,7 @@ function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, v
 % Directional granulometries for several orientations.
 %
 %   Computes typical size of bright or dark structures in several
-%   directions within images by performing gray-level granulometries with
+%   directions within images, by computing gray-level granulometries using
 %   linear elements with various orientations. 
 %   The function "imOrientedGranulo" is an alternative approach based on
 %   rotations of the original image.
@@ -15,7 +15,7 @@ function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, v
 %   IMG:        The input 2D gray-level image.
 %   NORIENT:    The number of orientations to consider, as a scalar numeric.
 %   ORIENTLIST: The list of orientations to consider, given as a 1-by-N
-%               array of numeric values. No orderingf
+%               array of numeric values. 
 %   GRTYPE:     The type of granulometry. Can be one of 'opening',
 %               'closing', 'dilation', 'erosion', or a function handle to a
 %               function that accepts an image and a structuring element. 
@@ -30,7 +30,7 @@ function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, v
 %
 %   [RES, ORIENTLIST] = imDirectionalGranulo(...)
 %   Also returns the array of orientations that was used for computing the
-%   granulometry. It ORIENTLIST was given as an input parameter, it is
+%   granulometry. If ORIENTLIST was given as an input parameter, it is
 %   returned as second output argument.
 %
 %
@@ -58,6 +58,11 @@ function [res, orientList] = imDirectionalGranulo(img, nOrients, grType, LMax, v
 
 %% Parse input arguments
 
+if ~ismatrix(img)
+    error('MatImage:imGranulometry:InputImageMustBe2D', ...
+        'Requires a 2-dimension image as input');
+end
+
 % create the list of angles, or use the array given as argument
 if isscalar(nOrients)
     orientList = linspace(0, 180, nOrients+1);
@@ -67,7 +72,7 @@ else
     nOrients = length(orientList);
 end
 
-% create funtion handle for morphological operation
+% create function handle for morphological operation
 if isa(grType, 'functionHandle')
     morphoOp = grType;
 else
@@ -102,7 +107,7 @@ end
 dim = size(img);
 
 % create the list of line diameters 
-% (consider only odd values to ensure symetry of the strel)
+% (consider only odd values to ensure symmetry of the strel)
 diamList = 1:2:LMax;
 nSteps = length(diamList);
 

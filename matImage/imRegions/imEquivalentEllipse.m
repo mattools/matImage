@@ -2,12 +2,12 @@ function [ellipse, labels] = imEquivalentEllipse(img, varargin)
 % Equivalent ellipse of a binary or label image.
 %
 %   ELLI = imEquivalentEllipse(IMG)
-%   Computes the ellipse with same second order moments for each region in
-%   label image IMG. If the case of a binary image, a single ellipse
-%   corresponding to the foreground (i.e. to the region with pixel value 1)
-%   will be computed. 
+%   Computes the ellipses with same second order moments for each region in
+%   the label image IMG. If the case of a binary image, computes a single
+%   ellipse corresponding to the foreground (i.e. to the region with pixel
+%   value 1). 
 %
-%   The result is a N-by-5 array ELLI = [XC YC A B THETA], containing
+%   The result is a N-by-5 array ELLI = [XC YC A B THETA], containing the
 %   coordinates of ellipse center, lengths of semi major and minor axes,
 %   and the orientation (given in degrees, counter-clockwise, in the
 %   direction of the greatest axis).
@@ -24,16 +24,16 @@ function [ellipse, labels] = imEquivalentEllipse(img, varargin)
 %   ORIGIN = [OX OY] contains the center position of the top-left pixel of
 %   image. 
 %   If no calibration is specified, spacing = [1 1] and origin = [1 1] are
-%   used. If only the sapcing is specified, the origin is set to [0 0].
+%   used. If only the spacing is specified, the origin is set to [0 0].
 %
 %   ELLI = imEquivalentEllipse(..., LABELS)
-%   Specifies the labels for which the equivalent ellipse needs to be
-%   computed. The result is a N-by-5 array with as many rows as the number
-%   of labels.
+%   Specifies the regions for which the equivalent ellipse needs to be
+%   computed, as an array of integer labels. The result is a N-by-5 array
+%   with as many rows as the number of regions.
 %
 %
 %   Example
-%   % Draw a commplex particle together with its equivalent ellipse
+%   % Draw a complex particle together with its equivalent ellipse
 %     img = imread('circles.png');
 %     imshow(img); hold on;
 %     elli = imEquivalentEllipse(img);
@@ -87,7 +87,7 @@ if ~isempty(varargin) && size(varargin{1}, 2) == 1
 end
 
 
-%% Initialisations
+%% Initializations
 
 % extract the set of labels, without the background
 if isempty(labels)
@@ -99,7 +99,7 @@ nLabels = length(labels);
 ellipse = zeros(nLabels, 5);
 
 
-%% Extract ellipse corresponding to each label
+%% Extract the ellipse corresponding to each region
 
 for i = 1:nLabels
     % extract points of the current particle

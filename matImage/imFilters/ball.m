@@ -18,7 +18,7 @@ else
 end
 
 if dim == 2
-    if length(size) == 1
+    if isscalar(size)
         xSize = size;
         ySize = size;
     else
@@ -43,7 +43,7 @@ if dim == 2
         end
     end
 else
-    if length(size) == 1
+    if isscalar(size)
         xSize = size;
         ySize = size;
         zSize = size;

@@ -63,7 +63,7 @@ outputClass = 'uint8';
 if ~isempty(varargin)
     % use min and max values given as parameter
     var = varargin{1};
-    if length(var) == 1
+    if isscalar(var)
         [mini, maxi] = computeGrayscaleAdjustement(img, var);
     else
         mini = var(1);

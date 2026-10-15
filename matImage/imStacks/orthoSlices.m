@@ -63,7 +63,7 @@ end
 spacing = [1 1 1];
 if ~isempty(varargin) && ~ischar(varargin{1})
     spacing = varargin{1};
-    if numel(spacing) == 1
+    if isscalar(spacing)
         % in case of scalar spacing, convert to row vector
         spacing = [1 1 1] * spacing;
     end

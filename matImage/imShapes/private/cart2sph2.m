@@ -32,7 +32,7 @@ function varargout = cart2sph2(varargin)
 %   03/11/2006: change convention for angle : uses order [THETA PHI RHO]
 %   27/06/2007: manage 2 output arguments
 
-if length(varargin)==1
+if isscalar(varargin)
     var = varargin{1};
 elseif length(varargin)==3
     var = [varargin{1} varargin{2} varargin{3}];
@@ -42,7 +42,7 @@ if size(var, 2)==2
     var(:,3)=1;
 end
 
-[p t r] = cart2sph(var(:,1), var(:,2), var(:,3));
+[p, t, r] = cart2sph(var(:,1), var(:,2), var(:,3));
 
 if nargout == 1 || nargout == 0
     varargout{1} = [pi/2-t p r];

@@ -32,7 +32,7 @@ cx = 0;
 cy = 0;
 
 % process input arguments
-if length(varargin)==1
+if isscalar(varargin)
     % the argument is either the scaling factor in both direction,
     % or a 1x2 array containing scaling factor in each direction
     var = varargin{1};

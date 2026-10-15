@@ -173,7 +173,7 @@ if nd == 2
             inds = convhull(x, y);
             x = x(inds);
             y = y(inds);
-        catch ME %#ok<NASGU>
+        catch ME 
             % an exception can occur if points are colinear.
             % in this case we transform all points
         end
@@ -227,7 +227,7 @@ elseif nd == 3
             x = x(inds);
             y = y(inds);
             z = z(inds);
-        catch ME %#ok<NASGU>
+        catch ME 
             % an exception can occur if points are colinear.
             % in this case we transform all points
         end

@@ -127,7 +127,7 @@ for i = 1:nLabels
     end
     
     % special case of regions composed of only one pixel
-    if length(x) == 1
+    if isscalar(x)
         rect(i,:) = [x y 1 1 0];
         continue;
     end
@@ -135,7 +135,7 @@ for i = 1:nLabels
     % compute bounding box of region pixel centers
     try
         obox = orientedBox([x y]);
-    catch ME %#ok<NASGU>
+    catch ME 
         % if points are aligned, convex hull computation fails.
         % Perform manual computation of box.
         xc = mean(x);

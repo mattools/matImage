@@ -56,7 +56,7 @@ if isPlanar
     %% Planar case 
     
     % convert pad to have 4 values
-    if length(pad) == 1
+    if isscalar(pad)
         pad = [pad pad pad pad];
     elseif length(pad)==2
         pad = [pad(1) pad(1) pad(2) pad(2)];
@@ -72,7 +72,7 @@ elseif length(dim) - isColor == 3
     %% Case of 3D image
     
     % convert pad to have 6 values
-    if length(pad) == 1
+    if isscalar(pad)
         pad = [pad pad pad pad pad pad];
     elseif length(pad) == 3
         pad = [pad(1) pad(1) pad(2) pad(2) pad(3) pad(3)];

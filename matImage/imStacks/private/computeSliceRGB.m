@@ -1,5 +1,5 @@
 function rgb = computeSliceRGB(slice, displayRange, lut)
-%COMPUTESLICERGB Convert slice data to renderable slice
+%COMPUTESLICERGB Convert slice data to renderable slice.
 %
 %   RGB = computeSliceRGB(SLICE)
 %
@@ -13,12 +13,12 @@ function rgb = computeSliceRGB(slice, displayRange, lut)
 %
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2011-11-07,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2011 INRA - Cepia Software Platform.
 
 % RGB slices are returned directly
-if ndims(slice) > 2
+if ndims(slice) > 2 %#ok<ISMAT>
     rgb = slice;
     return;
 end
@@ -28,7 +28,7 @@ if isempty(displayRange) || islogical(slice)
     displayRange = [0 max(slice(:))];
 end
 
-% converts to uint8, rescaling data between 0 and max value
+% converts to uint8, re scaling data between 0 and max value
 displayRange = double(displayRange);
 extent = displayRange(2) - displayRange(1);
 slice = uint8((double(slice) - displayRange(1)) * 255 / extent);

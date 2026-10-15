@@ -47,7 +47,7 @@ if ~isempty(varargin)
     % If alpha is specified, we compute the percentage of pixels outside of
     % the range
     alpha = varargin{1};
-    if length(alpha)==1
+    if isscalar(alpha)
         alpha = [alpha alpha]/2;
     end
     

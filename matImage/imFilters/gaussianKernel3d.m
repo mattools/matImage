@@ -46,12 +46,12 @@ function varargout = gaussianKernel3d(size, sigma, varargin)
 %% Process input
 
 % ensure size is a vector of length 3
-if length(size) == 1
+if isscalar(size)
     size = [size size size];
 end
 
 % ensure sigma is a vector of length 3
-if length(sigma) == 1
+if isscalar(sigma)
     sigma = [sigma sigma sigma];
 end
 

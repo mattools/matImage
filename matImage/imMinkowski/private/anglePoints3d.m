@@ -26,7 +26,7 @@ function alpha = anglePoints3d(varargin)
 
 
 p2 = [0 0 0];
-if length(varargin) == 1
+if isscalar(varargin)
     pts = varargin{1};
     if size(pts, 1)==2
         p1 = pts(1,:);

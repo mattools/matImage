@@ -17,12 +17,12 @@ function h = orientedGaussianKernel(size, sigma, theta)
 % Copyright 2012 INRA - Cepia Software Platform.
 
 % ensure size is a vector
-if length(size) == 1
+if isscalar(size)
     size = [size size];
 end
 
 % ensure sigma is a vector
-if length(sigma) == 1
+if isscalar(sigma)
     sigma = [sigma sigma];
 end
 

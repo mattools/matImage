@@ -227,11 +227,11 @@ area3 = sum(angles1)-pi*(n1-2);
 % -------------------------------------------------------------------
 
 % display some results
-disp('results : ')
-pattern = 'area of cell in direction %d: %12.10f sr, = %12.10f %%';
-disp(sprintf(pattern, 1, area1, area1*100/4/pi));
-disp(sprintf(pattern, 2, area2, area2*100/4/pi));
-disp(sprintf(pattern, 3, area3, area3*100/4/pi));
+disp('results: ')
+pattern = 'area of cell in direction %d: %12.10f sr, = %12.10f %%\n';
+fprintf(pattern, 1, area1, area1*100/4/pi);
+fprintf(pattern, 2, area2, area2*100/4/pi);
+fprintf(pattern, 3, area3, area3*100/4/pi);
 
 % return computed areas, formatted as fraction of sphere surface
 area = [area1 area2 area3]/4/pi;
@@ -267,7 +267,7 @@ if length(varargin)==3
     p1 = varargin{1};
     p2 = varargin{2};
     p3 = varargin{3};
-elseif length(varargin)==1
+elseif isscalar(varargin)
     var = varargin{1};
     p1 = var(1,:);
     p2 = var(2,:);
@@ -316,7 +316,7 @@ function line = createLine(varargin)
 %   created the 31/10/2003.
 %
 
-if length(varargin)==1
+if isscalar(varargin)
     % Only one input parameter. It can be :
     % - line angle
     % - array of four parameters
@@ -396,7 +396,7 @@ function plane = createPlane(varargin)
 %   HISTORY :
 %   24/11/2005 : add possibility to pack points for plane creation
 
-if length(varargin)==1
+if isscalar(varargin)
     var = varargin{1};
     
     if iscell(var)
@@ -879,7 +879,7 @@ function varargout = sph2cart2(varargin)
 %   22/03/2005 : make test for 2 args, and add radius if not specified for
 %       1 arg.
 
-if length(varargin)==1
+if isscalar(varargin)
     var = varargin{1};
     if size(var, 2)==2
         var = [var ones(size(var, 1), 1)];
@@ -890,7 +890,7 @@ elseif length(varargin)==3
     var = [varargin{1} varargin{2} varargin{3}];
 end
 
-[x y z] = sph2cart(var(:,1), pi/2-var(:,2), var(:,3));
+[x, y, z] = sph2cart(var(:,1), pi/2-var(:,2), var(:,3));
 
 if nargout == 1 || nargout == 0
     varargout{1} = [x, y, z];
@@ -931,11 +931,11 @@ function alpha = sphericalAngle(p1, p2, p3)
 
 % test if points are given as matlab spherical coordinate
 if size(p1, 2) ==2
-    [x y z] = sph2cart(p1(:,1), p1(:,2));
+    [x, y, z] = sph2cart(p1(:,1), p1(:,2));
     p1 = [x y z];
-    [x y z] = sph2cart(p2(:,1), p2(:,2));
+    [x, y, z] = sph2cart(p2(:,1), p2(:,2));
     p2 = [x y z];
-    [x y z] = sph2cart(p3(:,1), p3(:,2));
+    [x, y, z] = sph2cart(p3(:,1), p3(:,2));
     p3 = [x y z];
 end
 

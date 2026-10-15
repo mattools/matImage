@@ -37,10 +37,10 @@ if isempty(varargin)
     sx = 1;
     sy = 1;
     sz = 1;
-elseif length(varargin)==1
+elseif isscalar(varargin)
     % only one argument
     var = varargin{1};
-    if length(var)==1
+    if isscalar(var)
         % same scaling factor in each direction
         sx = var;
         sy = var;

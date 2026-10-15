@@ -58,7 +58,7 @@ while ~isempty(varargin)
         minimg = min(img(:));
         maximg = max(img(:));
         
-    elseif isnumeric(var) && length(var) == 1
+    elseif isnumeric(var) && isscalar(var)
         % argument is number of bins
         N = var;
         

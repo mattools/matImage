@@ -45,14 +45,14 @@ function res = subsample(src, scale, varargin)
 %   28/05/2009 add doc
 %   23/07/2009 update doc
 
-warning('imFilters:deprecated', ...
+warning('matImage:imFilters:deprecated', ...
     'subsample is deprecated, use imDownSample instead');
 
 % get initial size of image
 dim = size(src);
 
 % if scale is given as single value, convert to 1*NDIMS array
-if length(scale)==1
+if isscalar(scale)
     scale = ones(size(dim))*scale;
 end
 
@@ -66,11 +66,11 @@ end
 if islogical(src)
     res = false(floor(size(src)./scale));
 else
-    res = zeros(floor(size(src)./scale), class(src)); %#ok<ZEROLIKE>
+    res = zeros(floor(size(src)./scale), class(src)); 
 end
 
 % process case DIM=1
-if length(dim)==1 % & (dim(1)==1 | dim(2)==1)
+if isscalar(dim) 
 
     disp('dimension 1');
     if strcmp(type, 'max')
@@ -116,7 +116,7 @@ if length(dim)==2
     if islogical(src)
         tab = false([dim2(1) dim2(2) scale(1)*scale(2)]);
     else
-        tab = zeros([dim2(1) dim2(2) scale(1)*scale(2)], class(src)); %#ok<ZEROLIKE>
+        tab = zeros([dim2(1) dim2(2) scale(1)*scale(2)], class(src)); 
     end
 
     for i=1:scale(1)
@@ -129,13 +129,13 @@ if length(dim)==2
     
     if strcmp(type, 'max')
         res = max(tab, [], 3);
-    elseif strcmp(type, 'min');
+    elseif strcmp(type, 'min')
         res = min(tab, [], 3);
-    elseif strcmp(type, 'mean');
+    elseif strcmp(type, 'mean')
         res = mean(tab, 3);
-    elseif strcmp(type, 'median');
+    elseif strcmp(type, 'median')
         res = median(tab, 3);
-    elseif strcmp(type, 'first');
+    elseif strcmp(type, 'first')
         res = tab(:, :, 1);
     end
     return;

@@ -938,7 +938,7 @@ methods
         showOpenImageDialog(obj);
     end
     
-    function onOpenDemoImage(obj, hObject, eventdata)  %#ok<INUSL>
+    function onOpenDemoImage(obj, hObject, eventdata)  
         
         demoName = get(hObject, 'UserData');
         switch demoName
@@ -2154,7 +2154,7 @@ methods
         displayPixelCoords(obj, point);
     end
     
-    function mouseWheelScrolled(obj, hObject, eventdata) %#ok<INUSL>
+    function mouseWheelScrolled(obj, hObject, eventdata) 
         if isempty(obj.ImageData)
             return;
         end

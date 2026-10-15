@@ -89,7 +89,7 @@ elseif length(dims) == 3
             histo(i) = sum(map(:) == (i-1));
         end
         
-    catch ME %#ok<NASGU>
+    catch ME
         % in case of out-of-memory exception, switch to slower algorithm
         
         warning('matImage:imMinkowski:LowMemory', ...

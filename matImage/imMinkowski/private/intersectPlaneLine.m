@@ -32,11 +32,11 @@ warning('IMAEL:deprecatedFunction', ...
 
 
 % unify sizes of data
-if size(plane, 1) == 1;     % one plane possible many lines
+if size(plane, 1) == 1     % one plane possible many lines
     plane = repmat(plane, size(line,1), 1);
-elseif size(line,1) == 1;   % one line and many planes
+elseif size(line,1) == 1   % one line and many planes
     line = repmat(line, size(plane,1), 1);
-elseif (size(plane,1) ~= size(line,1)) ; % N planes and M lines, not allowed for now.
+elseif (size(plane,1) ~= size(line,1))  % N planes and M lines, not allowed for now.
     error('input size not correct, either one/many plane and many/one line, or same # of planes and lines!');
 end
 

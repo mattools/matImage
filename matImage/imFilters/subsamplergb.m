@@ -33,7 +33,7 @@ function res = subsamplergb(src, scale)
 
 
 dim = size(src);
-if length(scale) == 1
+if isscalar(scale)
     scale = ones(2, 1) * scale;
 end
 

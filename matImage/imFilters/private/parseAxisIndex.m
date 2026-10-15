@@ -1,5 +1,5 @@
 function axis = parseAxisIndex(axis)
-%PARSEAXISINDEX Parse argument and return axis number between 1 and 3
+%PARSEAXISINDEX Parse argument and return axis number between 1 and 3.
 %
 %   AXIS = parseAxisIndex(AXIS)
 %   If AXIS is a number, checks it is comprised between 1 and 3, and return
@@ -20,10 +20,10 @@ function axis = parseAxisIndex(axis)
 %
 %   See also
 %
-%
+
 % ------
 % Author: David Legland
-% e-mail: david.legland@grignon.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2010-10-20,    using Matlab 7.9.0.529 (R2009b)
 % Copyright 2010 INRA - Cepia Software Platform.
 
@@ -39,7 +39,7 @@ elseif ischar(axis)
         axis = 1;
     elseif strcmpi(axis, 'y')
         axis = 2;
-    elseif strcmpi(axis, 'z');
+    elseif strcmpi(axis, 'z')
         axis = 3;
     else
         error('Unknown direction string. Use ''x'', ''y'' or ''z''');

@@ -39,7 +39,7 @@ elseif ischar(axis)
         axis = 1;
     elseif strcmpi(axis, 'y')
         axis = 2;
-    elseif strcmpi(axis, 'z');
+    elseif strcmpi(axis, 'z')
         axis = 3;
     else
         error('Unknown direction string. Use ''x'', ''y'' or ''z''');

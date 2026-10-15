@@ -44,7 +44,7 @@ end
 % get connectivity from input parameter
 if ~isempty(varargin)
     var = varargin{1};
-    if length(var) == 1
+    if isscalar(var)
         if var == 4
             if ndims(img) == 2 %#ok<ISMAT>
                 se = [0 1 0;1 1 1;0 1 0];

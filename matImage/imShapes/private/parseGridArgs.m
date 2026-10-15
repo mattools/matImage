@@ -1,4 +1,4 @@
-function [lx ly varargin] = parseGridArgs(varargin)
+function [lx, ly, varargin] = parseGridArgs(varargin)
 %PARSEGRIDARGS  Extract or compute position vectors for meshgrid
 %
 %   [LX LY] = parseGridArgs(LX, LY)

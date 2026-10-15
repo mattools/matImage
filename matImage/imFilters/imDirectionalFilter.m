@@ -100,7 +100,7 @@ if length(varargin) > 1
 end
 
 
-%% Initialisations
+%% Initializations
 
 % memory allocation, creating result the same type as input
 if strcmp(op2, 'max')

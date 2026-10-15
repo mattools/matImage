@@ -15306,16 +15306,52 @@ Contains various functions for measuring or estimating geometric quantities from
 
 \begin_layout Standard
 For 2D images,
- parameters are the area,
- the perimeter and the (2D) Euler Number.
+ parameters are the 
+\series bold
+area
+\series default
+,
+ the 
+\series bold
+perimeter
+\series default
+ and the (2D)
+\series bold
+ Euler Number
+\series default
+.
  For 3D images,
- parameters are the volume,
- the surface area,
- the mean breadth (also known as integral of mean curvature),
- and the (3D) Euler Number.
+ parameters are the 
+\series bold
+volume
+\series default
+,
+ the 
+\series bold
+surface area
+\series default
+,
+ the 
+\series bold
+mean breadth
+\series default
+ (also known as integral of mean curvature),
+ and the
+\series bold
+ (3D) Euler Number
+\series default
+.
  For the sake of completeness,
  parameters for 1D images are also included:
- length and number (1D Euler Number).
+ 
+\series bold
+length
+\series default
+ and 
+\series bold
+number
+\series default
+ (1D Euler Number).
  
 \end_layout
 
@@ -15364,6 +15400,16 @@ literal "false"
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+could expand the section on mathematical background
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -15379,14 +15425,14 @@ im<Quantity> evaluates the quantity from a binary or label image.
 \end_layout
 
 \begin_layout Description
-im<Quantity>Density evaluates the quantity within the image,
+im<Quantity>Estimate evaluates the quantity within the image,
  by considering that the image is a representative window of a larger structure.
  The intersection of the structure with image border is not taken into account for measurements.
 \end_layout
 
 \begin_layout Description
-im<Quantity>Estimate same as im<Quantity>Estimate,
- but the result is normalized by the area or the volume of the observed window.
+im<Quantity>Density same as im<Quantity>Estimate,
+ but the result is normalized by the area or the volume of the observation window.
 \end_layout
 
 \begin_layout Description
@@ -15442,10 +15488,10 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-Most functions work both for binary and label images.
+Most functions work for both binary and label images.
  It is possible to specify options (connectivity for Euler Number,
  number of directions for perimeter or surface area),
- as well as image resolution in each direction.
+ as well as image resolution along each direction.
  Examples of use:
 \end_layout
 
@@ -16195,6 +16241,114 @@ Perimeter estimate of a 2D binary structure.
 \end_layout
 
 \begin_layout Minisec
+imProjectedDiameter
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+projectedDiameter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imProjectedDiameter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Computes the projected diameter
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+projected diameter
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+diameter
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+!
+\end_layout
+
+\end_inset
+
+projected
+\end_layout
+
+\end_inset
+
+ in a given direction.
+ In the continuous case,
+ the integration of the projected diameter over all the directions is proportional to the perimeter.
+\end_layout
+
+\begin_layout Minisec
 imEuler2dDensity
 \begin_inset Index ind
 range none
@@ -16918,6 +17072,78 @@ mean breadth
 \end_layout
 
 \begin_layout Minisec
+imProjectedArea
+\begin_inset Index ind
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+projectedArea
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+@
+\end_layout
+
+\end_inset
+
+imProjectedArea
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Computes the total projected area
+\begin_inset Index idx
+range none
+pageformat default
+status collapsed
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+total projected area
+\end_layout
+
+\end_inset
+
+ in a given direction.
+ In the continuous case,
+ the integration of the projected area over all the directions is proportional to the surface area.
+\end_layout
+
+\begin_layout Minisec
 imEuler3d
 \begin_inset Index ind
 range none
@@ -16988,7 +17214,7 @@ Euler number (3D)
 \end_layout
 
 \begin_layout Subsection
-Analysis of microstrucures
+Analysis of microstructures
 \end_layout
 
 \begin_layout Standard
@@ -17951,182 +18177,16 @@ nolink "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Minisec
-imProjectedDiameter
-\begin_inset Index ind
-range none
-pageformat default
-status collapsed
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\nospellcheck off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-projectedDiameter
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-@
-\end_layout
-
-\end_inset
-
-imProjectedDiameter
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Computes the projected diameter
-\begin_inset Index idx
-range none
-pageformat default
-status collapsed
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\nospellcheck off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-projected diameter
-\end_layout
-
-\end_inset
-
-
-\begin_inset Index idx
-range none
-pageformat default
-status collapsed
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\nospellcheck off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-diameter
-\begin_inset ERT
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-!
-\end_layout
-
-\end_inset
-
-projected
-\end_layout
-
-\end_inset
-
- in a given direction.
-\end_layout
-
-\begin_layout Minisec
-imProjectedArea
-\begin_inset Index ind
-range none
-pageformat default
-status collapsed
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\nospellcheck off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-projectedArea
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-@
-\end_layout
-
-\end_inset
-
-imProjectedArea
+move it to imFilters?
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Computes the total projected area
-\begin_inset Index idx
-range none
-pageformat default
-status collapsed
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\nospellcheck off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-total projected area
-\end_layout
-
-\end_inset
-
- in a given direction.
 \end_layout
 
 \begin_layout Minisec
@@ -18163,6 +18223,16 @@ epc
 Computes the Euler-Poincare Characteristic (EPC),
  or Euler number,
  of a structure.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+remove?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Minisec
@@ -18197,6 +18267,16 @@ tpl
 
 \begin_layout Standard
 Computes total projection length.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+remove?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter

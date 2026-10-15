@@ -18,9 +18,9 @@ function tests = test_imSurfaceArea(varargin)
 tests = functiontests(localfunctions);
 
 
-function testAddBorderD3(testCase)
+function test_isolatedCube_D3(testCase)
 
-img = ones([5 5 5]) > 0;
+img = false([5 5 5]);
 imgb = padarray(img, [1 1 1]) > 0;
 
 nDir = 3;
@@ -29,9 +29,9 @@ bb = imSurfaceArea(imgb, nDir);
 assertEqual(testCase, b, bb);
 
 
-function testAddBorderD13(testCase)
+function test_isolatedCube_D13(testCase)
 
-img = ones([5 5 5]) > 0;
+img = false([5 5 5]);
 imgb = padarray(img, [1 1 1]) > 0;
 
 nDir = 13;
@@ -40,14 +40,29 @@ bb = imSurfaceArea(imgb, nDir);
 assertEqual(testCase, b, bb);
 
 
-function test_Anisotropic(testCase)
+function test_isolatedCube_Anisotropic_D3(testCase)
 
-img = ones([5 5 5]) > 0;
+nDirs = 3;
+calib = [3 4 5];
+img = false([5 5 5]);
 imgb = padarray(img, [1 1 1]) > 0;
 
-nDir = 3;
-b = imSurfaceArea(img, nDir, [1 2 3]);
-bb = imSurfaceArea(imgb, nDir, [1 2 3]);
+b = imSurfaceArea(img, nDirs, calib);
+bb = imSurfaceArea(imgb, nDirs, calib);
+
+assertEqual(testCase, b, bb);
+
+
+function test_isolatedCube_Anisotropic_D13(testCase)
+
+nDirs = 13;
+calib = [3 4 5];
+img = false([5 5 5]);
+imgb = padarray(img, [1 1 1]) > 0;
+
+b = imSurfaceArea(img, nDirs, calib);
+bb = imSurfaceArea(imgb, nDirs, calib);
+
 assertEqual(testCase, b, bb);
 
 
@@ -92,7 +107,7 @@ bb13 = imSurfaceArea(imgb, 13);
 assertEqual(testCase, b13, bb13);
 
 
-function test_Labels2_D3(testCase)
+function test_Labels_nonRegular_D3(testCase)
 
 img = zeros([5 5 5]);
 img(1:3, 1:3, 1:3) = 2;
@@ -111,7 +126,7 @@ assertEqual(testCase, 8, length(labels3));
 assertEqual(testCase, labels3, [2 3 5 7 11 13 17 19]');
 
 
-function test_Labels2_D13(testCase)
+function test_Labels_nonRegular_D13(testCase)
 
 img = zeros([5 5 5]);
 img(1:3, 1:3, 1:3) = 2;
@@ -128,3 +143,50 @@ img(4:5, 4:5, 4:5) = 19;
 assertEqual(testCase, 8, length(b13));
 assertEqual(testCase, 8, length(labels13));
 assertEqual(testCase, labels13, [2 3 5 7 11 13 17 19]');
+
+
+function test_Labels_nonRegular_Anisotropic_D3(testCase)
+
+nDirs = 3;
+calib = [3 4 5];
+labels = [2 3 5 7 11 13 17 19];
+img = zeros([8 8 8]);
+img(1:3, 1:3, 1:3) = labels(1);
+img(4:8, 1:3, 1:3) = labels(2);
+img(1:3, 4:8, 1:3) = labels(3);
+img(4:8, 4:8, 1:3) = labels(4);
+img(1:3, 1:3, 4:8) = labels(5);
+img(4:8, 1:3, 4:8) = labels(6);
+img(1:3, 4:8, 4:8) = labels(7);
+img(4:8, 4:8, 4:8) = labels(8);
+
+[res, resLabels] = imSurfaceArea(img, nDirs, calib);
+
+assertEqual(testCase, 8, length(res));
+assertEqual(testCase, 8, length(resLabels));
+assertEqual(testCase, resLabels, labels');
+
+
+
+function test_Labels_nonRegular_Anisotropic_D13(testCase)
+
+nDirs = 13;
+calib = [3 4 5];
+labels = [2 3 5 7 11 13 17 19];
+img = zeros([8 8 8]);
+img(1:3, 1:3, 1:3) = labels(1);
+img(4:8, 1:3, 1:3) = labels(2);
+img(1:3, 4:8, 1:3) = labels(3);
+img(4:8, 4:8, 1:3) = labels(4);
+img(1:3, 1:3, 4:8) = labels(5);
+img(4:8, 1:3, 4:8) = labels(6);
+img(1:3, 4:8, 4:8) = labels(7);
+img(4:8, 4:8, 4:8) = labels(8);
+
+[res, resLabels] = imSurfaceArea(img, nDirs, calib);
+
+assertEqual(testCase, 8, length(res));
+assertEqual(testCase, 8, length(resLabels));
+assertEqual(testCase, resLabels, labels');
+
+

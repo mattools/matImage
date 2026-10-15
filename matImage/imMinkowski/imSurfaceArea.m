@@ -21,7 +21,7 @@ function [surf, labels] = imSurfaceArea(img, varargin)
 %
 %   S = imSurfaceArea(..., LABELS)
 %   In the case of a label image, specifies the labels of the region to
-%   analyse.
+%   analyze.
 %
 %
 %   Example

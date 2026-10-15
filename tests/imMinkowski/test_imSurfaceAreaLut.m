@@ -11,7 +11,7 @@ function tests = test_imSurfaceAreaLut(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@nantes.inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2018-09-10,    using Matlab 8.6.0.267246 (R2015b)
 % Copyright 2018 INRA - Cepia Software Platform.
 

@@ -1,4 +1,4 @@
-function chi = imEuler3dDensity(img, varargin)
+function epcd = imEuler3dDensity(img, varargin)
 % Compute Euler density in a 3D image.
 %
 %   CHI_V = imEuler3dDensity(IMG)
@@ -9,7 +9,7 @@ function chi = imEuler3dDensity(img, varargin)
 %
 %   CHI_V = imEuler3dDensity(IMG, CONN)
 %   Specifies the connectivity to use to define whether two voxels are
-%   neihbors or not. Can be either 6 (the default) or 26. 
+%   neighbor or not. Can be either 6 (the default) or 26. 
 %
 %   Example
 %   imEuler3dDensity
@@ -59,10 +59,10 @@ while ~isempty(varargin)
 end
 
 % Euler-Poincare Characteristic of each component in image
-chi = imEuler3dEstimate(img, conn);
+epc = imEuler3dEstimate(img, conn);
 
 % total volume of image
 obsVolume = prod(size(img) - 1) * prod(delta);
 
 % compute area density
-chi = chi / obsVolume;
+epcd = epc / obsVolume;

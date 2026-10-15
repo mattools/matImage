@@ -10,14 +10,14 @@ function tests = test_imAreaEstimate(varargin)
 
 % ------
 % Author: David Legland
-% e-mail: david.legland@inra.fr
+% e-mail: david.legland@inrae.fr
 % Created: 2009-04-22,    using Matlab 7.7.0.471 (R2008b)
 % Copyright 2009 INRA - Cepia Software Platform.
 
 tests = functiontests(localfunctions);
 
 
-function testSquare(testCase)
+function test_binary_Square(testCase)
 
 img = false(10, 10);
 img(3:3+4, 4:4+4) = true;
@@ -27,7 +27,7 @@ a = imAreaEstimate(img);
 assertEqual(testCase, 25, a);
 
 
-function testDelta(testCase)
+function test_binary_anisotropic(testCase)
 % Test with a non uniform resolution
 
 img = false(10, 10);
@@ -40,7 +40,7 @@ a = imAreaEstimate(img, delta);
 assertEqual(testCase, expectedArea, a);
 
 
-function testDividedImage(testCase)
+function test_additivityProperty(testCase)
 % compute on an image, cut imag in 4, then check sum of results
 
 img = false(10, 10);
@@ -58,7 +58,7 @@ as = a1+a2+a3+a4;
 assertEqual(testCase, at, as);
 
 
-function testLabelImage(testCase)
+function test_labelImage(testCase)
 
 lbl = bwlabel(imread('coins.png') > 100);
 

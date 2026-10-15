@@ -26,7 +26,7 @@ if ~islogical(img)
     labels = unique(img);
     labels(labels==0) = [];
     ad = zeros(length(labels), 1);
-    for i=1:length(labels)
+    for i = 1:length(labels)
         ad(i) = imAreaDensity(img==labels(i), varargin{:});
     end
     return;

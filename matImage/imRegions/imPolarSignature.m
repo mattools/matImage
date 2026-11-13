@@ -1,4 +1,4 @@
-function [res, thetaList] = imPolarSignature(img, varargin)
+function [res, thetaList, refPoint] = imPolarSignature(img, varargin)
 %IMPOLARSIGNATURE Polar signature of region contour.
 %
 %   Syntax:
@@ -28,6 +28,11 @@ function [res, thetaList] = imPolarSignature(img, varargin)
 %   Also returns the row vector containing the angles used for computing
 %   the signature. ANGLES has as many elements as SIG.
 %
+%   [SIG, ANGLES, REFPOINT] = imPolarSignature(...)
+%   Also returns the reference point used for computing angles. REFPOINT is
+%   a 1-by-2 row vector containing coordinates.
+%
+%
 %   Requires the "MatGeom" library for computation.
 %
 %   Example
@@ -41,7 +46,7 @@ function [res, thetaList] = imPolarSignature(img, varargin)
 %
 %
 %   See also
-%     polygonSignature, signatureToPolygon
+%     polygonSignature, signatureToPolygon, imBoundaryContours
 %
  
 % ------
